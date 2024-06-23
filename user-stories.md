@@ -177,3 +177,58 @@ Given I am on the login page
 When I click on the OAuth button  
 And I fail to authenticate  
 Then I should see an error message
+
+## Feature 7: Password recovery request
+
+As a user
+I want to request a password recovery code
+So that I can change my password
+
+### Scenario 1: Registered user requests password recovery
+
+Given I am on the login page
+When I click on the password recovery link
+And I fill in the password recovery form with my email
+Then I should receive an email with a verification code
+And I should be redirected to the password recovery page
+
+### Scenario 2: Unregistered user requests password recovery
+
+Given I am on the login page
+When I click on the password recovery link
+And I fill in the password recovery form with an unregistered email
+Then I should be redirected to the password recovery page #TODO per non dare informazioni sull'email
+
+## Feature 8: Password recovery verification
+
+As a user
+I want to change my password
+So that I can login to my account
+
+### Scenario 1: User verifies password recovery with valid code and new valid password
+
+Given I am on the password recovery page
+When I fill in the password recovery form with a valid code
+And I fill in the new password form with a new valid password
+Then I should be redirected to the login page
+
+### Scenario 2: User verifies password recovery with invalid code
+
+Given I am on the password recovery page
+When I fill in the password recovery form with an invalid code
+Then I should see an error message
+And I can request a new code
+
+### Scenario 3: Registered user requests new password recovery code
+
+Given I am on the password recovery page
+When I click on the request new code link
+Then I see a success message
+And I should receive a new email with a new verification code
+
+### Scenario 4: Unregistered user requests new password recovery code
+
+Given I am on the password recovery page
+When I click on the request new code link
+Then I see a success message
+And I should not receive an email with a new verification code
