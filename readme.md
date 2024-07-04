@@ -16,8 +16,10 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
 -   API:
     -   Stripe per i pagamenti
     -   OAuth con Google/Apple e vari
-    - Geolocalizzazione
-    -   MyFitnessPal (o altro database) opzionale per vedere le calorie del cibo
+    -   API per la geolocalizzazione
+    -   Database cibo per vedere le calorie e i valori nutrizionali del cibo
+    - API per calendario ad esempio con collegamento con calendar
+    - API per la chat??
                     
 - Normalmente si pagano 10 euro di commissioni ad ogni menu. L'utente gold invece non paga nessuna commissione. Nella schermata di pagamento appare un avviso che consiglia all'utente di fare il pro per non pagare le commissioni
 
@@ -31,10 +33,9 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
 
 ## Pagine varie
 
-Home uguale per tutti
-Pagina del menu
+Home uguale per tutti gli utenti non loggati  
+Pagina del menu  
 Visualizzare profilo chef
-
 
 Cliente loggato:
 1.	Conferma prenotazione (dove metti i tuoi dati) e pagamento
@@ -45,9 +46,118 @@ Cliente loggato:
 6.	Pagina del profilo con possibilità di modificare i tuoi dati
 
 Chef loggato:
-1.	Creare il menu -> extra come misenplass…
-2.	Visualizzare i miei menu
-3.	Visualizzare prenotazioni (magari con un calendario)
-4.	Singola prenotazione in cui vedere anche punteggio cliente
-5.	Chat (aprire solo dalla prenotazione/appena arriva prenotazione si crea una chat)
-6.	Pagina del profilo con possibilità di modificare i tuoi dati
+1. Dashboard chef (è la pagina principale in cui viene reindirizzato una volta loggato)
+2.	Creare il menu -> extra come misenplass…
+3.	Visualizzare i miei menu
+4.	Visualizzare prenotazioni (magari con un calendario)
+5.	Singola prenotazione in cui vedere anche punteggio cliente
+6.	Chat (aprire solo dalla prenotazione/appena arriva prenotazione si crea una chat)
+7.	Pagina del profilo con possibilità di modificare i tuoi dati
+
+
+
+
+
+# HOMEPAGE per utenti non registrati e clienti
+
+## Search
+bisogna compilare tutte le cose prima di fare la ricerca
+
+mettere altre feature?? una per ogni campo? ad esempio il campo 'quando' deve dare la possibilità di selezionare anche pranzo/cena, etc.; il campo 'dove' deve dare la possibilità di usare la geolocalizzazione
+
+mostrano i primi x risultati per l'infinite scroll / paginazione
+
+## Profile popup for registered user
+agli utenti registrati cliccando sull'iconcina in alto a destra compare un menu con profilo chat preferiti, prenotazioni e logout
+
+## Register / login
+invece agli utenti non registrati compare l'opzione di registrarsi e login
+
+## Filter 
+li chiamiamo 'filtri aggiuntivi'. fanno un fetch al database nel contesto della ricerca e mostrano i primi x risultati per l'infinite scroll / paginazione
+
+due scenari: selezione del menu (tipi di menu) o filtri in alto a destra (valori nutrizionali, prezzo, etc.)
+
+
+#  PAGINA DEL MENU 
+
+1. Se l'utente non ha compilato gli compare il tasto 'controlla la disponibilità'.                 
+Se l'utente ha compilato dipende:
+2. Se l'utente è registrato gli compare 'prenota ora'
+3. Se l'utente non è registrato e clicca 'prenota ora' appare un popup subito sopra il pulsante che gli dice di registrarsi/accedere per prenotare (con reindirizzazione alla pagina di registraizone/accesso)
+
+# PAGINA PRINCIPALE DELLO CHEF
+
+Nell'header ci sta logo, un numero con stellina che rappresenta la 'media delle recensioni' e la foto del profilo; cliccandola si apre un menu con:
+- Profilo (molto simile a quella del cliente)
+- Prenotazioni
+- Menu
+- Chat
+Nella schermata principale ci sono:
+1. Alcuni menu, con accanto la scritta 'per vederli tutti o aggiungerli' che porta alla schermata menu
+2. Le prenotazioni attive, con accanto la scritta 'per vedere tutte le prenotazioni' che porta alla schermata prenotazioni
+3. Ultime recensioni (cioè le ultime recensioni prese da tutti i menu)  
+Per vedere le recensioni bisogna andare nella schermata relativa del menu 
+
+# CREAZIONE DEL MENU (dalla pagina dei menu dello chef)
+
+1. Titolo del menu
+2. Foto (plurale) con la possibilità di selezionare quella che viene mostrata come foto principale
+3. Descrizione (opzionale ?) del menu e ACCANTO PREZZO E MIN. E MAX. PERSONE
+4. Allergeni presenti nel menu tramite una checkbox
+5. Due extra: Vino (degustazione ?) e mise en place; ogni opzione ha checkbox e costo (al momento del pagamento del client viene mostrato come extra e può essere anche non scelto) 
+6. Meccanismo per aggiungere le portate. Per ogni portata:
+    - Nome del piatto.
+    - Select per selezionare se primo antipasto etc.
+    - Opzionale ingredienti con peso  
+
+Quando si aggiunge una portata compare in alto e se ne possono aggiungere altre. Quando si è finito e a patto che ci sia ALMENO 1 portata, si può aggiungere il menu con un pulsante in basso a destra.
+
+Prima di confermare vengono mostrate tutte le portate, la descrizione, etc. insomma un'anteprima di quello che vedrà poi il client. Da qui se si conferma il menu viene pubblicato.
+
+# PROFILO PUBBLICO DELLO CHEF (visibile da tutti)
+
+1. Foto profilo e a destra descrizione del prof.
+2. Valutazione totale sotto la foto e sempre sotto la foto pulsante per chattare
+3. Carosello a scorrimento per vedere i diversi menu
+4. In basso mappa con diametro di distanza entro cui lo chef lavora
+
+# COMPLETAMENTO PROFILO 'CLIENTE'
+
+Per ora sono stati inseriti solo email e password (è la pagina a cui si arriva dopo la conferma dell'email). In questa pagina bisogna inserire:
+
+1. Nome e cognome con foto profilo opzionale
+2. Indirizzo con API di google
+3. Telefono
+4. Allergeni
+
+# COMPLETAMENTO PROFILO 'CHEF'
+
+Solito discorso: sono stati inseriti solo email e password (è la pagina a cui si arriva dopo la conferma dell'email). In questa pagina bisogna inserire:
+
+1. Nome e congome con foto profilo
+2. Indirizzo di lavoro con API di google (mettiamo con slider il raggio)
+3. Telefono
+4. Descrizione di sé
+
+Pagine fatte:
+1. Homepage quando non sei loggato o sei loggato come cliente.
+2. Pagina del menu.
+3. Dashboard chef.
+4. Pagina creazione del menu.
+5. Profilo pubblico chef.
+6. Completamento profilo cliente e chef.
+
+Pagine da fare:
+1. Registrazione e login.
+2. Pagina per la chat (uguali lato chef e lato client).
+3. Pagina per modificare il profilo di cliente e di chef.
+4. Pagina menu preferiti di un cliente (incorporarlo direttamente nella pagina profilo?).
+5. Lista prenotazioni di un cliente. 
+6. Pagina relativa ad una singola prenotazione lato cliente. C'è inoltre la possibilità di lasciare una recensione.
+7. Pagina relativa ad una singola prenotazione lato chef. Può vedere gli utenti, ognuno con la media delle recensioni e può decidere di confermare o bloccare la prenotazione. Inoltre ha la possibilità dopo di lasciare una recensione.
+8. Lista prenotazioni di uno chef.
+9. Lista menu di uno chef.
+10. Conferma prenotazione da parte di un cliente con pagamento.
+
+

@@ -15,6 +15,8 @@ Nella nostra piattaforma ci sono tre utenti:
 
 `Unverified user` -> Utente che si è registrato con email e password ma non ha verificato la propria email
 
+**Le seguenti feature sono contestuali alla registrazione e login.**
+
 # Login e registrazione di utenti
 
 Di seguito sono elencate le user stories per la registrazione e il login degli utenti, con e senza OAuth, con la possibilità di completare il proprio profilo e di recuperare la password.
@@ -237,3 +239,9 @@ And the email I inserted is not registered
 When I click on the request new code link  
 Then I see a success message  
 And I should not receive an email with a new verification code
+
+## Feature 9: Logout
+TODO
+
+**Le feature successive sono contestuali alla pagina principale.**
+
