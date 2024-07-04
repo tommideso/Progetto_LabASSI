@@ -16,13 +16,10 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
 -   API:
     -   Stripe per i pagamenti
     -   OAuth con Google/Apple e vari
-    -   ? Mappa per vedere dove si trova il cuoco
-    -   ? MyFitnessPal opzionale per vedere le calorie del cibo
+    - Geolocalizzazione
+    -   MyFitnessPal (o altro database) opzionale per vedere le calorie del cibo
 -   Utente Gold/Pro
-    -   ? Nessuna pubblicità
-    -   ? Sconto fisso su tutti i menu
-    -   ?
--   Chef paga per promuovere il proprio menu (come su JustEat)
+    -   Normalmente si pagano 10 euro di commissioni ad ogni menu. L'utente gold invece non paga nessuna commissione. Nella schermata di pagamento appare un avviso che consiglia all'utente di fare il pro per non pagare le commissioni
 
 ## Pagine varie
 
@@ -31,3 +28,5 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
 -   Pagina account: con pulsante per Informazioni Personali, Password e boh roba varia
 -   Pagina di un menu: con foto e descrizione e tutto ciò che serve
 -   Pagina dello chef: con foto, descrizione, recensioni, menu e chat
+
+
