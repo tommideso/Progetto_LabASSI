@@ -241,7 +241,98 @@ Then I see a success message
 And I should not receive an email with a new verification code
 
 ## Feature 9: Logout
-TODO
 
-**Le feature successive sono contestuali alla pagina principale.**
+As a logged user    
+I want to logout  
+### Scenario 1: Logged user logs out
+Given I am on a page  
+When I click on the profile icon and I click on logout  
+Then I should be logout
+
+## Feature 10: Searching menu in the homepage
+As a logged client or unlogged user    
+I want to search for a menu  
+So that I can find the menu I want
+
+### Scenario 1: User searches with the default search bar
+Given I am on the homepage (*the homepage of a client or unlogged user*)   
+And I compile every field of the default search bar (*localizzazione, n. persone, data con pranzo o cena ed allergeni*)  
+And I click on the search icon  
+Then I should see below the menus that match my search
+
+### Scenario 2: User searches with the default search bar without compiling every field
+Given I am on the homepage  
+And I do not compile every field of the default search bar  
+And I click on the search icon  
+Then I should receive an error message that says that I have to compile every field in order to search  
+
+### Scenario 3:  User searches with filters without having searched with the default search bar
+Given I am on the homepage  
+And I click on a type of menu (*terra, mare, vegano, etc.*)   
+Then I should see below the menus that match my search  
+
+### Scenario 4: User searches with filters having searched with the default search bar
+Given I am on the homepage  
+And I have already searched with the default search bar  
+And I click on a type of menu  
+Then I should see below the menus of my previous search filtered by the type of menu I clicked on
+
+### Scenario 5: User searches with advanced filters without having searched with the default search bar
+Given I am on the homepage 
+And I click on the filter icon  
+Then I should see a popup with the advanced filtering options  
+And I select the filters I want  
+And I click on the submit button  
+Then the popup should close and I should see below the menus that match my search
+
+### Scenario 6: User searches with advanced filters having searched with the default search bar
+Given I am on the homepage  
+And I have already searched with the default search bar  
+And I click on the filter icon  
+Then I should see a popup with the advanced filtering options  
+And I select the filters I want  
+And I click on the submit button  
+Then the popup should close and I should see below the menus of my previous search filtered by the filters I selected
+
+### Scenario 7: User searches with advanced filters having searched with the filters
+Given I am on the homepage  
+And I have already searched with the filters (*type of menu*)  
+And I click on the filter icon  
+Then I should see a popup with the advanced filtering options  
+And I select the filters I want  
+And I click on the submit button  
+Then the popup should close and I should see below the menus of my previous search, already filtered by the type of menu, filtered again by my selections 
+
+### Scenario 8: User searches with filters having searched with advanced filters
+Given I am on the homepage  
+And I have already searched with the advanced filters  
+And I click on a type of menu  
+Then I should see below **only** the menus that match   the search with the filters (*only the type of menu and NOT the advanced filters*)
+
+### Scenario 9: User searches with no match
+Given I am on the homepage  
+And I search (*with the default search bar or filters or advanced filters*)    
+And no menu matches my search  
+Then I should see a message that says that there are no menus that match my search
+
+### Scenario 10: User sort the search
+Given I am on the homepage  
+And I click on the sort icon  
+Then I should see a popup with the sorting options  
+And I select the option I want  
+And I click on the submit button  
+Then the popup should close and I should see below the menus of my previous search sorted
+
+## Feature 11: Menu selection
+As a logged client or unlogged user  
+I want to select a menu  
+So that I can view more details about it  
+### Scenario 1: User selects a menu
+Given I am on the homepage  
+And I see a menu that I like  
+And I click on the menu  
+Then I should be redirected to the menu page
+
+## Feature 12: 
+TODO: inserire le opzioni cliccabili dall'icona 'profilo' a partire dall'homepage e in generale da quell'header
 
