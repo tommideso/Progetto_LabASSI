@@ -5,7 +5,7 @@
 Chef a domicilio quindi lo chef mette i propri menu online, raggio di distanza da casa sua, chat con lo chef e calendario disponibilità, foto varie.
 Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “piano” / menu tra quelli che lo chef mi propone, scelgo data e orario e PAGO
 
-### Features varie
+## Features varie
 
 -   Allergeni e preferenze alimentari (vegano, vegetariano, senza glutine, ecc)
     -   Conferma prima di prenotare se ci sono allergie che potrebbero causare problemi
@@ -18,10 +18,24 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
     -   OAuth con Google/Apple e vari
     -   API per la geolocalizzazione
     -   Database cibo per vedere le calorie e i valori nutrizionali del cibo
-    - API per calendario ad esempio con collegamento con calendar
-    - API per la chat??
+    -   API per calendario ad esempio con collegamento con calendar (.ics)
+    -   API per la chat??
+    -   Per le email
+ -  Quando un cliente prenota per un pranzo/cena in un determinato giorno, il giorno scelto diventa automaticamente bloccato per altre prenotazioni.
                     
 - Normalmente si pagano 10 euro di commissioni ad ogni menu. L'utente gold invece non paga nessuna commissione. Nella schermata di pagamento appare un avviso che consiglia all'utente di fare il pro per non pagare le commissioni
+
+### Questione allergeni/ preferenze:
+- Gli allergeni/preferenze dell'utente sono utilizzati come campi preferiti già selezionati nella ricerca ma possono essere tolti o modificati in base alle esigenze delle altre persone che mangiano.
+- Il cliente al momento della ricerca può spuntare una checkbox per vedere tra i risultati:
+    - Sia i menu che non contengono proprio quell'allergene o che già soddisfano le preferenze alimentari.
+    - Sia i menu modificabili senza gli allergeni selezionati, o in modo da soddisfare le preferenze alimentari.
+- Lo chef può spuntare una checkbox per dire se è disposto a fare modifiche al menu:
+    - In quel caso può selezionare per quale allergene/preferenza può fare un menu diverso (tramite una select?).
+    - Al cliente al momento della prenotazione apparirà oltre ai soliti campi un campo di testo dove inserisce quanti menu modificati fare per ogni preferenza/allergene. Il campo di testo deve essere compilato se nella ricerca hai inserito la possibilità dei menu modificati.
+
+Così ha più senso che uno chef può accettare o meno una prenotazione.
+
 
 ## Utenti
 - Utente Gold/Pro : non paga le commissioni e vede menu specifici
@@ -49,10 +63,11 @@ Chef loggato:
 1.  Homepage chef (è la pagina principale in cui viene reindirizzato una volta loggato)
 2.	Creare il menu -> extra come misenplass…
 3.	Visualizzare i miei menu
-4.	Visualizzare prenotazioni (magari con un calendario)
-5.	Singola prenotazione in cui vedere anche punteggio cliente
-6.	Chat (aprire solo dalla prenotazione/appena arriva prenotazione si crea una chat)
-7.	Pagina del profilo con possibilità di modificare i tuoi dati
+4. Visualizzare un singolo menu 
+5.	Visualizzare prenotazioni (magari con un calendario)
+6.	Singola prenotazione in cui vedere anche punteggio cliente
+7.	Chat (aprire solo dalla prenotazione/appena arriva prenotazione si crea una chat)
+8.	Pagina del profilo con possibilità di modificare i tuoi dati
 
 
 Pagine fatte:
@@ -63,11 +78,12 @@ Pagine fatte:
 5. Profilo pubblico chef.
 6. Completamento profilo cliente e chef.
 7. Registrazione e login.
-8. Pagina per modificare il profilo dello chef.
+8. Pagina per modificare/visualizzare il profilo dello chef.
 9. Pagina per modificare/visualizzare profilo del cliente e visualizzare le prenotazioni
 10. Chat (uguali lato chef e lato client).
 11. Pagina menu preferiti di un cliente .
 12. Pagina relativa ad una singola prenotazione lato cliente. C'è inoltre la possibilità di lasciare una recensione.
+13. Pagina visualizzazione singolo menu per lo chef 
 
 Pagine da fare:
 1. Pagina relativa ad una singola prenotazione lato chef. Può vedere gli utenti, ognuno con la media delle recensioni e può decidere di confermare o bloccare la prenotazione. Inoltre ha la possibilità dopo di lasciare una recensione.
@@ -123,12 +139,14 @@ Per vedere le recensioni bisogna andare nella schermata relativa del menu
 1. Titolo del menu
 2. Foto (plurale) con la possibilità di selezionare quella che viene mostrata come foto principale
 3. Descrizione (opzionale ?) del menu e ACCANTO PREZZO E MIN. E MAX. PERSONE
-4. Allergeni presenti nel menu tramite una checkbox
-5. Due extra: Vino (degustazione ?) e mise en place; ogni opzione ha checkbox e costo (al momento del pagamento del client viene mostrato come extra e può essere anche non scelto) 
-6. Meccanismo per aggiungere le portate. Per ogni portata:
+4. Tipo di cucina (terra, mare ...) se ne può selezionare più di 1.
+5. Allergeni presenti nel menu tramite una checkbox
+6. Due extra: Vino (degustazione ?) e mise en place; ogni opzione ha checkbox e costo (al momento del pagamento del client viene mostrato come extra e può essere anche non scelto) 
+7. Meccanismo per aggiungere le portate. Per ogni portata:
     - Nome del piatto.
     - Select per selezionare se primo antipasto etc.
     - Opzionale ingredienti con peso  
+8. Seleziona se vuole fare menu modificati e in caso affermativo seleziona per quale allergene/preferenza alimentare può fare un menu modificato.
 
 Quando si aggiunge una portata compare in alto e se ne possono aggiungere altre. Quando si è finito e a patto che ci sia ALMENO 1 portata, si può aggiungere il menu con un pulsante in basso a destra.
 
@@ -178,9 +196,10 @@ Campi uguali alla pagina di completamento profilo cliente ma modificabile solo p
 Lista delle prenotazioni (di default compaiono in ordine cronologico), quando una prenotazione diventa passata si colora di grigio.   
 - Si possono filtrare per data, attive/passate, chef ...
 
-# MODIFICARE PROFILO CHEF
+# MODIFICARE/VISUALIZZARE PROFILO CHEF
 
-Uguale alla pagina completamento profilo chef ma con campi già compilati e modificabili
+Campi uguali alla pagina di completamento profilo chef ma modificabile solo premendo "modifica profilo".
+- Da qui può vedere anche la media di tutte le sue recensioni numeriche lasciate dai clienti
 
 # CHAT
 
@@ -199,11 +218,13 @@ Incorporarlo direttamente nella pagina profilo?
 2. Foto principale del menu
 2. Quando (data e se pranzo, cena ...)
 3. Nome e foto dello chef (se clicchi ti riporta alla pagina del profilo dello chef)
-4. Numero di persone
-5. Prezzo totale
-6. Indirizzo "di consegna" con mappa
-7. Extra
-8. Form che compare solo dopo la data della prenotazione per lasciare una recensione scritta e numerica al menu e solo numerica per lo chef.
+4. Link alla chat con lo chef
+5. Numero di persone
+6. Prezzo totale
+7. Indirizzo "di consegna" con mappa
+8. Extra
+9. Form che compare solo dopo la data della prenotazione per lasciare una recensione scritta e numerica al menu e solo numerica per lo chef.
+10. Visualizzare recensione lasciata dallo chef
 
 # PAGINA SINGOLA PRENOTAZIONE LATO CHEF
 
@@ -211,26 +232,35 @@ Incorporarlo direttamente nella pagina profilo?
 2. Foto principale del menu
 2. Quando (data e se pranzo, cena ...)
 3. Foto, nome e cognome, media recensioni cliente 
-4. Numero di persone
-5. Prezzo totale
-6. Indirizzo "di consegna" con mappa
-7. Extra
-8. Numero di menu modificati per ogni allergene/preferenza alimentare
-9. Form che compare solo dopo la data della prenotazione per lasciare una recensione numerica al cliente.   
-... DA FINIRE
+4. Link alla chat con lo chef
+5. Numero di persone
+6. Prezzo totale
+7. Indirizzo "di consegna" con mappa
+8. Extra
+9. Numero di menu modificati per ogni allergene/preferenza alimentare
+10. Form che compare solo dopo la data della prenotazione per lasciare una recensione numerica al cliente.   
+11. Visualizza recensione lasciata dal cliente
+12. Possibilità di rifiutare/cancellare la prenotazione
+
+
+# PAGINA VISUALIZZAZIONE SINGOLO MENU LATO CHEF
+
+- Pulsante per disattivare il menu
+- Possibilità di vedere le ultime prenotazioni per quel menu
 
 
 
 
-### Questione allergeni/ preferenze:
-- Gli allergeni/preferenze dell'utente sono utilizzati come campi preferiti già selezionati nella ricerca ma possono essere tolti o modificati in base alle esigenze delle altre persone che mangiano.
-- Il cliente al momento della ricerca può spuntare una checkbox per vedere tra i risultati:
-    - Sia i menu che non contengono proprio quell'allergene o che già soddisfano le preferenze alimentari.
-    - Sia i menu modificabili senza gli allergeni selezionati, o in modo da soddisfare le preferenze alimentari.
-- Lo chef può spuntare una checkbox per dire se è disposto a fare modifiche al menu:
-    - In quel caso può selezionare per quale allergene/preferenza può fare un menu diverso (tramite una select?).
-    - Al cliente al momento della prenotazione apparirà oltre ai soliti campi un campo di testo dove inserisce quanti menu modificati fare per ogni preferenza/allergene. Il campo di testo deve essere compilato se nella ricerca hai inserito la possibilità dei menu modificati.
+# HEADER:
 
-Così ha più senso che uno chef può accettare o meno una prenotazione.
+## Cliente
+
+- Tramite una icona può accedere alle sue chat
+
+## Chef
+
+- Tramite una icona può accedere alle sue chat
 
 
+# DA DEFINIRE:
+- Calendario per cliente/chef
