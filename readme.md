@@ -215,7 +215,8 @@ Incorporarlo direttamente nella pagina profilo?
 5. Prezzo totale
 6. Indirizzo "di consegna" con mappa
 7. Extra
-8. Form che compare solo dopo la data della prenotazione per lasciare una recensione numerica al cliente.
+8. Numero di menu modificati per ogni allergene/preferenza alimentare
+9. Form che compare solo dopo la data della prenotazione per lasciare una recensione numerica al cliente.   
 ... DA FINIRE
 
 
@@ -224,12 +225,12 @@ Incorporarlo direttamente nella pagina profilo?
 ### Questione allergeni/ preferenze:
 - Gli allergeni/preferenze dell'utente sono utilizzati come campi preferiti già selezionati nella ricerca ma possono essere tolti o modificati in base alle esigenze delle altre persone che mangiano.
 - Il cliente al momento della ricerca può spuntare una checkbox per vedere tra i risultati:
-    - Sia i menu che non contengono proprio quell'allergene o che già soddisfano quella esigenza alimentare
-    - Sia i menu modificabili senza gli allergeni selezionati, o in modo da soddisfare le preferenze alimentari
+    - Sia i menu che non contengono proprio quell'allergene o che già soddisfano le preferenze alimentari.
+    - Sia i menu modificabili senza gli allergeni selezionati, o in modo da soddisfare le preferenze alimentari.
 - Lo chef può spuntare una checkbox per dire se è disposto a fare modifiche al menu:
-    - In quel caso può selezionare per quale allergene/preferenza può fare un menu diverso (tramite una select?)
+    - In quel caso può selezionare per quale allergene/preferenza può fare un menu diverso (tramite una select?).
     - Al cliente al momento della prenotazione apparirà oltre ai soliti campi un campo di testo dove inserisce quanti menu modificati fare per ogni preferenza/allergene. Il campo di testo deve essere compilato se nella ricerca hai inserito la possibilità dei menu modificati.
 
-Così ha più senso se uno chef può accettare o meno una prenotazione.
+Così ha più senso che uno chef può accettare o meno una prenotazione.
 
 
