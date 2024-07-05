@@ -55,6 +55,25 @@ Chef loggato:
 7.	Pagina del profilo con possibilità di modificare i tuoi dati
 
 
+Pagine fatte:
+1. Homepage quando non sei loggato o sei loggato come cliente.
+2. Pagina del menu.
+3. Homepage chef.
+4. Pagina creazione del menu.
+5. Profilo pubblico chef.
+6. Completamento profilo cliente e chef.
+7. Registrazione e login.
+8. Pagina per modificare il profilo dello chef.
+9. Pagina per modificare/visualizzare profilo del cliente e visualizzare le prenotazioni
+10. Chat (uguali lato chef e lato client).
+11. Pagina menu preferiti di un cliente .
+12. Pagina relativa ad una singola prenotazione lato cliente. C'è inoltre la possibilità di lasciare una recensione.
+
+Pagine da fare:
+1. Pagina relativa ad una singola prenotazione lato chef. Può vedere gli utenti, ognuno con la media delle recensioni e può decidere di confermare o bloccare la prenotazione. Inoltre ha la possibilità dopo di lasciare una recensione.
+2. Lista prenotazioni di uno chef.
+3. Lista menu di uno chef.
+4. Conferma prenotazione da parte di un cliente con pagamento.
 
 
 
@@ -86,7 +105,7 @@ Se l'utente ha compilato dipende:
 2. Se l'utente è registrato gli compare 'prenota ora'
 3. Se l'utente non è registrato e clicca 'prenota ora' appare un popup subito sopra il pulsante che gli dice di registrarsi/accedere per prenotare (con reindirizzazione alla pagina di registraizone/accesso)
 
-# PAGINA PRINCIPALE DELLO CHEF
+# HOMEPAGE DELLO CHEF
 
 Nell'header ci sta logo, un numero con stellina che rappresenta la 'media delle recensioni' e la foto del profilo; cliccandola si apre un menu con:
 - Profilo (molto simile a quella del cliente)
@@ -168,7 +187,7 @@ Uguale alla pagina completamento profilo chef ma con campi già compilati e modi
  - Lo chef può parlare solo con i suoi clienti o con utenti che gli hanno scritto
  - Un cliente può parlare con qualsiasi chef anche prima di aver fatto la prenotazione
 
-# PAGINA MENU PREFERITI
+# PAGINA MENU PREFERITI DI UN CLIENTE
 
 - Pagina con varie card per ogni menu (uguali a quelle nella homepage del cliente/ non loggati)
 
@@ -186,26 +205,31 @@ Incorporarlo direttamente nella pagina profilo?
 7. Extra
 8. Form che compare solo dopo la data della prenotazione per lasciare una recensione scritta e numerica al menu e solo numerica per lo chef.
 
+# PAGINA SINGOLA PRENOTAZIONE LATO CHEF
 
-Pagine fatte:
-1. Homepage quando non sei loggato o sei loggato come cliente.
-2. Pagina del menu.
-3. Homepage chef.
-4. Pagina creazione del menu.
-5. Profilo pubblico chef.
-6. Completamento profilo cliente e chef.
-7. Registrazione e login.
-8. Pagina per modificare il profilo dello chef.
-9. Pagina per modificare/visualizzare profilo del cliente e visualizzare le prenotazioni
-10. Pagina per la chat (uguali lato chef e lato client).
-11. Pagina menu preferiti di un cliente .
-12. Pagina relativa ad una singola prenotazione lato cliente. C'è inoltre la possibilità di lasciare una recensione.
+1. Nome del menu (se ci clicchi ti riporta alla pagina di visualizzazione del menu)
+2. Foto principale del menu
+2. Quando (data e se pranzo, cena ...)
+3. Foto, nome e cognome, media recensioni cliente 
+4. Numero di persone
+5. Prezzo totale
+6. Indirizzo "di consegna" con mappa
+7. Extra
+8. Form che compare solo dopo la data della prenotazione per lasciare una recensione numerica al cliente.
+... DA FINIRE
 
-Pagine da fare:
 
-7. Pagina relativa ad una singola prenotazione lato chef. Può vedere gli utenti, ognuno con la media delle recensioni e può decidere di confermare o bloccare la prenotazione. Inoltre ha la possibilità dopo di lasciare una recensione.
-8. Lista prenotazioni di uno chef.
-9. Lista menu di uno chef.
-10. Conferma prenotazione da parte di un cliente con pagamento.
+
+
+### Questione allergeni/ preferenze:
+- Gli allergeni/preferenze dell'utente sono utilizzati come campi preferiti già selezionati nella ricerca ma possono essere tolti o modificati in base alle esigenze delle altre persone che mangiano.
+- Il cliente al momento della ricerca può spuntare una checkbox per vedere tra i risultati:
+    - Sia i menu che non contengono proprio quell'allergene o che già soddisfano quella esigenza alimentare
+    - Sia i menu modificabili senza gli allergeni selezionati, o in modo da soddisfare le preferenze alimentari
+- Lo chef può spuntare una checkbox per dire se è disposto a fare modifiche al menu:
+    - In quel caso può selezionare per quale allergene/preferenza può fare un menu diverso (tramite una select?)
+    - Al cliente al momento della prenotazione apparirà oltre ai soliti campi un campo di testo dove inserisce quanti menu modificati fare per ogni preferenza/allergene. Il campo di testo deve essere compilato se nella ricerca hai inserito la possibilità dei menu modificati.
+
+Così ha più senso se uno chef può accettare o meno una prenotazione.
 
 
