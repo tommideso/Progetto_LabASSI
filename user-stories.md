@@ -98,14 +98,14 @@ So that I can become a chef or a customer
 Given I am on the profile completion page  
 When I choose to complete my profile as a chef  
 And I fill in the profile completion form with valid data  
-Then I should be redirected to the chef dashboard
+Then I should be redirected to the chef homepage
 
 ### Scenario 2: User completes profile as a customer with valid data
 
 Given I am on the profile completion page  
 When I choose to complete my profile as a customer  
 And I fill in the profile completion form with valid data  
-Then I should be redirected to the customer dashboard
+Then I should be redirected to the customer homepage
 
 ### Scenario 3: User completes profile with invalid data
 
@@ -125,7 +125,7 @@ Given I am on the login page
 When I fill in the login form with valid email and password
 And I submit the form  
 And I am a completed user  
-Then I am redirected to my dashboard
+Then I am redirected to my homepage
 
 ### Scenario 2: User logs in as a verified user
 
@@ -155,7 +155,7 @@ Then I should see an error message
 
 As a registered user  
 I want to login to the platform  
-So that I can access my dashboard
+So that I can access my homepage
 
 ### Scenario 1: User logs in with OAuth as a completed user
 
@@ -163,7 +163,7 @@ Given I am on the login page
 When I click on the OAuth button  
 And I authenticate successfully  
 And I am a completed user  
-Then I am redirected to my dashboard
+Then I am redirected to my homepage
 
 ### Scenario 2: User logs in with OAuth as a verified user
 

@@ -46,7 +46,7 @@ Cliente loggato:
 6.	Pagina del profilo con possibilità di modificare i tuoi dati
 
 Chef loggato:
-1. Dashboard chef (è la pagina principale in cui viene reindirizzato una volta loggato)
+1.  Homepage chef (è la pagina principale in cui viene reindirizzato una volta loggato)
 2.	Creare il menu -> extra come misenplass…
 3.	Visualizzare i miei menu
 4.	Visualizzare prenotazioni (magari con un calendario)
@@ -140,21 +140,69 @@ Solito discorso: sono stati inseriti solo email e password (è la pagina a cui s
 3. Telefono
 4. Descrizione di sé
 
+# REGISTRAZIONE 
+
+1. Email
+2. Password
+3. Registrazione con OAuth
+
+# LOGIN 
+
+1. Email
+2. Password
+3. Hai dimenticato la password?
+4. Login con OAuth
+
+# MODIFICARE/VISUALIZZARE PROFILO CLIENTE e VISUALIZZARE LISTA PRENOTAZIONI
+
+Campi uguali alla pagina di completamento profilo cliente ma modificabile solo premendo "modifica profilo".
+Lista delle prenotazioni (di default compaiono in ordine cronologico), quando una prenotazione diventa passata si colora di grigio.   
+- Si possono filtrare per data, attive/passate, chef ...
+
+# MODIFICARE PROFILO CHEF
+
+Uguale alla pagina completamento profilo chef ma con campi già compilati e modificabili
+
+# CHAT
+
+ - Lo chef può parlare solo con i suoi clienti o con utenti che gli hanno scritto
+ - Un cliente può parlare con qualsiasi chef anche prima di aver fatto la prenotazione
+
+# PAGINA MENU PREFERITI
+
+- Pagina con varie card per ogni menu (uguali a quelle nella homepage del cliente/ non loggati)
+
+Incorporarlo direttamente nella pagina profilo?
+
+# PAGINA SINGOLA PRENOTAZIONE LATO CLIENTE
+
+1. Nome del menu (se ci clicchi ti riporta alla pagina di visualizzazione del menu)
+2. Foto principale del menu
+2. Quando (data e se pranzo, cena ...)
+3. Nome e foto dello chef (se clicchi ti riporta alla pagina del profilo dello chef)
+4. Numero di persone
+5. Prezzo totale
+6. Indirizzo "di consegna" con mappa
+7. Extra
+8. Form che compare solo dopo la data della prenotazione per lasciare una recensione scritta e numerica al menu e solo numerica per lo chef.
+
+
 Pagine fatte:
 1. Homepage quando non sei loggato o sei loggato come cliente.
 2. Pagina del menu.
-3. Dashboard chef.
+3. Homepage chef.
 4. Pagina creazione del menu.
 5. Profilo pubblico chef.
 6. Completamento profilo cliente e chef.
+7. Registrazione e login.
+8. Pagina per modificare il profilo dello chef.
+9. Pagina per modificare/visualizzare profilo del cliente e visualizzare le prenotazioni
+10. Pagina per la chat (uguali lato chef e lato client).
+11. Pagina menu preferiti di un cliente .
+12. Pagina relativa ad una singola prenotazione lato cliente. C'è inoltre la possibilità di lasciare una recensione.
 
 Pagine da fare:
-1. Registrazione e login.
-2. Pagina per la chat (uguali lato chef e lato client).
-3. Pagina per modificare il profilo di cliente e di chef.
-4. Pagina menu preferiti di un cliente (incorporarlo direttamente nella pagina profilo?).
-5. Lista prenotazioni di un cliente. 
-6. Pagina relativa ad una singola prenotazione lato cliente. C'è inoltre la possibilità di lasciare una recensione.
+
 7. Pagina relativa ad una singola prenotazione lato chef. Può vedere gli utenti, ognuno con la media delle recensioni e può decidere di confermare o bloccare la prenotazione. Inoltre ha la possibilità dopo di lasciare una recensione.
 8. Lista prenotazioni di uno chef.
 9. Lista menu di uno chef.
