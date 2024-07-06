@@ -492,6 +492,11 @@ Then I should see the personal review of that reservation and the menu review
 ### Scenario 4: Chef sees the reviews average
 
 Given I am on every page  
+Then I should see the average of the personal reviews I received in the header
+
+### Scenario 5: Chef sees the reviews average from his profile page
+
+Given I am on the profile page  
 Then I should see the average of the personal reviews I received
 
 ## Feature 17: Chef leaves a review
@@ -645,5 +650,14 @@ Then I should see a success message
 Given I am on the reservation page  
 And the time to reject the reservation expired  
 Then I should see a message that says that I can't reject the reservation anymore
+
+## Scenario 3: Chef rejects a reservation from the reservations page
+
+Given I am on the reservations page  
+And I see a reservation  
+And the time to reject the reservation has not expired  
+Then I should see a reject button  
+And if I click on the reject button  
+Then I should see a success message
 
 TODO: inserire le opzioni cliccabili dall'icona 'profilo' a partire dall'homepage e in generale da quell'header

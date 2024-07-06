@@ -26,7 +26,7 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
     Il cliente vede "In attesa di conferma" fino a che non scade il tempo per rifiutare, poi vede "Confermato" o "Rifiutato". (Se rifiutato il cliente riceve una mail, e il pagamento viene rimborsato???)
 -   Admin gestisce anche tipo le richieste di rimborso (chef non si presenta, allergie, lamentele varie) --> chat admin / cliente ?
 -   Admin può bloccare temporaneamente uno chef per verifiche se riceve molte recensioni pessime
-
+-   I soldi arrivano tutti a noi e poi noi li giriamo agli chef con un bonifico mensile
 -   Normalmente si pagano 10 euro di commissioni ad ogni menu. L'utente gold invece non paga nessuna commissione. Nella schermata di pagamento appare un avviso che consiglia all'utente di fare il pro per non pagare le commissioni
 
 ### Questione allergeni/ preferenze:
@@ -189,6 +189,7 @@ Solito discorso: sono stati inseriti solo email e password (è la pagina a cui s
 2. Indirizzo di lavoro con API di google (mettiamo con slider il raggio)
 3. Telefono
 4. Descrizione di sé
+5. Iban / dati bancari per ricevere i pagamenti
 
 # REGISTRAZIONE
 
@@ -283,6 +284,12 @@ Incorporarlo direttamente nella pagina profilo?
 ## Chef
 
 -   Tramite una icona può accedere alle sue chat
+
+# FOOTER:
+
+-   FAQ
+-   Chat con assistenza clienti
+-   Logo
 
 # DA DEFINIRE:
 
