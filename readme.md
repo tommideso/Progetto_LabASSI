@@ -45,12 +45,24 @@ Così ha più senso che uno chef può accettare o meno una prenotazione.
 
 -   Utente Gold/Pro : non paga le commissioni e vede menu specifici
 -   Admin:
-    -   Puo vedere tutte le recensione e cancellarle
-    -   Eliminare menu
+
+    -   Vedere saldo dell'ultimo mese (quindi vedere quanto deve dare a ogni chef) ???
+    -   Pagina con tutti gli chef e possibilità di cercarli?
+    -   Per ogni chef pagina con :
+
+        -   Tutti i menu
+        -   Tutte le prenotazioni
+        -   Chat con chef
+        -   Saldo dell'ultimo mese
+
+    -   Pagina del singolo menu con possibilità di disattivarlo (lo chef non può riattivarlo ovviamente)
     -   Bloccare chef per verifiche se recensioni pessime ?!
-    -   Gestire richieste di rimborso
-    -   Chat con utenti per lamentele varie, assistenza
-    -   Vedere tutte le prenotazioni, gestirle (cancellare nonostante sia scaduto il tempo per rifiutare, rimborsare in caso di problemi dopo la prenotazione, ecc)
+    -   Chat con utenti (problemi, richiesta di rimborso) e con chef per altri problemi
+    -   Pagina della singola prenotazione con:
+        -   Possibilità di rimborsare totalmente (o parzialmente ?) il cliente
+        -   (cancellare nonostante sia scaduto il tempo per rifiutare, rimborsare in caso di problemi dopo la prenotazione, ecc)
+    -   Pagina con tutte le prenotazioni
+    -
 
 ## Pagine varie
 
@@ -231,6 +243,8 @@ Incorporarlo direttamente nella pagina profilo?
 
 # PAGINA SINGOLA PRENOTAZIONE LATO CLIENTE
 
+> Anche ID della prenotazione (magari non id vero ma un codice più corto?)
+
 1. Nome del menu (se ci clicchi ti riporta alla pagina di visualizzazione del menu)
 2. Foto principale del menu
 3. Quando (data e se pranzo, cena ...)
@@ -244,6 +258,8 @@ Incorporarlo direttamente nella pagina profilo?
 11. Visualizzare recensione lasciata dallo chef
 
 # PAGINA SINGOLA PRENOTAZIONE LATO CHEF
+
+> Anche ID della prenotazione (magari non id vero ma un codice più corto?)
 
 1. Nome del menu (se ci clicchi ti riporta alla pagina di visualizzazione del menu)
 2. Foto principale del menu
