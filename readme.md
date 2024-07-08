@@ -44,25 +44,9 @@ Così ha più senso che uno chef può accettare o meno una prenotazione.
 ## Utenti
 
 -   Utente Gold/Pro : non paga le commissioni e vede menu specifici
--   Admin:
-
-    -   Vedere saldo dell'ultimo mese (quindi vedere quanto deve dare a ogni chef) ???
-    -   Pagina con tutti gli chef e possibilità di cercarli?
-    -   Per ogni chef pagina con :
-
-        -   Tutti i menu
-        -   Tutte le prenotazioni
-        -   Chat con chef
-        -   Saldo dell'ultimo mese
-
-    -   Pagina del singolo menu con possibilità di disattivarlo (lo chef non può riattivarlo ovviamente)
-    -   Bloccare chef per verifiche se recensioni pessime ?!
-    -   Chat con utenti (problemi, richiesta di rimborso) e con chef per altri problemi
-    -   Pagina della singola prenotazione con:
-        -   Possibilità di rimborsare totalmente (o parzialmente ?) il cliente
-        -   (cancellare nonostante sia scaduto il tempo per rifiutare, rimborsare in caso di problemi dopo la prenotazione, ecc)
-    -   Pagina con tutte le prenotazioni
-    -
+-   Admin: ha due funzioni principali
+    1. Gestire le prenotazioni "problematiche". Il workflow è il seguente: l'utente contatta in chat l'admin, l'admin clicca sul nome utente e attraverso il profilo dell'utente accede alla prenotazione "problematica".
+    2. Bloccare temporaneamente uno chef per verifiche se riceve molte recensioni pessime.
 
 ## Pagine varie
 
@@ -312,3 +296,12 @@ Incorporarlo direttamente nella pagina profilo?
 -   Calendario per cliente/chef
 -   Colore / badge per prenotazione passata, rifiutata, attiva bla bla
 -
+
+# PAGINE LATO ADMIN
+
+- L'admin ha un homepage con tutti gli chef, che possono essere filtrati in funzione della media delle recensioni
+- L'admin vede attraverso l'homepage una "notifica" sulle chat aperte da parte degli utenti e degli chef (??) 
+- Cliccando su uno chef, compare la solita pagina ma con altre funzionalità:
+    - Chat con chef
+    - Saldo chef (??)
+- Cliccando su una prenotazione, l'admin ha la possibilità di disattivarlo (lo chef non può riattivarlo ovviamente) e di rimborsare totalmente il cliente tramite un COUPON, in caso di problemi (ad es. se la prenotazione è stata rifiutata dallo chef oltre il tempo limite, oppure i clienti hanno avuto problemi con il cibo, etc.)
