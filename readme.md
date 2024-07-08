@@ -2,7 +2,7 @@
 
 ## Introduzione applicazione
 
-Chef a domicilio quindi lo chef mette i propri menu online, raggio di distanza da casa sua, chat con lo chef e calendario disponibilità, foto varie.
+Chef a domicilio quindi lo chef mette i propri menu online, raggio di distanza da casa sua, chat con lo chef e calendario disponibilità (per 'calendario disponibilità' si intendono SOLO le prenotazioni, cioè non vengono considerati gli impegni esterni dello chef), foto varie.
 Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “piano” / menu tra quelli che lo chef mi propone, scelgo data e orario e PAGO
 
 ## Features varie
@@ -18,16 +18,16 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
     -   OAuth con Google/Apple e vari
     -   API per la geolocalizzazione
     -   Database cibo per vedere le calorie e i valori nutrizionali del cibo
-    -   API per calendario ad esempio con collegamento con calendar (.ics)
-    -   API per la chat??
+    -   API per calendario ad esempio con collegamento con calendar (.ics): quando una prenotazione viene accettata chef e cliente ricevono un evento nel calendario
+    -   API per la chat
     -   Per le email
--   Quando un cliente prenota per un pranzo/cena in un determinato giorno, il giorno scelto diventa automaticamente bloccato per altre prenotazioni.
+-   Quando un cliente prenota per un pranzo/cena in un determinato giorno, il giorno scelto diventa automaticamente bloccato per altre prenotazioni e questo diventa visibile mediante un calendario che il cliente visiona in fase di prenotazione (nel calendario ci sono SOLO le altre prenotazioni, non rientrano gli impegni esterni dello chef)
 -   Quando un cliente prenota un menu, lo chef ha tot tempo per rifiutare la prenotazione.  
-    Il cliente vede "In attesa di conferma" fino a che non scade il tempo per rifiutare, poi vede "Confermato" o "Rifiutato". (Se rifiutato il cliente riceve una mail, e il pagamento viene rimborsato???)
--   Admin gestisce anche tipo le richieste di rimborso (chef non si presenta, allergie, lamentele varie) --> chat admin / cliente ?
--   Admin può bloccare temporaneamente uno chef per verifiche se riceve molte recensioni pessime
+- Il cliente vede "In attesa di conferma" fino a che non scade il tempo per rifiutare, poi vede "Confermato" o "Rifiutato"
+-  L'admin ha una serie di funzionalità (scritte nel paragrafo apposito)
 -   I soldi arrivano tutti a noi e poi noi li giriamo agli chef con un bonifico mensile
 -   Normalmente si pagano 10 euro di commissioni ad ogni menu. L'utente gold invece non paga nessuna commissione. Nella schermata di pagamento appare un avviso che consiglia all'utente di fare il pro per non pagare le commissioni
+-   Lo chef ha la possibilità di modificare i menu che non hanno prenotazioni attive (_lo chef quindi può mettere in blocco un menu, servire le prenotazioni rimanenti e poi modificarlo_) 
 
 ### Questione allergeni/ preferenze:
 
@@ -44,9 +44,10 @@ Così ha più senso che uno chef può accettare o meno una prenotazione.
 ## Utenti
 
 -   Utente Gold/Pro : non paga le commissioni e vede menu specifici
--   Admin: ha due funzioni principali
-    1. Gestire le prenotazioni "problematiche". Il workflow è il seguente: l'utente contatta in chat l'admin, l'admin clicca sul nome utente e attraverso il profilo dell'utente accede alla prenotazione "problematica".
+-   Admin: ha tre funzioni principali
+    1. Gestire e rimborsare le prenotazioni "problematiche". Il workflow è il seguente: l'utente contatta in chat l'admin, l'admin clicca sul nome utente e attraverso il profilo dell'utente accede alla prenotazione "problematica". Qui può rimborsare la prenotazione fornendo un COUPON all'utente.
     2. Bloccare temporaneamente uno chef per verifiche se riceve molte recensioni pessime.
+    3. Disattivare temporaneamente il menu di un chef.
 
 ## Pagine varie
 
@@ -147,10 +148,10 @@ Nell'header ci sta logo, un numero con stellina che rappresenta la 'media delle 
 
 1. Titolo del menu
 2. Foto (plurale) con la possibilità di selezionare quella che viene mostrata come foto principale
-3. Descrizione (opzionale ?) del menu e ACCANTO PREZZO E MIN. E MAX. PERSONE
+3. Descrizione (opzionale) del menu e ACCANTO PREZZO E MIN. E MAX. PERSONE
 4. Tipo di cucina (terra, mare ...) se ne può selezionare più di 1.
 5. Allergeni presenti nel menu tramite una checkbox
-6. Due extra: Vino (degustazione ?) e mise en place; ogni opzione ha checkbox e costo (al momento del pagamento del client viene mostrato come extra e può essere anche non scelto)
+6. Due extra: Vino e mise en place; ogni opzione ha checkbox e costo (al momento del pagamento del client viene mostrato come extra e può essere anche non scelto)
 7. Meccanismo per aggiungere le portate. Per ogni portata:
     - Nome del piatto.
     - Select per selezionare se primo antipasto etc.
@@ -185,7 +186,6 @@ Solito discorso: sono stati inseriti solo email e password (è la pagina a cui s
 2. Indirizzo di lavoro con API di google (mettiamo con slider il raggio)
 3. Telefono
 4. Descrizione di sé
-5. Iban / dati bancari per ricevere i pagamenti
 
 # REGISTRAZIONE
 
@@ -197,7 +197,7 @@ Solito discorso: sono stati inseriti solo email e password (è la pagina a cui s
 
 1. Email
 2. Password
-3. Hai dimenticato la password?
+3. Hai dimenticato la password
 4. Login con OAuth
 
 # MODIFICARE/VISUALIZZARE PROFILO CLIENTE e VISUALIZZARE LISTA PRENOTAZIONI
@@ -205,7 +205,12 @@ Solito discorso: sono stati inseriti solo email e password (è la pagina a cui s
 Campi uguali alla pagina di completamento profilo cliente ma modificabile solo premendo "modifica profilo".
 Lista delle prenotazioni (di default compaiono in ordine cronologico)
 
--   Quando una prenotazione diventa passata si colora di grigio???????
+-   Una prenotazione ha quattro possibili stati:
+    1.  In attesa di conferma --> giallo
+    2.  Rifiutata --> rosso
+    3.  Confermata --> verde
+    4.  Passata --> grigio
+
 -   Si possono filtrare per data, attive/passate, chef ...
 
 # MODIFICARE/VISUALIZZARE PROFILO CHEF
@@ -223,11 +228,9 @@ Campi uguali alla pagina di completamento profilo chef ma modificabile solo prem
 
 -   Pagina con varie card per ogni menu (uguali a quelle nella homepage del cliente/ non loggati)
 
-Incorporarlo direttamente nella pagina profilo?
-
 # PAGINA SINGOLA PRENOTAZIONE LATO CLIENTE
 
-> Anche ID della prenotazione (magari non id vero ma un codice più corto?)
+> Un codice legato alla prenotazione (non l'ID vero e proprio) breve così da essere facilmente individuabile dall'admin
 
 1. Nome del menu (se ci clicchi ti riporta alla pagina di visualizzazione del menu)
 2. Foto principale del menu
@@ -243,7 +246,7 @@ Incorporarlo direttamente nella pagina profilo?
 
 # PAGINA SINGOLA PRENOTAZIONE LATO CHEF
 
-> Anche ID della prenotazione (magari non id vero ma un codice più corto?)
+> Un codice legato alla prenotazione (non l'ID vero e proprio) breve così da essere facilmente individuabile dall'admin
 
 1. Nome del menu (se ci clicchi ti riporta alla pagina di visualizzazione del menu)
 2. Foto principale del menu
@@ -266,7 +269,12 @@ Incorporarlo direttamente nella pagina profilo?
 
 # PAGINA LISTA PRENOTAZIONI DI UNO CHEF
 
--   Quando una prenotazione diventa passata si colora di grigio???????
+-   Una prenotazione ha tre possibili stati:
+    1.  Da confermare --> giallo
+    2.  Confermata --> verde
+    3.  Passata --> grigio
+    - Le prenotazioni rifiutate, mentre compaiono nel caso del cliente, nel caso dello chef vengono eliminate (metterle in uno storico apparte ??)
+
 -   Si possono filtrare per data, attive/passate, cliente ...
     Di ogni prenotazione lo chef può vedere:
 -   Nome del menu
@@ -291,17 +299,11 @@ Incorporarlo direttamente nella pagina profilo?
 -   Chat con assistenza clienti
 -   Logo
 
-# DA DEFINIRE:
-
--   Calendario per cliente/chef
--   Colore / badge per prenotazione passata, rifiutata, attiva bla bla
--
-
 # PAGINE LATO ADMIN
 
 - L'admin ha un homepage con tutti gli chef, che possono essere filtrati in funzione della media delle recensioni
-- L'admin vede attraverso l'homepage una "notifica" sulle chat aperte da parte degli utenti e degli chef (??) 
-- Cliccando su uno chef, compare la solita pagina ma con altre funzionalità:
-    - Chat con chef
-    - Saldo chef (??)
-- Cliccando su una prenotazione, l'admin ha la possibilità di disattivarlo (lo chef non può riattivarlo ovviamente) e di rimborsare totalmente il cliente tramite un COUPON, in caso di problemi (ad es. se la prenotazione è stata rifiutata dallo chef oltre il tempo limite, oppure i clienti hanno avuto problemi con il cibo, etc.)
+- L'admin vede attraverso l'homepage una "notifica" sulle chat aperte da parte degli utenti e degli chef
+- Cliccando su uno chef, compare la solita pagina ma con funzionalità aggiuntive:
+    1. Sulla pagina stessa dello chef, ha la possibilità di bloccare lo chef
+    2. Cliccando su una prenotazione, l'admin ha la possibilità rimborsare totalmente il cliente tramite un COUPON, in caso di problemi (ad es. se la prenotazione è stata rifiutata dallo chef oltre il tempo limite, oppure i clienti hanno avuto problemi con il cibo, etc.)
+    3. Cliccando su un menu, l'admin ha la possibilità di disattivarlo (ad esempio puoi chiedere allo chef di cambiare alcune cose e fino a quel momento lo tiene disattivato). Il menu disattivato dall'admin non può essere disattivato dallo chef (quindi è un altro stato rispetto al menu disattivato dallo chef)
