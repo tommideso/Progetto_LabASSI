@@ -15,8 +15,6 @@ Nella nostra piattaforma ci sono tre utenti:
 
 `Unverified user` -> Utente che si è registrato con email e password ma non ha verificato la propria email
 
-**Le seguenti feature sono contestuali alla registrazione e login.**
-
 # Login e registrazione di utenti
 
 Di seguito sono elencate le user stories per la registrazione e il login degli utenti, con e senza OAuth, con la possibilità di completare il proprio profilo e di recuperare la password.
@@ -252,10 +250,10 @@ Then I should be logout
 
 # Chef
 
-## Feature 12: Chef Menus
+## Feature 1: Chef Menus
 
 As a logged chef  
-I want to see my menus
+I want to see my menus  
 So that I can manage them
 
 ### Scenario 1: Chef sees his last menus from the homepage
@@ -277,7 +275,7 @@ And I click on the "Mostra tutti" button in the "I tuoi menu" section
 Then I should be redirected to the menus page  
 And I should see all my menus
 
-## Feature 13: Chef Single Menu
+## Feature 2: Chef Single Menu
 
 As a logged chef  
 I want to see a single menu  
@@ -301,10 +299,10 @@ Given I am on a reservation page
 And I click on the menu link  
 Then I should be redirected to the menu page
 
-## Feature 14: Chef Reservations
+## Feature 3: Chef Reservations
 
-As a logged chef
-I want to see my reservations
+As a logged chef  
+I want to see my reservations  
 So that I can manage them
 
 ### Scenario 1: Chef sees a few active reservations from the homepage
@@ -331,7 +329,7 @@ And I should see all my reservations
 Given I am on a menu page  
 Then I should see the last reservations of that menu (_ordered by date of the reservation_)
 
-## Feature 15: Chef Single Reservation
+## Feature 4: Chef Single Reservation
 
 As a logged chef  
 I want to see a single reservation  
@@ -361,7 +359,7 @@ Given I am on the homepage
 And I click on a review  
 Then I should be redirected to the referred reservation page
 
-## Feature 16: Chef reviews
+## Feature 5: Chef reviews
 
 As a logged chef  
 I want to see the reviews  
@@ -383,17 +381,23 @@ Given I am on a reservation page
 And the user has left a review  
 Then I should see the personal review of that reservation and the menu review
 
-### Scenario 4: Chef sees the reviews average
+## Feature 6: Chef reviews average
+
+As a logged chef  
+I want to see the average of the reviews I received  
+So that I can improve my service
+
+### Scenario 1: Chef sees the reviews average
 
 Given I am on every page  
 Then I should see the average of the personal reviews I received in the header
 
-### Scenario 5: Chef sees the reviews average from his profile page
+### Scenario 2: Chef sees the reviews average from his profile page
 
 Given I am on the profile page  
 Then I should see the average of the personal reviews I received
 
-## Feature 17: Chef leaves a review
+## Feature 7: Chef leaves a review
 
 As a logged chef  
 I want to leave a review  
@@ -406,7 +410,7 @@ And I compile the review form
 Then I should see a success message  
 And not be able to leave another review
 
-## Feature 18: Chef chats
+## Feature 8: Chef chats
 
 As a logged chef  
 I want to see my chats
@@ -418,7 +422,7 @@ And I click on the chat icon in the header
 Then I should be redirected to the chats page  
 And I should see all my chats
 
-## Feature 19: Chef Single Chat
+## Feature 9: Chef Single Chat
 
 As a logged chef  
 I want to see a single chat  
@@ -437,7 +441,7 @@ And I click on the chat button near the user's name
 Then I should be redirected to the referred chat page  
 And I should see all the messages of that chat
 
-## Feature 20: Chef sends a message
+## Feature 10: Chef sends a message
 
 As a logged chef  
 I want to send a message  
@@ -449,7 +453,7 @@ Given I am on a chat page
 And I compile the message form  
 Then I should see the message I sent in the chat
 
-## Feature 21: Chef profile edit
+## Feature 11: Chef profile edit
 
 As a logged chef  
 I want to edit my profile  
@@ -470,7 +474,7 @@ And I click on the edit button
 And I compile the form with invalid data  
 Then I should see an error message]
 
-## Feature 21: Chef profile
+## Feature 12: Chef profile
 
 As a logged chef  
 I want to see my profile  
@@ -482,7 +486,7 @@ Given I am on every page
 And I click on the profile link in the header  
 Then I should be redirected to the profile page
 
-## Feature 22: Chef menu creation
+## Feature 13: Chef menu creation
 
 As a logged chef  
 I want to create a menu  
@@ -490,18 +494,40 @@ So that I can receive reservations
 
 ### Scenario 1: Chef creates a menu
 
-Given I am on the menu creation page  
+Given I am on the menus page  
+And I click on the create menu button  
 And I compile correctly the form  
 Then I should see a success message  
 And I should be redirected to the menu page
 
 ### Scenario 2: Chef creates a menu with invalid data
 
-Given I am on the menu creation page  
+Given I am on the menus page  
+And I click on the create menu button  
 And I compile the form with invalid data  
 Then I should see an error message
 
-## Feature 23: Chef menu deactivation
+## Feature 14: Chef menu edit (???)
+
+As a logged chef  
+I want to edit a menu  
+So that I can update it
+
+### Scenario 1: Chef edits a menu
+
+Given I am on the menu page  
+And I see the edit button (_the conditions to edit a menu are met_)  
+And I click on the edit button  
+Then I can see the form to edit the menu
+And I can submit the new data
+
+### Scenario 2: Chef can't edit a menu
+
+Given I am on the menu page  
+And I don't see the edit button (_the conditions to edit a menu are not met_)  
+Then I can't edit the menu
+
+## Feature 15: Chef menu deactivation
 
 As a logged chef  
 I want to deactivate a menu  
@@ -514,7 +540,7 @@ And I click on the deactivate button
 Then I should see a success message  
 And I should see the menu as deactivated
 
-## Feature 24: Chef menu activation
+## Feature 16: Chef menu activation
 
 As a logged chef  
 I want to activate a menu  
@@ -527,7 +553,7 @@ And I click on the activate button
 Then I should see a success message  
 And I should see the menu as activated
 
-## Feature 25: Chef reservation rejection
+## Feature 17: Chef reservation rejection
 
 As a logged chef  
 I want to reject a reservation
@@ -539,13 +565,13 @@ And the time to reject the reservation has not expired
 And I click on the reject button  
 Then I should see a success message
 
-## Scenario 2: Time to reject a reservation expired
+### Scenario 2: Time to reject a reservation expired
 
 Given I am on the reservation page  
 And the time to reject the reservation expired  
 Then I should see a message that says that I can't reject the reservation anymore
 
-## Scenario 3: Chef rejects a reservation from the reservations page
+### Scenario 3: Chef rejects a reservation from the reservations page
 
 Given I am on the reservations page  
 And I see a reservation  
@@ -554,9 +580,9 @@ Then I should see a reject button
 And if I click on the reject button  
 Then I should see a success message
 
-# Cliente / Utente
+# Cliente
 
-## Feature 10: Searching menu in the homepage
+## Feature 1: Searching menu in the homepage
 
 As a logged client or unlogged user  
 I want to search for a menu  
@@ -641,7 +667,7 @@ And I select the option I want
 And I click on the submit button  
 Then the popup should close and I should see below the menus of my previous search sorted
 
-## Feature 11: Menu selection
+## Feature 2: Menu selection
 
 As a logged client or unlogged user  
 I want to select a menu  
@@ -656,13 +682,20 @@ Then I should be redirected to the menu page
 
 ### Scenario 2: User selects a menu after having searched using the default search bar
 
-Given I am on the homepage
-And I have searched using the default search bar
-And I see a menu that I like
-And I click on the menu
+Given I am on the homepage  
+And I have searched using the default search bar  
+And I see a menu that I like  
+And I click on the menu  
 Then I should be redirected to the menu page with the search fields already compiled in the page (both the search bar in the header and the reservation card in the menu page)
 
-## Feature 26: Logged user menu view
+### Scenario 3: User selects a menu from the chef public profile
+
+Given I am on a chef public profile page  
+And I see a menu that I like  
+And I click on the menu  
+Then I should be redirected to the menu page
+
+## Feature 3: Logged user menu view
 
 As a logged client  
 I want to see a menu  
@@ -680,7 +713,7 @@ Given I am on a reservation page
 And I click on the menu link  
 Then I am redirected to the menu page
 
-## Feature 27: Menu review
+## Feature 4: Menu review
 
 As a logged client  
 I want to leave a menu review  
@@ -694,7 +727,7 @@ And I compile the menu review form correctly
 Then I should see a success message  
 And not be able to leave another menu review for that reservation
 
-## Feature 28: User leaves chef review
+## Feature 5: Chef review
 
 As a logged client  
 I want to leave a chef review  
@@ -705,10 +738,10 @@ So that I can give feedback to the chef
 Given I am on a reservation page  
 And the reservation is completed  
 And I compile the chef review form correctly  
-Then I should see a success message
+Then I should see a success message  
 And not be able to leave another chef review for that reservation
 
-## Feature 29: Profile edit
+## Feature 6: Profile edit
 
 As a logged client  
 I want to edit my profile  
@@ -728,7 +761,7 @@ And I click on the edit button
 And I compile the form with invalid data  
 Then I should see an error message
 
-## Feature 30: Chat with chef
+## Feature 7: Chat with chef
 
 As a logged client  
 I want to chat with the chef  
@@ -753,26 +786,26 @@ And I click on a previous chat with the chef
 Then I see the chat with the chef
 And I can chat with the chef
 
-## Feature 31: Chat with client service
+## Feature 8: Chat with admin
 
 As a logged client  
-I want to chat with the client service  
+I want to chat with admin  
 So that I can be helped
 
 ### Scenario 1: From every page
 
 Given I am on every page  
 And I click on the client service button in the footer  
-Then I should be redirected to the chat page with the client service
+Then I should be redirected to the chat page with the admin
 
 ### Scenario 2: From the chat page
 
 Given I am on the chat page  
-And I click on a previous chat with the client service  
-Then I see the chat with the client service  
-And I can chat with the client service
+And I click on a previous chat with the admin  
+Then I see the chat with admin  
+And I can chat with admin
 
-## Feature 32: Chef public profile view
+## Feature 9: Chef public profile view
 
 As a user
 I want to see the chef public profile  
@@ -798,9 +831,9 @@ And I am on the chat page
 And I click on the chef's name  
 Then I should be redirected to the chef public profile page
 
-## Feature 33: Menu reservation
+## Feature 10: Menu reservation
 
-As a user
+As a user  
 I want to reserve a menu  
 So that I can pay it
 
@@ -808,7 +841,7 @@ So that I can pay it
 
 Given I am a logged client  
 And I am on the menu page  
-And the reservation card is already compiled with the search fields
+And the reservation card is already compiled with the search fields  
 And I click on the reservation button  
 Then I should be redirected to the confirmation and payment page
 
@@ -828,9 +861,9 @@ And the reservation card is compiled with the search fields
 And I click on the reservation button  
 Then I see the option to login or register
 
-## Feature 34: Menu reservation confirmation
+## Feature 11: Menu reservation confirmation
 
-As a logged client
+As a logged client  
 I want to complete the reservation  
 So that I can pay it
 
@@ -848,4 +881,203 @@ And I compile the form with invalid data
 And I click on the pay button  
 Then I should see an error message
 
-TODO: inserire le opzioni cliccabili dall'icona 'profilo' a partire dall'homepage e in generale da quell'header
+# Admin
+
+## Feature 1: Chef search and select
+
+As a logged admin  
+I want to view a chef  
+So that I can manage him
+
+### Scenario 1: Admin views a chef from the homepage
+
+Given I am on the homepage (_admin side_)  
+And I see all the chefs  
+And I click on a chef  
+Then I am redirected to the chef profile page (_admin side_)
+
+### Scenario 2: Admin views a chef from the homepage filtering
+
+Given I am on the homepage (_admin side_)  
+And I see all the chefs  
+And I filter or search for a chef  
+And I click on a chef  
+Then I am redirected to the chef profile page (_admin side_)
+
+### Scenario 3: Admin views a chef from a chat page
+
+Given I am on a chat page with a chef  
+And I click on the chef's name  
+Then I am redirected to the chef profile page (_admin side_)
+
+### Scenario 4: Admin views a chef from a reservation page
+
+Given I am on a reservation page  
+And I click on the chef's name  
+Then I am redirected to the chef profile page (_admin side_)
+
+## Feature 2: Chat with user
+
+As a logged admin  
+I want to chat with a user  
+So that I can help him
+
+### Scenario 1: Admin chats with a user from the chat page
+
+Given I am on the chat page  
+And I click on a previous chat with a user  
+Then I see the chat with the user  
+And I can chat with the user
+
+### Scenario 2: Admin sees notification from every page
+
+Given I am on every page  
+And I see a chat notification in the header  
+And I click on the chat notification  
+Then I am redirected to the chats page  
+And I can chat with the user
+
+### Scenario 3: Admin chats with a user from chef profile page (_admin side_)
+
+Given I am on a chef profile page (_admin side_)  
+And I click on the chat button near the user's name  
+Then I am redirected to the chat page with that user
+
+### Scenario 4: Admin chats with a user from the user profile page (_admin side_)
+
+Given I am on the user profile page (_admin side_)  
+And I click on the chat button near the user's name  
+Then I am redirected to the chat page with that user
+
+## Feature 3: Admin sees a reservation
+
+As a logged admin  
+I want to see a reservation  
+So that I can manage it
+
+### Scenario 1: Admin sees a reservation from a chef profile page (_admin side_)
+
+Given I am on a chef profile page (_admin side_)  
+And I see a reservation in the reservations list with that chef  
+And I click on a reservation  
+Then I am redirected to the reservation page (_admin side_)
+
+### Scenario 2: Admin sees a reservation from a user profile page (_admin side_)
+
+Given I am on a user profile page (_admin side_)  
+And I see a reservation in the reservations list with that user  
+And I click on a reservation  
+Then I am redirected to the reservation page (_admin side_)
+
+### Scenario 3: Admin sees a reservation from a menu page (_admin side_)
+
+Given I am on a menu page (_admin side_)  
+And I see a reservation in the reservations list for that menu  
+And I click on a reservation  
+Then I am redirected to the reservation page (_admin side_)
+
+## Feature 4: Admin blocks a chef
+
+As a logged admin  
+I want to block a chef  
+So that I can do some verifications
+
+### Scenario 1: Admin blocks a chef from the chef profile page (_admin side_)
+
+Given I am on the chef profile page (_admin side_)  
+And I click on the block button  
+Then I should see a success message  
+And the chef should be blocked
+
+## Feature 5: Admin unblocks a chef
+
+As a logged admin  
+I want to unblock a chef  
+So that he can use the platform again
+
+### Scenario 1: Admin unblocks a chef from the chef profile page (_admin side_)
+
+Given I am on the chef profile page (_admin side_)  
+And I click on the unblock button  
+Then I should see a success message
+
+## Feature 6: Refund a reservation
+
+As a logged admin  
+I want to refund a reservation
+
+### Scenario 1: Admin refunds a reservation from the reservation page (_admin side_) with success
+
+Given I am on the reservation page (_admin side_)  
+And I click on the refund button  
+Then I should see a success message
+
+### Scenario 2: Admin refunds a reservation from the reservation page (_admin side_) with error
+
+Given I am on the reservation page (_admin side_)  
+And I click on the refund button  
+And the refund fails (_already refunded or other stripe errors_)  
+Then I should see an error message
+
+## Feature 7: Admin deactivates a menu
+
+As a logged admin  
+I want to deactivate a menu  
+So that I can stop reservations for that menu
+
+### Scenario 1: Admin deactivates a menu from the menu page (_admin side_)
+
+Given I am on the menu page (_admin side_)  
+And I click on the deactivate button  
+Then I should see a success message  
+And the chef can't reactivate the menu
+
+## Feature 8: Admin activates a menu
+
+As a logged admin  
+I want to activate a menu
+So that I can start reservations for that menu
+
+### Scenario 1: Admin activates a menu from the menu page (_admin side_)
+
+Given I am on the menu page (_admin side_)  
+And I click on the activate button  
+Then I should see a success message
+
+## Feature 9: Admin menu select and view
+
+As a logged admin  
+I want to view a menu  
+So that I can manage it
+
+### Scenario 1: Admin views a menu from the chef profile page (_admin side_)
+
+Given I am on a chef profile page (_admin side_)  
+And I see a menu in the menus list of that chef  
+And I click on a menu  
+Then I am redirected to the menu page (_admin side_)
+
+### Scenario 2: Admin views a menu from the reservation page (_admin side_)
+
+Given I am on a reservation page (_admin side_)  
+And I see a menu in the menus list of that reservation  
+And I click on a menu  
+Then I am redirected to the menu page (_admin side_)
+
+## Feature 10: User selection
+
+As a logged admin  
+I want to view a user  
+So that I can manage him
+
+### Scenario 1: Admin views a user from the chat page
+
+Given I am on a chat page with a user  
+And I click on the user's name  
+Then I am redirected to the user profile page (_admin side_)
+
+### Scenario 2: Admin views a user from the reservation page
+
+Given I am on a reservation page  
+And I click on the user's name  
+Then I am redirected to the user profile page (_admin side_)
