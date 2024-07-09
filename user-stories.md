@@ -255,7 +255,7 @@ Then I should be logout
 ## Feature 12: Chef Menus
 
 As a logged chef  
-I want to see my menus
+I want to see my menus  
 So that I can manage them
 
 ### Scenario 1: Chef sees his last menus from the homepage
@@ -539,13 +539,13 @@ And the time to reject the reservation has not expired
 And I click on the reject button  
 Then I should see a success message
 
-## Scenario 2: Time to reject a reservation expired
+### Scenario 2: Time to reject a reservation expired
 
 Given I am on the reservation page  
 And the time to reject the reservation expired  
 Then I should see a message that says that I can't reject the reservation anymore
 
-## Scenario 3: Chef rejects a reservation from the reservations page
+### Scenario 3: Chef rejects a reservation from the reservations page
 
 Given I am on the reservations page  
 And I see a reservation  
@@ -554,7 +554,30 @@ Then I should see a reject button
 And if I click on the reject button  
 Then I should see a success message
 
-# Cliente / Utente
+<!--
+## Feature 35: Chef menu edit
+
+As a logged chef
+I want to edit a menu
+So that I can update it
+
+### Scenario 1: Chef edits a menu
+
+Given I am on the menu page
+And the menu is deactivated
+And there are no active reservations for that menu
+And I click on the edit button
+Then I can edit the menu
+And I can submit the new data
+
+### Scenario 2: Chef can't edit a menu
+
+Given I am on the menu page
+And the menu is not deactivated
+Or there are active reservations for that menu
+Then I can't edit the menu -->
+
+# Cliente
 
 ## Feature 10: Searching menu in the homepage
 
@@ -662,6 +685,13 @@ And I see a menu that I like
 And I click on the menu
 Then I should be redirected to the menu page with the search fields already compiled in the page (both the search bar in the header and the reservation card in the menu page)
 
+### Scenario 3: User selects a menu from the chef public profile
+
+Given I am on a chef public profile page  
+And I see a menu that I like  
+And I click on the menu  
+Then I should be redirected to the menu page
+
 ## Feature 26: Logged user menu view
 
 As a logged client  
@@ -694,7 +724,7 @@ And I compile the menu review form correctly
 Then I should see a success message  
 And not be able to leave another menu review for that reservation
 
-## Feature 28: User leaves chef review
+## Feature 28: Chef review
 
 As a logged client  
 I want to leave a chef review  
@@ -848,4 +878,191 @@ And I compile the form with invalid data
 And I click on the pay button  
 Then I should see an error message
 
-TODO: inserire le opzioni cliccabili dall'icona 'profilo' a partire dall'homepage e in generale da quell'header
+# Admin
+
+## Feature 36: Chef selection
+
+As a logged admin  
+I want to view a chef  
+So that I can manage him
+
+### Scenario 1: Admin views a chef from the homepage
+
+Given I am on the homepage  
+And I see all the chefs  
+And I click on a chef  
+Then I am redirected to the chef admin page
+
+### Scenario 2: Admin views a chef from the homepage filtering
+
+Given I am on the homepage  
+And I see all the chefs  
+And I filter or search for a chef  
+And I click on a chef  
+Then I am redirected to the chef admin page
+
+### Scenario 3: Admin views a chef from a chat page
+
+Given I am on a chat page with a chef  
+And I click on the chef's name  
+Then I am redirected to the chef admin page
+
+### Scenario 4: Admin views a chef from a reservation page
+
+Given I am on a reservation page  
+And I click on the chef's name  
+Then I am redirected to the chef admin page
+
+## Feature 37: Chat with user
+
+As a logged admin  
+I want to chat with a user  
+So that I can help him
+
+### Scenario 1: Admin chats with a user from the chat page
+
+Given I am on the chat page  
+And I click on a previous chat with a user  
+Then I see the chat with the user  
+And I can chat with the user
+
+### Scenario 2: Admin sees notification from every page
+
+Given I am on every page  
+And I see a chat notification in the header  
+And I click on the chat notification  
+Then I am redirected to the chats page  
+And I can chat with the user
+
+### Scenario 3: Admin chats with a user from chef admin page
+
+Given I am on a chef admin page  
+And I click on the chat button near the user's name  
+Then I am redirected to the chat page with the user
+
+## Feature 38: Admin sees a reservation
+
+As a logged admin  
+I want to see a reservation  
+So that I can manage it
+
+### Scenario 1: Admin sees a reservation from a chef admin page
+
+Given I am on a chef admin page  
+And I see a reservation in the reservations list with that chef  
+And I click on a reservation  
+Then I am redirected to the reservation admin page
+
+### Scenario 2: Admin sees a reservation from a user admin page
+
+Given I am on a user admin page  
+And I see a reservation in the reservations list with that user  
+And I click on a reservation  
+Then I am redirected to the reservation admin page
+
+### Scenario 3: Admin sees a reservation from a menu admin page
+
+Given I am on a menu admin page  
+And I see a reservation in the reservations list for that menu  
+And I click on a reservation  
+Then I am redirected to the reservation admin page
+
+## Feature 39: Admin blocks a chef
+
+As a logged admin  
+I want to block a chef  
+So that I can do some verifications
+
+### Scenario 1: Admin blocks a chef from the chef admin page
+
+Given I am on the chef admin page  
+And I click on the block button  
+Then I should see a success message  
+And the chef should be blocked
+
+## Feature 40: Admin unblocks a chef
+
+As a logged admin  
+I want to unblock a chef  
+So that he can use the platform again
+
+### Scenario 1: Admin unblocks a chef from the chef admin page
+
+Given I am on the chef admin page  
+And I click on the unblock button  
+Then I should see a success message
+
+## Feature 41: Refund a reservation
+
+As a logged admin  
+I want to refund a reservation
+
+### Scenario 1: Admin refunds a reservation from the reservation admin page with success
+
+Given I am on the reservation admin page  
+And I click on the refund button  
+Then I should see a success message
+
+### Scenario 2: Admin refunds a reservation from the reservation admin page with error
+
+Given I am on the reservation admin page  
+And I click on the refund button  
+And the refund fails (_already refunded or other stripe errors_)  
+Then I should see an error message
+
+## Feature 42: Admin deactivates a menu
+
+As a logged admin  
+I want to deactivate a menu  
+So that I can stop reservations for that menu
+
+### Scenario 1: Admin deactivates a menu from the menu admin page
+
+Given I am on the menu admin page  
+And I click on the deactivate button  
+Then I should see a success message  
+And the chef can't reactivate the menu
+
+## Feature 43: Admin activates a menu
+
+As a logged admin  
+I want to activate a menu
+So that I can start reservations for that menu
+
+### Scenario 1: Admin activates a menu from the menu admin page
+
+Given I am on the menu admin page  
+And I click on the activate button  
+Then I should see a success message
+
+## Feature 44: Admin menu selection
+
+As a logged admin  
+I want to view a menu  
+So that I can manage it
+
+### Scenario 1: Admin views a menu from the chef admin page
+
+Given I am on a chef admin page  
+And I see a menu in the menus list of that chef  
+And I click on a menu  
+Then I am redirected to the menu admin page
+
+### Scenario 2: Admin views a menu from the reservation admin page
+
+Given I am on a reservation admin page  
+And I see a menu in the menus list of that reservation  
+And I click on a menu  
+Then I am redirected to the menu admin page
+
+## Feature 45: User selection
+
+As a logged admin  
+I want to view a user  
+So that I can manage him
+
+### Scenario 1: Admin views a user from the chat page
+
+Given I am on a chat page with a user  
+And I click on the user's name  
+Then I am redirected to the user admin page
