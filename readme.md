@@ -316,3 +316,9 @@ Campi uguali alla pagina di completamento profilo chef ma modificabile solo prem
 - ??? L'admin può bloccare un cliente: se decidiamo di farlo:
     - nell'homepage dell'admin oltre agli chef compare un tab con gli utenti (come nel caso degli chef, possono essere filtrati e ordinati in base alla media delle recensioni)
     - bisogna gestire il "bloccare gli utenti", ad esempio cosa succede alle loro recensioni?
+
+
+# DA DEFINIRE
+1. Se l'admin può bloccare l'utente ed in caso gestire opportunamente la cosa
+2. Se l'admin può vedere gli utenti oltre agli chef nell'homepage 
+3. Utente gold?
