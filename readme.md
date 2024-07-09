@@ -27,7 +27,9 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
 -  L'admin ha una serie di funzionalità (scritte nel paragrafo apposito)
 -   I soldi arrivano tutti a noi 
 -   Normalmente si pagano 10 euro di commissioni ad ogni menu. L'utente gold invece non paga nessuna commissione. Nella schermata di pagamento appare un avviso che consiglia all'utente di fare il pro per non pagare le commissioni
--   Lo chef ha la possibilità di modificare i menu che non hanno prenotazioni attive (_lo chef quindi può mettere in blocco un menu, servire le prenotazioni rimanenti e poi modificarlo_) 
+-   Lo chef ha la possibilità di modificare i menu che non hanno prenotazioni attive (_lo chef quindi può mettere in blocco un menu, servire le prenotazioni rimanenti e poi modificarlo_)
+-   Il cliente può prenotare solo per un giorno compreso tra 1 e 14 giorni dalla data attuale?
+
 
 ### Questione allergeni/ preferenze:
 
@@ -266,6 +268,8 @@ Campi uguali alla pagina di completamento profilo chef ma modificabile solo prem
 
 -   Pulsante per disattivare il menu
 -   Possibilità di vedere le ultime prenotazioni per quel menu
+-   Bottone modifica menu che diventa cliccabile solo se (1) non ci sono prenotazioni attive e (2) se il menu è disattivato. Del menu può modificare tutti i campi tranne le portate?
+-  Fare due bottoni diversi uno disattiva e uno modifica menu? 
 
 # PAGINA LISTA PRENOTAZIONI DI UNO CHEF
 
