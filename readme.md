@@ -47,7 +47,7 @@ Così ha più senso che uno chef può accettare o meno una prenotazione.
 
 -   Utente Gold/Pro : non paga le commissioni e vede menu specifici
 -   Admin: ha tre funzioni principali
-    1. Gestire e rimborsare le prenotazioni "problematiche". Il workflow è il seguente: l'utente contatta in chat l'admin, l'admin clicca sul nome utente e attraverso il profilo dell'utente accede alla prenotazione "problematica". Qui può rimborsare la prenotazione fornendo un COUPON all'utente.
+    1. Gestire e rimborsare le prenotazioni "problematiche". Il workflow è il seguente: l'utente contatta in chat l'admin, l'admin clicca sul nome utente e attraverso il profilo dell'utente accede alla prenotazione "problematica". Qui può rimborsare la prenotazione.
     2. Bloccare temporaneamente uno chef per verifiche se riceve molte recensioni pessime.
     3. Disattivare temporaneamente il menu di un chef.
 
@@ -310,7 +310,7 @@ Campi uguali alla pagina di completamento profilo chef ma modificabile solo prem
 - Cliccando su uno chef, compare la solita pagina ma con funzionalità aggiuntive:
     1. Sulla pagina stessa dello chef, può vedere tutte le prenotazioni
     2. Sulla pagina stessa dello chef, ha la possibilità di bloccare lo chef
-    3. Cliccando su una prenotazione, l'admin ha la possibilità rimborsare totalmente il cliente tramite un COUPON, in caso di problemi (ad es. se la prenotazione è stata rifiutata dallo chef oltre il tempo limite, oppure i clienti hanno avuto problemi con il cibo, etc.)
+    3. Cliccando su una prenotazione, l'admin ha la possibilità rimborsare totalmente il cliente in caso di problemi (ad es. se la prenotazione è stata rifiutata dallo chef oltre il tempo limite, oppure i clienti hanno avuto problemi con il cibo, etc.)
     4. Cliccando su un menu, l'admin ha la possibilità di disattivarlo (ad esempio puoi chiedere allo chef di cambiare alcune cose e fino a quel momento lo tiene disattivato). Il menu disattivato dall'admin non può essere disattivato dallo chef (quindi è un altro stato rispetto al menu disattivato dallo chef)
 - Inoltre cliccando su un cliente, l'admin può vedere tutte le sue prenotazioni
 - ??? L'admin può bloccare un cliente: se decidiamo di farlo:
