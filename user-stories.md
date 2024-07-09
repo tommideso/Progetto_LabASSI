@@ -15,8 +15,6 @@ Nella nostra piattaforma ci sono tre utenti:
 
 `Unverified user` -> Utente che si è registrato con email e password ma non ha verificato la propria email
 
-**Le seguenti feature sono contestuali alla registrazione e login.**
-
 # Login e registrazione di utenti
 
 Di seguito sono elencate le user stories per la registrazione e il login degli utenti, con e senza OAuth, con la possibilità di completare il proprio profilo e di recuperare la password.
@@ -303,8 +301,8 @@ Then I should be redirected to the menu page
 
 ## Feature 14: Chef Reservations
 
-As a logged chef
-I want to see my reservations
+As a logged chef  
+I want to see my reservations  
 So that I can manage them
 
 ### Scenario 1: Chef sees a few active reservations from the homepage
@@ -383,12 +381,18 @@ Given I am on a reservation page
 And the user has left a review  
 Then I should see the personal review of that reservation and the menu review
 
-### Scenario 4: Chef sees the reviews average
+## Feature 17: Chef reviews average
+
+As a logged chef  
+I want to see the average of the reviews I received  
+So that I can improve my service
+
+### Scenario 1: Chef sees the reviews average
 
 Given I am on every page  
 Then I should see the average of the personal reviews I received in the header
 
-### Scenario 5: Chef sees the reviews average from his profile page
+### Scenario 2: Chef sees the reviews average from his profile page
 
 Given I am on the profile page  
 Then I should see the average of the personal reviews I received
@@ -490,16 +494,38 @@ So that I can receive reservations
 
 ### Scenario 1: Chef creates a menu
 
-Given I am on the menu creation page  
+Given I am on the menus page  
+And I click on the create menu button  
 And I compile correctly the form  
 Then I should see a success message  
 And I should be redirected to the menu page
 
 ### Scenario 2: Chef creates a menu with invalid data
 
-Given I am on the menu creation page  
+Given I am on the menus page  
+And I click on the create menu button  
 And I compile the form with invalid data  
 Then I should see an error message
+
+## Feature 23: Chef menu edit (???)
+
+As a logged chef  
+I want to edit a menu  
+So that I can update it
+
+### Scenario 1: Chef edits a menu
+
+Given I am on the menu page  
+And I see the edit button (_the conditions to edit a menu are met_)  
+And I click on the edit button  
+Then I can see the form to edit the menu
+And I can submit the new data
+
+### Scenario 2: Chef can't edit a menu
+
+Given I am on the menu page  
+And I don't see the edit button (_the conditions to edit a menu are not met_)  
+Then I can't edit the menu
 
 ## Feature 23: Chef menu deactivation
 
@@ -553,29 +579,6 @@ And the time to reject the reservation has not expired
 Then I should see a reject button  
 And if I click on the reject button  
 Then I should see a success message
-
-<!--
-## Feature 35: Chef menu edit
-
-As a logged chef
-I want to edit a menu
-So that I can update it
-
-### Scenario 1: Chef edits a menu
-
-Given I am on the menu page
-And the menu is deactivated
-And there are no active reservations for that menu
-And I click on the edit button
-Then I can edit the menu
-And I can submit the new data
-
-### Scenario 2: Chef can't edit a menu
-
-Given I am on the menu page
-And the menu is not deactivated
-Or there are active reservations for that menu
-Then I can't edit the menu -->
 
 # Cliente
 
@@ -679,10 +682,10 @@ Then I should be redirected to the menu page
 
 ### Scenario 2: User selects a menu after having searched using the default search bar
 
-Given I am on the homepage
-And I have searched using the default search bar
-And I see a menu that I like
-And I click on the menu
+Given I am on the homepage  
+And I have searched using the default search bar  
+And I see a menu that I like  
+And I click on the menu  
 Then I should be redirected to the menu page with the search fields already compiled in the page (both the search bar in the header and the reservation card in the menu page)
 
 ### Scenario 3: User selects a menu from the chef public profile
@@ -735,7 +738,7 @@ So that I can give feedback to the chef
 Given I am on a reservation page  
 And the reservation is completed  
 And I compile the chef review form correctly  
-Then I should see a success message
+Then I should see a success message  
 And not be able to leave another chef review for that reservation
 
 ## Feature 29: Profile edit
@@ -783,24 +786,24 @@ And I click on a previous chat with the chef
 Then I see the chat with the chef
 And I can chat with the chef
 
-## Feature 31: Chat with client service
+## Feature 31: Chat with admin
 
 As a logged client  
-I want to chat with the client service  
+I want to chat with admin  
 So that I can be helped
 
 ### Scenario 1: From every page
 
 Given I am on every page  
 And I click on the client service button in the footer  
-Then I should be redirected to the chat page with the client service
+Then I should be redirected to the chat page with the admin
 
 ### Scenario 2: From the chat page
 
 Given I am on the chat page  
-And I click on a previous chat with the client service  
-Then I see the chat with the client service  
-And I can chat with the client service
+And I click on a previous chat with the admin  
+Then I see the chat with admin  
+And I can chat with admin
 
 ## Feature 32: Chef public profile view
 
@@ -830,7 +833,7 @@ Then I should be redirected to the chef public profile page
 
 ## Feature 33: Menu reservation
 
-As a user
+As a user  
 I want to reserve a menu  
 So that I can pay it
 
@@ -838,7 +841,7 @@ So that I can pay it
 
 Given I am a logged client  
 And I am on the menu page  
-And the reservation card is already compiled with the search fields
+And the reservation card is already compiled with the search fields  
 And I click on the reservation button  
 Then I should be redirected to the confirmation and payment page
 
@@ -860,7 +863,7 @@ Then I see the option to login or register
 
 ## Feature 34: Menu reservation confirmation
 
-As a logged client
+As a logged client  
 I want to complete the reservation  
 So that I can pay it
 
@@ -880,7 +883,7 @@ Then I should see an error message
 
 # Admin
 
-## Feature 36: Chef selection
+## Feature 36: Chef search and select
 
 As a logged admin  
 I want to view a chef  
@@ -888,14 +891,14 @@ So that I can manage him
 
 ### Scenario 1: Admin views a chef from the homepage
 
-Given I am on the homepage (_admin side_)
+Given I am on the homepage (_admin side_)  
 And I see all the chefs  
 And I click on a chef  
 Then I am redirected to the chef profile page (_admin side_)
 
 ### Scenario 2: Admin views a chef from the homepage filtering
 
-Given I am on the homepage (_admin side_)
+Given I am on the homepage (_admin side_)  
 And I see all the chefs  
 And I filter or search for a chef  
 And I click on a chef  
@@ -936,13 +939,13 @@ And I can chat with the user
 
 ### Scenario 3: Admin chats with a user from chef profile page (_admin side_)
 
-Given I am on a chef profile page (_admin side_)
+Given I am on a chef profile page (_admin side_)  
 And I click on the chat button near the user's name  
 Then I am redirected to the chat page with that user
 
 ### Scenario 4: Admin chats with a user from the user profile page (_admin side_)
 
-Given I am on the user profile page (_admin side_)
+Given I am on the user profile page (_admin side_)  
 And I click on the chat button near the user's name  
 Then I am redirected to the chat page with that user
 
@@ -1041,7 +1044,7 @@ Given I am on the menu page (_admin side_)
 And I click on the activate button  
 Then I should see a success message
 
-## Feature 44: Admin menu selection
+## Feature 44: Admin menu select and view
 
 As a logged admin  
 I want to view a menu  
