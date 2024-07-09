@@ -308,3 +308,7 @@ Campi uguali alla pagina di completamento profilo chef ma modificabile solo prem
     2. Sulla pagina stessa dello chef, ha la possibilità di bloccare lo chef
     3. Cliccando su una prenotazione, l'admin ha la possibilità rimborsare totalmente il cliente tramite un COUPON, in caso di problemi (ad es. se la prenotazione è stata rifiutata dallo chef oltre il tempo limite, oppure i clienti hanno avuto problemi con il cibo, etc.)
     4. Cliccando su un menu, l'admin ha la possibilità di disattivarlo (ad esempio puoi chiedere allo chef di cambiare alcune cose e fino a quel momento lo tiene disattivato). Il menu disattivato dall'admin non può essere disattivato dallo chef (quindi è un altro stato rispetto al menu disattivato dallo chef)
+- Inoltre cliccando su un cliente, l'admin può vedere tutte le sue prenotazioni
+- ??? L'admin può bloccare un cliente: se decidiamo di farlo:
+    - nell'homepage dell'admin oltre agli chef compare un tab con gli utenti (come nel caso degli chef, possono essere filtrati e ordinati in base alla media delle recensioni)
+    - bisogna gestire il "bloccare gli utenti", ad esempio cosa succede alle loro recensioni?
