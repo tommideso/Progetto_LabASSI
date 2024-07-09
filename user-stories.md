@@ -938,7 +938,13 @@ And I can chat with the user
 
 Given I am on a chef admin page  
 And I click on the chat button near the user's name  
-Then I am redirected to the chat page with the user
+Then I am redirected to the chat page with that user
+
+### Scenario 4: Admin chats with a user from the user admin page
+
+Given I am on the user admin page  
+And I click on the chat button near the user's name  
+Then I am redirected to the chat page with that user
 
 ## Feature 38: Admin sees a reservation
 
@@ -1064,5 +1070,11 @@ So that I can manage him
 ### Scenario 1: Admin views a user from the chat page
 
 Given I am on a chat page with a user  
+And I click on the user's name  
+Then I am redirected to the user admin page
+
+### Scenario 2: Admin views a user from the reservation page
+
+Given I am on a reservation page  
 And I click on the user's name  
 Then I am redirected to the user admin page
