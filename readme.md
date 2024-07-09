@@ -308,6 +308,7 @@ Campi uguali alla pagina di completamento profilo chef ma modificabile solo prem
 - L'admin ha un homepage con tutti gli chef, che possono essere filtrati in funzione della media delle recensioni
 - L'admin vede attraverso l'homepage una "notifica" sulle chat aperte da parte degli utenti e degli chef
 - Cliccando su uno chef, compare la solita pagina ma con funzionalità aggiuntive:
-    1. Sulla pagina stessa dello chef, ha la possibilità di bloccare lo chef
-    2. Cliccando su una prenotazione, l'admin ha la possibilità rimborsare totalmente il cliente tramite un COUPON, in caso di problemi (ad es. se la prenotazione è stata rifiutata dallo chef oltre il tempo limite, oppure i clienti hanno avuto problemi con il cibo, etc.)
-    3. Cliccando su un menu, l'admin ha la possibilità di disattivarlo (ad esempio puoi chiedere allo chef di cambiare alcune cose e fino a quel momento lo tiene disattivato). Il menu disattivato dall'admin non può essere disattivato dallo chef (quindi è un altro stato rispetto al menu disattivato dallo chef)
+    1. Sulla pagina stessa dello chef, può vedere tutte le prenotazioni
+    2. Sulla pagina stessa dello chef, ha la possibilità di bloccare lo chef
+    3. Cliccando su una prenotazione, l'admin ha la possibilità rimborsare totalmente il cliente tramite un COUPON, in caso di problemi (ad es. se la prenotazione è stata rifiutata dallo chef oltre il tempo limite, oppure i clienti hanno avuto problemi con il cibo, etc.)
+    4. Cliccando su un menu, l'admin ha la possibilità di disattivarlo (ad esempio puoi chiedere allo chef di cambiare alcune cose e fino a quel momento lo tiene disattivato). Il menu disattivato dall'admin non può essere disattivato dallo chef (quindi è un altro stato rispetto al menu disattivato dallo chef)
