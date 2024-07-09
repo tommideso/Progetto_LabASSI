@@ -888,30 +888,30 @@ So that I can manage him
 
 ### Scenario 1: Admin views a chef from the homepage
 
-Given I am on the homepage  
+Given I am on the homepage (_admin side_)
 And I see all the chefs  
 And I click on a chef  
-Then I am redirected to the chef admin page
+Then I am redirected to the chef profile page (_admin side_)
 
 ### Scenario 2: Admin views a chef from the homepage filtering
 
-Given I am on the homepage  
+Given I am on the homepage (_admin side_)
 And I see all the chefs  
 And I filter or search for a chef  
 And I click on a chef  
-Then I am redirected to the chef admin page
+Then I am redirected to the chef profile page (_admin side_)
 
 ### Scenario 3: Admin views a chef from a chat page
 
 Given I am on a chat page with a chef  
 And I click on the chef's name  
-Then I am redirected to the chef admin page
+Then I am redirected to the chef profile page (_admin side_)
 
 ### Scenario 4: Admin views a chef from a reservation page
 
 Given I am on a reservation page  
 And I click on the chef's name  
-Then I am redirected to the chef admin page
+Then I am redirected to the chef profile page (_admin side_)
 
 ## Feature 37: Chat with user
 
@@ -934,15 +934,15 @@ And I click on the chat notification
 Then I am redirected to the chats page  
 And I can chat with the user
 
-### Scenario 3: Admin chats with a user from chef admin page
+### Scenario 3: Admin chats with a user from chef profile page (_admin side_)
 
-Given I am on a chef admin page  
+Given I am on a chef profile page (_admin side_)
 And I click on the chat button near the user's name  
 Then I am redirected to the chat page with that user
 
-### Scenario 4: Admin chats with a user from the user admin page
+### Scenario 4: Admin chats with a user from the user profile page (_admin side_)
 
-Given I am on the user admin page  
+Given I am on the user profile page (_admin side_)
 And I click on the chat button near the user's name  
 Then I am redirected to the chat page with that user
 
@@ -952,26 +952,26 @@ As a logged admin
 I want to see a reservation  
 So that I can manage it
 
-### Scenario 1: Admin sees a reservation from a chef admin page
+### Scenario 1: Admin sees a reservation from a chef profile page (_admin side_)
 
-Given I am on a chef admin page  
+Given I am on a chef profile page (_admin side_)  
 And I see a reservation in the reservations list with that chef  
 And I click on a reservation  
-Then I am redirected to the reservation admin page
+Then I am redirected to the reservation page (_admin side_)
 
-### Scenario 2: Admin sees a reservation from a user admin page
+### Scenario 2: Admin sees a reservation from a user profile page (_admin side_)
 
-Given I am on a user admin page  
+Given I am on a user profile page (_admin side_)  
 And I see a reservation in the reservations list with that user  
 And I click on a reservation  
-Then I am redirected to the reservation admin page
+Then I am redirected to the reservation page (_admin side_)
 
-### Scenario 3: Admin sees a reservation from a menu admin page
+### Scenario 3: Admin sees a reservation from a menu page (_admin side_)
 
-Given I am on a menu admin page  
+Given I am on a menu page (_admin side_)  
 And I see a reservation in the reservations list for that menu  
 And I click on a reservation  
-Then I am redirected to the reservation admin page
+Then I am redirected to the reservation page (_admin side_)
 
 ## Feature 39: Admin blocks a chef
 
@@ -979,9 +979,9 @@ As a logged admin
 I want to block a chef  
 So that I can do some verifications
 
-### Scenario 1: Admin blocks a chef from the chef admin page
+### Scenario 1: Admin blocks a chef from the chef profile page (_admin side_)
 
-Given I am on the chef admin page  
+Given I am on the chef profile page (_admin side_)  
 And I click on the block button  
 Then I should see a success message  
 And the chef should be blocked
@@ -992,9 +992,9 @@ As a logged admin
 I want to unblock a chef  
 So that he can use the platform again
 
-### Scenario 1: Admin unblocks a chef from the chef admin page
+### Scenario 1: Admin unblocks a chef from the chef profile page (_admin side_)
 
-Given I am on the chef admin page  
+Given I am on the chef profile page (_admin side_)  
 And I click on the unblock button  
 Then I should see a success message
 
@@ -1003,15 +1003,15 @@ Then I should see a success message
 As a logged admin  
 I want to refund a reservation
 
-### Scenario 1: Admin refunds a reservation from the reservation admin page with success
+### Scenario 1: Admin refunds a reservation from the reservation page (_admin side_) with success
 
-Given I am on the reservation admin page  
+Given I am on the reservation page (_admin side_)  
 And I click on the refund button  
 Then I should see a success message
 
-### Scenario 2: Admin refunds a reservation from the reservation admin page with error
+### Scenario 2: Admin refunds a reservation from the reservation page (_admin side_) with error
 
-Given I am on the reservation admin page  
+Given I am on the reservation page (_admin side_)  
 And I click on the refund button  
 And the refund fails (_already refunded or other stripe errors_)  
 Then I should see an error message
@@ -1022,9 +1022,9 @@ As a logged admin
 I want to deactivate a menu  
 So that I can stop reservations for that menu
 
-### Scenario 1: Admin deactivates a menu from the menu admin page
+### Scenario 1: Admin deactivates a menu from the menu page (_admin side_)
 
-Given I am on the menu admin page  
+Given I am on the menu page (_admin side_)  
 And I click on the deactivate button  
 Then I should see a success message  
 And the chef can't reactivate the menu
@@ -1035,9 +1035,9 @@ As a logged admin
 I want to activate a menu
 So that I can start reservations for that menu
 
-### Scenario 1: Admin activates a menu from the menu admin page
+### Scenario 1: Admin activates a menu from the menu page (_admin side_)
 
-Given I am on the menu admin page  
+Given I am on the menu page (_admin side_)  
 And I click on the activate button  
 Then I should see a success message
 
@@ -1047,19 +1047,19 @@ As a logged admin
 I want to view a menu  
 So that I can manage it
 
-### Scenario 1: Admin views a menu from the chef admin page
+### Scenario 1: Admin views a menu from the chef profile page (_admin side_)
 
-Given I am on a chef admin page  
+Given I am on a chef profile page (_admin side_)  
 And I see a menu in the menus list of that chef  
 And I click on a menu  
-Then I am redirected to the menu admin page
+Then I am redirected to the menu page (_admin side_)
 
-### Scenario 2: Admin views a menu from the reservation admin page
+### Scenario 2: Admin views a menu from the reservation page (_admin side_)
 
-Given I am on a reservation admin page  
+Given I am on a reservation page (_admin side_)  
 And I see a menu in the menus list of that reservation  
 And I click on a menu  
-Then I am redirected to the menu admin page
+Then I am redirected to the menu page (_admin side_)
 
 ## Feature 45: User selection
 
@@ -1071,10 +1071,10 @@ So that I can manage him
 
 Given I am on a chat page with a user  
 And I click on the user's name  
-Then I am redirected to the user admin page
+Then I am redirected to the user profile page (_admin side_)
 
 ### Scenario 2: Admin views a user from the reservation page
 
 Given I am on a reservation page  
 And I click on the user's name  
-Then I am redirected to the user admin page
+Then I am redirected to the user profile page (_admin side_)
