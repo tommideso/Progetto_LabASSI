@@ -250,112 +250,6 @@ Given I am on a page
 When I click on the profile icon and I click on logout  
 Then I should be logout
 
-## Feature 10: Searching menu in the homepage
-
-As a logged client or unlogged user  
-I want to search for a menu  
-So that I can find the menu I want
-
-### Scenario 1: User searches with the default search bar
-
-Given I am on the homepage (_the homepage of a client or unlogged user_)  
-And I compile every field of the default search bar (_localizzazione, n. persone, data con pranzo o cena ed allergeni_)  
-And I click on the search icon  
-Then I should see below the menus that match my search
-
-### Scenario 2: User searches with the default search bar without compiling every field
-
-Given I am on the homepage  
-And I do not compile every field of the default search bar  
-And I click on the search icon  
-Then I should receive an error message that says that I have to compile every field in order to search
-
-### Scenario 3: User searches with filters without having searched with the default search bar
-
-Given I am on the homepage  
-And I click on a type of menu (_terra, mare, indiano etc._)  
-Then I should see below the menus that match my search
-
-### Scenario 4: User searches with filters having searched with the default search bar
-
-Given I am on the homepage  
-And I have already searched with the default search bar  
-And I click on a type of menu  
-Then I should see below the menus of my previous search filtered by the type of menu I clicked on
-
-### Scenario 5: User searches with advanced filters without having searched with the default search bar
-
-Given I am on the homepage
-And I click on the filter icon  
-Then I should see a popup with the advanced filtering options  
-And I select the filters I want  
-And I click on the submit button  
-Then the popup should close and I should see below the menus that match my search
-
-### Scenario 6: User searches with advanced filters having searched with the default search bar
-
-Given I am on the homepage  
-And I have already searched with the default search bar  
-And I click on the filter icon  
-Then I should see a popup with the advanced filtering options  
-And I select the filters I want  
-And I click on the submit button  
-Then the popup should close and I should see below the menus of my previous search filtered by the filters I selected
-
-### Scenario 7: User searches with advanced filters having searched with the filters
-
-Given I am on the homepage  
-And I have already searched with the filters (_type of menu_)  
-And I click on the filter icon  
-Then I should see a popup with the advanced filtering options  
-And I select the filters I want  
-And I click on the submit button  
-Then the popup should close and I should see below the menus of my previous search, already filtered by the type of menu, filtered again by my selections
-
-### Scenario 8: User searches with filters having searched with advanced filters
-
-Given I am on the homepage  
-And I have already searched with the advanced filters  
-And I click on a type of menu  
-Then I should see below the menus of my previous search, already filtered by the advanced filters, filtered again by the type of menu I clicked on
-
-### Scenario 9: User searches with no match
-
-Given I am on the homepage  
-And I search (_with the default search bar or filters or advanced filters_)  
-And no menu matches my search  
-Then I should see a message that says that there are no menus that match my search
-
-### Scenario 10: User sort the search
-
-Given I am on the homepage  
-And I click on the sort icon  
-Then I should see a popup with the sorting options  
-And I select the option I want  
-And I click on the submit button  
-Then the popup should close and I should see below the menus of my previous search sorted
-
-## Feature 11: Menu selection
-
-As a logged client or unlogged user  
-I want to select a menu  
-So that I can view more details about it
-
-### Scenario 1: User selects a menu
-
-Given I am on the homepage  
-And I see a menu that I like  
-And I click on the menu  
-Then I should be redirected to the menu page
-
-### Scenario 2: User selects a menu after having searched using the default search bar
-
-Given I am on the homepage
-And I have searched using the default search bar
-And I see a menu that I like
-And I click on the menu
-Then I should be redirected to the menu page with the search fields already compiled in the page (both the search bar in the header and the reservation card in the menu page)
-
 # Chef
 
 ## Feature 12: Chef Menus
@@ -659,5 +553,299 @@ And the time to reject the reservation has not expired
 Then I should see a reject button  
 And if I click on the reject button  
 Then I should see a success message
+
+# Cliente / Utente
+
+## Feature 10: Searching menu in the homepage
+
+As a logged client or unlogged user  
+I want to search for a menu  
+So that I can find the menu I want
+
+### Scenario 1: User searches with the default search bar
+
+Given I am on the homepage (_the homepage of a client or unlogged user_)  
+And I compile every field of the default search bar (_localizzazione, n. persone, data con pranzo o cena ed allergeni_)  
+And I click on the search icon  
+Then I should see below the menus that match my search
+
+### Scenario 2: User searches with the default search bar without compiling every field
+
+Given I am on the homepage  
+And I do not compile every field of the default search bar  
+And I click on the search icon  
+Then I should receive an error message that says that I have to compile every field in order to search
+
+### Scenario 3: User searches with filters without having searched with the default search bar
+
+Given I am on the homepage  
+And I click on a type of menu (_terra, mare, indiano etc._)  
+Then I should see below the menus that match my search
+
+### Scenario 4: User searches with filters having searched with the default search bar
+
+Given I am on the homepage  
+And I have already searched with the default search bar  
+And I click on a type of menu  
+Then I should see below the menus of my previous search filtered by the type of menu I clicked on
+
+### Scenario 5: User searches with advanced filters without having searched with the default search bar
+
+Given I am on the homepage
+And I click on the filter icon  
+Then I should see a popup with the advanced filtering options  
+And I select the filters I want  
+And I click on the submit button  
+Then the popup should close and I should see below the menus that match my search
+
+### Scenario 6: User searches with advanced filters having searched with the default search bar
+
+Given I am on the homepage  
+And I have already searched with the default search bar  
+And I click on the filter icon  
+Then I should see a popup with the advanced filtering options  
+And I select the filters I want  
+And I click on the submit button  
+Then the popup should close and I should see below the menus of my previous search filtered by the filters I selected
+
+### Scenario 7: User searches with advanced filters having searched with the filters
+
+Given I am on the homepage  
+And I have already searched with the filters (_type of menu_)  
+And I click on the filter icon  
+Then I should see a popup with the advanced filtering options  
+And I select the filters I want  
+And I click on the submit button  
+Then the popup should close and I should see below the menus of my previous search, already filtered by the type of menu, filtered again by my selections
+
+### Scenario 8: User searches with filters having searched with advanced filters
+
+Given I am on the homepage  
+And I have already searched with the advanced filters  
+And I click on a type of menu  
+Then I should see below the menus of my previous search, already filtered by the advanced filters, filtered again by the type of menu I clicked on
+
+### Scenario 9: User searches with no match
+
+Given I am on the homepage  
+And I search (_with the default search bar or filters or advanced filters_)  
+And no menu matches my search  
+Then I should see a message that says that there are no menus that match my search
+
+### Scenario 10: User sort the search
+
+Given I am on the homepage  
+And I click on the sort icon  
+Then I should see a popup with the sorting options  
+And I select the option I want  
+And I click on the submit button  
+Then the popup should close and I should see below the menus of my previous search sorted
+
+## Feature 11: Menu selection
+
+As a logged client or unlogged user  
+I want to select a menu  
+So that I can view more details about it
+
+### Scenario 1: User selects a menu
+
+Given I am on the homepage  
+And I see a menu that I like  
+And I click on the menu  
+Then I should be redirected to the menu page
+
+### Scenario 2: User selects a menu after having searched using the default search bar
+
+Given I am on the homepage
+And I have searched using the default search bar
+And I see a menu that I like
+And I click on the menu
+Then I should be redirected to the menu page with the search fields already compiled in the page (both the search bar in the header and the reservation card in the menu page)
+
+## Feature 26: Logged user menu view
+
+As a logged client  
+I want to see a menu  
+So that I can view more details about it
+
+### Scenario 1: User sees a menu from the favorites page
+
+Given I am on the favorites page  
+And I click on a menu  
+Then I am redirected to the menu page
+
+### Scenario 2: User sees a menu from a reservation page
+
+Given I am on a reservation page  
+And I click on the menu link  
+Then I am redirected to the menu page
+
+## Feature 27: Menu review
+
+As a logged client  
+I want to leave a menu review  
+So that I can give feedback to the menu
+
+### Scenario 1: User leaves a review from a reservation page
+
+Given I am on a reservation page  
+And the reservation is completed (_the date of the reservation is passed_)  
+And I compile the menu review form correctly  
+Then I should see a success message  
+And not be able to leave another menu review for that reservation
+
+## Feature 28: User leaves chef review
+
+As a logged client  
+I want to leave a chef review  
+So that I can give feedback to the chef
+
+### Scenario 1: User leaves a review from a reservation page
+
+Given I am on a reservation page  
+And the reservation is completed  
+And I compile the chef review form correctly  
+Then I should see a success message
+And not be able to leave another chef review for that reservation
+
+## Feature 29: Profile edit
+
+As a logged client  
+I want to edit my profile  
+So that I can update my informations
+
+### Scenario 1: User edits his profile
+
+Given I am on the profile page  
+And I click on the edit button  
+And I compile the form  
+Then I should see a success message
+
+### Scenario 2: User edits his profile with invalid data
+
+Given I am on the profile page  
+And I click on the edit button  
+And I compile the form with invalid data  
+Then I should see an error message
+
+## Feature 30: Chat with chef
+
+As a logged client  
+I want to chat with the chef  
+So that I can ask questions about the menu
+
+### Scenario 1: From the reservation page
+
+Given I am on a reservation page  
+And I click on the chat button near the chef's name  
+Then I should be redirected to the chat page with the chef
+
+### Scenario 2: From the chef public profile page
+
+Given I am on a chef public profile page  
+And I click on the chat button  
+Then I should be redirected to the chat page with the chef
+
+### Scenario 3: From the chat page
+
+Given I am on the chat page  
+And I click on a previous chat with the chef  
+Then I see the chat with the chef
+And I can chat with the chef
+
+## Feature 31: Chat with client service
+
+As a logged client  
+I want to chat with the client service  
+So that I can be helped
+
+### Scenario 1: From every page
+
+Given I am on every page  
+And I click on the client service button in the footer  
+Then I should be redirected to the chat page with the client service
+
+### Scenario 2: From the chat page
+
+Given I am on the chat page  
+And I click on a previous chat with the client service  
+Then I see the chat with the client service  
+And I can chat with the client service
+
+## Feature 32: Chef public profile view
+
+As a user
+I want to see the chef public profile  
+So that I can view the chef's informations
+
+### Scenario 1: User sees the chef public profile from the menu page
+
+Given I am on a menu page  
+And I click on the chef's name  
+Then I should be redirected to the chef public profile page
+
+### Scenario 2: User sees the chef public profile from the reservation page
+
+Given I am a logged client user
+And I am on a reservation page  
+And I click on the chef's name  
+Then I should be redirected to the chef public profile page
+
+### Scenario 3: User sees the chef public profile from the chat page
+
+Given I am a logged client user  
+And I am on the chat page  
+And I click on the chef's name  
+Then I should be redirected to the chef public profile page
+
+## Feature 33: Menu reservation
+
+As a user
+I want to reserve a menu  
+So that I can pay it
+
+### Scenario 1: Logged User with already compiled data
+
+Given I am a logged client  
+And I am on the menu page  
+And the reservation card is already compiled with the search fields
+And I click on the reservation button  
+Then I should be redirected to the confirmation and payment page
+
+### Scenario 2: User with not compiled data
+
+Given I am a user  
+And I am on the menu page  
+And the reservation card is not compiled with the search fields  
+And I click on the "Controlla disponibilità" button  
+Then I should see an error message that says that I have to compile the reservation card with the search fields
+
+### Scenario 3: User with compiled data and not logged
+
+Given I am not logged  
+And I am on the menu page  
+And the reservation card is compiled with the search fields  
+And I click on the reservation button  
+Then I see the option to login or register
+
+## Feature 34: Menu reservation confirmation
+
+As a logged client
+I want to complete the reservation  
+So that I can pay it
+
+### Scenario 1: User completes the reservation
+
+Given I am on the confirmation page  
+And I compile the form with my data  
+And I click on the pay button  
+Then I should be redirected to the Stripe payment page
+
+### Scenario 2: User completes the reservation with invalid data
+
+Given I am on the confirmation page  
+And I compile the form with invalid data  
+And I click on the pay button  
+Then I should see an error message
 
 TODO: inserire le opzioni cliccabili dall'icona 'profilo' a partire dall'homepage e in generale da quell'header
