@@ -25,7 +25,7 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
 -   Quando un cliente prenota un menu, lo chef ha tot tempo per rifiutare la prenotazione.  
 - Il cliente vede "In attesa di conferma" fino a che non scade il tempo per rifiutare, poi vede "Confermato" o "Rifiutato"
 -  L'admin ha una serie di funzionalità (scritte nel paragrafo apposito)
--   I soldi arrivano tutti a noi e poi noi li giriamo agli chef con un bonifico mensile
+-   I soldi arrivano tutti a noi 
 -   Normalmente si pagano 10 euro di commissioni ad ogni menu. L'utente gold invece non paga nessuna commissione. Nella schermata di pagamento appare un avviso che consiglia all'utente di fare il pro per non pagare le commissioni
 -   Lo chef ha la possibilità di modificare i menu che non hanno prenotazioni attive (_lo chef quindi può mettere in blocco un menu, servire le prenotazioni rimanenti e poi modificarlo_) 
 
