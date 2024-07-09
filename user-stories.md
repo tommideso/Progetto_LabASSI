@@ -250,7 +250,7 @@ Then I should be logout
 
 # Chef
 
-## Feature 12: Chef Menus
+## Feature 1: Chef Menus
 
 As a logged chef  
 I want to see my menus  
@@ -275,7 +275,7 @@ And I click on the "Mostra tutti" button in the "I tuoi menu" section
 Then I should be redirected to the menus page  
 And I should see all my menus
 
-## Feature 13: Chef Single Menu
+## Feature 2: Chef Single Menu
 
 As a logged chef  
 I want to see a single menu  
@@ -299,7 +299,7 @@ Given I am on a reservation page
 And I click on the menu link  
 Then I should be redirected to the menu page
 
-## Feature 14: Chef Reservations
+## Feature 3: Chef Reservations
 
 As a logged chef  
 I want to see my reservations  
@@ -329,7 +329,7 @@ And I should see all my reservations
 Given I am on a menu page  
 Then I should see the last reservations of that menu (_ordered by date of the reservation_)
 
-## Feature 15: Chef Single Reservation
+## Feature 4: Chef Single Reservation
 
 As a logged chef  
 I want to see a single reservation  
@@ -359,7 +359,7 @@ Given I am on the homepage
 And I click on a review  
 Then I should be redirected to the referred reservation page
 
-## Feature 16: Chef reviews
+## Feature 5: Chef reviews
 
 As a logged chef  
 I want to see the reviews  
@@ -381,7 +381,7 @@ Given I am on a reservation page
 And the user has left a review  
 Then I should see the personal review of that reservation and the menu review
 
-## Feature 17: Chef reviews average
+## Feature 6: Chef reviews average
 
 As a logged chef  
 I want to see the average of the reviews I received  
@@ -397,7 +397,7 @@ Then I should see the average of the personal reviews I received in the header
 Given I am on the profile page  
 Then I should see the average of the personal reviews I received
 
-## Feature 17: Chef leaves a review
+## Feature 7: Chef leaves a review
 
 As a logged chef  
 I want to leave a review  
@@ -410,7 +410,7 @@ And I compile the review form
 Then I should see a success message  
 And not be able to leave another review
 
-## Feature 18: Chef chats
+## Feature 8: Chef chats
 
 As a logged chef  
 I want to see my chats
@@ -422,7 +422,7 @@ And I click on the chat icon in the header
 Then I should be redirected to the chats page  
 And I should see all my chats
 
-## Feature 19: Chef Single Chat
+## Feature 9: Chef Single Chat
 
 As a logged chef  
 I want to see a single chat  
@@ -441,7 +441,7 @@ And I click on the chat button near the user's name
 Then I should be redirected to the referred chat page  
 And I should see all the messages of that chat
 
-## Feature 20: Chef sends a message
+## Feature 10: Chef sends a message
 
 As a logged chef  
 I want to send a message  
@@ -453,7 +453,7 @@ Given I am on a chat page
 And I compile the message form  
 Then I should see the message I sent in the chat
 
-## Feature 21: Chef profile edit
+## Feature 11: Chef profile edit
 
 As a logged chef  
 I want to edit my profile  
@@ -474,7 +474,7 @@ And I click on the edit button
 And I compile the form with invalid data  
 Then I should see an error message]
 
-## Feature 21: Chef profile
+## Feature 12: Chef profile
 
 As a logged chef  
 I want to see my profile  
@@ -486,7 +486,7 @@ Given I am on every page
 And I click on the profile link in the header  
 Then I should be redirected to the profile page
 
-## Feature 22: Chef menu creation
+## Feature 13: Chef menu creation
 
 As a logged chef  
 I want to create a menu  
@@ -507,7 +507,7 @@ And I click on the create menu button
 And I compile the form with invalid data  
 Then I should see an error message
 
-## Feature 23: Chef menu edit (???)
+## Feature 14: Chef menu edit (???)
 
 As a logged chef  
 I want to edit a menu  
@@ -527,7 +527,7 @@ Given I am on the menu page
 And I don't see the edit button (_the conditions to edit a menu are not met_)  
 Then I can't edit the menu
 
-## Feature 23: Chef menu deactivation
+## Feature 15: Chef menu deactivation
 
 As a logged chef  
 I want to deactivate a menu  
@@ -540,7 +540,7 @@ And I click on the deactivate button
 Then I should see a success message  
 And I should see the menu as deactivated
 
-## Feature 24: Chef menu activation
+## Feature 16: Chef menu activation
 
 As a logged chef  
 I want to activate a menu  
@@ -553,7 +553,7 @@ And I click on the activate button
 Then I should see a success message  
 And I should see the menu as activated
 
-## Feature 25: Chef reservation rejection
+## Feature 17: Chef reservation rejection
 
 As a logged chef  
 I want to reject a reservation
@@ -582,7 +582,7 @@ Then I should see a success message
 
 # Cliente
 
-## Feature 10: Searching menu in the homepage
+## Feature 1: Searching menu in the homepage
 
 As a logged client or unlogged user  
 I want to search for a menu  
@@ -667,7 +667,7 @@ And I select the option I want
 And I click on the submit button  
 Then the popup should close and I should see below the menus of my previous search sorted
 
-## Feature 11: Menu selection
+## Feature 2: Menu selection
 
 As a logged client or unlogged user  
 I want to select a menu  
@@ -695,7 +695,7 @@ And I see a menu that I like
 And I click on the menu  
 Then I should be redirected to the menu page
 
-## Feature 26: Logged user menu view
+## Feature 3: Logged user menu view
 
 As a logged client  
 I want to see a menu  
@@ -713,7 +713,7 @@ Given I am on a reservation page
 And I click on the menu link  
 Then I am redirected to the menu page
 
-## Feature 27: Menu review
+## Feature 4: Menu review
 
 As a logged client  
 I want to leave a menu review  
@@ -727,7 +727,7 @@ And I compile the menu review form correctly
 Then I should see a success message  
 And not be able to leave another menu review for that reservation
 
-## Feature 28: Chef review
+## Feature 5: Chef review
 
 As a logged client  
 I want to leave a chef review  
@@ -741,7 +741,7 @@ And I compile the chef review form correctly
 Then I should see a success message  
 And not be able to leave another chef review for that reservation
 
-## Feature 29: Profile edit
+## Feature 6: Profile edit
 
 As a logged client  
 I want to edit my profile  
@@ -761,7 +761,7 @@ And I click on the edit button
 And I compile the form with invalid data  
 Then I should see an error message
 
-## Feature 30: Chat with chef
+## Feature 7: Chat with chef
 
 As a logged client  
 I want to chat with the chef  
@@ -786,7 +786,7 @@ And I click on a previous chat with the chef
 Then I see the chat with the chef
 And I can chat with the chef
 
-## Feature 31: Chat with admin
+## Feature 8: Chat with admin
 
 As a logged client  
 I want to chat with admin  
@@ -805,7 +805,7 @@ And I click on a previous chat with the admin
 Then I see the chat with admin  
 And I can chat with admin
 
-## Feature 32: Chef public profile view
+## Feature 9: Chef public profile view
 
 As a user
 I want to see the chef public profile  
@@ -831,7 +831,7 @@ And I am on the chat page
 And I click on the chef's name  
 Then I should be redirected to the chef public profile page
 
-## Feature 33: Menu reservation
+## Feature 10: Menu reservation
 
 As a user  
 I want to reserve a menu  
@@ -861,7 +861,7 @@ And the reservation card is compiled with the search fields
 And I click on the reservation button  
 Then I see the option to login or register
 
-## Feature 34: Menu reservation confirmation
+## Feature 11: Menu reservation confirmation
 
 As a logged client  
 I want to complete the reservation  
@@ -883,7 +883,7 @@ Then I should see an error message
 
 # Admin
 
-## Feature 36: Chef search and select
+## Feature 1: Chef search and select
 
 As a logged admin  
 I want to view a chef  
@@ -916,7 +916,7 @@ Given I am on a reservation page
 And I click on the chef's name  
 Then I am redirected to the chef profile page (_admin side_)
 
-## Feature 37: Chat with user
+## Feature 2: Chat with user
 
 As a logged admin  
 I want to chat with a user  
@@ -949,7 +949,7 @@ Given I am on the user profile page (_admin side_)
 And I click on the chat button near the user's name  
 Then I am redirected to the chat page with that user
 
-## Feature 38: Admin sees a reservation
+## Feature 3: Admin sees a reservation
 
 As a logged admin  
 I want to see a reservation  
@@ -976,7 +976,7 @@ And I see a reservation in the reservations list for that menu
 And I click on a reservation  
 Then I am redirected to the reservation page (_admin side_)
 
-## Feature 39: Admin blocks a chef
+## Feature 4: Admin blocks a chef
 
 As a logged admin  
 I want to block a chef  
@@ -989,7 +989,7 @@ And I click on the block button
 Then I should see a success message  
 And the chef should be blocked
 
-## Feature 40: Admin unblocks a chef
+## Feature 5: Admin unblocks a chef
 
 As a logged admin  
 I want to unblock a chef  
@@ -1001,7 +1001,7 @@ Given I am on the chef profile page (_admin side_)
 And I click on the unblock button  
 Then I should see a success message
 
-## Feature 41: Refund a reservation
+## Feature 6: Refund a reservation
 
 As a logged admin  
 I want to refund a reservation
@@ -1019,7 +1019,7 @@ And I click on the refund button
 And the refund fails (_already refunded or other stripe errors_)  
 Then I should see an error message
 
-## Feature 42: Admin deactivates a menu
+## Feature 7: Admin deactivates a menu
 
 As a logged admin  
 I want to deactivate a menu  
@@ -1032,7 +1032,7 @@ And I click on the deactivate button
 Then I should see a success message  
 And the chef can't reactivate the menu
 
-## Feature 43: Admin activates a menu
+## Feature 8: Admin activates a menu
 
 As a logged admin  
 I want to activate a menu
@@ -1044,7 +1044,7 @@ Given I am on the menu page (_admin side_)
 And I click on the activate button  
 Then I should see a success message
 
-## Feature 44: Admin menu select and view
+## Feature 9: Admin menu select and view
 
 As a logged admin  
 I want to view a menu  
@@ -1064,7 +1064,7 @@ And I see a menu in the menus list of that reservation
 And I click on a menu  
 Then I am redirected to the menu page (_admin side_)
 
-## Feature 45: User selection
+## Feature 10: User selection
 
 As a logged admin  
 I want to view a user  
