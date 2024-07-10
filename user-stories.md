@@ -888,6 +888,18 @@ And I compile the form with invalid data
 And I click on the pay button  
 Then I should see an error message
 
+## Feature 10: User sends a message
+
+As a logged user  
+I want to send a message  
+So that I can chat with the chef
+
+### Scenario 1: User sends a message from a chat page
+
+Given I am on a chat page  
+And I compile the message form  
+Then I should see the message I sent in the chat
+
 # Admin
 
 ## Feature 1: Chef search and select
@@ -1100,3 +1112,15 @@ Given I am on the user profile page (_admin side_)
 And I click on the ban button  
 Then I should see a success message  
 And the user should be banned  
+
+## Feature 12: Admin sends a message
+
+As a logged admin  
+I want to send a message  
+So that I can chat with the users
+
+### Scenario 1: Admin sends a message from a chat page
+
+Given I am on a chat page  
+And I compile the message form  
+Then I should see the message I sent in the chat

@@ -268,8 +268,7 @@ Per ora sono stati inseriti solo email e password (è la pagina a cui si arriva 
 -   Logo
 
 # DA DEFINIRE
-
-3. Utente gold?
+1. Utente gold?
     - Normalmente si pagano 10 euro di commissioni ad ogni menu. L'utente gold invece non paga nessuna commissione. Nella schermata di pagamento appare un avviso che consiglia all'utente di fare il pro per non pagare le commissioni
 
 
