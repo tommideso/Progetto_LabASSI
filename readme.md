@@ -23,6 +23,7 @@ Io persona cerco in base alla distanza e prezzo e tipo di cucina, scelgo il “p
     -   Per le email
 -   Quando un cliente prenota per un pranzo/cena in un determinato giorno, il giorno scelto diventa automaticamente bloccato per altre prenotazioni e questo diventa visibile mediante un calendario che il cliente visiona in fase di prenotazione (nel calendario ci sono SOLO le altre prenotazioni, non rientrano gli impegni esterni dello chef)
 -   Quando un cliente prenota un menu, lo chef ha tot tempo per rifiutare la prenotazione.
+-   Le prenotazioni rifiutate vengono eliminate sia per il cliente che per lo chef. 
 
 ### Questione allergeni/ preferenze:
 
@@ -78,6 +79,7 @@ Vengono mostrati i primi _x_ risultati e tramite infinite scroll o paginazione s
 -   Se l'utente ha compilato:
     -   Se l'utente è registrato gli compare 'prenota ora'
     -   Se l'utente non è registrato e clicca 'prenota ora' appare un popup che gli dice di registrarsi/accedere per prenotare (con reindirizzamento alla pagina di registrazione/accesso)
+-   Il cliente può prenotare solo per un giorno compreso tra 1 e 14 giorni dalla data attuale
 
 ## Pagina profilo pubblico dello chef (visibile da tutti)
 
@@ -135,6 +137,7 @@ Solito discorso: sono stati inseriti solo email e password (è la pagina a cui s
 
 Campi uguali alla pagina di completamento profilo chef ma modificabile premendo "modifica profilo".
 Da qui può vedere anche la media di tutte le sue recensioni numeriche lasciate dai clienti (non le recensioni ai menu)
+-  Lo chef può modificare tutti i campi tranne le portate
 
 ## Pagina singola prenotazione (lato chef)
 
@@ -158,7 +161,9 @@ Da qui può vedere anche la media di tutte le sue recensioni numeriche lasciate 
 
 -   Pulsante per disattivare il menu
 -   Possibilità di vedere le ultime prenotazioni per quel menu
--   Bottone modifica menu sempre cliccabile (le modifiche che può fare sono tutti i campi tranne le portate?)
+-   Bottone modifica menu sempre cliccabile (le modifiche che può fare sono tutti i campi tranne le portate)
+-   Uno chef può solo rimuovere allergeni (lo chef si è scordato di scrivere che il menu è senza glutine)
+-   Il prezzo può essere modificato ma per gli utenti che hanno già fatto la prenotazione nella pagina della prenotazione rimane quello che hanno pagato al momento della prenotazione
 
 ## Pagina con tutte le prenotazioni (lato chef)
 
@@ -221,6 +226,7 @@ Per ora sono stati inseriti solo email e password (è la pagina a cui si arriva 
 10. Form che compare solo dopo la data della prenotazione per lasciare una recensione scritta e numerica al menu e solo numerica per lo chef.
 11. Visualizzare recensione lasciata dallo chef
 
+
 # Admin (o servizio clienti)
 
 ## Funzioni principali
@@ -228,6 +234,8 @@ Per ora sono stati inseriti solo email e password (è la pagina a cui si arriva 
 1. Gestire e rimborsare le prenotazioni "problematiche". Il workflow è il seguente: l'utente contatta in chat l'admin, l'admin clicca sul nome utente e attraverso il profilo dell'utente accede alla prenotazione "problematica". Qui può rimborsare la prenotazione.
 2. Bloccare temporaneamente uno chef per verifiche se riceve molte recensioni pessime.
 3. Disattivare temporaneamente il menu di un chef.
+4. L'admin può bannare l'utente ed in caso gestire opportunamente la cosa:
+    - il suo account e tutte le sue recensioni vengono eliminate
 
 ## Pagine e funzionalità
 
@@ -239,6 +247,7 @@ Per ora sono stati inseriti solo email e password (è la pagina a cui si arriva 
     3. Cliccando su una prenotazione, l'admin ha la possibilità rimborsare totalmente il cliente in caso di problemi (ad es. se la prenotazione è stata rifiutata dallo chef oltre il tempo limite, oppure i clienti hanno avuto problemi con il cibo, etc.)
     4. Cliccando su un menu, l'admin ha la possibilità di disattivarlo (ad esempio puoi chiedere allo chef di cambiare alcune cose e fino a quel momento lo tiene disattivato). Il menu disattivato dall'admin non può essere disattivato dallo chef (quindi è un altro stato rispetto al menu disattivato dallo chef)
 -   Inoltre cliccando su un cliente, l'admin può vedere tutte le sue prenotazioni
+-   Nell'homepage dell'admin oltre agli chef compare un tab con gli utenti (come nel caso degli chef, possono essere filtrati e ordinati in base alla media delle recensioni)
 
 # Chat
 
@@ -260,13 +269,7 @@ Per ora sono stati inseriti solo email e password (è la pagina a cui si arriva 
 
 # DA DEFINIRE
 
-1. Se l'admin può bloccare l'utente ed in caso gestire opportunamente la cosa:
-   Se decidiamo di farlo:
-    - nell'homepage dell'admin oltre agli chef compare un tab con gli utenti (come nel caso degli chef, possono essere filtrati e ordinati in base alla media delle recensioni)
-    - bisogna gestire il "bloccare gli utenti", ad esempio cosa succede alle loro recensioni?
-2. Se l'admin può vedere gli utenti oltre agli chef nell'homepage
 3. Utente gold?
     - Normalmente si pagano 10 euro di commissioni ad ogni menu. L'utente gold invece non paga nessuna commissione. Nella schermata di pagamento appare un avviso che consiglia all'utente di fare il pro per non pagare le commissioni
-4. Il cliente può prenotare solo per un giorno compreso tra 1 e 14 giorni dalla data attuale?
-5. Modifica menu: lo chef può modificare tutti i campi tranne le portate?
-6. Le prenotazioni rifiutate, mentre compaiono nel caso del cliente, nel caso dello chef vengono eliminate (metterle in uno storico apparte ??)
+
+

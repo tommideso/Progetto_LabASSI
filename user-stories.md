@@ -248,6 +248,18 @@ Given I am on a page
 When I click on the profile icon and I click on logout  
 Then I should be logout
 
+## Feature 10: Banned user tries to login
+
+As a banned user  
+I try to login  
+
+### Scenario 1: Banned user tries to login  
+
+Given I am on the login page   
+When I try to login   
+Then I should see an error message saying that I am banned  
+
+
 # Chef
 
 ## Feature 1: Chef Menus
@@ -507,7 +519,7 @@ And I click on the create menu button
 And I compile the form with invalid data  
 Then I should see an error message
 
-## Feature 14: Chef menu edit (???)
+## Feature 14: Chef menu edits
 
 As a logged chef  
 I want to edit a menu  
@@ -516,16 +528,11 @@ So that I can update it
 ### Scenario 1: Chef edits a menu
 
 Given I am on the menu page  
-And I see the edit button (_the conditions to edit a menu are met_)  
+And I see the edit button    
 And I click on the edit button  
-Then I can see the form to edit the menu
-And I can submit the new data
+Then I can see the form to edit the menu  
+And I can submit the new data  
 
-### Scenario 2: Chef can't edit a menu
-
-Given I am on the menu page  
-And I don't see the edit button (_the conditions to edit a menu are not met_)  
-Then I can't edit the menu
 
 ## Feature 15: Chef menu deactivation
 
@@ -1081,3 +1088,15 @@ Then I am redirected to the user profile page (_admin side_)
 Given I am on a reservation page  
 And I click on the user's name  
 Then I am redirected to the user profile page (_admin side_)
+
+## Feature 11: Admin ban a user
+
+As a logged admin  
+I want to ban a user  
+So that he can't use the platform anymore  
+
+### Scenario 1: Admin ban a user from the user profile page (_admin side_)
+Given I am on the user profile page (_admin side_)  
+And I click on the ban button  
+Then I should see a success message  
+And the user should be banned  
