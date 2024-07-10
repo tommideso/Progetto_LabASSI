@@ -1,20 +1,3 @@
-# AO CHEF
-
-Nella nostra piattaforma ci sono tre utenti:
-
--   Chef
--   Customer (con la possibilità di diventare utente Pro)
--   Admin
-
-`Verified user` -> Utente che
-
--   si è registrato con email e password e ha verificato la propria email.
--   si è registrato con OAuth
-
-`Completed user` -> 'Verified user' che ha completato il proprio profilo
-
-`Unverified user` -> Utente che si è registrato con email e password ma non ha verificato la propria email
-
 # Login e registrazione di utenti
 
 Di seguito sono elencate le user stories per la registrazione e il login degli utenti, con e senza OAuth, con la possibilità di completare il proprio profilo e di recuperare la password.
