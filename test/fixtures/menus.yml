@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  titolo: MyString
+  descrizione: MyText
+  prezzo_persona: 9.99
+  min_persone: 1
+  max_persone: 1
+  tipo_cucina: MyString
+  allergeni: 
+  preferenze_alimentari: 
+  adattabile: 
+  extra: 
+  prezzo_extra: 9.99
+  disattivato: false
+
+two:
+  titolo: MyString
+  descrizione: MyText
+  prezzo_persona: 9.99
+  min_persone: 1
+  max_persone: 1
+  tipo_cucina: MyString
+  allergeni: 
+  preferenze_alimentari: 
+  adattabile: 
+  extra: 
+  prezzo_extra: 9.99
+  disattivato: false

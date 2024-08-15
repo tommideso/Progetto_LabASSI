@@ -1,0 +1,47 @@
+<h1><%= @menu.titolo %></h1>
+
+<p><strong>Descrizione:</strong> <%= @menu.descrizione %></p>
+
+<p><strong>Prezzo per Persona:</strong> <%= number_to_currency(@menu.prezzo_persona, unit: "€") %></p>
+
+<p><strong>Numero Minimo di Persone:</strong> <%= @menu.min_persone %></p>
+
+<p><strong>Numero Massimo di Persone:</strong> <%= @menu.max_persone %></p>
+
+<p><strong>Tipo di Cucina:</strong> <%= @menu.tipo_cucina %></p>
+
+<p><strong>Allergeni:</strong>
+  <ul>
+    <% @menu.allergeni.each do |allergene, presente| %>
+      <li><%= "#{allergene.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
+    <% end %>
+  </ul>
+</p>
+
+<p><strong>Preferenze Alimentari:</strong>
+  <ul>
+    <% @menu.preferenze_alimentari.each do |preferenzas, presente| %>
+      <li><%= "#{preferenzas.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
+    <% end %>
+  </ul>
+</p>
+
+<p><strong>Adattabile:</strong>
+  <ul>
+    <% @menu.adattabile.each do |adattamento, presente| %>
+      <li><%= "#{adattamento.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
+    <% end %>
+  </ul>
+</p>
+
+<p><strong>Extra:</strong>
+  <ul>
+    <% @menu.extra.each do |extra, presente| %>
+      <li><%= "#{extra.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
+    <% end %>
+  </ul>
+</p>
+
+<p><strong>Prezzo Extra:</strong> <%= number_to_currency(@menu.prezzo_extra, unit: "€") %></p>
+
+<p><strong>Disattivato:</strong> <%= @menu.disattivato ? 'Sì' : 'No' %></p>

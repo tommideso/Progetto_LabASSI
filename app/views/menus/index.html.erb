@@ -1,0 +1,9 @@
+<h1> Benvenuto su AOCHEF </h1>
+
+<div> 
+   <% @menu.each do |menu| %> 
+        <h2> <%= link_to menu.titolo, menu_path(menu.id) %> </h2>
+        <p> <%= menu.descrizione %> </p>
+        <p> <%= menu.allergeni %> </p>
+   <% end %> 
+</div>
