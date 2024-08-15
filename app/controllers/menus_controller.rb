@@ -1,5 +1,5 @@
 class MenusController < ApplicationController
-    before_action :find_menu, only: [:show]
+    before_action :find_menu, only: [:show, :edit, :update, :destroy]
 
     def index
         @menu = Menu.all
@@ -12,6 +12,17 @@ class MenusController < ApplicationController
         @menu = Menu.new
     end
 
+    def edit
+    end
+
+    def update
+        if @menu.update(menu_params)
+            redirect_to @menu
+        else
+            render :new, status: :unprocessable_entity
+        end
+    end
+
     def create
         @menu = Menu.new(menu_params)
         if @menu.save
@@ -20,6 +31,15 @@ class MenusController < ApplicationController
             render :new, status: :unprocessable_entity
         end
     end
+
+    def destroy
+        if @menu.destroy 
+            redirect_to root_path
+        else
+            render :show, status: :unprocessable_entity
+        end
+    end
+
 
     private
     

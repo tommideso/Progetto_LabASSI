@@ -73,3 +73,5 @@
 <p><strong>Prezzo Extra:</strong> <%= number_to_currency(@menu.prezzo_extra, unit: "€") %></p>
 
 <p><strong>Disattivato:</strong> <%= @menu.disattivato ? 'Sì' : 'No' %></p>
+
+<h3> <%= link_to "Modifica il post", edit_menu_path %> </h3>
