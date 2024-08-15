@@ -12,7 +12,7 @@
 
 <p><strong>Allergeni:</strong>
   <% if @menu.allergeni.present? %>
-    <ul>
+    <ul class="m-0">
       <% @menu.allergeni.each do |allergene, presente| %>
         <li><%= "#{allergene.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
       <% end %>
