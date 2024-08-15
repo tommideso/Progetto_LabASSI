@@ -1,0 +1,100 @@
+<%= form_with model: @menu do |form| %>
+    <!-- mostriamo eventuali errori legati alla validazione del modello -->
+    <% if form.object.errors.any? %>
+        <% form.object.errors.full_messages.each do |message| %>
+        <div> <%= message %> </div>
+        <% end %>
+    <% end %>
+
+    <!-- mostriamo i contenuti del modello -->
+    <div>
+        <%= form.label :titolo %>
+        <%= form.text_field :titolo %>
+    </div>
+
+    <div>
+        <%= form.label :descrizione %>
+        <%= form.text_area :descrizione %>
+    </div>
+
+    <div>
+        <%= form.label :prezzo_persona %>
+        <%= form.number_field :prezzo_persona, step: '0.01' %>
+    </div>
+
+    <div>
+        <%= form.label :min_persone %>
+        <%= form.number_field :min_persone, step: 1 %>
+    </div>
+
+    <div>
+        <%= form.label :max_persone %>
+        <%= form.number_field :max_persone, step: 1 %>
+    </div>
+
+    <div>
+        <%= form.label :tipo_cucina %>
+        <!-- usiamo map per mostrare la prima lettera maiuscola (pur inviando al server la stringa minuscola) -->
+        <%= form.select :tipo_cucina, options_for_select(Menu::TIPI_CUCINA.map { |tipo| [tipo.capitalize, tipo] }, @menu.tipo_cucina) %>
+    </div>
+
+    <div>
+        <%= form.label :allergeni, "Seleziona gli allergeni:" %><br>
+        <% Menu::ALLERGENI.each do |allergene| %>
+        <div>
+            <!-- inviamo il contenuto come l'elemento di un dizionario con valore true se la checkbox è checkata
+            grazie alla condizione come terzo parametro la checkbox viene mostrata checkata se il valore è presente -->
+            <%= check_box_tag "menu[allergeni][#{allergene}]", 'true', @menu.allergeni && @menu.allergeni[allergene] %>
+            <%= label_tag "menu_allergeni_#{allergene}", allergene.capitalize %>
+        </div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :preferenze_alimentari, "Seleziona le preferenze alimentari:" %><br>
+        <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
+        <div>
+            <!-- stessa cosa della lista degli allergeni -->
+            <%= check_box_tag "menu[preferenze_alimentari][#{preferenza}]", 'true', @menu.preferenze_alimentari && @menu.preferenze_alimentari[preferenza] %>
+            <%= label_tag "menu_preferenze_alimentari_#{preferenza}", preferenza.capitalize %>
+        </div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :adattabile, "Seleziona l'adattabilità rispetto gli allergeni e le preferenze alimentari:" %><br>
+        <div> Adattabile per le preferenze alimentari 
+            <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
+            <div>
+                <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", 'true', @menu.adattabile&.dig("preferenze", preferenza) %>
+                <%= label_tag "menu_adattabile_preferenze#{preferenza}", "Adattabile per " + preferenza  %>
+            </div>
+            <% end %>
+        </div>
+        <div> Adattabile per gli allergeni 
+            <% Menu::ALLERGENI.each do |allergene| %>
+            <div>
+                <%= check_box_tag "menu[adattabile][allergeni][#{allergene}]", 'true', @menu.adattabile&.dig("allergeni", allergene) %>
+                <%= label_tag "menu_adattabile_allergeni#{allergene}", "Adattabile per " + allergene  %>
+            </div>
+            <% end %>
+        </div>
+    </div>
+
+    <div>
+        <%= form.label :extra, 'Seleziona gli extra:' %><br>
+        <% Menu::EXTRA.each do |extra| %>
+        <div>
+            <%= check_box_tag "menu[extra][#{extra}]", 'true', @menu.extra && @menu.extra[extra] %>
+            <%= label_tag "menu_extra_#{extra}", extra.capitalize %>
+        </div>
+        <% end %>
+    </div>
+    
+    <div>
+        <%= form.label :prezzo_extra %>
+        <%= form.number_field :prezzo_extra, step: '0.01' %>
+    </div>
+
+    <%= form.button %>
+<% end %>
