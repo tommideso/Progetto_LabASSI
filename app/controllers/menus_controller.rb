@@ -13,9 +13,9 @@ class MenusController < ApplicationController
     end
 
     def create
-        @menu = BlogPost.new(params_blog_post)
-        if @post.save
-            redirect_to @post
+        @menu = Menu.new(menu_params)
+        if @menu.save
+            redirect_to @menu
         else
             render :new, status: :unprocessable_entity
         end

@@ -63,4 +63,3 @@ menu2.update!(
     prezzo_extra: 10,
     disattivato: false
 )
-)
