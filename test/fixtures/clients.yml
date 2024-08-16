@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  allergeni: 
+  indirizzo: MyString
+  telefono: MyString
+  user: one
+
+two:
+  allergeni: 
+  indirizzo: MyString
+  telefono: MyString
+  user: two
