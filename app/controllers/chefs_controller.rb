@@ -1,0 +1,3 @@
+class ChefsController < ApplicationController
+
+end
