@@ -25,8 +25,9 @@ class Menu < ApplicationRecord
     private
 
     def max_persone_maggior_di_min_persone
-        if (max_persone < min_persone)
-            errors.add(:max_persone, "deve essere maggiore rispetto di min persone")
+        # Verifica che entrambi i campi siano presenti prima di eseguire il confronto
+        if max_persone.present? && min_persone.present? && max_persone < min_persone
+            errors.add(:max_persone, "deve essere maggiore rispetto a min_persone")
         end
     end
 end
