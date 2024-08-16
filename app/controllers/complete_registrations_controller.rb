@@ -9,6 +9,7 @@ class CompleteRegistrationsController < ApplicationController
 
   def create
     if @user.update(user_params)
+      @user.update(inizializzato: false)
       redirect_to root_path, notice: 'Profilo completato con successo.'
     else
       render :new, status: :unprocessable_entity
