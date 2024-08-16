@@ -11,13 +11,14 @@ class RegistrationsController < Devise::RegistrationsController
         devise_parameter_sanitizer.permit(:account_update, keys: [:nome, :cognome])
     end
 
-    # sovrascriviamo il metodo create per creare un'istanza di chef o cliente a seconda della scelta dell'utente
+    # sovrascrivo il metodo create, chiamando comunque super, per impostare inizializzato a true
+    # e passare poi al completamento (con il relativo controller)
     def create
-        super do |utente|
-            if utente.persisted? && utente.ruolo.present?
+        super do |utente| 
+            if utente.persisted?
+                utente.update_column(:inizializzato, true)
                 sign_in(utente)
-                redirect_to new_complete_registration_path
-                return
+                redirect_to new_complete_registration_path and return
             end
         end
     end

@@ -9,6 +9,10 @@ class User < ApplicationRecord
   # usiamo dependent: :destroy per fare in modo che se un'istanza di utente viene eliminata, allora viene eliminata la relativa istanza di chef o client
   has_one :chef, dependent: :destroy
   has_one :client, dependent: :destroy
+  # fondamentale definire gli attributi nestati perché cosi riusciamo a prendere, tramite helper fields_for, gli attributi di chef e cliente
+  # come fossero "nestati" da dentro user!
+  accepts_nested_attributes_for :chef
+  accepts_nested_attributes_for :client
 
   # validazione per i campi
   validates :ruolo, presence: true

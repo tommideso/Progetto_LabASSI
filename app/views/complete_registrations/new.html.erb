@@ -1,8 +1,6 @@
 <h2>Completa il tuo profilo</h2>
 
 <%= form_for @user, url: complete_registration_path, method: :post do |f| %>
-
-  <% # Visualizzazione degli errori in testa al form %>
   <% if @user.errors.any? || (@chef && @chef.errors.any?) || (@client && @client.errors.any?) %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count + (@chef&.errors&.count || 0) + (@client&.errors&.count || 0), "error") %> proibisce di salvare questo profilo:</h2>
@@ -37,7 +35,7 @@
   </div>
 
   <% if @user.ruolo == "chef" %>
-    <%= fields_for :chef, @chef || Chef.new do |chef_form| %>
+    <%= f.fields_for :chef, @chef || Chef.new do |chef_form| %>
       <div class="field">
         <%= chef_form.label :indirizzo %><br />
         <%= chef_form.text_field :indirizzo %>
@@ -59,7 +57,7 @@
       </div>
     <% end %>
   <% elsif @user.ruolo == "client" %>
-    <%= fields_for :client, @client || Client.new do |client_form| %>
+    <%= f.fields_for :client, @client || Client.new do |client_form| %>
       <div class="field">
         <%= client_form.label :indirizzo %><br />
         <%= client_form.text_field :indirizzo %>
