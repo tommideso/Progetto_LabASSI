@@ -14,7 +14,7 @@
   <% if @menu.allergeni.present? %>
     <ul class="m-0">
       <% @menu.allergeni.each do |allergene, presente| %>
-        <li><%= "#{allergene.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
+        <li><%= "#{allergene.capitalize}: #{ActiveModel::Type::Boolean.new.cast(presente) ? 'Sì' : 'No'}" %></li>
       <% end %>
     </ul>
   <% else %>
@@ -26,7 +26,7 @@
   <% if @menu.preferenze_alimentari.present? %>
     <ul>
       <% @menu.preferenze_alimentari.each do |preferenza, presente| %>
-        <li><%= "#{preferenza.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
+        <li><%= "#{preferenza.capitalize}: #{ActiveModel::Type::Boolean.new.cast(presente) ? 'Sì' : 'No'}" %></li>
       <% end %>
     </ul>
   <% else %>
@@ -38,7 +38,7 @@
   <% if @menu.adattabile.present? && @menu.adattabile["allergeni"].present? %>
     <ul>
       <% @menu.adattabile["allergeni"].each do |adattamento, presente| %>
-        <li><%= "#{adattamento.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
+        <li><%= "#{adattamento.capitalize}: #{ActiveModel::Type::Boolean.new.cast(presente) ? 'Sì' : 'No'}" %></li>
       <% end %>
     </ul>
   <% else %>
@@ -50,7 +50,7 @@
   <% if @menu.adattabile.present? && @menu.adattabile["preferenze"].present? %>
     <ul>
       <% @menu.adattabile["preferenze"].each do |adattamento, presente| %>
-        <li><%= "#{adattamento.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
+        <li><%= "#{adattamento.capitalize}: #{ActiveModel::Type::Boolean.new.cast(presente) ? 'Sì' : 'No'}" %></li>
       <% end %>
     </ul>
   <% else %>
@@ -62,7 +62,7 @@
   <% if @menu.extra.present? %>
     <ul>
       <% @menu.extra.each do |extra, presente| %>
-        <li><%= "#{extra.capitalize}: #{presente ? 'Sì' : 'No'}" %></li>
+        <li><%= "#{extra.capitalize}: #{ActiveModel::Type::Boolean.new.cast(presente) ? 'Sì' : 'No'}" %></li>
       <% end %>
     </ul>
   <% else %>
