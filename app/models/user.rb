@@ -13,6 +13,7 @@ class User < ApplicationRecord
   # validazione per i campi
   validates :ruolo, presence: true
   validates :ruolo, inclusion: { in: ["chef", "client", "admin"] }
+  validate :nome_e_cognome_presenti_se_inizializzato
 
   # metodi per determinare i ruoli
   def chef?
@@ -23,5 +24,11 @@ class User < ApplicationRecord
   end
   def admin?
     ruolo == "admin"
+  end
+
+  private
+
+  def nome_e_cognome_presenti_se_inizializzato
+    errors.add(:base, "Nome e cognome devono essere presenti") if inizializzato && (nome.blank? || cognome.blank?)
   end
 end
