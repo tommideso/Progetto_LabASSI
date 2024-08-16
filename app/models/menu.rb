@@ -4,10 +4,8 @@ class Menu < ApplicationRecord
 
     # per l'attributo booleano definisco il validates usando incluse per evitare problemi se è false
     validates :disattivato, inclusion: { in: [true, false] }
-    validates :prezzo_extra, presence: true, if: -> { extra_has_selected? }
-    validates :extra, presence: true, if: -> { prezzo_extra.present? }
-
-    validate :prezzo_extra_has_at_least_one_extra, if: -> { prezzo_extra.present? }
+    # per extra e prezzo_extra definisco una validazione con un metodo 
+    validate :prezzo_and_extra
 
     # definiamo direttamente nel modello delle liste immutabili per la lista degli allergeni, le preferenze alimentari e il tipo di cucina
     # (così se vogliamo modificarli, li dobbiamo modificare solamente qua)
@@ -17,6 +15,7 @@ class Menu < ApplicationRecord
     TIPI_CUCINA = ["mare", "terra", "cinese", "indiano"].freeze
     EXTRA = ["vino", "mise en place"].freeze
 
+    
     private
 
     def max_persone_maggior_di_min_persone
@@ -26,15 +25,13 @@ class Menu < ApplicationRecord
         end
     end
 
-    def prezzo_extra_has_at_least_one_extra
-        # Verifica che almeno uno degli extra sia selezionato
-        selected_extras = extra.select { |key, value| value == "true" }.keys
-        unless (selected_extras & EXTRA).any?
-            errors.add(:extra, "almeno uno degli extra deve essere selezionato")
+    def prezzo_and_extra
+        # se un extra è stato selezionato (quindi ci sta almeno uno con un valore true) e prezzo_extra è vuoto, restituisci errore
+        if extra.values.any? { |value| value == "true" } && prezzo_extra.blank?
+            errors.add(:prezzo_extra, "deve essere presente se selezioni un extra")
+        # se il prezzo è stato inserito ma non ci sta nessun extra (non c'è ne sta nemmeno una true), restituisci errore
+        elsif prezzo_extra.present? && !extra.values.any? { |value| value == "true"}
+            errors.add(:extra, "deve avere almeno una selezione se ci sta un prezzo")
         end
-    end
-
-    def extra_has_selected?
-        extra.present? && extra.values.any? { |value| value == "true" }
     end
 end
