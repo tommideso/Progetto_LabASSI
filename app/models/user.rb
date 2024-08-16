@@ -11,17 +11,17 @@ class User < ApplicationRecord
   has_one :client, dependent: :destroy
 
   # validazione per i campi
-  validates :nome, :cognome, :ruolo, presence: true
+  validates :ruolo, presence: true
   validates :ruolo, inclusion: { in: ["chef", "client", "admin"] }
 
   # metodi per determinare i ruoli
   def chef?
-    role == "chef"
+    ruolo == "chef"
   end
   def client?
-    role == "client"
+    ruolo == "client"
   end
   def admin?
-    role == "admin"
+    ruolo == "admin"
   end
 end

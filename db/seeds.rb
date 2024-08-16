@@ -31,7 +31,7 @@ menu1.update!(
             "arachidi" => false
         }
     },
-    extra: { "bevande_incluse" => false, "dessert" => true },
+    extra: { "mise en place" => false, "vino" => true },
     prezzo_extra: 5,
     disattivato: false
 )
@@ -59,7 +59,7 @@ menu2.update!(
             "arachidi" => false
         }
     },
-    extra: { "bevande_incluse" => true, "dessert" => true },
+    extra: { "mise en place" => true, "vino" => true },
     prezzo_extra: 10,
     disattivato: false
 )

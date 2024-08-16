@@ -1,5 +1,15 @@
 <h1 class="align-middle"> Benvenuto su AOCHEF </h1>
 
+<% if user_signed_in? %>
+   <% if current_user.chef? %>
+   <h2> Benvenuto chef </h2>
+   <% elsif current_user.client? %>
+   <h2> Benvenuto client </h2>
+   <% elsif current_user.admin? %>
+   <h2> Benvenuto admin </h2>
+   <% end %>
+<% end %>
+
 <div> 
    <% @menu.each do |menu| %> 
         <h2> <%= link_to menu.titolo, menu_path(menu.id) %> </h2>

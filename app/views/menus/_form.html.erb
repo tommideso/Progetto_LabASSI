@@ -42,6 +42,7 @@
         <%= form.label :allergeni, "Seleziona gli allergeni:" %><br>
         <% Menu::ALLERGENI.each do |allergene| %>
         <div>
+            <%= hidden_field_tag "menu[allergeni][#{allergene}]", 'false' %>
             <!-- inviamo il contenuto come l'elemento di un dizionario con valore true se la checkbox è checkata
             grazie alla condizione come terzo parametro la checkbox viene mostrata checkata se il valore è presente -->
             <%= check_box_tag "menu[allergeni][#{allergene}]", 'true', @menu.allergeni && @menu.allergeni[allergene] %>
@@ -54,6 +55,7 @@
         <%= form.label :preferenze_alimentari, "Seleziona le preferenze alimentari:" %><br>
         <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
         <div>
+            <%= hidden_field_tag "menu[preferenze_alimentari][#{preferenza}]", 'false' %>
             <!-- stessa cosa della lista degli allergeni -->
             <%= check_box_tag "menu[preferenze_alimentari][#{preferenza}]", 'true', @menu.preferenze_alimentari && @menu.preferenze_alimentari[preferenza] %>
             <%= label_tag "menu_preferenze_alimentari_#{preferenza}", preferenza.capitalize %>
@@ -66,6 +68,7 @@
         <div> Adattabile per le preferenze alimentari 
             <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
             <div>
+                <%= hidden_field_tag "menu[adattabile][preferenze][#{preferenza}]", 'false' %>
                 <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", 'true', @menu.adattabile&.dig("preferenze", preferenza) %>
                 <%= label_tag "menu_adattabile_preferenze#{preferenza}", "Adattabile per " + preferenza  %>
             </div>
@@ -74,6 +77,7 @@
         <div> Adattabile per gli allergeni 
             <% Menu::ALLERGENI.each do |allergene| %>
             <div>
+                <%= hidden_field_tag "menu[adattabile][allergeni][#{allergene}]", 'false' %>
                 <%= check_box_tag "menu[adattabile][allergeni][#{allergene}]", 'true', @menu.adattabile&.dig("allergeni", allergene) %>
                 <%= label_tag "menu_adattabile_allergeni#{allergene}", "Adattabile per " + allergene  %>
             </div>
@@ -85,6 +89,7 @@
         <%= form.label :extra, 'Seleziona gli extra:' %><br>
         <% Menu::EXTRA.each do |extra| %>
         <div>
+            <%= hidden_field_tag "menu[extra][#{extra}]", 'false' %>
             <%= check_box_tag "menu[extra][#{extra}]", 'true', @menu.extra && @menu.extra[extra] %>
             <%= label_tag "menu_extra_#{extra}", extra.capitalize %>
         </div>

@@ -51,9 +51,9 @@ class MenusController < ApplicationController
 
     def menu_params
         # non permetto il passaggio del parametro disattivato! (solo per gli admin, per questioni di sicurezza)
-        params.require(:menu).permit(:titolo, :descrizione, :prezzo_persona,
-                                    :min_persone, :max_persone, :tipo_cucina,
-                                    :allergeni, :preferenze_alimentari, :adattabile,
-                                    :extra, :prezzo_extra)
+        params.require(:menu).permit(
+            :titolo, :descrizione, :prezzo_persona, :min_persone, :max_persone, :tipo_cucina, :prezzo_extra,
+            allergeni: {}, preferenze_alimentari: {}, adattabile: [:preferenze => {}, :allergeni => {}], extra: {}
+          )
     end
 end 

@@ -1,0 +1,83 @@
+<h2>Completa il tuo profilo</h2>
+
+<%= form_for @user, url: complete_registration_path, method: :post do |f| %>
+
+  <% # Visualizzazione degli errori in testa al form %>
+  <% if @user.errors.any? || (@chef && @chef.errors.any?) || (@client && @client.errors.any?) %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count + (@chef&.errors&.count || 0) + (@client&.errors&.count || 0), "error") %> proibisce di salvare questo profilo:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+
+        <% if @chef %>
+          <% @chef.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        <% end %>
+
+        <% if @client %>
+          <% @client.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome %><br />
+    <%= f.text_field :nome %>
+  </div>
+
+  <div class="field">
+    <%= f.label :cognome %><br />
+    <%= f.text_field :cognome %>
+  </div>
+
+  <% if @user.ruolo == "chef" %>
+    <%= fields_for :chef, @chef || Chef.new do |chef_form| %>
+      <div class="field">
+        <%= chef_form.label :indirizzo %><br />
+        <%= chef_form.text_field :indirizzo %>
+      </div>
+
+      <div class="field">
+        <%= chef_form.label :telefono %><br />
+        <%= chef_form.text_field :telefono %>
+      </div>
+
+      <div class="field">
+        <%= chef_form.label :raggio %><br />
+        <%= chef_form.number_field :raggio %>
+      </div>
+
+      <div class="field">
+        <%= chef_form.label :descrizione %><br />
+        <%= chef_form.text_area :descrizione %>
+      </div>
+    <% end %>
+  <% elsif @user.ruolo == "client" %>
+    <%= fields_for :client, @client || Client.new do |client_form| %>
+      <div class="field">
+        <%= client_form.label :indirizzo %><br />
+        <%= client_form.text_field :indirizzo %>
+      </div>
+
+      <div class="field">
+        <%= client_form.label :telefono %><br />
+        <%= client_form.text_field :telefono %>
+      </div>
+
+      <div class="field">
+        <%= client_form.label :allergeni %><br />
+        <%= client_form.text_area :allergeni %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Complete Registration" %>
+  </div>
+<% end %>

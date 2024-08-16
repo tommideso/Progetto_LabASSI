@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # le rotte devise per la registrazione vengono gestite dal controller 'registrations_controller.rb'
   devise_for :users, controllers: { registrations: "registrations" }
   # le rotte per il completamento (che dipende dal ruolo scelto) vengono gestite dal controller 'complete_registrations_controller.rb'
-  # resource :complete_registration, only: [:new, :create]
+  resource :complete_registration, only: [:new, :create]
 
   root "menus#index"
   resources :menus # definiamo le rotte crud per il controller menus_controller
