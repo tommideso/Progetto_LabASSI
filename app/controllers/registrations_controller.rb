@@ -1,6 +1,8 @@
 class RegistrationsController < Devise::RegistrationsController
     # prima di ogni azione del controller, devise prende i parametri 
     before_action :get_params, if: :devise_controller?
+    # grazie a set_nested_attributes impostiamo gli attributi nestati per le azioni di edit ed update
+    before_action :set_nested_attributes, only: [:edit, :update]
 
     def get_params
         # consentiamo di prendere l'attributo 'personalizzato' chiave durante la registrazione
@@ -8,7 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
         # consentiamo di prendere anche gli altri attributi di client e chef durante la registrazone
         devise_parameter_sanitizer.permit(:sign_up, keys: [:nome, :cognome])
         # questi parametri devono poter essere aggiornati 
-        devise_parameter_sanitizer.permit(:account_update, keys: [:nome, :cognome])
+        devise_parameter_sanitizer.permit(:account_update, keys: [:nome, :cognome, chef_attributes: [:indirizzo, :telefono, :raggio, :descrizione]])
     end
 
     # sovrascrivo il metodo create, chiamando comunque super, per impostare inizializzato a true
@@ -21,5 +23,16 @@ class RegistrationsController < Devise::RegistrationsController
                 redirect_to new_complete_registration_path and return
             end
         end
+    end
+
+    
+    private
+
+    def set_nested_attributes
+      if current_user.ruolo == "chef"
+        @chef = current_user.chef || current_user.build_chef
+      elsif current_user.ruolo == "client"
+        @client = current_user.client || current_user.build_client
+      end
     end
 end

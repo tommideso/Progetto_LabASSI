@@ -1,0 +1,50 @@
+<div class="field">
+  <%= f.label :nome %><br />
+  <%= f.text_field :nome %>
+</div>
+
+<div class="field">
+  <%= f.label :cognome %><br />
+  <%= f.text_field :cognome %>
+</div>
+
+<% if @user.ruolo == "chef" %>
+  <%= f.fields_for :chef, @chef || Chef.new do |chef_form| %>
+    <div class="field">
+      <%= chef_form.label :indirizzo %><br />
+      <%= chef_form.text_field :indirizzo %>
+    </div>
+
+    <div class="field">
+      <%= chef_form.label :telefono %><br />
+      <%= chef_form.text_field :telefono %>
+    </div>
+
+    <div class="field">
+      <%= chef_form.label :raggio %><br />
+      <%= chef_form.number_field :raggio %>
+    </div>
+
+    <div class="field">
+      <%= chef_form.label :descrizione %><br />
+      <%= chef_form.text_area :descrizione %>
+    </div>
+  <% end %>
+<% elsif @user.ruolo == "client" %>
+  <%= f.fields_for :client, @client || Client.new do |client_form| %>
+    <div class="field">
+      <%= client_form.label :indirizzo %><br />
+      <%= client_form.text_field :indirizzo %>
+    </div>
+
+    <div class="field">
+      <%= client_form.label :telefono %><br />
+      <%= client_form.text_field :telefono %>
+    </div>
+
+    <div class="field">
+      <%= client_form.label :allergeni %><br />
+      <%= client_form.text_area :allergeni %>
+    </div>
+  <% end %>
+<% end %>
