@@ -61,3 +61,5 @@ gem "tailwindcss-rails", "~> 2.7"
 gem "foreman", "~> 0.88.1"
 
 gem "devise", "~> 4.9"
+
+gem "letter_opener_web", "~> 3.0"

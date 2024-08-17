@@ -10,10 +10,14 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # le rotte devise per la registrazione vengono gestite dal controller 'registrations_controller.rb'
-  devise_for :users, controllers: { registrations: "registrations" }
+  # ho inoltre creato un controller per la conferma 
+  devise_for :users, controllers: { registrations: "registrations", confirmations: "users/confirmations" }
   # le rotte per il completamento (che dipende dal ruolo scelto) vengono gestite dal controller 'complete_registrations_controller.rb'
   resource :complete_registration, only: [:new, :create]
 
   root "menus#index"
   resources :menus # definiamo le rotte crud per il controller menus_controller
+
+  # per la gestione (temporanea delle email)
+  mount LetterOpenerWeb::Engine, at: "/letter_opener"
 end
