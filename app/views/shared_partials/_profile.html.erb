@@ -30,6 +30,7 @@
       <%= chef_form.text_area :descrizione %>
     </div>
   <% end %>
+  
 <% elsif @user.ruolo == "client" %>
   <%= f.fields_for :client, @client || Client.new do |client_form| %>
     <div class="field">

@@ -10,24 +10,19 @@ SIA dei campi aggiuntivi -->
        %>
     </h2>
     <ul>
-      <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+      <% grouped_errors = {} %>
 
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-
-      <% if @chef %>
-        <% @chef.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+      <% [resource, @user, @chef, @client].compact.each do |record| %>
+        <% record.errors.each do |error| %>
+          <% attribute = error.attribute.to_s.split('.').last.humanize.capitalize %>
+          <% message = error.message %>
+          <% grouped_errors[attribute] ||= [] %>
+          <% grouped_errors[attribute] << message %>
         <% end %>
       <% end %>
 
-      <% if @client %>
-        <% @client.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
+      <% grouped_errors.each do |attribute, messages| %>
+        <li><%= attribute %>: <%= messages.uniq.join(', ') %></li>
       <% end %>
     </ul>
   </div>

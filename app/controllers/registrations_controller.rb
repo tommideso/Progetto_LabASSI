@@ -1,16 +1,18 @@
 class RegistrationsController < Devise::RegistrationsController
     # prima di ogni azione del controller, devise prende i parametri 
-    before_action :get_params, if: :devise_controller?
+    before_action :configure_permitted_parameters, if: :devise_controller?
     # grazie a set_nested_attributes impostiamo gli attributi nestati per le azioni di edit ed update
     before_action :set_nested_attributes, only: [:edit, :update]
 
-    def get_params
+    def configure_permitted_parameters
         # consentiamo di prendere l'attributo 'personalizzato' chiave durante la registrazione
         devise_parameter_sanitizer.permit(:sign_up, keys: [:ruolo])
         # consentiamo di prendere anche gli altri attributi di client e chef durante la registrazone
         devise_parameter_sanitizer.permit(:sign_up, keys: [:nome, :cognome])
         # questi parametri devono poter essere aggiornati 
-        devise_parameter_sanitizer.permit(:account_update, keys: [:nome, :cognome, chef_attributes: [:indirizzo, :telefono, :raggio, :descrizione]])
+        devise_parameter_sanitizer.permit(:account_update, keys: [:nome, :cognome, 
+                                          chef_attributes: [:indirizzo, :telefono, :raggio, :descrizione, :id], 
+                                          client_attributes: [:indirizzo, :telefono, :allergeni, :id]])
     end
 
     # sovrascrivo il metodo create, chiamando comunque super, per impostare inizializzato a true
@@ -26,7 +28,6 @@ class RegistrationsController < Devise::RegistrationsController
     #     end
     # end
     # HO SPOSTATO QUESTA LOGICA NEL CONTROLLER DELLA CONFERMA DELL'EMAIL!
-
 
     private
 
