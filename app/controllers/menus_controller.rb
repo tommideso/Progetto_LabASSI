@@ -29,7 +29,7 @@ class MenusController < ApplicationController
         if @menu.save
             redirect_to @menu
         else
-            render :edit, status: :unprocessable_entity
+            render :new, status: :unprocessable_entity
         end
     end
 

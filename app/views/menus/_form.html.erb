@@ -9,27 +9,27 @@
     <!-- Mostriamo i contenuti del modello -->
     <div>
         <%= form.label :titolo %>
-        <%= form.text_field :titolo, value: @menu.titolo.presence || @menu.reload.titolo %>
+        <%= form.text_field :titolo, value: @menu.persisted? ? (@menu.titolo.presence || @menu.reload.titolo) : @menu.titolo %>
     </div>
 
     <div>
         <%= form.label :descrizione %>
-        <%= form.text_area :descrizione, value: @menu.descrizione.presence || @menu.reload.descrizione %>
+        <%= form.text_area :descrizione, value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione %>
     </div>
 
     <div>
         <%= form.label :prezzo_persona %>
-        <%= form.number_field :prezzo_persona, step: '0.01', value: @menu.prezzo_persona.presence || @menu.reload.prezzo_persona %>
+        <%= form.number_field :prezzo_persona, step: '0.01', value: @menu.persisted? ? (@menu.prezzo_persona.presence || @menu.reload.prezzo_persona) : @menu.prezzo_persona %>
     </div>
 
     <div>
         <%= form.label :min_persone %>
-        <%= form.number_field :min_persone, step: 1, value: @menu.min_persone.presence || @menu.reload.min_persone %>
+        <%= form.number_field :min_persone, step: 1, value: @menu.persisted? ? (@menu.min_persone.presence || @menu.reload.min_persone) : @menu.min_persone %>
     </div>
 
     <div>
         <%= form.label :max_persone %>
-        <%= form.number_field :max_persone, step: 1, value: @menu.max_persone.presence || @menu.reload.max_persone %>
+        <%= form.number_field :max_persone, step: 1, value: @menu.persisted? ? (@menu.max_persone.presence || @menu.reload.max_persone) : @menu.max_persone %>
     </div>
 
     <div>

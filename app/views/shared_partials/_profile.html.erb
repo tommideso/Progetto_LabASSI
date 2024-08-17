@@ -1,33 +1,33 @@
 <div class="field">
   <%= f.label :nome %><br />
-  <%= f.text_field :nome, value: resource.nome.presence || resource.reload.nome %>
+  <%= f.text_field :nome, value: f.object.persisted? ? (f.object.nome.presence || f.object.reload.nome) : f.object.nome %>
 </div>
 
 <div class="field">
   <%= f.label :cognome %><br />
-  <%= f.text_field :cognome, value: resource.cognome.presence || resource.reload.cognome %>
+  <%= f.text_field :cognome, value: f.object.persisted? ? (f.object.cognome.presence || f.object.reload.cognome) : f.object.cognome %>
 </div>
 
 <% if @user.ruolo == "chef" %>
   <%= f.fields_for :chef, @chef || Chef.new do |chef_form| %>
     <div class="field">
       <%= chef_form.label :indirizzo %><br />
-      <%= chef_form.text_field :indirizzo, value: @chef.indirizzo.presence || @chef.reload.indirizzo %>
+      <%= chef_form.text_field :indirizzo, value: @chef.persisted? ? (@chef.indirizzo.presence || @chef.reload.indirizzo) : @chef.indirizzo %>
     </div>
 
     <div class="field">
       <%= chef_form.label :telefono %><br />
-      <%= chef_form.text_field :telefono, value: @chef.telefono.presence || @chef.reload.telefono %>
+      <%= chef_form.text_field :telefono, value: @chef.persisted? ? (@chef.telefono.presence || @chef.reload.telefono) : @chef.telefono %>
     </div>
 
     <div class="field">
       <%= chef_form.label :raggio %><br />
-      <%= chef_form.number_field :raggio, value: @chef.raggio.presence || @chef.reload.raggio %>
+      <%= chef_form.number_field :raggio, value: @chef.persisted? ? (@chef.raggio.presence || @chef.reload.raggio) : @chef.raggio %>
     </div>
 
     <div class="field">
       <%= chef_form.label :descrizione %><br />
-      <%= chef_form.text_area :descrizione, value: @chef.descrizione.presence || @chef.reload.descrizione %>
+      <%= chef_form.text_area :descrizione, value: @chef.persisted? ? (@chef.descrizione.presence || @chef.reload.descrizione) : @chef.descrizione %>
     </div>
   <% end %>
   
@@ -35,17 +35,17 @@
   <%= f.fields_for :client, @client || Client.new do |client_form| %>
     <div class="field">
       <%= client_form.label :indirizzo %><br />
-      <%= client_form.text_field :indirizzo, value: @client.indirizzo.presence || @client.reload.indirizzo %>
+      <%= client_form.text_field :indirizzo, value: @client.persisted? ? (@client.indirizzo.presence || @client.reload.indirizzo) : @client.indirizzo %>
     </div>
 
     <div class="field">
       <%= client_form.label :telefono %><br />
-      <%= client_form.text_field :telefono, value: @client.telefono.presence || @client.reload.telefono %>
+      <%= client_form.text_field :telefono, value: @client.persisted? ? (@client.telefono.presence || @client.reload.telefono) : @client.telefono %>
     </div>
 
     <div class="field">
       <%= client_form.label :allergeni %><br />
-      <%= client_form.text_area :allergeni, value: @client.allergeni.presence || @client.reload.allergeni %>
+      <%= client_form.text_area :allergeni, value: @client.persisted? ? (@client.allergeni.presence || @client.reload.allergeni) : @client.allergeni %>
     </div>
   <% end %>
 <% end %>
