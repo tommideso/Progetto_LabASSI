@@ -1,33 +1,33 @@
 <div class="field">
   <%= f.label :nome %><br />
-  <%= f.text_field :nome %>
+  <%= f.text_field :nome, value: resource.nome.presence || resource.reload.nome %>
 </div>
 
 <div class="field">
   <%= f.label :cognome %><br />
-  <%= f.text_field :cognome %>
+  <%= f.text_field :cognome, value: resource.cognome.presence || resource.reload.cognome %>
 </div>
 
 <% if @user.ruolo == "chef" %>
   <%= f.fields_for :chef, @chef || Chef.new do |chef_form| %>
     <div class="field">
       <%= chef_form.label :indirizzo %><br />
-      <%= chef_form.text_field :indirizzo %>
+      <%= chef_form.text_field :indirizzo, value: @chef.indirizzo.presence || @chef.reload.indirizzo %>
     </div>
 
     <div class="field">
       <%= chef_form.label :telefono %><br />
-      <%= chef_form.text_field :telefono %>
+      <%= chef_form.text_field :telefono, value: @chef.telefono.presence || @chef.reload.telefono %>
     </div>
 
     <div class="field">
       <%= chef_form.label :raggio %><br />
-      <%= chef_form.number_field :raggio %>
+      <%= chef_form.number_field :raggio, value: @chef.raggio.presence || @chef.reload.raggio %>
     </div>
 
     <div class="field">
       <%= chef_form.label :descrizione %><br />
-      <%= chef_form.text_area :descrizione %>
+      <%= chef_form.text_area :descrizione, value: @chef.descrizione.presence || @chef.reload.descrizione %>
     </div>
   <% end %>
   
@@ -35,17 +35,17 @@
   <%= f.fields_for :client, @client || Client.new do |client_form| %>
     <div class="field">
       <%= client_form.label :indirizzo %><br />
-      <%= client_form.text_field :indirizzo %>
+      <%= client_form.text_field :indirizzo, value: @client.indirizzo.presence || @client.reload.indirizzo %>
     </div>
 
     <div class="field">
       <%= client_form.label :telefono %><br />
-      <%= client_form.text_field :telefono %>
+      <%= client_form.text_field :telefono, value: @client.telefono.presence || @client.reload.telefono %>
     </div>
 
     <div class="field">
       <%= client_form.label :allergeni %><br />
-      <%= client_form.text_area :allergeni %>
+      <%= client_form.text_area :allergeni, value: @client.allergeni.presence || @client.reload.allergeni %>
     </div>
   <% end %>
 <% end %>
