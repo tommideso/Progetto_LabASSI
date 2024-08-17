@@ -28,6 +28,8 @@ class CompleteRegistrationsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:nome, :cognome, chef_attributes: [:indirizzo, :telefono, :raggio, :descrizione, :id], client_attributes: [:indirizzo, :telefono, :allergeni, :id])
+    params.require(:user).permit(:nome, :cognome, 
+    chef_attributes: [:indirizzo, :telefono, :raggio, :descrizione, :id], 
+    client_attributes: [:indirizzo, :telefono, { allergeni: {} }, :id])
   end
 end

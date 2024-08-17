@@ -5,14 +5,14 @@ class RegistrationsController < Devise::RegistrationsController
     before_action :set_nested_attributes, only: [:edit, :update]
 
     def configure_permitted_parameters
-        # consentiamo di prendere l'attributo 'personalizzato' chiave durante la registrazione
-        devise_parameter_sanitizer.permit(:sign_up, keys: [:ruolo])
-        # consentiamo di prendere anche gli altri attributi di client e chef durante la registrazone
-        devise_parameter_sanitizer.permit(:sign_up, keys: [:nome, :cognome])
-        # questi parametri devono poter essere aggiornati 
-        devise_parameter_sanitizer.permit(:account_update, keys: [:nome, :cognome, 
-                                          chef_attributes: [:indirizzo, :telefono, :raggio, :descrizione, :id], 
-                                          client_attributes: [:indirizzo, :telefono, :allergeni, :id]])
+      # consentiamo di prendere l'attributo 'personalizzato' chiave durante la registrazione
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:ruolo])
+      # consentiamo di prendere anche gli altri attributi di client e chef durante la registrazone
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:nome, :cognome])
+      # questi parametri devono poter essere aggiornati 
+      devise_parameter_sanitizer.permit(:account_update, keys: [:nome, :cognome, 
+                                            chef_attributes: [:indirizzo, :telefono, :raggio, :descrizione, :id], 
+                                            client_attributes: [:indirizzo, :telefono, { allergeni: {} }, :id]])
     end
 
     # sovrascrivo il metodo create, chiamando comunque super, per impostare inizializzato a true

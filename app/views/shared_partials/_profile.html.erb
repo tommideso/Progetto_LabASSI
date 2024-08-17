@@ -43,9 +43,16 @@
       <%= client_form.text_field :telefono, value: @client.persisted? ? (@client.telefono.presence || @client.reload.telefono) : @client.telefono %>
     </div>
 
-    <div class="field">
-      <%= client_form.label :allergeni %><br />
-      <%= client_form.text_area :allergeni, value: @client.persisted? ? (@client.allergeni.presence || @client.reload.allergeni) : @client.allergeni %>
+    <div>
+      <%= client_form.label :allergeni, "Seleziona gli allergeni:" %><br>
+      <% Menu::ALLERGENI.each do |allergene| %>
+        <div>
+          <%= hidden_field_tag "user[client_attributes][allergeni][#{allergene}]", "false" %>
+          <%= check_box_tag "user[client_attributes][allergeni][#{allergene}]", "true", @client.allergeni&.dig(allergene) == "true" %>
+          <%= label_tag "user_client_attributes_allergeni_#{allergene}", allergene.capitalize %>
+        </div>
+      <% end %>
     </div>
+
   <% end %>
 <% end %>
