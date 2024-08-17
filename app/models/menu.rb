@@ -27,10 +27,10 @@ class Menu < ApplicationRecord
 
     def prezzo_and_extra
         # se un extra è stato selezionato (quindi ci sta almeno uno con un valore true) e prezzo_extra è vuoto, restituisci errore
-        if extra.values.any? { |value| value == true } && prezzo_extra.blank?
+        if extra.values.any? { |value| value == "true" } && prezzo_extra.blank?
             errors.add(:prezzo_extra, "deve essere presente se selezioni un extra")
         # se il prezzo è stato inserito ma non ci sta nessun extra (non c'è ne sta nemmeno una true), restituisci errore
-        elsif prezzo_extra.present? && !extra.values.any? { |value| value == true }
+        elsif prezzo_extra.present? && !extra.values.any? { |value| value == "true" }
             errors.add(:extra, "deve avere almeno una selezione se ci sta un prezzo")
         end
     end

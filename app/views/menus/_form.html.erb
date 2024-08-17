@@ -42,9 +42,8 @@
         <%= form.label :allergeni, "Seleziona gli allergeni:" %><br>
         <% Menu::ALLERGENI.each do |allergene| %>
         <div>
-            <%= hidden_field_tag "menu[allergeni][#{allergene}]", 'false' %>
-            <!-- Verifica che il valore sia interpretato come booleano -->
-            <%= check_box_tag "menu[allergeni][#{allergene}]", 'true', @menu.allergeni&.dig(allergene) == 'true' %>
+            <%= hidden_field_tag "menu[allergeni][#{allergene}]", "false" %>
+            <%= check_box_tag "menu[allergeni][#{allergene}]", "true", @menu.allergeni&.dig(allergene) == "true" %>
             <%= label_tag "menu_allergeni_#{allergene}", allergene.capitalize %>
         </div>
         <% end %>
@@ -54,9 +53,8 @@
         <%= form.label :preferenze_alimentari, "Seleziona le preferenze alimentari:" %><br>
         <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
         <div>
-            <%= hidden_field_tag "menu[preferenze_alimentari][#{preferenza}]", 'false' %>
-            <!-- Verifica che il valore sia interpretato come booleano -->
-            <%= check_box_tag "menu[preferenze_alimentari][#{preferenza}]", 'true', @menu.preferenze_alimentari&.dig(preferenza) == 'true' %>
+            <%= hidden_field_tag "menu[preferenze_alimentari][#{preferenza}]", "false" %>
+            <%= check_box_tag "menu[preferenze_alimentari][#{preferenza}]", "true", @menu.preferenze_alimentari&.dig(preferenza) == "true" %>
             <%= label_tag "menu_preferenze_alimentari_#{preferenza}", preferenza.capitalize %>
         </div>
         <% end %>
@@ -67,9 +65,8 @@
         <div> Adattabile per le preferenze alimentari 
             <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
             <div>
-                <%= hidden_field_tag "menu[adattabile][preferenze][#{preferenza}]", 'false' %>
-                <!-- Verifica che il valore sia interpretato come booleano -->
-                <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", 'true', @menu.adattabile&.dig("preferenze", preferenza) == 'true' %>
+                <%= hidden_field_tag "menu[adattabile][preferenze][#{preferenza}]", "false" %>
+                <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", "true", @menu.adattabile&.dig("preferenze", preferenza) == "true" %>
                 <%= label_tag "menu_adattabile_preferenze_#{preferenza}", "Adattabile per " + preferenza %>
             </div>
             <% end %>
@@ -77,9 +74,8 @@
         <div> Adattabile per gli allergeni 
             <% Menu::ALLERGENI.each do |allergene| %>
             <div>
-                <%= hidden_field_tag "menu[adattabile][allergeni][#{allergene}]", 'false' %>
-                <!-- Verifica che il valore sia interpretato come booleano -->
-                <%= check_box_tag "menu[adattabile][allergeni][#{allergene}]", 'true', @menu.adattabile&.dig("allergeni", allergene) == 'true' %>
+                <%= hidden_field_tag "menu[adattabile][allergeni][#{allergene}]", "false" %>
+                <%= check_box_tag "menu[adattabile][allergeni][#{allergene}]", "true", @menu.adattabile&.dig("allergeni", allergene) == "true" %>
                 <%= label_tag "menu_adattabile_allergeni_#{allergene}", "Adattabile per " + allergene %>
             </div>
             <% end %>
@@ -90,9 +86,8 @@
         <%= form.label :extra, 'Seleziona gli extra:' %><br>
         <% Menu::EXTRA.each do |extra| %>
         <div>
-            <%= hidden_field_tag "menu[extra][#{extra}]", 'false' %>
-            <!-- Verifica che il valore sia interpretato come booleano -->
-            <%= check_box_tag "menu[extra][#{extra}]", 'true', @menu.extra&.dig(extra) == 'true' %>
+            <%= hidden_field_tag "menu[extra][#{extra}]", "false" %>
+            <%= check_box_tag "menu[extra][#{extra}]", "true", @menu.extra&.dig(extra) == "true" %>
             <%= label_tag "menu_extra_#{extra}", extra.capitalize %>
         </div>
         <% end %>

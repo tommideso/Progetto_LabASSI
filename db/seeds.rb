@@ -15,25 +15,25 @@ menu1.update!(
     min_persone: 2,
     max_persone: 10,
     tipo_cucina: "Vegano",
-    allergeni: { "glutine" => false, "soia" => true, "noci" => true, "lattosio" => false, "crostacei" => true, "arachidi" => false },
-    preferenze_alimentari: { "vegano" => true, "glutine" => true },
+    allergeni: { "glutine" => "false", "soia" => "true", "noci" => "true", "lattosio" => "false", "crostacei" => "true", "arachidi" => "false" },
+    preferenze_alimentari: { "vegano" => "true", "glutine" => "true" },
     adattabile: {
         "preferenze" => {
-            "vegano" => true,
-            "glutine" => false
+            "vegano" => "true",
+            "glutine" => "false"
         },
         "allergeni" => {
-            "glutine" => false, 
-            "soia" => true, 
-            "noci" => true, 
-            "lattosio" => false, 
-            "crostacei" => true, 
-            "arachidi" => false
+            "glutine" => "false", 
+            "soia" => "true", 
+            "noci" => "true", 
+            "lattosio" => "false", 
+            "crostacei" => "true", 
+            "arachidi" => "false"
         }
     },
-    extra: { "mise en place" => false, "vino" => true },
+    extra: { "mise en place" => "false", "vino" => "true" },
     prezzo_extra: 5,
-    disattivato: false
+    disattivato: "false"
 )
 
 menu2 = Menu.find_or_initialize_by(titolo: "Menu Carnivoro")
@@ -43,23 +43,23 @@ menu2.update!(
     min_persone: 3,
     max_persone: 12,
     tipo_cucina: "Carnivoro",
-    allergeni: { "glutine" => false, "soia" => true, "noci" => true, "lattosio" => false, "crostacei" => true, "arachidi" => false },
-    preferenze_alimentari: { "vegano" => true, "glutine" => false },
+    allergeni: { "glutine" => "false", "soia" => "true", "noci" => "true", "lattosio" => "false", "crostacei" => "true", "arachidi" => "false" },
+    preferenze_alimentari: { "vegano" => "true", "glutine" => "false" },
     adattabile: {
         "preferenze" => {
-            "vegano" => true,
-            "glutine" => false
+            "vegano" => "true",
+            "glutine" => "false"
         },
         "allergeni" => {
-            "glutine" => false, 
-            "soia" => true, 
-            "noci" => true, 
-            "lattosio" => false, 
-            "crostacei" => true, 
-            "arachidi" => false
+            "glutine" => "false", 
+            "soia" => "true", 
+            "noci" => "true", 
+            "lattosio" => "false", 
+            "crostacei" => "true", 
+            "arachidi" => "false"
         }
     },
-    extra: { "mise en place" => true, "vino" => true },
+    extra: { "mise en place" => "true", "vino" => "true" },
     prezzo_extra: 10,
-    disattivato: false
+    disattivato: "false"
 )

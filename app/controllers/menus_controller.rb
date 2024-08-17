@@ -19,7 +19,7 @@ class MenusController < ApplicationController
         if @menu.update(menu_params)
             redirect_to @menu
         else
-            render :new, status: :unprocessable_entity
+            render :edit, status: :unprocessable_entity
         end
     end
 
@@ -28,7 +28,7 @@ class MenusController < ApplicationController
         if @menu.save
             redirect_to @menu
         else
-            render :new, status: :unprocessable_entity
+            render :edit, status: :unprocessable_entity
         end
     end
 
@@ -45,8 +45,8 @@ class MenusController < ApplicationController
     
     def find_menu
         @menu = Menu.find(params[:id])
-        rescue ActiveRecord::RecordNotFound
-            redirect_to root_path 
+    rescue ActiveRecord::RecordNotFound
+        redirect_to root_path 
     end
 
     def menu_params
