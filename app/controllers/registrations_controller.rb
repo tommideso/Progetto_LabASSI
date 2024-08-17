@@ -15,17 +15,19 @@ class RegistrationsController < Devise::RegistrationsController
 
     # sovrascrivo il metodo create, chiamando comunque super, per impostare inizializzato a true
     # e passare poi al completamento (con il relativo controller)
-    def create
-        super do |utente| 
-            if utente.persisted?
-                utente.update_column(:inizializzato, true)
-                sign_in(utente)
-                redirect_to new_complete_registration_path and return
-            end
-        end
-    end
+    # def create
+    #     super do |utente| 
+    #         if utente.persisted?
+    #             utente.update_column(:inizializzato, true)
+    #             sign_in(utente)
+    #             redirect_to new_complete_registration_path
+    #             return
+    #         end
+    #     end
+    # end
+    # HO SPOSTATO QUESTA LOGICA NEL CONTROLLER DELLA CONFERMA DELL'EMAIL!
 
-    
+
     private
 
     def set_nested_attributes
