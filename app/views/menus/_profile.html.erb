@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+    <%= link_to "Profilo", edit_user_registration_path %>
+    <%= button_to "Log out", destroy_user_session_path, method: :delete %> 
+<% else %>
+    <%= link_to "Login", new_user_session_path %>
+    <%= link_to "Sign in", new_user_registration_path %>
+<% end %>
+
+<% if user_signed_in? and current_user.inizializzato %>
+    <h2 class="bg-red-700"> <%= link_to "Completa il profilo!", new_complete_registration_path %> </h2>
+<% end %>
