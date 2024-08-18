@@ -1,5 +1,9 @@
 class MenusController < ApplicationController
     before_action :find_menu, only: [:show, :edit, :update, :destroy]
+    # prima di accedere alle funzioni di modifica o creazione di un menù l'utente deve essere autenticato
+    before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
+    # oltre ad essere autenticato, il suo ruolo deve essere quello di chef
+    before_action :check_if_chef, only: [:edit, :update, :destroy, :new, :create]
 
     def index
         @menu = Menu.all
@@ -56,5 +60,11 @@ class MenusController < ApplicationController
             :titolo, :descrizione, :prezzo_persona, :min_persone, :max_persone, :tipo_cucina, :prezzo_extra,
             allergeni: {}, preferenze_alimentari: {}, adattabile: [:preferenze => {}, :allergeni => {}], extra: {}
           )
+    end
+
+    def check_if_chef
+        unless current_user.ruolo == "chef"
+            redirect_to root_path, alert: "Il ruolo non consente tale azione"
+        end
     end
 end 
