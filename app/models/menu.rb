@@ -6,7 +6,8 @@ class Menu < ApplicationRecord
     validates :disattivato, inclusion: { in: [true, false] }
     # per extra e prezzo_extra definisco una validazione con un metodo 
     validate :prezzo_and_extra
-
+    validate :max_persone_maggior_di_min_persone
+    
     # definiamo direttamente nel modello delle liste immutabili per la lista degli allergeni, le preferenze alimentari e il tipo di cucina
     # (così se vogliamo modificarli, li dobbiamo modificare solamente qua)
     # (il metodo freeze impedisce agli oggetti di essere modificati)

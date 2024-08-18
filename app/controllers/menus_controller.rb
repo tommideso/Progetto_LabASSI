@@ -23,7 +23,6 @@ class MenusController < ApplicationController
         if @menu.update(menu_params)
             redirect_to @menu
         else
-            Rails.logger.debug "Failed to edit menu: #{@menu.errors.full_messages.join(', ')}"
             render :edit, status: :unprocessable_entity
         end
     end
