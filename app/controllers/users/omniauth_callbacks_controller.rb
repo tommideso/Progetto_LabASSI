@@ -15,7 +15,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
       #sign_in_and_redirect user, event: :authentication
       sign_in(user)
-      redirect_to new_complete_registration_path
+      if user.completed < 2
+        user.update_column(:inizializzato, true)
+        redirect_to new_complete_registration_path
+      else
+        redirect_to root_path
+      end
     else
       flash[:alert] = t 'devise.omniauth_callbacks.failure', kind: 'Google', reason: "#{auth.info.email} is not authorized"
       redirect_to new_user_session_path

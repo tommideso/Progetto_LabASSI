@@ -19,7 +19,7 @@ class CompleteRegistrationsController < ApplicationController
 
   def create
     if @user.update(user_params)
-      @user.update(completed: 2)
+      @user.update_column(:completed, 2)
       redirect_to root_path, notice: 'Profilo completato con successo.'
     else
       # se la validazione fallisce, ri-inizializziamo gli attributi nestati (chef e client)
