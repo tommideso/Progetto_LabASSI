@@ -63,3 +63,9 @@ gem "foreman", "~> 0.88.1"
 gem "devise", "~> 4.9"
 
 gem "letter_opener_web", "~> 3.0"
+
+# gem OAuth
+gem "omniauth"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem 'dotenv-rails', groups: [:development, :test]
