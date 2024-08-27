@@ -31,6 +31,8 @@ class User < ApplicationRecord
     ruolo == "admin"
   end
 
+  # TEST
+
   private
 
   def nome_e_cognome_presenti_se_inizializzato_o_completato
