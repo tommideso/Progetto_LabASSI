@@ -1,0 +1,12 @@
+<h1>Seleziona il ruolo</h1>
+
+<%= form_with url: new_complete_registration_path, method: :get, local: true do %>
+  <div>
+    <%= label_tag :role, 'Client' %>
+    <%= radio_button_tag :role, 'client' %>
+    <%= label_tag :role, 'Chef' %>
+    <%= radio_button_tag :role, 'chef' %>
+  </div>
+
+  <button type="submit">Seleziona Ruolo</button>
+<% end %>

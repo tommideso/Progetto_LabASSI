@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_27_164258) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_27_210611) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,7 +69,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_164258) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.boolean "completed"
+    t.integer "completed", default: 0
     t.string "avatar_url"
     t.string "uid"
     t.string "provider"
