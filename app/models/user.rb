@@ -31,22 +31,19 @@ class User < ApplicationRecord
     ruolo == "admin"
   end
 
-  # TEST
+  # funzione per fare retrieving dei dati sugli utenti loggati tramite oauth
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-      # user.nome = auth.info.name
       user.avatar_url = auth.info.image
-      user.ruolo = "client"
       user.confirmed_at = Time.now
       user.inizializzato = true
       user.nome = auth.info.name.split(" ")[0]
       user.cognome = auth.info.name.split(" ")[1 .. -1].join(" ")
 
-      
-
-
+      # campi extra come nome e ruolo vengono impostati nella fase di completamento anche per gli utenti registrati da oauth
+      user.ruolo = "client" # PER ORA HARDCODIAMO IL RUOLO PERCHÉ NON C'È UNA PAGINA SEPARATA! TODO
     end
   end
 
