@@ -36,10 +36,17 @@ class User < ApplicationRecord
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-      user.nome = auth.info.name
+      # user.nome = auth.info.name
       user.avatar_url = auth.info.image
-      user.skip_confirmation!
+      user.ruolo = "client"
+      user.confirmed_at = Time.now
+      user.inizializzato = true
+      user.nome = auth.info.name.split(" ")[0]
+      user.cognome = auth.info.name.split(" ")[1 .. -1].join(" ")
+
       
+
+
     end
   end
 
