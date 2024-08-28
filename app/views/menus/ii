@@ -1,0 +1,3 @@
+  <%= turbo_stream.replace "pagination" do %>
+    <%= pagy_nav(@pagy) if @pagy.pages > 1 %>
+  <% end %>

@@ -1,13 +1,35 @@
 class MenusController < ApplicationController
+    
     before_action :find_menu, only: [:show, :edit, :update, :destroy]
     # prima di accedere alle funzioni di modifica o creazione di un menù l'utente deve essere autenticato
     before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
     # oltre ad essere autenticato, il suo ruolo deve essere quello di chef
     before_action :check_if_chef, only: [:edit, :update, :destroy, :new, :create]
 
+    
+    
     def index
-        @menu = Menu.all
-    end
+        # Default to page 1 if params[:page] is not a valid positive integer
+        page = params[:page].to_i
+        page = 1 if page <= 0
+      
+        # Initialize @pagy and @menu with error handling
+        begin
+          @pagy, @menu = pagy(Menu.all, page: page, items: 10)
+        rescue Pagy::OverflowError
+          # Initialize @pagy to a default value if there is an overflow error
+          @pagy, @menu = pagy(Menu.all, page: 1, items: 10)
+          # Redirect to the last valid page
+          redirect_to menus_path(page: @pagy.last), alert: "Page number out of range. Showing the last page."
+          return # Ensure no further code runs
+        end
+      
+        respond_to do |format|
+          format.html # Renders the HTML view by default
+          format.turbo_stream # Handles Turbo Stream format
+        end
+      end
+      
 
     def show
     end
