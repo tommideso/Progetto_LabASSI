@@ -38,8 +38,8 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0, 20]
       user.avatar_url = auth.info.image
       user.confirmed_at = Time.now
-      user.nome = auth.info.name.split(" ")[0]
-      user.cognome = auth.info.name.split(" ")[1 .. -1].join(" ")
+      user.nome = auth.info.name.split(" ")[0].capitalize
+      user.cognome = auth.info.name.split(" ")[1 .. -1].join(" ").capitalize
 
       # campi extra come nome e ruolo vengono impostati nella fase di completamento anche per gli utenti registrati da oauth
       # user.ruolo = nil # PER ORA HARDCODIAMO IL RUOLO PERCHÉ NON C'È UNA PAGINA SEPARATA! TODO
@@ -54,6 +54,6 @@ class User < ApplicationRecord
   end
 
   def ruolo_presente_se_inizializzato
-    errors.add(:base, "Il ruolo deve essere presente") if (inizializzato) && (ruolo.blank?)
+    errors.add(:base, "Il ruolo deve essere presente") if (completed==0) && (ruolo.blank?)
   end
 end

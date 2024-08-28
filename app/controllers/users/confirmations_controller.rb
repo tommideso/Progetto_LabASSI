@@ -20,7 +20,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
   def after_confirmation_path_for(resource_name, resource)
     sign_in(resource)
-    resource.update_column(:inizializzato, true)
+    resource.update_column(:completed, 0)
     new_complete_registration_path
   end
 

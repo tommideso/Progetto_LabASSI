@@ -15,8 +15,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
       #sign_in_and_redirect user, event: :authentication
       sign_in(user)
-      if user.completed < 2
-        user.update_column(:inizializzato, true)
+      if user.completed.nil?
+        user.update_column(:completed, 0)
+        redirect_to new_complete_registration_path
+      elsif user.completed < 2
         redirect_to new_complete_registration_path
       else
         redirect_to root_path

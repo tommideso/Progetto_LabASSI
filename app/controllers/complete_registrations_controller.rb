@@ -3,6 +3,7 @@ class CompleteRegistrationsController < ApplicationController
   before_action :set_user
 
   def new
+    # TODO controllare il parametro role se è valido, forse scambiare ordine delle condizioni
     if (params[:role])
       @user.update(ruolo: params[:role])
       @user.update_column(:completed, 1)
