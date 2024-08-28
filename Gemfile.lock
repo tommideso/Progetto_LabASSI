@@ -113,6 +113,8 @@ GEM
       railties (>= 6.1)
     drb (2.2.1)
     erubi (1.13.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     faraday (2.11.0)
       faraday-net_http (>= 2.0, < 3.4)
       logger
@@ -389,6 +391,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   dotenv-rails
+  faker (~> 3.4)
   foreman (~> 0.88.1)
   importmap-rails
   jbuilder

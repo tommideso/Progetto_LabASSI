@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_28_141523) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_28_153044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,25 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_141523) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "data_prenotazione"
+    t.string "stato"
+    t.decimal "prezzo", precision: 10, scale: 2
+    t.integer "num_persone"
+    t.string "tipo_pasto"
+    t.jsonb "extra"
+    t.text "modifiche_richieste"
+    t.string "indirizzo_consegna"
+    t.integer "recensione_cliente"
+    t.boolean "pagamento_effettuato", default: false
+    t.boolean "rimborsato", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "data_prenotazione"], name: "index_reservations_on_user_id_and_data_prenotazione", unique: true
+    t.index ["user_id"], name: "index_reservations_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -80,4 +99,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_141523) do
 
   add_foreign_key "chefs", "users"
   add_foreign_key "clients", "users"
+  add_foreign_key "reservations", "users"
 end
