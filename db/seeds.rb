@@ -1,4 +1,4 @@
-100.times.with_index do |i|
+30.times.with_index do |i|
     Menu.find_or_initialize_by(titolo: "Menu #{i + 1}").update!(
         descrizione: Faker::Food.description,
         prezzo_persona: Faker::Number.decimal(l_digits: 2, r_digits: 2),

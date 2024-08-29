@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const menuList = document.getElementById('menu-list');
+    if (!menuList) return;
     let page = 1;
   
     const loadMore = () => {
