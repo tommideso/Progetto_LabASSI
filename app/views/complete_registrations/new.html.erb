@@ -1,6 +1,6 @@
 <h2>Completa il tuo profilo</h2>
 
-<%= form_for @user, url: complete_registration_path, method: :post do |f| %>
+<%= form_for @user, url: complete_registration_path, method: :post, html: { data: { turbo: false } } do |f| %>
   <%= render partial: "shared_partials/profile_errors" %>
   <%= render "shared_partials/profile", f: f %>
 

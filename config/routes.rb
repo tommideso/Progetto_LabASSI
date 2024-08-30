@@ -11,7 +11,10 @@ Rails.application.routes.draw do
 
   # le rotte devise per la registrazione vengono gestite dal controller 'registrations_controller.rb'
   # ho inoltre creato un controller per la conferma 
-  devise_for :users, controllers: { registrations: "registrations", confirmations: "users/confirmations", omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions" }
+  devise_for :users, controllers: { registrations: "registrations", 
+                                  confirmations: "users/confirmations", 
+                                  omniauth_callbacks: "users/omniauth_callbacks", 
+                                  sessions: "users/sessions" }
   # le rotte per il completamento (che dipende dal ruolo scelto) vengono gestite dal controller 'complete_registrations_controller.rb'
   resource :complete_registration, only: [:new, :create]
   # definiamo le rotte per il controller user (questo controller serve per gestire gli utenti lato chat)
