@@ -98,5 +98,19 @@
         <%= form.number_field :prezzo_extra, step: '0.01' %>
     </div>
 
+    <!-- Upload delle immagini -->
+    <div>
+        <%= form.label :images, "Seleziona le immagini:" %><br>
+        <% if @menu.images.attached? %>
+            <% @menu.images.each do |image| %>
+                <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
+                <%= image_tag(image, height: '100') %> <!-- immagine caricata -->
+                <!-- Link per mandare richiesta delete per eliminare l'immagine -->
+                <%= link_to "Elimina", remove_image_menu_path(image), data: { confirm: "Sei sicuro", turbo_method: :delete}  %>
+            <% end %>
+        <% end %>
+        <!-- Input per immagini -->
+        <%= form.file_field :images, multiple: true , accept: 'image/*' %>
+    </div>
     <%= form.submit %>
 <% end %>

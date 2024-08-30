@@ -16,6 +16,11 @@ class Menu < ApplicationRecord
     TIPI_CUCINA = ["mare", "terra", "cinese", "indiano"].freeze
     EXTRA = ["vino", "mise en place"].freeze
 
+
+    ## Immagini
+    has_many_attached :images
+    validate :images_must_be_valid
+
     
     private
 
@@ -40,4 +45,14 @@ class Menu < ApplicationRecord
         ["allergeni", "descrizione", "titolo"]
     end
     
+    # definiamo un metodo per verificare che si possono caricare solo immagini di tipo jpeg, png o gif
+    def images_must_be_valid
+        if images.attached?
+          images.each do |image|
+            if !image.content_type.in?(%w[image/jpeg image/png image/gif])
+              errors.add(:images, 'must be a JPEG, PNG, or GIF')
+            end
+          end
+        end
+    end
 end

@@ -16,7 +16,15 @@ Rails.application.routes.draw do
   resource :complete_registration, only: [:new, :create]
 
   root "menus#index"
-  resources :menus # definiamo le rotte crud per il controller menus_controller
+  # resources :menus # definiamo le rotte crud per il controller menus_controller
+  
+  # Per la gestione delle immagini
+  resources :menus do
+    member do
+      # remove_image_menu_path(image)
+      delete :remove_image
+    end
+  end
 
   # per la gestione (temporanea delle email)
   mount LetterOpenerWeb::Engine, at: "/letter_opener"

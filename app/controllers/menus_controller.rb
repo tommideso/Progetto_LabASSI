@@ -85,6 +85,14 @@ class MenusController < ApplicationController
         end
     end
 
+    # Funzione per rimuovere un'immagine (richiesta delete da pulsante in _form.html.erb sotto ogni immagine)
+    def remove_image
+        @image = ActiveStorage::Attachment.find(params[:id])
+        @image.purge_later
+        redirect_back(fallback_location: request.referer)
+
+    end
+
 
     private
     
@@ -98,7 +106,8 @@ class MenusController < ApplicationController
         # non permetto il passaggio del parametro disattivato! (solo per gli admin, per questioni di sicurezza)
         params.require(:menu).permit(
             :titolo, :descrizione, :prezzo_persona, :min_persone, :max_persone, :tipo_cucina, :prezzo_extra,
-            allergeni: {}, preferenze_alimentari: {}, adattabile: [:preferenze => {}, :allergeni => {}], extra: {}
+            allergeni: {}, preferenze_alimentari: {}, adattabile: [:preferenze => {}, :allergeni => {}], extra: {}, 
+            images: []
           )
     end
 
