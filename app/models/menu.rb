@@ -35,4 +35,9 @@ class Menu < ApplicationRecord
             errors.add(:extra, "deve avere almeno una selezione se ci sta un prezzo")
         end
     end
+
+    def self.ransackable_attributes(auth_object = nil)
+        ["allergeni", "descrizione", "titolo"]
+    end
+    
 end

@@ -73,3 +73,5 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem "faker", "~> 3.4"
 
 gem 'pagy'
+
+gem "ransack", "~> 4.2"

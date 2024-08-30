@@ -1,0 +1,18 @@
+<!-- app/views/search/index.html.erb -->
+<%= search_form_for @q, url: search_path, method: :get do |f| %>
+  <div class="field">
+    <%= f.label :titolo_cont, "Titolo" %>
+    <%= f.search_field :titolo_cont %>
+  </div>
+  <div class="field">
+    <%= f.label :descrizione_cont, "Descrizione" %>
+    <%= f.search_field :descrizione_cont %>
+  </div>
+  <div class="field">
+    <%= f.label :descrizione_cont, "Allergeni" %>
+    <%= f.search_field :allergeni_cont %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Search" %>
+  </div>
+<% end %>

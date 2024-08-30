@@ -20,4 +20,6 @@ Rails.application.routes.draw do
 
   # per la gestione (temporanea delle email)
   mount LetterOpenerWeb::Engine, at: "/letter_opener"
+
+  get 'search', to: 'search#index'
 end
