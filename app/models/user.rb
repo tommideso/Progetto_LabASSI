@@ -14,6 +14,8 @@ class User < ApplicationRecord
   # come fossero "nestati" da dentro user!
   accepts_nested_attributes_for :chef
   accepts_nested_attributes_for :client
+  # vincoli necessari per la chat
+  has_many :messages, dependent: :destroy
 
   # validazione per i campi
   validates :ruolo, inclusion: { in: ["chef", "client", "admin", nil] }

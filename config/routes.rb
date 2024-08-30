@@ -23,9 +23,12 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'users', to: 'devise/sessions#new'
   end
-  # rotte per le stanze (cioè la chat)
-  resources :rooms
+  # rotte per le stanze (cioè la chat); per ogni rotta dei messaggi definiamo le rotte nestate per i messaggi
+  resources :rooms do
+    resources :messages
+  end
 
+  # definiamo la root path
   root "menus#index"
   # resources :menus # definiamo le rotte crud per il controller menus_controller
   # Per la gestione delle immagini
