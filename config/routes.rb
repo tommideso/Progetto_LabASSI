@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   # le rotte per il completamento (che dipende dal ruolo scelto) vengono gestite dal controller 'complete_registrations_controller.rb'
   resource :complete_registration, only: [:new, :create]
   # definiamo le rotte per il controller user (questo controller serve per gestire gli utenti lato chat)
-  resources :users, only: [:show]
+  get 'users/show'
+  get 'user/:id', to: 'users#show', as: 'user'
   # usiamo devise_scope per definire una rotta personalizzata: l'indirizzo GET /users porta ora al controller session di devise
   devise_scope :user do
     get 'users', to: 'devise/sessions#new'
