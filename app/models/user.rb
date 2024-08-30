@@ -47,6 +47,10 @@ class User < ApplicationRecord
     end
   end
 
+  # TODO: rimuovere
+  # scope per la chat
+  scope :all_except, ->(user) { where.not(id: user) }
+
   private
 
   def nome_e_cognome_presenti_se_ruolo_selezionato_o_completato

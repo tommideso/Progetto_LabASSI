@@ -7,7 +7,13 @@ class UsersController < ApplicationController
     # questa funzione crea la nuova stanza (dal punto di vista del modello)
     # prende il nome della stanza
     # e controlla se esiste già una stanza con quel nome: se non esiste, viene creata
-    #create_or_retrive_single_room 
+    # create_or_retrive_single_room 
+
+    # poi mostro i messaggi in ordine ascendente 
+    # @message = Message.new
+    # @messages = @single_room.messages.order(created_at: :asc)
+    # e renderizzo la stanza
+    # render 'rooms/index'
   end
 
 
