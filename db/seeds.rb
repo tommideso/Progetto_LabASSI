@@ -46,7 +46,9 @@ require 'open-uri'
     image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: ['food']) 
     downloaded_image = URI.open(image_url) 
     menu.images.attach(io: downloaded_image, filename: "menu_#{i + 1}.jpg") 
- 
+        
+    puts "Created menu #{i}"
+
     menu.save! 
 end
 

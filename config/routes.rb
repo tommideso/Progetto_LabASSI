@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     member do
       # remove_image_menu_path(image)
       delete :remove_image
+      get :versions
+      get 'versions/:version_id', to: 'menus#show_version', as: 'version'
     end
   end
 

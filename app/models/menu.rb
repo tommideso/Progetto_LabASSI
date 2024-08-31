@@ -8,6 +8,9 @@ class Menu < ApplicationRecord
     validate :prezzo_and_extra
     validate :max_persone_maggior_di_min_persone
     
+    # collegamento verso prenotazione
+    has_many :reservation
+
     # definiamo direttamente nel modello delle liste immutabili per la lista degli allergeni, le preferenze alimentari e il tipo di cucina
     # (così se vogliamo modificarli, li dobbiamo modificare solamente qua)
     # (il metodo freeze impedisce agli oggetti di essere modificati)
@@ -16,12 +19,15 @@ class Menu < ApplicationRecord
     TIPI_CUCINA = ["mare", "terra", "cinese", "indiano"].freeze
     EXTRA = ["vino", "mise en place"].freeze
 
-
-    ## Immagini
+    # immagini
     has_many_attached :images
     validate :images_must_be_valid
-
     
+    # versioning tramite gemma paper_trail
+    has_paper_trail on: [:update]
+
+    # aggiungere metodo che specifichi quando fare versioning
+
     private
 
     def max_persone_maggior_di_min_persone
