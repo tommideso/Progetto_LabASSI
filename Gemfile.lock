@@ -215,6 +215,9 @@ GEM
     orm_adapter (0.5.0)
     pagy (5.10.1)
       activesupport
+    paper_trail (15.1.0)
+      activerecord (>= 6.1)
+      request_store (~> 1.4)
     parallel (1.26.3)
     parser (3.3.4.2)
       ast (~> 2.4.1)
@@ -277,6 +280,8 @@ GEM
     regexp_parser (2.9.2)
     reline (0.5.9)
       io-console (~> 0.5)
+    request_store (1.7.0)
+      rack (>= 1.4)
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -406,6 +411,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-rails_csrf_protection (~> 1.0)
   pagy
+  paper_trail (~> 15.1)
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.2.0)
