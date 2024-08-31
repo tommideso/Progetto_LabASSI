@@ -1,5 +1,27 @@
-<div>
-  <h1 class="font-bold text-4xl">Search#index</h1>
-  <p>Find me in app/views/search/index.html.erb</p>
-</div>
+
+<h1 class="text-center"><%= pluralize(@menus.count,"Result")%></h1>
 <%= render 'search/form' %>
+
+<div class="container">
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th><%= sort_link(@q, :titolo, "Titolo", default_order: :asc)%> </th>
+        <th><%= sort_link(@q, :allergeni, "Allergeni")%></th>
+        <th><%= sort_link(@q, :preferenze_alimentari, "Preferenze alimentari")%></th>
+        <th><%= sort_link(@q, :min_persone, "Numero di persone")%></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @menus.each do |menu| %>
+        <tr>
+          <td><%= link_to menu.titolo, menu %></td>
+          <td><%= menu.allergeni %></td>
+          <td><%= menu.preferenze_alimentari %></td>
+          <td><%= menu.min_persone %></td>
+        </tr>
+      <% end %>
+    </tbody>  
+  </table>    
+
+</div>

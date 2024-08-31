@@ -42,9 +42,35 @@ class Menu < ApplicationRecord
     end
 
     def self.ransackable_attributes(auth_object = nil)
-        ["allergeni", "descrizione", "titolo"]
+        ["allergeni", "preferenze_alimentari", "titolo", "min_persone", "max_persone"]
     end
-    
+    def self.ransackable_associations(auth_object = nil)
+        []
+    end
+
+    ransacker :allergeni, formatter: proc { |v| "%#{v}%" } do |parent, v|
+        Arel::Nodes::InfixOperation.new(
+        'ILIKE',
+        Arel::Nodes::NamedFunction.new('CAST', [parent.table[:allergeni].as('text')]),
+        Arel::Nodes.build_quoted(v)
+        )
+    end
+
+    ransacker :preferenze_alimentari, formatter: proc { |v| "%#{v}%" } do |parent, v|
+        Arel::Nodes::InfixOperation.new(
+        'ILIKE',
+        Arel::Nodes::NamedFunction.new('CAST', [parent.table[:preferenze_alimentari].as('text')]),
+        Arel::Nodes.build_quoted(v)
+        )
+    end
+
+    ransacker :min_persone, formatter: proc { |v| v.to_i } do |parent, v|
+        Arel::Nodes::InfixOperation.new(
+        '=',
+        parent.table[:min_persone],
+        Arel::Nodes.build_quoted(v)
+        )
+    end
     # definiamo un metodo per verificare che si possono caricare solo immagini di tipo jpeg, png o gif
     def images_must_be_valid
         if images.attached?

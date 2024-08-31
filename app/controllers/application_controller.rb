@@ -3,5 +3,11 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   include Pagy::Backend 
 
+  before_action :set_query
+
+  def set_query
+    @q=Menu.ransack(params[:q])   
+  end
+
 
 end

@@ -1,16 +1,19 @@
-<!-- app/views/search/index.html.erb -->
 <%= search_form_for @q, url: search_path, method: :get do |f| %>
   <div class="field">
     <%= f.label :titolo_cont, "Titolo" %>
     <%= f.search_field :titolo_cont %>
   </div>
   <div class="field">
-    <%= f.label :descrizione_cont, "Descrizione" %>
-    <%= f.search_field :descrizione_cont %>
+    <%= f.label :allergeni_cont, "Allergeni" %>
+    <%= f.search_field :allergeni_cont %>
   </div>
   <div class="field">
-    <%= f.label :descrizione_cont, "Allergeni" %>
-    <%= f.search_field :allergeni_cont %>
+    <%= f.label :preferenze_alimentari_cont, "Preferenze alimentari" %>
+    <%= f.search_field :preferenze_alimentari_cont %>
+  </div>
+  <div class="field">
+    <%= f.label :min_persone_cont, "Numero di persone" %>
+    <%= f.search_field :min_persone_cont %>
   </div>
   <div class="actions">
     <%= f.submit "Search" %>
