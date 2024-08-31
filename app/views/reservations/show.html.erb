@@ -1,0 +1,19 @@
+<h1>Reservation Details</h1>
+
+<p><strong>User:</strong> <%= @reservation.user.email %></p>
+<p><strong>Menu:</strong> <%= @reservation.menu.titolo %></p>
+<p><strong>Data Prenotazione:</strong> <%= @reservation.data_prenotazione %></p>
+<p><strong>Stato:</strong> <%= @reservation.stato %></p>
+<p><strong>Prezzo:</strong> <%= number_to_currency(@reservation.prezzo, unit: "€") %></p>
+<p><strong>Numero di Persone:</strong> <%= @reservation.num_persone %></p>
+<p><strong>Tipo di Pasto:</strong> <%= @reservation.tipo_pasto %></p>
+<p><strong>Extra:</strong> <%= @reservation.extra %></p>
+<p><strong>Modifiche Richieste:</strong> <%= @reservation.modifiche_richieste %></p>
+<p><strong>Indirizzo di Consegna:</strong> <%= @reservation.indirizzo_consegna %></p>
+<p><strong>Recensione Cliente:</strong> <%= @reservation.recensione_cliente %></p>
+<p><strong>Pagamento Effettuato:</strong> <%= @reservation.pagamento_effettuato ? 'Sì' : 'No' %></p>
+<p><strong>Rimborsato:</strong> <%= @reservation.rimborsato ? 'Sì' : 'No' %></p>
+<p><strong>Menu Version ID:</strong> <%= @reservation.menu_version_id %></p>
+
+<%= link_to 'Back to Menu', menu_path(@reservation.menu), class: 'btn btn-secondary' %>
+<%= link_to 'Edit Reservation', edit_reservation_path(@reservation), class: 'btn btn-primary' %>

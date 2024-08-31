@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_31_160634) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_31_231850) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -115,6 +115,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_160634) do
     t.boolean "rimborsato", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "menu_id"
+    t.bigint "menu_version_id"
+    t.index ["menu_id"], name: "index_reservations_on_menu_id"
+    t.index ["menu_version_id"], name: "index_reservations_on_menu_version_id"
     t.index ["user_id", "data_prenotazione"], name: "index_reservations_on_user_id_and_data_prenotazione", unique: true
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
@@ -168,5 +172,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_160634) do
   add_foreign_key "messages", "users"
   add_foreign_key "participants", "rooms"
   add_foreign_key "participants", "users"
+  add_foreign_key "reservations", "menus"
   add_foreign_key "reservations", "users"
+  add_foreign_key "reservations", "versions", column: "menu_version_id"
 end

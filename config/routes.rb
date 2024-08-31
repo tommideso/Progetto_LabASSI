@@ -42,6 +42,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # rotte per le prenotazioni
+  resources :reservations
+
   # per la gestione (temporanea delle email)
   mount LetterOpenerWeb::Engine, at: "/letter_opener"
 

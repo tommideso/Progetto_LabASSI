@@ -9,7 +9,7 @@ class Menu < ApplicationRecord
     validate :max_persone_maggior_di_min_persone
     
     # collegamento verso prenotazione
-    has_many :reservation
+    has_many :reservations
 
     # definiamo direttamente nel modello delle liste immutabili per la lista degli allergeni, le preferenze alimentari e il tipo di cucina
     # (così se vogliamo modificarli, li dobbiamo modificare solamente qua)
@@ -24,10 +24,9 @@ class Menu < ApplicationRecord
     validate :images_must_be_valid
     
     # versioning tramite gemma paper_trail
-    has_paper_trail on: [:update]
+    has_paper_trail on: [] # normalmente la gemma è disabilitata! viene attivata dal modello reservation.rb
 
-    # aggiungere metodo che specifichi quando fare versioning
-
+    
     private
 
     def max_persone_maggior_di_min_persone
