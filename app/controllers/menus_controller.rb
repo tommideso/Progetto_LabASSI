@@ -1,12 +1,10 @@
 class MenusController < ApplicationController
 
-    before_action :find_menu, only: [:show, :edit, :update, :destroy]
+    before_action :find_menu, only: [:show, :edit, :update, :destroy, :versions, :show_version]
     # prima di accedere alle funzioni di modifica o creazione di un menù l'utente deve essere autenticato
     before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
     # oltre ad essere autenticato, il suo ruolo deve essere quello di chef
     before_action :check_if_chef, only: [:edit, :update, :destroy, :new, :create]
-    
- 
     
     # Altro metodo funzionante per infinite scroll, con rescue per evitare errori
     # def index
@@ -90,7 +88,16 @@ class MenusController < ApplicationController
         @image = ActiveStorage::Attachment.find(params[:id])
         @image.purge_later
         redirect_back(fallback_location: request.referer)
+    end
 
+    # metodi per accedere alle versioni
+    def versions
+        @versions = @menu.versions
+      end
+
+    # per mostrare una versione specifica
+    def show_version
+        @menu = @menu.versions.find(params[:version_id]).reify
     end
 
 

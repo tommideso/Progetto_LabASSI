@@ -23,6 +23,11 @@ class Menu < ApplicationRecord
     has_many_attached :images
     validate :images_must_be_valid
     
+    # versioning tramite gemma paper_trail
+    has_paper_trail on: [:update]
+
+    # aggiungere metodo che specifichi quando fare versioning
+
     private
 
     def max_persone_maggior_di_min_persone
