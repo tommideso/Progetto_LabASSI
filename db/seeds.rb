@@ -1,30 +1,53 @@
-30.times.with_index do |i|
-    Menu.find_or_initialize_by(titolo: "Menu #{i + 1}").update!(
-        descrizione: Faker::Food.description,
-        prezzo_persona: Faker::Number.decimal(l_digits: 2, r_digits: 2),
-        min_persone: Faker::Number.between(from: 2, to: 10),
-        max_persone: Faker::Number.between(from: 11, to: 20),
-        tipo_cucina: Faker::Food.dish,
-        allergeni: { "glutine" => Faker::Boolean.boolean, "soia" => Faker::Boolean.boolean, "noci" => Faker::Boolean.boolean, "lattosio" => Faker::Boolean.boolean, "crostacei" => Faker::Boolean.boolean, "arachidi" => Faker::Boolean.boolean },
-        preferenze_alimentari: { "vegano" => Faker::Boolean.boolean, "glutine" => Faker::Boolean.boolean },
-        adattabile: {
-            "preferenze" => {
-                "vegano" => Faker::Boolean.boolean,
-                "glutine" => Faker::Boolean.boolean
-            },
-            "allergeni" => {
-                "glutine" => Faker::Boolean.boolean,
-                "soia" => Faker::Boolean.boolean,
-                "noci" => Faker::Boolean.boolean,
-                "lattosio" => Faker::Boolean.boolean,
-                "crostacei" => Faker::Boolean.boolean,
-                "arachidi" => Faker::Boolean.boolean
-            }
-        },
-        extra: { "mise en place" => "true", "vino" => Faker::Boolean.boolean },
-        prezzo_extra: Faker::Number.decimal(l_digits: 2, r_digits: 2),
-        disattivato: Faker::Boolean.boolean
-    )
+require 'open-uri' 
+ 
+30.times.with_index do |i| 
+    menu = Menu.find_or_initialize_by(titolo: "Menu #{i}") 
+    menu.update!( 
+        descrizione: Faker::Food.description, 
+        prezzo_persona: Faker::Number.decimal(l_digits: 2, r_digits: 2), 
+        min_persone: Faker::Number.between(from: 2, to: 10), 
+        max_persone: Faker::Number.between(from: 11, to: 20), 
+        tipo_cucina: Faker::Food.dish, 
+        allergeni: {  
+            "glutine" => Faker::Boolean.boolean,  
+            "soia" => Faker::Boolean.boolean,  
+            "noci" => Faker::Boolean.boolean,  
+            "lattosio" => Faker::Boolean.boolean,  
+            "crostacei" => Faker::Boolean.boolean,  
+            "arachidi" => Faker::Boolean.boolean  
+        }, 
+        preferenze_alimentari: {  
+            "vegano" => Faker::Boolean.boolean,  
+            "glutine" => Faker::Boolean.boolean  
+        }, 
+        adattabile: { 
+            "preferenze" => { 
+                "vegano" => Faker::Boolean.boolean, 
+                "glutine" => Faker::Boolean.boolean 
+            }, 
+            "allergeni" => { 
+                "glutine" => Faker::Boolean.boolean, 
+                "soia" => Faker::Boolean.boolean, 
+                "noci" => Faker::Boolean.boolean, 
+                "lattosio" => Faker::Boolean.boolean, 
+                "crostacei" => Faker::Boolean.boolean, 
+                "arachidi" => Faker::Boolean.boolean 
+            } 
+        }, 
+        extra: {  
+            "mise en place" => "true",  
+            "vino" => Faker::Boolean.boolean  
+        }, 
+        prezzo_extra: Faker::Number.decimal(l_digits: 2, r_digits: 2), 
+        disattivato: Faker::Boolean.boolean 
+    ) 
+ 
+    # Download and attach the image 
+    image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: ['food']) 
+    downloaded_image = URI.open(image_url) 
+    menu.images.attach(io: downloaded_image, filename: "menu_#{i + 1}.jpg") 
+ 
+    menu.save! 
 end
 
 
