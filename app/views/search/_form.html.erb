@@ -4,16 +4,20 @@
     <%= f.search_field :titolo_cont %>
   </div>
   <div class="field">
-    <%= f.label :allergeni_cont, "Allergeni" %>
-    <%= f.search_field :allergeni_cont %>
+    <%= f.label :allergeni_true, "Allergeni" %>
+    <%= f.search_field :allergeni_true %>
   </div>
   <div class="field">
-    <%= f.label :preferenze_alimentari_cont, "Preferenze alimentari" %>
-    <%= f.search_field :preferenze_alimentari_cont %>
+    <%= f.label :preferenze_alimentari_cont_any, "Preferenze alimentari" %>
+    <%= f.search_field :preferenze_alimentari_cont_any %>
   </div>
   <div class="field">
-    <%= f.label :min_persone_cont, "Numero di persone" %>
-    <%= f.search_field :min_persone_cont %>
+    <%= f.label :min_persone_lteq_all, "Numero di persone minimo" %>
+    <%= f.search_field :min_persone_lteq_all %>
+  </div>
+  <div class="field">
+    <%= f.label :max_persone_gteq_all, "Numero di persone massimo" %>
+    <%= f.search_field :max_persone_gteq_all %> 
   </div>
   <div class="actions">
     <%= f.submit "Search" %>
