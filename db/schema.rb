@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_31_231850) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_01_130043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_231850) do
     t.boolean "disattivato", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "chef_id"
+    t.index ["chef_id"], name: "index_menus_on_chef_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -101,7 +103,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_231850) do
   end
 
   create_table "reservations", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.date "data_prenotazione"
     t.string "stato"
     t.decimal "prezzo", precision: 10, scale: 2
@@ -117,10 +118,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_231850) do
     t.datetime "updated_at", null: false
     t.bigint "menu_id"
     t.bigint "menu_version_id"
+    t.bigint "chef_id"
+    t.bigint "client_id"
+    t.index ["chef_id"], name: "index_reservations_on_chef_id"
+    t.index ["client_id"], name: "index_reservations_on_client_id"
     t.index ["menu_id"], name: "index_reservations_on_menu_id"
     t.index ["menu_version_id"], name: "index_reservations_on_menu_version_id"
-    t.index ["user_id", "data_prenotazione"], name: "index_reservations_on_user_id_and_data_prenotazione", unique: true
-    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -168,11 +171,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_231850) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chefs", "users"
   add_foreign_key "clients", "users"
+  add_foreign_key "menus", "chefs"
   add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users"
   add_foreign_key "participants", "rooms"
   add_foreign_key "participants", "users"
+  add_foreign_key "reservations", "chefs"
+  add_foreign_key "reservations", "clients"
   add_foreign_key "reservations", "menus"
-  add_foreign_key "reservations", "users"
   add_foreign_key "reservations", "versions", column: "menu_version_id"
 end
