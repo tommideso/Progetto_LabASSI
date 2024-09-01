@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_01_044529) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_01_171923) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -157,6 +157,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_01_044529) do
     t.index ["ruolo"], name: "index_users_on_ruolo"
   end
 
+  create_table "version_images", force: :cascade do |t|
+    t.bigint "version_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["version_id"], name: "index_version_images_on_version_id"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.bigint "item_id", null: false
@@ -180,4 +187,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_01_044529) do
   add_foreign_key "reservations", "clients"
   add_foreign_key "reservations", "menus"
   add_foreign_key "reservations", "versions", column: "menu_version_id"
+  add_foreign_key "version_images", "versions"
 end

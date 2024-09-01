@@ -1,3 +1,4 @@
+
 class Reservation < ApplicationRecord
   belongs_to :client ## Chi ha prenotato
   belongs_to :chef ## Chi ha creato il menù
@@ -30,6 +31,7 @@ class Reservation < ApplicationRecord
       if menu.valid?
         PaperTrail.request(enabled: true) do
           menu_version = menu.paper_trail.save_with_version
+          
           Rails.logger.debug "Menu Version: #{menu_version.inspect}"
           
           if menu_version.present?
@@ -37,6 +39,12 @@ class Reservation < ApplicationRecord
           else
             Rails.logger.error "Menu version is nil. Cannot update reservation with menu version."
           end
+          ultima_versione = menu.versions.find(menu_version.id)
+          version_image = VersionImage.create!(version_id: ultima_versione.id)
+          menu.images.each do |image|
+            version_image.images.attach(image.blob)
+          end
+
         end
       else
         Rails.logger.error "Menu is not valid: #{menu.errors.full_messages.join(", ")}"

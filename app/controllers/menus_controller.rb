@@ -98,6 +98,7 @@ class MenusController < ApplicationController
     # per mostrare una versione specifica
     def show_version
         @menu = @menu.versions.find(params[:version_id]).reify
+        @version = @menu.versions.find(params[:version_id])
     end
 
 
