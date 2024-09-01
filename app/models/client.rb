@@ -7,6 +7,7 @@ class Client < ApplicationRecord
   # validazione personalizzata per :allergeni (dato che è un jsbonb)
   validate :allergeni_presence
 
+  has_many :reservations, dependent: :destroy
 
   private
   def allergeni_presence

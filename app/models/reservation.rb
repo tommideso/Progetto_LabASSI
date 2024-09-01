@@ -1,5 +1,6 @@
 class Reservation < ApplicationRecord
-  belongs_to :user
+  belongs_to :client ## Chi ha prenotato
+  belongs_to :chef ## Chi ha creato il menù
   # associazione rispetto il menu
   belongs_to :menu
   # usiamo un'associazione "personalizzata" con paper_trail 
@@ -14,6 +15,9 @@ class Reservation < ApplicationRecord
   # salvandone la versione all'interno della colonna "menu_version_id"
   after_create :create_menu_version
 
+  # Chiavi per unica prenotazione attiva per cliente e giorno, e per chef e giorno
+  validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where(stato: 'attiva') } }
+  validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where(stato: 'attiva') } }
   private
 
   def create_menu_version
@@ -41,4 +45,6 @@ class Reservation < ApplicationRecord
       Rails.logger.error "Menu is nil. Cannot create menu version."
     end
   end
+
+
 end

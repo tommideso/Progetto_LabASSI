@@ -91,12 +91,13 @@
 
 <% if user_signed_in? && current_user.client? %>
   <%= form_with model: Reservation.new, url: reservations_path, local: true do |f| %>
-    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.hidden_field :client_id, value: current_user.client.id %>
     <%= f.hidden_field :prezzo, value: @menu.prezzo_persona %>
     <%= f.hidden_field :num_persone, value: @menu.min_persone %>
     <%= f.hidden_field :tipo_pasto, value: @menu.tipo_cucina %>
     <%= f.hidden_field :extra, value: @menu.extra %>
     <%= f.hidden_field :menu_id, value: @menu.id %> 
+    <%= f.hidden_field :chef_id, value: @menu.chef.id %>
     <%= f.submit "Prenota" %>
   <% end %>
 <% end %>

@@ -17,7 +17,9 @@ class CreateReservations < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
-    # Aggiungi un indice unico sulla combinazione di user_id e data_prenotazione
-    add_index :reservations, [:user_id, :data_prenotazione], unique: true
+    # Tolgo l'index univoco su user_id e data_prenotazione perché voglio che
+    # un utente possa prenotare una sola volta al giorno ma solo se lo stato è ATTIVA quindi
+    # va messo un validatore nel modello Reservation
+    # add_index :reservations, [:client_id, :data_prenotazione], unique: true
   end
 end
