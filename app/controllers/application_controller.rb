@@ -9,5 +9,11 @@ class ApplicationController < ActionController::Base
     @q=Menu.ransack(params[:q])   
   end
 
+  # Metodo per cambiare il testo del bottone in base alla presenza del preferito
+  def favorite_text
+    return @favorite_exists ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"
+  end
+  
+  helper_method :favorite_text
 
 end

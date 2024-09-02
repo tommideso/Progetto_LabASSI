@@ -49,6 +49,10 @@ class MenusController < ApplicationController
    
 
     def show
+        if user_signed_in? && current_user.client?
+            # Controllo se il menù è già tra i preferiti dell'utente
+            @favorite_exists = Favorite.where(menu: @menu, client: current_user.client) == []? false : true
+        end
     end
 
     def new

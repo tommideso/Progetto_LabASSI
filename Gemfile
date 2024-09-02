@@ -77,3 +77,4 @@ gem 'pagy'
 gem "ransack", "~> 4.2"
 
 gem "paper_trail", "~> 15.1"
+
