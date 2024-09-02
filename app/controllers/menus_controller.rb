@@ -5,7 +5,6 @@ class MenusController < ApplicationController
     before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
     # oltre ad essere autenticato, il suo ruolo deve essere quello di chef
     before_action :check_if_chef, only: [:edit, :update, :destroy, :new, :create]
-    
     # Altro metodo funzionante per infinite scroll, con rescue per evitare errori
     # def index
     #     # Default to page 1 if params[:page] is not a valid positive integer
@@ -123,11 +122,7 @@ class MenusController < ApplicationController
           )
     end
 
-    def check_if_chef
-        unless current_user.ruolo == "chef"
-            redirect_to root_path, alert: "Il ruolo non consente tale azione"
-        end
-    end
+    
 
     
       

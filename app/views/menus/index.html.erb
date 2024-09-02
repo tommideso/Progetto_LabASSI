@@ -11,13 +11,14 @@
    <% elsif current_user.admin? %>
    <h2> Benvenuto admin </h2>
    <% end %>
+   <% if current_user.client? %>
+      <%= link_to "Menu preferiti", favorites_path %>
+   <% end %>
 <% end %>
 
 <div id="menu-list">
    <% @menu.each do |menu| %>
-        <h2> <%= link_to menu.titolo, menu_path(menu.id) %> </h2>
-        <p> <%= menu.descrizione %> </p>
-        <p> <%= menu.allergeni %> </p>
+      <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>
    <% end %>
 </div>
 

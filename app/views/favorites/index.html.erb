@@ -1,0 +1,12 @@
+<h1>I tuoi preferiti </h1>
+
+<% if @favorites.any? %>
+  <div id="menu-favorites-list">
+    <% @favorites.each do |fav| %>
+        <%= render partial: "shared_partials/menu_card", locals: {menu: fav.menu} %>
+
+    <% end %>
+  </div>
+<% else %>
+  <p>Non hai ancora aggiunto menu ai preferiti.</p>
+<% end %>

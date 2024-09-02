@@ -1,4 +1,7 @@
 class FavoritesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_if_client
+  
   def update
       menu = Menu.find(params[:menu])
       # Se il menu è già nei preferiti, lo rimuove, altrimenti lo aggiunge
@@ -15,6 +18,10 @@ class FavoritesController < ApplicationController
         format.html {redirect_to menu}
         format.js {}
       end
+  end
+
+  def index
+    @favorites = current_user.client.favorites
   end
   
 end

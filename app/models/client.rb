@@ -1,5 +1,6 @@
 class Client < ApplicationRecord
   belongs_to :user
+  
 
   # validazione per i campi
   validates :indirizzo, :telefono, presence: true
@@ -8,6 +9,7 @@ class Client < ApplicationRecord
   validate :allergeni_presence
 
   has_many :reservations, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   private
   def allergeni_presence

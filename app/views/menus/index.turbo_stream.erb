@@ -1,6 +1,8 @@
 <%= turbo_stream.append "menu-list" do %>
-    <%= render partial: "menu", collection: @menu %>
-  <% end %>
+    <% for menu in @menu %>
+        <%= render partial: "shared_partials/menu_card", locals: { menu: menu } %>
+    <% end %>
+<% end %>
   
 
   

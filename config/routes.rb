@@ -50,4 +50,7 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: "/letter_opener"
 
   get 'search', to: 'search#index'
+
+  # rotte per i preferiti
+  resources :favorites, only: [:index]
 end

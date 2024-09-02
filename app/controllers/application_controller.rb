@@ -16,4 +16,24 @@ class ApplicationController < ActionController::Base
   
   helper_method :favorite_text
 
+  private
+
+  # Metodi per controllare il ruolo dell'utente
+  def check_if_chef
+    unless current_user.ruolo == "chef"
+        redirect_to root_path, alert: "Il ruolo non consente tale azione"
+    end
+  end
+  def check_if_client
+    unless current_user.ruolo == "client"
+      redirect_to root_path, alert: "Il ruolo non consente tale azione"
+    end
+  end
+
+  def check_if_admin
+    unless current_user.ruolo == "admin"
+      redirect_to root_path, alert: "Il ruolo non consente tale azione"
+    end
+  end
+
 end
