@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create, :update, :destroy] do
       collection do
         post 'create_by_client'
+        post 'create_by_chef'
       end
     end
   end

@@ -50,20 +50,7 @@
       <div class="actions">
         <%= form.submit %>
       </div>
-    <% end %>
-  <% else %>
-    <h3>Hai già scritto una recensione per questa prenotazione:</h3>
-        <% @reservation.reviews.each do |review| %>
-            <% if review.tipo_recensione_type != "Client" %>
-                <div class="review">
-                    <p><strong>Recensione a:</strong> <%= review.tipo_recensione_type %></p>
-                    <p><strong>Valutazione:</strong> <%= review.valutazione %></p>
-                    <% if review.commento.present? %>
-                    <p><strong>Commento:</strong> <%= review.commento %></p>
-                    <% end %>
-                </div>
-            <% end %>
-        <% end %>
+    <% end %>    
   <% end %>
 <% elsif current_user.chef? %>
   <% if @reservation.reviews.empty? || @reservation.reviews.length == 2 %>
@@ -78,6 +65,9 @@
           </ul>
         </div>
       <% end %>
+    
+    <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
+
       
       <div class="field">
         <%= form.label :valutazione_cliente, "Rating for Customer" %>
@@ -88,11 +78,18 @@
         <%= form.submit %>
       </div>
     <% end %>
-  <% else %>
-    <p>Hai già lasciato una recensione per questa prenotazione.</p>
   <% end %>
 <% end %>
 
+<% @reservation.reviews.each do |review| %>
+        <div class="review">
+            <p><strong>Recensione a:</strong> <%= review.tipo_recensione_type %></p>
+            <p><strong>Valutazione:</strong> <%= review.valutazione %></p>
+            <% if review.commento.present? %>
+            <p><strong>Commento:</strong> <%= review.commento %></p>
+            <% end %>
+        </div>
+<% end %>
 
 
 <%= link_to 'Back to Menu', menu_path(@reservation.menu), class: 'btn btn-secondary' %>

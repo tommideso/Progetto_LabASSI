@@ -71,6 +71,7 @@ class MenusController < ApplicationController
 
     def create
         @menu = Menu.new(menu_params)
+        @menu.chef = current_user.chef
         if @menu.save
             redirect_to @menu
         else

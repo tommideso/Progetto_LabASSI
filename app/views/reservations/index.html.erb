@@ -1,0 +1,6 @@
+<!-- Mostro le prenotazioni con link alla prenotazione -->
+<% @reservations.each do |reservation| %>
+  <div>
+    <h2> <%= link_to reservation.menu.titolo, reservation_path(reservation.id) %> </h2>
+  </div>
+<% end %>

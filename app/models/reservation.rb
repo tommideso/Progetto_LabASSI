@@ -23,8 +23,6 @@ class Reservation < ApplicationRecord
   # Recensioni
   has_many :reviews
   validate :max_three_reviews # non più di tre recensioni per prenotazione
-  validate :unique_review_types # recensioni uniche per tipo (Menu, Chef, Cliente)
-
   private
 
   def create_menu_version
@@ -66,13 +64,6 @@ class Reservation < ApplicationRecord
       errors.add(:base, "Ogni prenotazione può avere al massimo tre recensioni")
     end
   end
-  # Verifica che le recensioni siano uniche per tipo
-  def unique_review_types
-    reviewable_types = reviews.pluck(:tipo_recensione_type).uniq
-    if reviewable_types.size != reviews.size
-      errors.add(:base, "Ogni prenotazione può avere una sola recensione per tipo")
-    end
-  end
-
+  
 
 end

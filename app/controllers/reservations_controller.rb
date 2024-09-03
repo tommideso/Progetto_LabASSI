@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
     before_action :authenticate_user!
+
   
     def create
       PaperTrail.request(enabled: true) do
@@ -20,6 +21,15 @@ class ReservationsController < ApplicationController
       @reservation = Reservation.find(params[:id])
       @review = Review.new
     end
+
+    def index
+      if current_user.chef?
+        @reservations = Reservation.where(chef_id: current_user.chef.id)
+      elsif current_user.client?
+        @reservations = Reservation.where(client_id: current_user.client.id)
+      end
+    end
+
   
     private
   
