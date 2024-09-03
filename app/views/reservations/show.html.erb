@@ -15,5 +15,85 @@
 <p><strong>Rimborsato:</strong> <%= @reservation.rimborsato ? 'Sì' : 'No' %></p>
 <p><strong>Menu Version ID:</strong> <%= @reservation.menu_version_id %></p>
 
+
+<!-- Recensioni -->
+<% if current_user.client? %>
+  <% if @reservation.reviews.empty? || @reservation.reviews.length == 1 %>
+    <%= form_with(model: [@reservation, @review], url: create_by_client_reservation_reviews_path(@reservation), local: true) do |form| %>
+      <% if @review.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@review.errors.count, "error") %> errori non hanno permesso di salvare la recensione:</h2>
+          <ul>
+            <% @review.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+        <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
+      <div class="field">
+        <%= form.label :valutazione_chef, "Valutazione per Chef" %>
+        <%= form.number_field :valutazione_chef, in: 1..5, required: true %>
+      </div>
+      
+      <div class="field">
+        <%= form.label :valutazione_menu, "Valutazione per Menu" %>
+        <%= form.number_field :valutazione_menu, in: 1..5, required: true %>
+      </div>
+
+        <div class="field">
+            <%= form.label :commento, "Commento per menu" %>
+            <%= form.text_area :commento, required: true %>
+        </div>
+      
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    <% end %>
+  <% else %>
+    <h3>Hai già scritto una recensione per questa prenotazione:</h3>
+        <% @reservation.reviews.each do |review| %>
+            <% if review.tipo_recensione_type != "Client" %>
+                <div class="review">
+                    <p><strong>Recensione a:</strong> <%= review.tipo_recensione_type %></p>
+                    <p><strong>Valutazione:</strong> <%= review.valutazione %></p>
+                    <% if review.commento.present? %>
+                    <p><strong>Commento:</strong> <%= review.commento %></p>
+                    <% end %>
+                </div>
+            <% end %>
+        <% end %>
+  <% end %>
+<% elsif current_user.chef? %>
+  <% if @reservation.reviews.empty? || @reservation.reviews.length == 2 %>
+    <%= form_with(model: [@reservation, @review], url: create_by_chef_reservation_reviews_path(@reservation), local: true) do |form| %>
+      <% if @review.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@review.errors.count, "error") %> errori non hanno permesso di salvare la recensione:</h2>
+          <ul>
+            <% @review.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      <div class="field">
+        <%= form.label :valutazione_cliente, "Rating for Customer" %>
+        <%= form.number_field :valutazione_cliente, in: 1..5 %>
+      </div>
+      
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>Hai già lasciato una recensione per questa prenotazione.</p>
+  <% end %>
+<% end %>
+
+
+
 <%= link_to 'Back to Menu', menu_path(@reservation.menu), class: 'btn btn-secondary' %>
 <%= link_to 'Edit Reservation', edit_reservation_path(@reservation), class: 'btn btn-primary' %>

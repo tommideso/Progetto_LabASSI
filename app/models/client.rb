@@ -11,6 +11,9 @@ class Client < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
+  # Recensioni
+  has_many :reviews, as: :tipo_recensione  
+
   private
   def allergeni_presence
     if allergeni.nil? || allergeni.empty? || allergeni.values.all?(&:blank?)

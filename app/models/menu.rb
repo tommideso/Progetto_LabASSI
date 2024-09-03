@@ -29,6 +29,8 @@ class Menu < ApplicationRecord
     # versioning tramite gemma paper_trail
     has_paper_trail on: [] # normalmente la gemma è disabilitata! viene attivata dal modello reservation.rb
 
+    # Recensioni
+    has_many :reviews, as: :tipo_recensione
     
     private
 

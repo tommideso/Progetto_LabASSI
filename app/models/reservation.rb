@@ -19,6 +19,12 @@ class Reservation < ApplicationRecord
   # Chiavi per unica prenotazione attiva per cliente e giorno, e per chef e giorno
   validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where(stato: 'attiva') } }
   validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where(stato: 'attiva') } }
+
+  # Recensioni
+  has_many :reviews
+  validate :max_three_reviews # non più di tre recensioni per prenotazione
+  validate :unique_review_types # recensioni uniche per tipo (Menu, Chef, Cliente)
+
   private
 
   def create_menu_version
@@ -51,6 +57,20 @@ class Reservation < ApplicationRecord
       end
     else
       Rails.logger.error "Menu is nil. Cannot create menu version."
+    end
+  end
+
+  # Verifica che non ci siano più di tre recensioni per prenotazione 
+  def max_three_reviews
+    if reviews.size > 3
+      errors.add(:base, "Ogni prenotazione può avere al massimo tre recensioni")
+    end
+  end
+  # Verifica che le recensioni siano uniche per tipo
+  def unique_review_types
+    reviewable_types = reviews.pluck(:tipo_recensione_type).uniq
+    if reviewable_types.size != reviews.size
+      errors.add(:base, "Ogni prenotazione può avere una sola recensione per tipo")
     end
   end
 

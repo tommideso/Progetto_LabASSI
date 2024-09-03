@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_02_141138) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_03_133510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -135,6 +135,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_02_141138) do
     t.index ["menu_version_id"], name: "index_reservations_on_menu_version_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.integer "valutazione"
+    t.text "commento"
+    t.string "tipo_recensione_type", null: false
+    t.bigint "tipo_recensione_id", null: false
+    t.bigint "reservation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_reviews_on_reservation_id"
+    t.index ["tipo_recensione_type", "tipo_recensione_id"], name: "index_reviews_on_tipo_recensione"
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -198,5 +210,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_02_141138) do
   add_foreign_key "reservations", "clients"
   add_foreign_key "reservations", "menus"
   add_foreign_key "reservations", "versions", column: "menu_version_id"
+  add_foreign_key "reviews", "reservations"
   add_foreign_key "version_images", "versions"
 end

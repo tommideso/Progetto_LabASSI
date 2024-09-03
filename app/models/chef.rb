@@ -8,4 +8,7 @@ class Chef < ApplicationRecord
 
   has_many :menus, dependent: :destroy
   has_many :reservations, dependent: :destroy
+
+  # Recensioni
+  has_many :reviews, as: :tipo_recensione  
 end

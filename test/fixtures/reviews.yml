@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  valutazione: 1
+  commento: MyText
+  tipo_prenotazione: one
+  tipo_prenotazione_type: Tipo prenotazione
+  reservation: one
+
+two:
+  valutazione: 1
+  commento: MyText
+  tipo_prenotazione: two
+  tipo_prenotazione_type: Tipo prenotazione
+  reservation: two
