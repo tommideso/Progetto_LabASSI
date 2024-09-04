@@ -43,7 +43,7 @@ end
 
 30.times.with_index do |i| 
     menu = Menu.find_or_initialize_by(titolo: "Menu #{i}") 
-    menu.update!( 
+    menu.assign_attributes( 
         descrizione: Faker::Food.description, 
         prezzo_persona: Faker::Number.decimal(l_digits: 2, r_digits: 2), 
         min_persone: Faker::Number.between(from: 2, to: 10), 
@@ -81,14 +81,32 @@ end
         }, 
         prezzo_extra: Faker::Number.decimal(l_digits: 2, r_digits: 2), 
         disattivato: Faker::Boolean.boolean,
-        chef: Chef.all.sample
+        chef: Chef.all.sample,
     ) 
     # menu.chef = Chef.all.sample
     # Download and attach the image 
     image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: ['food']) 
     downloaded_image = URI.open(image_url) 
     menu.images.attach(io: downloaded_image, filename: "menu_#{i + 1}.jpg") 
-        
+    
+    product = Stripe::Product.create({
+        name: menu.titolo,
+        active: true,
+        description: menu.descrizione,
+        metadata: {
+            menu_id: menu.id,
+    }})
+    menu.stripe_product_id = product.id
+
+    price = Stripe::Price.create({
+        product: menu.stripe_product_id,
+        unit_amount: (menu.prezzo_persona * 100).to_i,
+        currency: "eur"
+    })
+    menu.stripe_price_id = price.id
+    puts "Stripe product id: #{menu.stripe_product_id}"
+    puts "Stripe price id: #{menu.stripe_price_id}"
+
     puts "Created menu #{i}"
 
     menu.save! 

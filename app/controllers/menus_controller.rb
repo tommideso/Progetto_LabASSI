@@ -63,7 +63,20 @@ class MenusController < ApplicationController
 
     def update
         if @menu.update(menu_params)
-            redirect_to @menu
+            begin
+                Stripe::Product.update(@menu.stripe_product_id, {
+                    name: @menu.titolo, 
+                    description: @menu.descrizione
+                })
+            
+                Stripe::Price.update(@menu.stripe_price_id, {
+                    unit_amount: (@menu.prezzo_persona * 100).to_i
+                })
+            rescue Stripe::StripeError => e
+                Rails.logger.error "Errore durante l'aggiornamento del prodotto o del prezzo: #{e.message}"
+            end
+            redirect_to @menu, notice: "Menu aggiornato con successo"
+            
         else
             render :edit, status: :unprocessable_entity
         end
@@ -72,6 +85,25 @@ class MenusController < ApplicationController
     def create
         @menu = Menu.new(menu_params)
         @menu.chef = current_user.chef
+        begin
+            product = Stripe::Product.create({
+                name: @menu.titolo,
+                active: true,
+                description: @menu.descrizione,
+                metadata: {
+                    menu_id: @menu.id,
+                }
+            })
+            price = Stripe::Price.create({
+                product: product.id,
+                unit_amount: (@menu.prezzo_persona * 100).to_i,
+                currency: "eur"
+            })
+            @menu.stripe_product_id = product.id
+            @menu.stripe_price_id = price.id
+        rescue Stripe::StripeError => e
+            @menu.errors.add(:base, "Errore durante la creazione del prodotto o del prezzo (Stripe): #{e.message}")
+        end
         if @menu.save
             redirect_to @menu
         else

@@ -60,5 +60,9 @@ Rails.application.routes.draw do
         post 'create_by_chef'
       end
     end
+
+    member do
+      get 'checkout/success', to: 'reservations#checkout_success'
+    end
   end
 end

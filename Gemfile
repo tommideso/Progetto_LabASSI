@@ -77,3 +77,5 @@ gem 'pagy'
 gem "ransack", "~> 4.2"
 
 gem "paper_trail", "~> 15.1"
+gem "stripe", "~> 12.5"
+gem "pay", "~> 7.3"

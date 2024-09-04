@@ -1,6 +1,6 @@
 class Menu < ApplicationRecord
     validates :titolo, :descrizione, :prezzo_persona, :min_persone, 
-                :max_persone, :tipo_cucina, presence: true
+                :max_persone, :tipo_cucina, :stripe_price_id, :stripe_product_id, presence: true
     
 
     # per l'attributo booleano definisco il validates usando incluse per evitare problemi se è false
@@ -8,6 +8,8 @@ class Menu < ApplicationRecord
     # per extra e prezzo_extra definisco una validazione con un metodo 
     validate :prezzo_and_extra
     validate :max_persone_maggior_di_min_persone
+
+    
     
     # collegamento verso chef
     belongs_to :chef

@@ -12,17 +12,31 @@ class Reservation < ApplicationRecord
   # aggiunta dell'associazione menu_version_id
   belongs_to :menu_version, optional: true
 
+  enum stato: { attesa_pagamento: 0, confermata: 1, completata: 2, cancellata: 3 }
+  validates :num_persone, :tipo_pasto, :data_prenotazione, :indirizzo_consegna, :extra, presence: true
+
   # dopo la creazione di ogni prenotazione, 'salviamo' una versione del menù e la associamo alla prenotazione
   # salvandone la versione all'interno della colonna "menu_version_id"
   after_create :create_menu_version
 
-  # Chiavi per unica prenotazione attiva per cliente e giorno, e per chef e giorno
-  validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where(stato: 'attiva') } }
-  validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where(stato: 'attiva') } }
+
+
+
 
   # Recensioni
   has_many :reviews
   validate :max_three_reviews # non più di tre recensioni per prenotazione
+
+  # Se il pagamento è stato effettuato, allora la prenotazione deve avere un session_id
+  validates :stripe_session_id, presence: true, if: :pagamento_effettuato?
+
+
+
+  # Chiavi per unica prenotazione attiva per cliente e giorno, e per chef e giorno se la prenotazione non è stata cancellata
+  validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: :cancellata) } }
+  validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: :cancellata) } }
+  
+  
   private
 
   def create_menu_version

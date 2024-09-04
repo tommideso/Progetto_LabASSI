@@ -91,6 +91,8 @@
         </div>
 <% end %>
 
-
+<% if @reservation.pagamento_effettuato == false %>
+  <%= render partial: 'pay/stripe/checkout_button', locals: { session: @checkout_session, title: "Checkout" } %>
+<% end %>
 <%= link_to 'Back to Menu', menu_path(@reservation.menu), class: 'btn btn-secondary' %>
 <%= link_to 'Edit Reservation', edit_reservation_path(@reservation), class: 'btn btn-primary' %>
