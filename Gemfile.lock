@@ -151,7 +151,7 @@ GEM
       letter_opener (~> 1.9)
       railties (>= 6.1)
       rexml
-    logger (1.6.0)
+    logger (1.6.1)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -213,8 +213,7 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    pagy (5.10.1)
-      activesupport
+    pagy (9.0.8)
     paper_trail (15.1.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
