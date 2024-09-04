@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :omniauthable, omniauth_providers: [:google_oauth2] 
+         :confirmable, :omniauthable, omniauth_providers: [ :google_oauth2 ]
 
   # definiamo vincoli rispetto cliente e chef (has_one da parte di utente; belongs_to da parte di cliente e chef)
   # in questo modo ogni riga di cliente e chef si deve trovare in utente e ogni istanza di utente si trova al massimo in una di chef o client
@@ -18,7 +18,7 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy
 
   # validazione per i campi
-  validates :ruolo, inclusion: { in: ["chef", "client", "admin", nil] }
+  validates :ruolo, inclusion: { in: [ "chef", "client", "admin", nil ] }
   validate :ruolo_presente_se_inizializzato
   validate :nome_e_cognome_presenti_se_ruolo_selezionato_o_completato
 
@@ -35,18 +35,37 @@ class User < ApplicationRecord
 
   # funzione per fare retrieving dei dati sugli utenti loggati tramite oauth
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0, 20]
-      user.avatar_url = auth.info.image
-      user.confirmed_at = Time.now
-      user.nome = auth.info.name.split(" ")[0].capitalize
-      user.cognome = auth.info.name.split(" ")[1 .. -1].join(" ").capitalize
-
-      # campi extra come nome e ruolo vengono impostati nella fase di completamento anche per gli utenti registrati da oauth
-      # user.ruolo = nil # PER ORA HARDCODIAMO IL RUOLO PERCHÉ NON C'È UNA PAGINA SEPARATA! TODO
-      # user.inizializzato = true
+    # Cerca se l'utente è già presente nel database
+    # Se l'utente è già presente, aggiorna i dati
+    user = User.where(email: auth.info.email).first
+    if user
+      # Se uid è nil significa che l'utente è stato creato tramite email e password
+      if user.uid.nil? || user.uid == auth.uid
+        user.provider = auth.provider
+        user.uid = auth.uid
+        user.avatar_url = user.avatar_url || auth.info.image
+        user.confirmed_at = user.confirmed_at || Time.now
+        user.nome = user.nome || auth.info.name.split(" ")[0].capitalize
+        user.cognome = user.cognome || auth.info.name.split(" ")[1 .. -1].join(" ").capitalize
+        user.save
+      else
+        # Errore: la mail era già stata usata per un account, ma uid diverso
+        return nil
+      end
+    else
+      user = User.new({
+        email: auth.info.email,
+        provider: auth.provider,
+        uid: auth.uid,
+        avatar_url: auth.info.image,
+        confirmed_at: Time.now,
+        nome: auth.info.name.split(" ")[0].capitalize,
+        cognome: auth.info.name.split(" ")[1 .. -1].join(" ").capitalize,
+        password: Devise.friendly_token[0, 20]
+      })
+      user.save
     end
+    user
   end
 
   # TODO: rimuovere
@@ -60,6 +79,6 @@ class User < ApplicationRecord
   end
 
   def ruolo_presente_se_inizializzato
-    errors.add(:base, "Il ruolo deve essere presente") if (completed==0) && (ruolo.blank?)
+    errors.add(:base, "Il ruolo deve essere presente") if (completed==1) && (ruolo.blank?)
   end
 end
