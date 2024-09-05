@@ -11,19 +11,19 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # le rotte devise per la registrazione vengono gestite dal controller 'registrations_controller.rb'
-  # ho inoltre creato un controller per la conferma 
-  devise_for :users, controllers: { registrations: "registrations", 
-                                  confirmations: "users/confirmations", 
-                                  omniauth_callbacks: "users/omniauth_callbacks", 
+  # ho inoltre creato un controller per la conferma
+  devise_for :users, controllers: { registrations: "registrations",
+                                  confirmations: "users/confirmations",
+                                  omniauth_callbacks: "users/omniauth_callbacks",
                                   sessions: "users/sessions" }
   # le rotte per il completamento (che dipende dal ruolo scelto) vengono gestite dal controller 'complete_registrations_controller.rb'
-  resource :complete_registration, only: [:new, :create]
+  resource :complete_registration, only: [ :new, :create ]
   # definiamo le rotte per il controller user (questo controller serve per gestire gli utenti lato chat)
-  get 'users/show'
-  get 'user/:id', to: 'users#show', as: 'user'
+  get "users/show"
+  get "user/:id", to: "users#show", as: "user"
   # usiamo devise_scope per definire una rotta personalizzata: l'indirizzo GET /users porta ora al controller session di devise
   devise_scope :user do
-    get 'users', to: 'devise/sessions#new'
+    get "users", to: "devise/sessions#new"
   end
   # rotte per le stanze (cioè la chat); per ogni rotta dei messaggi definiamo le rotte nestate per i messaggi
   resources :rooms do
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       # remove_image_menu_path(image)
       delete :remove_image
       get :versions
-      get 'versions/:version_id', to: 'menus#show_version', as: 'version'
+      get "versions/:version_id", to: "menus#show_version", as: "version"
     end
   end
 
@@ -47,22 +47,22 @@ Rails.application.routes.draw do
   # per la gestione (temporanea delle email)
   mount LetterOpenerWeb::Engine, at: "/letter_opener"
 
-  get 'search', to: 'search#index'
+  get "search", to: "search#index"
 
   # rotte per i preferiti
-  resources :favorites, only: [:index]
-  
+  resources :favorites, only: [ :index ]
+
   # rotte per le prenotazioni
   resources :reservations do
-    resources :reviews, only: [:create, :update, :destroy] do
+    resources :reviews, only: [ :create, :update, :destroy ] do
       collection do
-        post 'create_by_client'
-        post 'create_by_chef'
+        post "create_by_client"
+        post "create_by_chef"
       end
     end
 
     member do
-      get 'checkout/success', to: 'reservations#checkout_success'
+      get "checkout/success", to: "reservations#checkout_success"
     end
   end
 end

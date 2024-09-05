@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_04_104303) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_05_100423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -209,7 +209,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_04_104303) do
     t.integer "stato", default: 0, null: false
     t.decimal "prezzo", precision: 10, scale: 2
     t.integer "num_persone"
-    t.string "tipo_pasto"
+    t.integer "tipo_pasto"
     t.jsonb "extra"
     t.text "modifiche_richieste"
     t.string "indirizzo_consegna"

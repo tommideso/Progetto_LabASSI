@@ -5,10 +5,8 @@ class ReservationsController < ApplicationController
   def create
     PaperTrail.request(enabled: true) do
       @reservation = Reservation.new(reservation_params)
-
-      @reservation.data_prenotazione = Faker::Date.forward(from: Date.today, days: 10)
-      # TODO: mettere indirizzo vero
-      @reservation.indirizzo_consegna = current_user.client.indirizzo
+      # TODO aggiungere anche extra
+      @reservation.prezzo = reservation_params[:prezzo].to_f * reservation_params[:num_persone].to_i
       if @reservation.save
         redirect_to @reservation, notice: "Reservation was successfully created."
       else
@@ -85,6 +83,6 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:client_id, :chef_id, :prezzo, :num_persone, :tipo_pasto, :extra, :menu_id)
+    params.require(:reservation).permit(:client_id, :chef_id, :num_persone, :tipo_pasto, :extra, :menu_id, :data_prenotazione, :indirizzo_consegna, :prezzo)
   end
 end

@@ -7,7 +7,7 @@ class CreateReservations < ActiveRecord::Migration[7.2]
       t.string :stato # Stato della prenotazione (es. pending, confirmed, cancelled)
       t.decimal :prezzo, precision: 10, scale: 2 # Prezzo della prenotazione
       t.integer :num_persone # Numero di persone
-      t.string :tipo_pasto # pranzo o cena 
+      t.string :tipo_pasto # Tipo di pasto (es. colazione, pranzo, aperitivo, cena, altro)
       t.jsonb :extra # Eventuali extra inclusi nella prenotazione
       t.text :modifiche_richieste # Modifiche richieste dal cliente
       t.string :indirizzo_consegna # Indirizzo di consegna
