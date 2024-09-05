@@ -5,7 +5,7 @@ class Message < ApplicationRecord
   before_create :confirm_participant
   # fondamentale affinché ogni messaggio porti ad un aggiornamento (tramite turbostream) della pagina
   # in questo modo non è necessario refreshare la pagina per mostrare nuovi messaggi
-  after_create_commit {broadcast_append_to self.room }
+  after_create_commit { broadcast_append_to self.room }
 
   def confirm_participant
     # se non c'è un participant corretto, aborta creazione messaggio

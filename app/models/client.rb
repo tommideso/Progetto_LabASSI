@@ -1,6 +1,6 @@
 class Client < ApplicationRecord
   belongs_to :user
-  
+
 
   # validazione per i campi
   validates :indirizzo, :telefono, presence: true
@@ -12,7 +12,7 @@ class Client < ApplicationRecord
   has_many :favorites, dependent: :destroy
 
   # Recensioni
-  has_many :reviews, as: :tipo_recensione  
+  has_many :reviews, as: :tipo_recensione
 
   delegate :email, to: :user
   pay_customer stripe_attributes: :stripe_attributes
@@ -40,7 +40,7 @@ class Client < ApplicationRecord
       # },
       metadata: {
         pay_customer_id: pay_customer.id,
-        user_id: user.id 
+        user_id: user.id
       }
     }
   end

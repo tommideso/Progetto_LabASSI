@@ -6,12 +6,12 @@ class RoomsController < ApplicationController
     @room = Room.new
     # TODO: rimuovere
     @users = User.all_except(current_user)
-    render 'index'
+    render "index"
   end
 
   def create
     # creiamo la stanza dandogli il nome associato alla chiave room dentro params
-    @room = Room.create(name: params['room']['name'])
+    @room = Room.create(name: params["room"]["name"])
   end
 
   def show
@@ -25,6 +25,6 @@ class RoomsController < ApplicationController
 
     # TODO: rimuovere
     @users = User.all_except(current_user)
-    render 'index'
+    render "index"
   end
 end

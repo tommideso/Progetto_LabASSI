@@ -1,4 +1,4 @@
-require 'open-uri' 
+require 'open-uri'
 ## Create some users
 password = "password"
 20.times do |i|
@@ -14,7 +14,7 @@ password = "password"
         completed: 1
     )
     puts "Created user #{i}"
-    
+
     if u.chef?
         Chef.find_or_create_by(
             user: u,
@@ -30,7 +30,7 @@ password = "password"
             user: u,
             telefono: Faker::PhoneNumber.cell_phone,
             indirizzo: Faker::Address.full_address,
-            allergeni: { "glutine" => Faker::Boolean.boolean, "soia" => Faker::Boolean.boolean, "noci" => Faker::Boolean.boolean, "lattosio" => Faker::Boolean.boolean, "crostacei" => Faker::Boolean.boolean, "arachidi" => Faker::Boolean.boolean }, 
+            allergeni: { "glutine" => Faker::Boolean.boolean, "soia" => Faker::Boolean.boolean, "noci" => Faker::Boolean.boolean, "lattosio" => Faker::Boolean.boolean, "crostacei" => Faker::Boolean.boolean, "arachidi" => Faker::Boolean.boolean },
 
         )
         puts "Created client #{i}"
@@ -38,64 +38,64 @@ password = "password"
 end
 
 
-    
 
 
-30.times.with_index do |i| 
-    menu = Menu.find_or_initialize_by(titolo: "Menu #{i}") 
-    menu.assign_attributes( 
-        descrizione: Faker::Food.description, 
-        prezzo_persona: Faker::Number.decimal(l_digits: 2, r_digits: 2), 
-        min_persone: Faker::Number.between(from: 2, to: 10), 
-        max_persone: Faker::Number.between(from: 11, to: 20), 
-        tipo_cucina: Faker::Food.dish, 
-        allergeni: {  
-            "glutine" => Faker::Boolean.boolean,  
-            "soia" => Faker::Boolean.boolean,  
-            "noci" => Faker::Boolean.boolean,  
-            "lattosio" => Faker::Boolean.boolean,  
-            "crostacei" => Faker::Boolean.boolean,  
-            "arachidi" => Faker::Boolean.boolean  
-        }, 
-        preferenze_alimentari: {  
-            "vegano" => Faker::Boolean.boolean,  
-            "glutine" => Faker::Boolean.boolean  
-        }, 
-        adattabile: { 
-            "preferenze" => { 
-                "vegano" => Faker::Boolean.boolean, 
-                "glutine" => Faker::Boolean.boolean 
-            }, 
-            "allergeni" => { 
-                "glutine" => Faker::Boolean.boolean, 
-                "soia" => Faker::Boolean.boolean, 
-                "noci" => Faker::Boolean.boolean, 
-                "lattosio" => Faker::Boolean.boolean, 
-                "crostacei" => Faker::Boolean.boolean, 
-                "arachidi" => Faker::Boolean.boolean 
-            } 
-        }, 
-        extra: {  
-            "mise en place" => "true",  
-            "vino" => Faker::Boolean.boolean  
-        }, 
-        prezzo_extra: Faker::Number.decimal(l_digits: 2, r_digits: 2), 
+
+30.times.with_index do |i|
+    menu = Menu.find_or_initialize_by(titolo: "Menu #{i}")
+    menu.assign_attributes(
+        descrizione: Faker::Food.description,
+        prezzo_persona: Faker::Number.decimal(l_digits: 2, r_digits: 2),
+        min_persone: Faker::Number.between(from: 2, to: 10),
+        max_persone: Faker::Number.between(from: 11, to: 20),
+        tipo_cucina: Faker::Food.dish,
+        allergeni: {
+            "glutine" => Faker::Boolean.boolean,
+            "soia" => Faker::Boolean.boolean,
+            "noci" => Faker::Boolean.boolean,
+            "lattosio" => Faker::Boolean.boolean,
+            "crostacei" => Faker::Boolean.boolean,
+            "arachidi" => Faker::Boolean.boolean
+        },
+        preferenze_alimentari: {
+            "vegano" => Faker::Boolean.boolean,
+            "glutine" => Faker::Boolean.boolean
+        },
+        adattabile: {
+            "preferenze" => {
+                "vegano" => Faker::Boolean.boolean,
+                "glutine" => Faker::Boolean.boolean
+            },
+            "allergeni" => {
+                "glutine" => Faker::Boolean.boolean,
+                "soia" => Faker::Boolean.boolean,
+                "noci" => Faker::Boolean.boolean,
+                "lattosio" => Faker::Boolean.boolean,
+                "crostacei" => Faker::Boolean.boolean,
+                "arachidi" => Faker::Boolean.boolean
+            }
+        },
+        extra: {
+            "mise en place" => "true",
+            "vino" => Faker::Boolean.boolean
+        },
+        prezzo_extra: Faker::Number.decimal(l_digits: 2, r_digits: 2),
         disattivato: Faker::Boolean.boolean,
         chef: Chef.all.sample,
-    ) 
+    )
     # menu.chef = Chef.all.sample
-    # Download and attach the image 
-    image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: ['food']) 
-    downloaded_image = URI.open(image_url) 
-    menu.images.attach(io: downloaded_image, filename: "menu_#{i + 1}.jpg") 
-    
+    # Download and attach the image
+    image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'food' ])
+    downloaded_image = URI.open(image_url)
+    menu.images.attach(io: downloaded_image, filename: "menu_#{i + 1}.jpg")
+
     product = Stripe::Product.create({
         name: menu.titolo,
         active: true,
         description: menu.descrizione,
         metadata: {
-            menu_id: menu.id,
-    }})
+            menu_id: menu.id
+    } })
     menu.stripe_product_id = product.id
 
     price = Stripe::Price.create({
@@ -109,7 +109,7 @@ end
 
     puts "Created menu #{i}"
 
-    menu.save! 
+    menu.save!
 end
 
 
@@ -129,11 +129,11 @@ end
 #             "glutine" => "false"
 #         },
 #         "allergeni" => {
-#             "glutine" => "false", 
-#             "soia" => "true", 
-#             "noci" => "true", 
-#             "lattosio" => "false", 
-#             "crostacei" => "true", 
+#             "glutine" => "false",
+#             "soia" => "true",
+#             "noci" => "true",
+#             "lattosio" => "false",
+#             "crostacei" => "true",
 #             "arachidi" => "false"
 #         }
 #     },
@@ -157,11 +157,11 @@ end
 #             "glutine" => "false"
 #         },
 #         "allergeni" => {
-#             "glutine" => "false", 
-#             "soia" => "true", 
-#             "noci" => "true", 
-#             "lattosio" => "false", 
-#             "crostacei" => "true", 
+#             "glutine" => "false",
+#             "soia" => "true",
+#             "noci" => "true",
+#             "lattosio" => "false",
+#             "crostacei" => "true",
 #             "arachidi" => "false"
 #         }
 #     },
@@ -185,11 +185,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "false", 
-#             "noci" => "true", 
-#             "lattosio" => "true", 
-#             "crostacei" => "true", 
+#             "glutine" => "true",
+#             "soia" => "false",
+#             "noci" => "true",
+#             "lattosio" => "true",
+#             "crostacei" => "true",
 #             "arachidi" => "false"
 #         }
 #     },
@@ -213,11 +213,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "true", 
-#             "noci" => "true", 
-#             "lattosio" => "true", 
-#             "crostacei" => "false", 
+#             "glutine" => "true",
+#             "soia" => "true",
+#             "noci" => "true",
+#             "lattosio" => "true",
+#             "crostacei" => "false",
 #             "arachidi" => "false"
 #         }
 #     },
@@ -241,11 +241,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "false", 
-#             "soia" => "true", 
-#             "noci" => "false", 
-#             "lattosio" => "false", 
-#             "crostacei" => "true", 
+#             "glutine" => "false",
+#             "soia" => "true",
+#             "noci" => "false",
+#             "lattosio" => "false",
+#             "crostacei" => "true",
 #             "arachidi" => "false"
 #         }
 #     },
@@ -269,11 +269,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "true", 
-#             "noci" => "true", 
-#             "lattosio" => "true", 
-#             "crostacei" => "true", 
+#             "glutine" => "true",
+#             "soia" => "true",
+#             "noci" => "true",
+#             "lattosio" => "true",
+#             "crostacei" => "true",
 #             "arachidi" => "true"
 #         }
 #     },
@@ -297,11 +297,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "true", 
-#             "noci" => "true", 
-#             "lattosio" => "true", 
-#             "crostacei" => "true", 
+#             "glutine" => "true",
+#             "soia" => "true",
+#             "noci" => "true",
+#             "lattosio" => "true",
+#             "crostacei" => "true",
 #             "arachidi" => "true"
 #         }
 #     },
@@ -325,11 +325,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "false", 
-#             "noci" => "true", 
-#             "lattosio" => "true", 
-#             "crostacei" => "false", 
+#             "glutine" => "true",
+#             "soia" => "false",
+#             "noci" => "true",
+#             "lattosio" => "true",
+#             "crostacei" => "false",
 #             "arachidi" => "false"
 #         }
 #     },
@@ -353,11 +353,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "true", 
-#             "noci" => "true", 
-#             "lattosio" => "false", 
-#             "crostacei" => "true", 
+#             "glutine" => "true",
+#             "soia" => "true",
+#             "noci" => "true",
+#             "lattosio" => "false",
+#             "crostacei" => "true",
 #             "arachidi" => "true"
 #         }
 #     },
@@ -381,11 +381,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "false", 
-#             "noci" => "true", 
-#             "lattosio" => "true", 
-#             "crostacei" => "false", 
+#             "glutine" => "true",
+#             "soia" => "false",
+#             "noci" => "true",
+#             "lattosio" => "true",
+#             "crostacei" => "false",
 #             "arachidi" => "true"
 #         }
 #     },
@@ -409,11 +409,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "false", 
-#             "noci" => "true", 
-#             "lattosio" => "true", 
-#             "crostacei" => "true", 
+#             "glutine" => "true",
+#             "soia" => "false",
+#             "noci" => "true",
+#             "lattosio" => "true",
+#             "crostacei" => "true",
 #             "arachidi" => "false"
 #         }
 #     },
@@ -437,11 +437,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "true", 
-#             "noci" => "true", 
-#             "lattosio" => "true", 
-#             "crostacei" => "false", 
+#             "glutine" => "true",
+#             "soia" => "true",
+#             "noci" => "true",
+#             "lattosio" => "true",
+#             "crostacei" => "false",
 #             "arachidi" => "true"
 #         }
 #     },
@@ -465,11 +465,11 @@ end
 #             "glutine" => "true"
 #         },
 #         "allergeni" => {
-#             "glutine" => "true", 
-#             "soia" => "true", 
-#             "noci" => "true", 
-#             "lattosio" => "true", 
-#             "crostacei" => "true", 
+#             "glutine" => "true",
+#             "soia" => "true",
+#             "noci" => "true",
+#             "lattosio" => "true",
+#             "crostacei" => "true",
 #             "arachidi" => "true"
 #         }
 #     },

@@ -13,6 +13,6 @@ class Room < ApplicationRecord
           Participant.create(user_id: user.id, room_id: single_room.id)
         end
         # restituiamo la stanza
-        return single_room
-      end
+        single_room
+    end
 end

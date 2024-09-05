@@ -4,10 +4,10 @@ class Reservation < ApplicationRecord
   belongs_to :chef ## Chi ha creato il menù
   # associazione rispetto il menu
   belongs_to :menu
-  # usiamo un'associazione "personalizzata" con paper_trail 
-  belongs_to :menu_version, class_name: 'PaperTrail::Version', optional: true
+  # usiamo un'associazione "personalizzata" con paper_trail
+  belongs_to :menu_version, class_name: "PaperTrail::Version", optional: true
   # ed un'altra associata personalizzata con il solo scope di percorrere l'associazione in maniera più veloce
-  has_one :versioned_menu, through: :menu_version, source: :item, source_type: 'Menu'
+  has_one :versioned_menu, through: :menu_version, source: :item, source_type: "Menu"
 
   # aggiunta dell'associazione menu_version_id
   belongs_to :menu_version, optional: true
@@ -35,8 +35,8 @@ class Reservation < ApplicationRecord
   # Chiavi per unica prenotazione attiva per cliente e giorno, e per chef e giorno se la prenotazione non è stata cancellata
   validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: :cancellata) } }
   validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: :cancellata) } }
-  
-  
+
+
   private
 
   def create_menu_version
@@ -49,9 +49,9 @@ class Reservation < ApplicationRecord
       if menu.valid?
         PaperTrail.request(enabled: true) do
           menu_version = menu.paper_trail.save_with_version
-          
+
           Rails.logger.debug "Menu Version: #{menu_version.inspect}"
-          
+
           if menu_version.present?
             update!(menu_version_id: menu_version.id)
           else
@@ -62,7 +62,6 @@ class Reservation < ApplicationRecord
           menu.images.each do |image|
             version_image.images.attach(image.blob)
           end
-
         end
       else
         Rails.logger.error "Menu is not valid: #{menu.errors.full_messages.join(", ")}"
@@ -72,12 +71,10 @@ class Reservation < ApplicationRecord
     end
   end
 
-  # Verifica che non ci siano più di tre recensioni per prenotazione 
+  # Verifica che non ci siano più di tre recensioni per prenotazione
   def max_three_reviews
     if reviews.size > 3
       errors.add(:base, "Ogni prenotazione può avere al massimo tre recensioni")
     end
   end
-  
-
 end
