@@ -1,10 +1,9 @@
 class MenusController < ApplicationController
-
-    before_action :find_menu, only: [:show, :edit, :update, :destroy, :versions, :show_version]
+    before_action :find_menu, only: [ :show, :edit, :update, :destroy, :versions, :show_version ]
     # prima di accedere alle funzioni di modifica o creazione di un menù l'utente deve essere autenticato
-    before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
+    before_action :authenticate_user!, only: [ :edit, :update, :destroy, :new, :create ]
     # oltre ad essere autenticato, il suo ruolo deve essere quello di chef
-    before_action :check_if_chef, only: [:edit, :update, :destroy, :new, :create]
+    before_action :check_if_chef, only: [ :edit, :update, :destroy, :new, :create ]
     # Altro metodo funzionante per infinite scroll, con rescue per evitare errori
     # def index
     #     # Default to page 1 if params[:page] is not a valid positive integer
@@ -16,36 +15,36 @@ class MenusController < ApplicationController
     #         rescue Pagy::OverflowError
     #         return
     #     end
-    
+
     #     respond_to do |format|
     #     format.html # Renders the HTML view by default
     #     format.turbo_stream # Handles Turbo Stream format
     #     end
-        
+
     #   end
 
     def index
         page = params[:page].to_i
         page = 1 if page <= 0
         num_items = 10
-      
+
         # Calcola il numero totale di elementi e il numero di pagine
         total_items = Menu.count
-        total_pages = (total_items.to_f / num_items).ceil            
-      
+        total_pages = (total_items.to_f / num_items).ceil
+
         # Se la pagina richiesta supera il numero totale di pagine, non caricare nulla
         if page > total_pages
           render turbo_stream: turbo_stream.replace("menu-container", "") and return
         end
-      
+
         @pagy, @menu = pagy(Menu.all, page: page, items: num_items)
-      
+
         respond_to do |format|
           format.html
           format.turbo_stream
         end
-      end
-   
+    end
+
 
     def show
         if user_signed_in? && current_user.client?
@@ -62,21 +61,33 @@ class MenusController < ApplicationController
     end
 
     def update
-        if @menu.update(menu_params)
+        # Se prezzo_persona è cambiato, aggiorno il prezzo del prodotto su Stripe
+        old_price = @menu.prezzo_persona
+        update_params = menu_params.dup
+        begin
+            if menu_params[:prezzo_persona].to_f != old_price.to_f
+                product = Stripe::Price.create({
+                    unit_amount: (menu_params[:prezzo_persona].to_f * 100).to_i,
+                    product: @menu.stripe_product_id,
+                    currency: "eur"
+                })
+                update_params[:stripe_price_id] = product.id
+            end
+        rescue Stripe::StripeError => e
+            @menu.errors.add(:base, "Errore durante l'aggiornamento del prezzo (Stripe): #{e.message}")
+        end
+
+        if @menu.update(update_params)
             begin
                 Stripe::Product.update(@menu.stripe_product_id, {
-                    name: @menu.titolo, 
+                    name: @menu.titolo,
                     description: @menu.descrizione
                 })
-            
-                Stripe::Price.update(@menu.stripe_price_id, {
-                    unit_amount: (@menu.prezzo_persona * 100).to_i
-                })
             rescue Stripe::StripeError => e
-                Rails.logger.error "Errore durante l'aggiornamento del prodotto o del prezzo: #{e.message}"
+                Rails.logger.error "Errore durante l'aggiornamento del prodotto: #{e.message}"
             end
             redirect_to @menu, notice: "Menu aggiornato con successo"
-            
+
         else
             render :edit, status: :unprocessable_entity
         end
@@ -91,7 +102,7 @@ class MenusController < ApplicationController
                 active: true,
                 description: @menu.descrizione,
                 metadata: {
-                    menu_id: @menu.id,
+                    menu_id: @menu.id
                 }
             })
             price = Stripe::Price.create({
@@ -112,7 +123,7 @@ class MenusController < ApplicationController
     end
 
     def destroy
-        if @menu.destroy 
+        if @menu.destroy
             redirect_to root_path
         else
             render :show, status: :unprocessable_entity
@@ -139,24 +150,19 @@ class MenusController < ApplicationController
 
 
     private
-    
+
     def find_menu
         @menu = Menu.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-        redirect_to root_path 
+        redirect_to root_path
     end
 
     def menu_params
         # non permetto il passaggio del parametro disattivato! (solo per gli admin, per questioni di sicurezza)
         params.require(:menu).permit(
             :titolo, :descrizione, :prezzo_persona, :min_persone, :max_persone, :tipo_cucina, :prezzo_extra,
-            allergeni: {}, preferenze_alimentari: {}, adattabile: [:preferenze => {}, :allergeni => {}], extra: {}, 
+            allergeni: {}, preferenze_alimentari: {}, adattabile: [ preferenze: {}, allergeni: {} ], extra: {},
             images: []
           )
     end
-
-    
-
-    
-      
-end 
+end
