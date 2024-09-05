@@ -12,10 +12,11 @@ class Reservation < ApplicationRecord
   # aggiunta dell'associazione menu_version_id
   belongs_to :menu_version, optional: true
 
-  enum stato: { attesa_pagamento: 0, confermata: 1, completata: 2, cancellata: 3 }
+  enum stato: { attesa_pagamento: 0, confermata: 1, completata: 2, cancellata: 3 }, validate: true
+
   validates :num_persone, :tipo_pasto, :data_prenotazione, :indirizzo_consegna, :extra, presence: true
 
-  enum tipo_pasto: { colazione: 0, pranzo: 1, aperitivo: 2, cena: 3, altro: 4 }
+  enum tipo_pasto: { colazione: 0, pranzo: 1, aperitivo: 2, cena: 3, altro: 4 }, validate: true
   # validates :tipo_pasto, presence: true
 
   # dopo la creazione di ogni prenotazione, 'salviamo' una versione del menù e la associamo alla prenotazione
