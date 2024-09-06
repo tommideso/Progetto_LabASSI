@@ -83,3 +83,5 @@ gem "pay", "~> 7.3"
 group :development, :test do
   gem 'rspec-rails', '~> 7.0.0'
 end
+
+gem 'factory_bot_rails', group: [:development, :test]
