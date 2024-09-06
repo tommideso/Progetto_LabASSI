@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+         :recoverable, :rememberable, :validatable, :lockable,
          :confirmable, :omniauthable, omniauth_providers: [ :google_oauth2 ]
 
   # definiamo vincoli rispetto cliente e chef (has_one da parte di utente; belongs_to da parte di cliente e chef)
@@ -32,6 +32,7 @@ class User < ApplicationRecord
   def admin?
     ruolo == "admin"
   end
+
 
   # funzione per fare retrieving dei dati sugli utenti loggati tramite oauth
   def self.from_omniauth(auth)
@@ -81,4 +82,5 @@ class User < ApplicationRecord
   def ruolo_presente_se_inizializzato
     errors.add(:base, "Il ruolo deve essere presente") if (completed==1) && (ruolo.blank?)
   end
+
 end

@@ -1,4 +1,20 @@
 require 'open-uri'
+
+# Create a user for the admin
+admin_email = "admin@admin.it"
+admin = User.create!(
+    email: admin_email,
+    nome: "Admin",
+    cognome: "Admin",
+    ruolo: "admin",
+    password: admin_email,
+    encrypted_password: User.new(password: admin_email).encrypted_password,
+    confirmed_at: Time.now,
+    completed: 2,
+)
+puts "Created admin user #{admin.inspect}"
+
+
 ## Create some users
 password = "password"
 20.times do |i|
@@ -16,29 +32,25 @@ password = "password"
     puts "Created user #{i}"
 
     if u.chef?
-        Chef.find_or_create_by(
+        c = Chef.create!(
             user: u,
-            telefono: Faker::PhoneNumber.cell_phone,
+            telefono: Faker::PhoneNumber.cell_phone_in_e164.to_s,
             indirizzo: Faker::Address.full_address,
             raggio: Faker::Number.between(from: 5, to: 50),
             descrizione: Faker::Restaurant.description,
-            bloccato: false
         )
-        puts "Created chef #{i}"
+        puts "Created chef #{i}, chef: #{c.inspect}"
     else
-        Client.find_or_create_by(
+        c = Client.create!(
             user: u,
-            telefono: Faker::PhoneNumber.cell_phone,
+            telefono: Faker::PhoneNumber.cell_phone_in_e164.to_s,
             indirizzo: Faker::Address.full_address,
             allergeni: { "glutine" => Faker::Boolean.boolean, "soia" => Faker::Boolean.boolean, "noci" => Faker::Boolean.boolean, "lattosio" => Faker::Boolean.boolean, "crostacei" => Faker::Boolean.boolean, "arachidi" => Faker::Boolean.boolean },
 
         )
-        puts "Created client #{i}"
+        puts "Created client #{i}, client: #{c.inspect}"
     end
 end
-
-
-
 
 
 30.times.with_index do |i|

@@ -1,0 +1,8 @@
+
+<%= @user.nome %>
+<%= @user.cognome %>
+
+<%= @user.access_locked? ? 
+    button_to("Sblocca", unblock_profile_path(@user.id), method: :put) : 
+    button_to("Blocca", block_profile_path(@user.id), method: :put) 
+%>

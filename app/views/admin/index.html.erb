@@ -1,0 +1,13 @@
+<%= render partial: "shared_partials/mini_header" %>
+
+<% if @users.any? %>
+    <% @users.each do |user| %>
+        <div>
+            <%= user.email %>
+            <%= user.nome %>
+            <%= user.ruolo %>
+            
+            <%= link_to "Show", profile_path(user.id) %>
+        </div>
+    <% end %>
+<% end %>

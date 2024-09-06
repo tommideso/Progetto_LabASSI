@@ -29,9 +29,9 @@ Rails.application.routes.draw do
   resources :rooms do
     resources :messages
   end
-
+  
   # definiamo la root path
-  root "menus#index"
+  root "pages#index"
   # resources :menus # definiamo le rotte crud per il controller menus_controller
   # Per la gestione delle immagini
   resources :menus do
@@ -65,4 +65,13 @@ Rails.application.routes.draw do
       get "checkout/success", to: "reservations#checkout_success"
     end
   end
+
+  get "admin", to: "admin#index"
+  resources :profiles, only: [ :show ] do
+    member do
+      put "block", to: "profiles#block" # richiamo il metodo block del controller profiles
+      put "unblock", to: "profiles#unblock" # richiamo il metodo unblock del controller profiles
+    end
+  end
+
 end
