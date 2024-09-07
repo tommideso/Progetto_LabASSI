@@ -1,4 +1,4 @@
-<%= render partial: "shared_partials/mini_header" %>
+<%= render partial: "profile" %>
 
 <h1><%= @menu.titolo %></h1>
 <!-- Immagini -->
@@ -100,29 +100,26 @@
     controller: "flatpickr",
     flatpickr_disabled_dates_value: @disabled_dates.to_json
   }, local: true do |f| %>
-    
     <%= f.hidden_field :extra, value: @menu.extra %>
     <%= f.hidden_field :menu_id, value: @menu.id %> 
     <%# Num Persone, TipoPasto, Data, Indirizzo di consegna %>
     <div>
       <%= f.label :indirizzo_consegna %>
-      <%= f.text_field :indirizzo_consegna, class: "form-control", value: current_user.client.indirizzo %>
+      <%= f.text_field :indirizzo_consegna, value: current_user.client.indirizzo %>
     </div>
     <div>
       <%= f.label :num_persone %>
-      <%= f.number_field :num_persone, class: "form-control", min: @menu.min_persone, max: @menu.max_persone %>
+      <%= f.number_field :num_persone, min: @menu.min_persone, max: @menu.max_persone %>
     </div>
     <div>
       <%= f.label :tipo_pasto %>
       <%# Prendo i valori del campo tipo_pasto dalla classe Reservation e li mappo in un array di coppie chiave-valore, dove la chiave è il valore del campo e il valore è il campo con la prima lettera maiuscola %>
-      <%= f.select :tipo_pasto, Reservation.tipo_pastos.keys.map { |tipo_pasto| [tipo_pasto.humanize, tipo_pasto] }, class: "form-control" %>
+      <%= f.select :tipo_pasto, Reservation.tipo_pastos.keys.map { |tipo_pasto| [tipo_pasto.humanize, tipo_pasto] } %>
     </div>
     <div>
       <%= f.label :data_prenotazione %>
       <%= f.date_field :data_prenotazione, class: "datepicker", min: Date.today, id: "data_prenotazione" %>
     </div>
-
-
     <%# TODO inserire calcolo live del prezzo? %>
     <%= f.submit "Prenota" %>
   <% end %>

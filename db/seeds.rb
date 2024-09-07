@@ -17,6 +17,7 @@ puts "Created admin user #{admin.inspect}"
 
 ## Create some users
 password = "password"
+
 20.times do |i|
     # Create a user
     u = User.create!(

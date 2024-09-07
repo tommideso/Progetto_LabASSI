@@ -13,13 +13,15 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <script src="https://js.stripe.com/v3/"></script>
   </head>
 
-  <body class="prose m-auto flex flex-col items-center pt-10 mb-10 space-y-4">
+  <body class="prose flex flex-col items-center p-10 mb-10">
 
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>

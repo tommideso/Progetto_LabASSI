@@ -12,7 +12,7 @@ class Reservation < ApplicationRecord
   # aggiunta dell'associazione menu_version_id
   belongs_to :menu_version, optional: true
 
-  enum stato: { attesa_pagamento: 0, confermata: 1, completata: 2, cancellata: 3 }
+  enum stato: { attesa_pagamento: 0, confermata: 1, completata: 2, cancellata: 3, rimborsata: 4 }
 
   validates :num_persone, :tipo_pasto, :data_prenotazione, :indirizzo_consegna, :extra, presence: true
 
@@ -37,8 +37,8 @@ class Reservation < ApplicationRecord
 
 
   # Chiavi per unica prenotazione attiva per cliente e giorno, e per chef e giorno se la prenotazione non è stata cancellata
-  validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: :cancellata) } }
-  validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: :cancellata) } }
+  validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: [ :cancellata, :rimborsata ]) } }
+  validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: [ :cancellata, :rimborsata ]) } }
 
 
   private

@@ -7,3 +7,4 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 
 pin "infinite_scroll", to: "infinite_scroll.js"
+pin "flatpickr" # @4.6.13

@@ -3,16 +3,25 @@ class ReservationsController < ApplicationController
 
 
   def create
-    PaperTrail.request(enabled: true) do
-      @reservation = Reservation.new(reservation_params)
-      # TODO aggiungere anche extra
-      @reservation.prezzo = reservation_params[:prezzo].to_f * reservation_params[:num_persone].to_i
-      if @reservation.save
-        redirect_to @reservation, notice: "Reservation was successfully created."
-      else
-        puts "ERRORE PRENOTAZIONE"
-        logger.error @reservation.errors.full_messages.join(", ")
-        redirect_to menu_path(reservation_params[:menu_id]), alert: "Impossibile creare la prenotazione, controlla il log per ulteriori dettagli."
+    if current_user.client?
+      puts "PARAMS: #{reservation_params.inspect}"
+
+      menu = Menu.find(reservation_params[:menu_id])
+      update_params = reservation_params.dup
+      update_params[:client_id] = current_user.client.id
+      update_params[:chef_id] = menu.chef.id
+
+      PaperTrail.request(enabled: true) do
+        @reservation = Reservation.new(update_params)
+        # TODO aggiungere anche extra
+        @reservation.prezzo = menu.prezzo_persona.to_f * reservation_params[:num_persone].to_i
+        if @reservation.save
+          redirect_to @reservation, notice: "Reservation was successfully created."
+        else
+          puts "ERRORE PRENOTAZIONE"
+          logger.error @reservation.errors.full_messages.join(", ")
+          redirect_to menu_path(reservation_params[:menu_id]), alert: "Impossibile creare la prenotazione, controlla il log per ulteriori dettagli."
+        end
       end
     end
   end
@@ -20,8 +29,14 @@ class ReservationsController < ApplicationController
   def show
     @reservation = Reservation.find(params[:id])
     @review = Review.new
+    puts "RESERVATION: #{@reservation.data_prenotazione}, #{Date.today}, #{@reservation.data_prenotazione > Date.today}"
+    if @reservation.data_prenotazione < Date.today && @reservation.confermata?
+      @reservation.stato = :completata
+    elsif @reservation.data_prenotazione < Date.today && @reservation.attesa_pagamento?
+      @reservation.stato = :cancellata
+    end
     if current_user.client?
-      if @reservation.pagamento_effettuato == false
+      if @reservation.attesa_pagamento?
         current_user.client.set_payment_processor :stripe
         current_user.client.payment_processor.customer
         menu = @reservation.menu.versions.find(@reservation.menu_version_id).reify
@@ -30,11 +45,13 @@ class ReservationsController < ApplicationController
             line_items: [ {
               price: menu.stripe_price_id,
               quantity: @reservation.num_persone
-            },
-            {
-              price: menu.stripe_price_id,
-              quantity: 1
-            } ],
+            }
+              # {
+              #   price: menu.stripe_price_id,
+              #   quantity: 1
+              # }
+              # TODO aggiungere extra
+            ],
             metadata: {
               reservation_id: @reservation.id
             },
@@ -83,6 +100,6 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:client_id, :chef_id, :num_persone, :tipo_pasto, :extra, :menu_id, :data_prenotazione, :indirizzo_consegna, :prezzo)
+    params.require(:reservation).permit(:num_persone, :tipo_pasto, :extra, :menu_id, :data_prenotazione, :indirizzo_consegna)
   end
 end

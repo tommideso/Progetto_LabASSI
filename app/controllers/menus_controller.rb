@@ -50,6 +50,9 @@ class MenusController < ApplicationController
         if user_signed_in? && current_user.client?
             # Controllo se il menù è già tra i preferiti dell'utente
             @favorite_exists = Favorite.where(menu: @menu, client: current_user.client) == []? false : true
+            disabled_dates_client = current_user.client.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
+            disabled_dates_chef = @menu.chef.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
+            @disabled_dates = (disabled_dates_client + disabled_dates_chef).map { |date| date.strftime("%Y-%m-%d") }
         end
     end
 
@@ -140,7 +143,7 @@ class MenusController < ApplicationController
     # metodi per accedere alle versioni
     def versions
         @versions = @menu.versions
-      end
+    end
 
     # per mostrare una versione specifica
     def show_version

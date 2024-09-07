@@ -1,6 +1,7 @@
 <!-- Mostro le prenotazioni con link alla prenotazione -->
 <% @reservations.each do |reservation| %>
-  <div>
-    <h2> <%= link_to reservation.menu.titolo, reservation_path(reservation.id) %> </h2>
+  <div class="border rounded flex flex-col gap-0 p-5" >
+    <p> <%= reservation.num_persone %> persone, <%= reservation.tipo_pasto.humanize %> il <%= reservation.data_prenotazione %> </p>
+    <p> <%= link_to reservation.id , reservation_path(reservation.id) %> </p>
   </div>
 <% end %>
