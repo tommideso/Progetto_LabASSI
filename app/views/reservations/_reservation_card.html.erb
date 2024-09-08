@@ -1,0 +1,4 @@
+<div class="border rounded flex flex-col gap-0 p-5" >
+    <p> <%= reservation.num_persone %> persone, <%= reservation.tipo_pasto.humanize %> il <%= reservation.data_prenotazione %> </p>
+    <p> <%= link_to link_text, reservation_path(reservation.id) %> </p>
+</div>

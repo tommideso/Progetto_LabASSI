@@ -1,8 +1,47 @@
+<%= render partial: "shared_partials/mini_header" %>
+<!-- Solo gli amministratori possono vedere il pulsante Blocca/Sblocca -->
+<% if user_signed_in? && current_user.admin? %>
+    <%= @user.access_locked? ? 
+        button_to("Sblocca", unblock_profile_path(@user.id), method: :put) : 
+        button_to("Blocca", block_profile_path(@user.id), method: :put) 
+    %>
+<% end %>
 
-<%= @user.nome %>
-<%= @user.cognome %>
+<% if @user.chef? %>
+    <% if @menus.any? %>
+        <h2> Profilo pubblico di <%= @user.nome %> </h2>
+        <div id="menu-list">
+            <% @menus.each do |menu| %>
+                <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>
+            <% end %>
+        </div>
+    <% else %>
+        <p> <%= @user.nome %> non ha ancora creato nessun menù. </p>
+    <% end %>
+<% end %>
 
-<%= @user.access_locked? ? 
-    button_to("Sblocca", unblock_profile_path(@user.id), method: :put) : 
-    button_to("Blocca", block_profile_path(@user.id), method: :put) 
-%>
+<% if @user.client? %>
+  <div>
+    <h2>Informazioni del Cliente</h2>
+    <p><strong>Nome:</strong> <%= @user.nome %></p>
+    <p><strong>Cognome:</strong> <%= @user.cognome %></p>
+    <p><strong>Email:</strong> <%= @user.email %></p>
+    <p><strong>Allergeni:</strong> <%= @user.client.allergeni %></p>
+  </div>
+<% end %>
+
+<% if user_signed_in? && current_user.chef? %>
+   <h3> <%= link_to "Crea un nuovo menu", new_menu_path %> </h3>
+<% end %>
+        
+
+
+
+
+
+
+
+
+
+
+

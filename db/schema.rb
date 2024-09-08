@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_06_165647) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_08_162712) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,6 +90,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_06_165647) do
     t.bigint "chef_id"
     t.string "stripe_price_id"
     t.string "stripe_product_id"
+    t.string "disattivato_da"
     t.index ["chef_id"], name: "index_menus_on_chef_id"
   end
 
@@ -213,15 +214,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_06_165647) do
     t.text "modifiche_richieste"
     t.string "indirizzo_consegna"
     t.integer "recensione_cliente"
-    t.boolean "pagamento_effettuato", default: false
-    t.boolean "rimborsato", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "menu_id"
     t.bigint "menu_version_id"
     t.bigint "chef_id"
     t.bigint "client_id"
-    t.string "stripe_session_id"
+    t.string "stripe_payment_intent_id"
     t.index ["chef_id"], name: "index_reservations_on_chef_id"
     t.index ["client_id"], name: "index_reservations_on_client_id"
     t.index ["menu_id"], name: "index_reservations_on_menu_id"

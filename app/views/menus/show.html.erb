@@ -16,6 +16,7 @@
   <%= link_to favorite_text, favorites_update_path(menu: @menu), remote: true, id:'favorite_link'  %>
 <% end %>
 
+<p><strong>Chef:</strong> <%= link_to @menu.chef.user.nome, profile_path(@menu.chef.user) %></p>
 
 <p><strong>Descrizione:</strong> <%= @menu.descrizione %></p>
 
@@ -90,6 +91,35 @@
 <p><strong>Prezzo Extra:</strong> <%= number_to_currency(@menu.prezzo_extra, unit: "€") %></p>
 
 <p><strong>Disattivato:</strong> <%= @menu.disattivato ? 'Sì' : 'No' %></p>
+
+<!-- Pulsante di disattivazione -->
+<p><strong>Stato del menu:</strong>
+  <% if @menu.disattivato %>
+    <% if @menu.disattivato_da == 'chef' %>
+      <span>Disattivato dallo Chef</span>
+      <% if current_user.admin? %>
+        <p>L'admin non può modificare questo menu disattivato dallo chef.</p>
+      <% end %>
+    <% elsif @menu.disattivato_da == 'admin' %>
+      <span>Disattivato dall'Admin</span>
+      <% if current_user.chef? %>
+        <p>Lo chef non può modificare questo menu disattivato dall'admin.</p>
+      <% end %>
+    <% end %>
+  <% else %>
+    <!-- Menu attivo -->
+    <span>Attivo</span>
+    <% if current_user.chef? || current_user.admin? %>
+      <%= button_to "Disattiva Menu", disattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
+    <% end %>
+  <% end %>
+</p>
+
+<!-- Pulsante di riattivazione -->
+<% if @menu.disattivato && ((current_user.admin? && @menu.disattivato_da != 'chef') || (current_user.chef? && @menu.disattivato_da != 'admin')) %>
+  <%= button_to "Riattiva Menu", riattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
+<% end %>
+
 
 <% if user_signed_in? && current_user.chef? %>
   <h3> <%= link_to "Modifica il post", edit_menu_path %> </h3>

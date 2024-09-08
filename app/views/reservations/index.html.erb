@@ -1,7 +1,9 @@
 <!-- Mostro le prenotazioni con link alla prenotazione -->
-<% @reservations.each do |reservation| %>
-  <div class="border rounded flex flex-col gap-0 p-5" >
-    <p> <%= reservation.num_persone %> persone, <%= reservation.tipo_pasto.humanize %> il <%= reservation.data_prenotazione %> </p>
-    <p> <%= link_to reservation.id , reservation_path(reservation.id) %> </p>
-  </div>
+<% if @reservations.empty? %>
+  <p>Non hai prenotazioni</p>
+<% else %>
+  <h2>Le tue prenotazioni</h2>
+  <% @reservations.each do |reservation| %>
+    <%= render partial: 'reservation_card', locals: { reservation: reservation, link_text: "Vai alla prenotazione" } %>
+  <% end %>
 <% end %>

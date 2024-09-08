@@ -4,6 +4,10 @@ class MenusController < ApplicationController
     before_action :authenticate_user!, only: [ :edit, :update, :destroy, :new, :create ]
     # oltre ad essere autenticato, il suo ruolo deve essere quello di chef
     before_action :check_if_chef, only: [ :edit, :update, :destroy, :new, :create ]
+    # attiva,disattiva menu
+    before_action :check_permission, only: [ :disattiva, :riattiva ]
+
+
     # Altro metodo funzionante per infinite scroll, con rescue per evitare errori
     # def index
     #     # Default to page 1 if params[:page] is not a valid positive integer
@@ -28,8 +32,8 @@ class MenusController < ApplicationController
         page = 1 if page <= 0
         num_items = 10
 
-        # Calcola il numero totale di elementi e il numero di pagine
-        total_items = Menu.count
+        # Filtra solo i menu attivi
+        total_items = Menu.where(disattivato: false).count
         total_pages = (total_items.to_f / num_items).ceil
 
         # Se la pagina richiesta supera il numero totale di pagine, non caricare nulla
@@ -37,7 +41,8 @@ class MenusController < ApplicationController
           render turbo_stream: turbo_stream.replace("menu-container", "") and return
         end
 
-        @pagy, @menu = pagy(Menu.all, page: page, items: num_items)
+        # Fa vedere solo menu attivi (da far vedere a admin)
+        @pagy, @menus = pagy(Menu.where(disattivato: false), page: page, items: num_items)
 
         respond_to do |format|
           format.html
@@ -151,6 +156,26 @@ class MenusController < ApplicationController
         @version = @menu.versions.find(params[:version_id])
     end
 
+    # Attiva e disattiva menu
+    def disattiva
+        @menu = Menu.find(params[:id])
+        if current_user.chef?
+          @menu.update(disattivato: true, disattivato_da: "chef")
+        elsif current_user.admin?
+          @menu.update(disattivato: true, disattivato_da: "admin")
+        end
+        redirect_to @menu, notice: "Menu disattivato con successo."
+    end
+
+    def riattiva
+        @menu = Menu.find(params[:id])
+        if @menu.disattivato_da == current_user.ruolo
+            @menu.update(disattivato: false, disattivato_da: nil)
+            redirect_to @menu, notice: "Menu riattivato con successo."
+        else
+            redirect_to @menu, alert: "Non puoi riattivare un menu disattivato da un altro ruolo."
+        end
+    end
 
     private
 
@@ -167,5 +192,15 @@ class MenusController < ApplicationController
             allergeni: {}, preferenze_alimentari: {}, adattabile: [ preferenze: {}, allergeni: {} ], extra: {},
             images: []
           )
+    end
+
+    def check_permission
+        @menu = Menu.find(params[:id])
+        # Controlla se l'utente ha il permesso di disattivare/riattivare il menu
+        if current_user.chef? && @menu.disattivato_da == "admin"
+          redirect_to menus_path, alert: "Non puoi modificare un menu disattivato dall'admin."
+        elsif current_user.admin? && @menu.disattivato_da == "chef"
+          redirect_to menus_path, alert: "Non puoi modificare un menu disattivato dallo chef."
+        end
     end
 end
