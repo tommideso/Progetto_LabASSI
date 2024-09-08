@@ -1,14 +1,12 @@
 class ProfilesController < ApplicationController
-    before_action :check_if_admin, only: [:block, :unblock]
+    before_action :check_if_admin, only: [ :block, :unblock ]
 
-    def show 
+    def show
         @user = User.find(params[:id])
         # solo se l'utente è uno chef voglio vedere i suoi menu
         if @user.chef?
-            @menus = Menu.where(chef_id: @user.id)
+            @menus = Menu.where(chef: @user.chef)
         end
-        
-        
     end
 
     # Ci arrivo da richiesta PUT a /profiles/:id/block
@@ -30,5 +28,4 @@ class ProfilesController < ApplicationController
         flash[:notice] = "Utente sbloccato"
         redirect_to profile_path(@user.id)
     end
-    
 end

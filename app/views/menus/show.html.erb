@@ -16,7 +16,7 @@
   <%= link_to favorite_text, favorites_update_path(menu: @menu), remote: true, id:'favorite_link'  %>
 <% end %>
 
-<p><strong>Chef:</strong> <%= link_to User.find(@menu.chef_id).nome, profile_path(User.find(@menu.chef_id)) %></p>
+<p><strong>Chef:</strong> <%= link_to @menu.chef.user.nome, profile_path(@menu.chef.user) %></p>
 
 <p><strong>Descrizione:</strong> <%= @menu.descrizione %></p>
 

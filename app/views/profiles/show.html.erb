@@ -1,4 +1,4 @@
-
+<%= render partial: "shared_partials/mini_header" %>
 <!-- Solo gli amministratori possono vedere il pulsante Blocca/Sblocca -->
 <% if current_user.admin? %>
     <%= @user.access_locked? ? 
