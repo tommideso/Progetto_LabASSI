@@ -1,6 +1,6 @@
 <%= render partial: "shared_partials/mini_header" %>
 <!-- Solo gli amministratori possono vedere il pulsante Blocca/Sblocca -->
-<% if current_user.admin? %>
+<% if user_signed_in? && current_user.admin? %>
     <%= @user.access_locked? ? 
         button_to("Sblocca", unblock_profile_path(@user.id), method: :put) : 
         button_to("Blocca", block_profile_path(@user.id), method: :put) 
@@ -28,6 +28,10 @@
     <p><strong>Email:</strong> <%= @user.email %></p>
     <p><strong>Allergeni:</strong> <%= @user.client.allergeni %></p>
   </div>
+<% end %>
+
+<% if user_signed_in? && current_user.chef? %>
+   <h3> <%= link_to "Crea un nuovo menu", new_menu_path %> </h3>
 <% end %>
         
 

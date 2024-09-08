@@ -90,6 +90,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_08_162712) do
     t.bigint "chef_id"
     t.string "stripe_price_id"
     t.string "stripe_product_id"
+    t.string "disattivato_da"
     t.index ["chef_id"], name: "index_menus_on_chef_id"
   end
 

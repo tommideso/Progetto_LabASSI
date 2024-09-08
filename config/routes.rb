@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   # # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -29,7 +28,7 @@ Rails.application.routes.draw do
   resources :rooms do
     resources :messages
   end
-  
+
   # definiamo la root path
   root "pages#index"
   # resources :menus # definiamo le rotte crud per il controller menus_controller
@@ -40,8 +39,12 @@ Rails.application.routes.draw do
       delete :remove_image
       get :versions
       get "versions/:version_id", to: "menus#show_version", as: "version"
+      # Rotte di attiva e disattiva
+      post :disattiva
+      post :riattiva
     end
   end
+
 
 
   # per la gestione (temporanea delle email)
@@ -74,5 +77,4 @@ Rails.application.routes.draw do
       put "unblock", to: "profiles#unblock" # richiamo il metodo unblock del controller profiles
     end
   end
-
 end

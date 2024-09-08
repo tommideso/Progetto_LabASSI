@@ -17,9 +17,11 @@
 <% end %>
 
 <div id="menu-list">
-   <% @menu.each do |menu| %>
+   
+   <% @menus.each do |menu| %>
       <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>
    <% end %>
+   
 </div>
 
 <% if user_signed_in? && current_user.chef? %>
