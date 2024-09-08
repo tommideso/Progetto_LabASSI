@@ -11,8 +11,6 @@
 <p><strong>Modifiche Richieste:</strong> <%= @reservation.modifiche_richieste %></p>
 <p><strong>Indirizzo di Consegna:</strong> <%= @reservation.indirizzo_consegna %></p>
 <p><strong>Recensione Cliente:</strong> <%= @reservation.recensione_cliente %></p>
-<p><strong>Pagamento Effettuato:</strong> <%= @reservation.pagamento_effettuato ? 'Sì' : 'No' %></p>
-<p><strong>Rimborsato:</strong> <%= @reservation.rimborsato ? 'Sì' : 'No' %></p>
 <p><strong>Menu Version ID:</strong> <%= @reservation.menu_version_id %></p>
 
 
@@ -97,6 +95,15 @@
 <% if @reservation.attesa_pagamento? %>
   <%= render partial: 'pay/stripe/checkout_button', locals: { session: @checkout_session, title: "Checkout" } %>
 <% end %>
+
+<% if @reservation.attesa_pagamento? || @reservation.confermata? %>
+  <%= button_to 'Annulla Prenotazione', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
+<% end %>
+
+<% if @current_user.admin? && @reservation.completata? %>
+  <% button_to 'Rimborso completo', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
+<% end %>
+
 <%= link_to 'Back to Menu', menu_path(@reservation.menu), class: 'btn btn-secondary' %>
 <%= link_to 'Back to Reservations', reservations_path, class: 'btn btn-secondary' %>
 <%# <%= link_to 'Edit Reservation', edit_reservation_path(@reservation), class: 'btn btn-primary' %>

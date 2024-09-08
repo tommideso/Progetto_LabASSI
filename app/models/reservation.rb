@@ -12,11 +12,16 @@ class Reservation < ApplicationRecord
   # aggiunta dell'associazione menu_version_id
   belongs_to :menu_version, optional: true
 
+  # attesa_pagamento: appena prenoti e devi ancora pagare,
+  # confermata: hai pagato,
+  # completata: il menu è stato servito,
+  # cancellata: chef o cliente hanno cancellato la prenotazione -> rimborso
+  # rimborsata: il cliente ha chiesto il rimborso dopo che la prenotazione è stata completata
   enum stato: { attesa_pagamento: 0, confermata: 1, completata: 2, cancellata: 3, rimborsata: 4 }
-
-  validates :num_persone, :tipo_pasto, :data_prenotazione, :indirizzo_consegna, :extra, presence: true
-
   enum tipo_pasto: { colazione: 0, pranzo: 1, aperitivo: 2, cena: 3, altro: 4 }
+
+  validates :num_persone, :tipo_pasto, :stato, :data_prenotazione, :indirizzo_consegna, :extra, presence: true
+
   # validates :tipo_pasto, presence: true
 
   # dopo la creazione di ogni prenotazione, 'salviamo' una versione del menù e la associamo alla prenotazione
@@ -32,7 +37,7 @@ class Reservation < ApplicationRecord
   validate :max_three_reviews # non più di tre recensioni per prenotazione
 
   # Se il pagamento è stato effettuato, allora la prenotazione deve avere un session_id
-  validates :stripe_session_id, presence: true, if: :pagamento_effettuato?
+  validates :stripe_payment_intent_id, presence: true, if: -> { confermata? }
 
 
 
