@@ -1,6 +1,6 @@
 
+<%= render "search/form"%>
 <h1 class="text-center"><%= pluralize(@menus.count,"Result")%></h1>
-<%= render 'search/form' %>
 
 <div class="container">
   <table class="table table-dark table-striped">
@@ -9,7 +9,8 @@
         <th><%= sort_link(@q, :titolo, "Titolo", default_order: :asc)%> </th>
         <th><%= sort_link(@q, :allergeni, "Allergeni")%></th>
         <th><%= sort_link(@q, :preferenze_alimentari, "Preferenze alimentari")%></th>
-        <th><%= sort_link(@q, :min_persone, "Numero di persone")%></th>
+        <th><%= sort_link(@q, :min_persone, "Numero minimo di persone")%></th>
+        <th><%= sort_link(@q, :max_persone, "Numero massimo di persone")%></th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
           <td><%= menu.allergeni %></td>
           <td><%= menu.preferenze_alimentari %></td>
           <td><%= menu.min_persone %></td>
+          <td><%= menu.max_persone %></td>
         </tr>
       <% end %>
     </tbody>  

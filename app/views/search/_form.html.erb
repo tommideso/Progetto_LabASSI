@@ -3,22 +3,32 @@
     <%= f.label :titolo_cont, "Titolo" %>
     <%= f.search_field :titolo_cont %>
   </div>
-  <div class="field">
-    <%= f.label :allergeni_true, "Allergeni" %>
-    <%= f.search_field :allergeni_true %>
+
+ <div class="field">
+    <%= f.label :numero_persone, "Numero di persone" %>
+    <%= text_field_tag :numero_persone, params[:numero_persone], placeholder: "Es. 5" %>
   </div>
+
   <div class="field">
-    <%= f.label :preferenze_alimentari_cont_any, "Preferenze alimentari" %>
-    <%= f.search_field :preferenze_alimentari_cont_any %>
+    <h3>Filtra per allergeni:</h3>
+    <% ["noci", "soia", "glutine", "arachidi", "lattosio", "crostacei"].each do |allergene| %>
+      <label>
+        <%= check_box_tag 'allergeni[]', allergene, params[:allergeni]&.include?(allergene) %>
+        <%= allergene.capitalize %>
+      </label>
+    <% end %>
   </div>
+
   <div class="field">
-    <%= f.label :min_persone_lteq_all, "Numero di persone minimo" %>
-    <%= f.search_field :min_persone_lteq_all %>
+    <h3>Filtra per preferenze alimentari:</h3>
+    <% ["vegano", "glutine"].each do |preferenza| %>
+      <label>
+        <%= check_box_tag 'preferenze[]', preferenza, params[:preferenze]&.include?(preferenza) %>
+        <%= preferenza.capitalize %>
+      </label>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :max_persone_gteq_all, "Numero di persone massimo" %>
-    <%= f.search_field :max_persone_gteq_all %> 
-  </div>
+
   <div class="actions">
     <%= f.submit "Search" %>
   </div>
