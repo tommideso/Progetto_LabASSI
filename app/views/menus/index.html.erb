@@ -33,6 +33,7 @@
     if (!menuList) return;
     let page = 1;
     const maxPages = <%= @total_pages %>;
+      console.log(maxPages);
 
     const loadMore = () => {
          const test = document.getElementById("menu-list");
@@ -40,6 +41,7 @@
          const scrollPosition = window.innerHeight + window.scrollY;
          const documentHeight = document.documentElement.scrollHeight;
          const scrollThreshold = documentHeight * 0.6; // 60% della pagina
+         console.log(scrollPosition, documentHeight, scrollThreshold);
          if (scrollPosition >= scrollThreshold && page < maxPages) {
                page += 1;
                fetch(`/menus?page=${page}`, {
@@ -65,5 +67,4 @@
 
     window.addEventListener("scroll", debounce(loadMore, 200));
 });
-
 </script>

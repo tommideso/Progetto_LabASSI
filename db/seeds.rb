@@ -93,7 +93,6 @@ end
             "vino" => Faker::Boolean.boolean
         },
         prezzo_extra: Faker::Number.decimal(l_digits: 2, r_digits: 2),
-        disattivato: Faker::Boolean.boolean,
         chef: Chef.all.sample,
     )
     # menu.chef = Chef.all.sample

@@ -37,7 +37,7 @@ class MenusController < ApplicationController
         num_items = 10
         @total_pages = (total_items.to_f / num_items).ceil
 
-
+        puts "Total items: #{total_items}, total pages: #{@total_pages}"
         # Se la pagina richiesta supera il numero totale di pagine, non caricare nulla
         if page > @total_pages
           render turbo_stream: turbo_stream.replace("menu-list", "") and return

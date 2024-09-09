@@ -34,8 +34,14 @@
 <% elsif @user.ruolo == "client" %>
   <%= f.fields_for :client, @client || Client.new do |client_form| %>
     <div class="field">
-      <%= client_form.label :indirizzo %><br />
-      <%= client_form.text_field :indirizzo, value: @client.persisted? ? (@client.indirizzo.presence || @client.reload.indirizzo) : @client.indirizzo %>
+      <div
+        data-controller="places-autocomplete"
+        data-action="google-maps-callback@window->places-autocomplete#initAutocomplete"
+        data-places-autocomplete-country-value='["it"]'
+      >
+        <%= client_form.label :indirizzo %><br />
+        <%= client_form.text_field :indirizzo, value: @client.persisted? ? (@client.indirizzo.presence || @client.reload.indirizzo) : @client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Search a location" %>
+      </div>  
     </div>
 
     <div class="field">

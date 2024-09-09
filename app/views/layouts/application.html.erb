@@ -16,17 +16,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
     <%= javascript_importmap_tags %>
     <script src="https://js.stripe.com/v3/"></script>
     
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places&callback=initAutocomplete"
+      async></script>
+    
+    <script>
+      window.initAutocomplete = function () {
+        const event = new Event('google-maps-callback', {
+          bubbles: true,
+          cancelable: true,
+        })
+
+        window.dispatchEvent(event)
+      }
+    </script>
 
     <style>
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
-        overflow-x: hidden; 
+        /* overflow-x: hidden;  */
       }
     </style>
   </head>
