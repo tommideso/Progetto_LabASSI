@@ -9,3 +9,4 @@ pin "flatpickr" # @4.6.13
 pin "@stimulus-components/notification", to: "@stimulus-components--notification.js" # @3.0.0
 pin "@hotwired/stimulus", to: "@hotwired--stimulus.js" # @3.2.2
 pin "stimulus-use" # @0.52.2
+pin "stimulus-places-autocomplete" # @0.5.0
