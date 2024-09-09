@@ -19,12 +19,18 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <script src="https://js.stripe.com/v3/"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    
   </head>
 
   <body class="prose flex flex-col items-center p-10 mb-10">
-
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+    <!-- <p class="notice"><%= notice %></p> -->
+    <!-- <p class="alert"><%= alert %></p> -->
+    <%= render partial: "shared_partials/notifications", locals: { message: flash[:notice], type: "success" } %>
+    <%= render partial: "shared_partials/notifications", locals: { message: flash[:alert], type: "warning" } %>
+    <%= render partial: "shared_partials/notifications", locals: { message: flash[:error], type: "danger" } %>
 
       
 

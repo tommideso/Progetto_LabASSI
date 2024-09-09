@@ -68,11 +68,11 @@ gem "letter_opener_web", "~> 3.0"
 gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
-gem 'dotenv-rails', groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 
 gem "faker", "~> 3.4"
 
-gem 'pagy'
+gem "pagy"
 
 gem "ransack", "~> 4.2"
 
@@ -81,7 +81,7 @@ gem "stripe", "~> 12.5"
 gem "pay", "~> 7.3"
 
 group :development, :test do
-  gem 'rspec-rails', '~> 7.0.0'
+  gem "rspec-rails", "~> 7.0.0"
 end
 
-gem 'factory_bot_rails', group: [:development, :test]
+gem "factory_bot_rails", group: [ :development, :test ]
