@@ -285,6 +285,7 @@ GEM
       i18n
     rdoc (6.7.0)
       psych (>= 4.0.0)
+    redis (4.8.1)
     regexp_parser (2.9.2)
     reline (0.5.9)
       io-console (~> 0.5)
@@ -444,6 +445,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.2.0)
   ransack (~> 4.2)
+  redis (~> 4.0)
   rspec-rails (~> 7.0.0)
   rubocop-rails-omakase
   selenium-webdriver

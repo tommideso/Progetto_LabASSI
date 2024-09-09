@@ -1,25 +1,36 @@
-<div id="chatroom_container" class="flex flex-col md:flex-row">
-
-  <div id="side_panel" class="w-full md:w-1/3 p-4">
-    <h5 class="text-lg font-semibold"> Utente corrente: <%= current_user.nome %> </h5>
-    <h4 class="text-xl font-bold"> Altri utenti: </h4>
-    <%= turbo_stream_from "users" %>
-    <div id="users">
-      <%= render @users %>
-    </div>
+<div id="list_users">
+  <h5 class="text-lg font-semibold"> Utente corrente: <%= current_user.nome %> </h5>
+  <h4 class="text-xl font-bold"> Altri utenti: </h4>
+  <%= turbo_stream_from "users" %>
+  <div id="users">
+    <%= render @users %>
   </div>
-
-  <div id="room_container" class="w-full md:w-2/3 bg-gray-800 text-white p-4 ml-20">
-    <% if @single_room %>
-      <div id="single_room">
-        <h4 class="text-center text-xl font-bold text-white"> <%= @user&.email || @single_room.name %> </h4>
-        <%= turbo_stream_from @single_room %>
-        <div id="messages" class="mt-4">
-          <%= render @messages %>
-        </div>
-        <%= render 'layouts/new_message' %>
-      </div>
-    <% end %>
-  </div>
-
 </div>
+
+<div id="room_container" class="w-full h-96 md:w-2/3 bg-gray-800 text-white p-4 ml-20" style="overflow-y: auto;">
+  <% if @single_room %>
+    <div id="single_room">
+      <h4 class="text-center text-xl font-bold text-white"> <%= @user&.email || @single_room.name %> </h4>
+      <%= turbo_stream_from @single_room %>
+      <div id="messages" class="mt-4">
+        <%= render @messages %>
+      </div>
+      <%= render 'layouts/new_message' %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  // debugging TODO: rimuovere
+  document.addEventListener("turbo:before-stream-render", function(event) {
+    console.log("Turbo Stream received:", event.target);
+  });
+
+  document.addEventListener("turbo:submit-end", function(event) {
+    console.log("Form submitted:", event.target);
+  });
+
+  document.addEventListener("turbo:load", function(event) {
+    console.log("Turbo loaded:", event.target);
+  });
+</script>
