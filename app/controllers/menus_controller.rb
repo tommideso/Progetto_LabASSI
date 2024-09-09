@@ -30,11 +30,12 @@ class MenusController < ApplicationController
     def index
         page = params[:page].to_i
         page = 1 if page <= 0
-        num_items = 10
 
         # Filtra solo i menu attivi
         total_items = Menu.where(disattivato: false).count
+        num_items = total_items > 10 ? 10 : total_items
         total_pages = (total_items.to_f / num_items).ceil
+
 
         # Se la pagina richiesta supera il numero totale di pagine, non caricare nulla
         if page > total_pages

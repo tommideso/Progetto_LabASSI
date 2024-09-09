@@ -42,6 +42,8 @@ Rails.application.routes.draw do
       # Rotte di attiva e disattiva
       post :disattiva
       post :riattiva
+
+      put :favorites, to: "favorites#update"
     end
   end
 
@@ -53,7 +55,6 @@ Rails.application.routes.draw do
   get "search", to: "search#index"
 
   # rotte per i preferiti
-  get "favorites/update"
   resources :favorites, only: [ :index ]
 
   # rotte per le prenotazioni
