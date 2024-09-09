@@ -18,7 +18,7 @@ puts "Created admin user #{admin.inspect}"
 ## Create some users
 password = "password"
 
-20.times do |i|
+15.times do |i|
     # Create a user
     u = User.create!(
         email: Faker::Internet.email,
@@ -55,7 +55,7 @@ end
 
 
 30.times.with_index do |i|
-    menu = Menu.find_or_initialize_by(titolo: "Menu #{i}")
+    menu = Menu.find_or_initialize_by(titolo: Faker::Food.dish)
     menu.assign_attributes(
         descrizione: Faker::Food.description,
         prezzo_persona: Faker::Number.decimal(l_digits: 2, r_digits: 2),
@@ -98,9 +98,12 @@ end
     )
     # menu.chef = Chef.all.sample
     # Download and attach the image
-    image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'food' ])
-    downloaded_image = URI.open(image_url)
-    menu.images.attach(io: downloaded_image, filename: "menu_#{i + 1}.jpg")
+    Faker::Number.between(from: 1, to: 5).times do |j|
+        image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'food', 'menu' ])
+        downloaded_image = URI.open(image_url)
+        menu.images.attach(io: downloaded_image, filename: "menu_#{j + 1}.jpg")
+    end
+
 
     product = Stripe::Product.create({
         name: menu.titolo,

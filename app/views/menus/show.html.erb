@@ -12,9 +12,11 @@
 </div>
 
 <!-- Preferiti -->
-<% if user_signed_in? && current_user.client? %>
-  <%= link_to favorite_text, favorites_update_path(menu: @menu), remote: true, id:'favorite_link'  %>
-<% end %>
+<div id="favorite-button">
+  <% if user_signed_in? && current_user.client? %>
+    <%= button_to favorite_text, favorites_menu_path, method: :put %>
+  <% end %>
+</div>
 
 <p><strong>Chef:</strong> <%= link_to @menu.chef.user.nome, profile_path(@menu.chef.user) %></p>
 
