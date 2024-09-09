@@ -1,18 +1,18 @@
 require 'open-uri'
 
 # Create a user for the admin
-admin_email = "admin@admin.it"
-admin = User.create!(
-    email: admin_email,
-    nome: "Admin",
-    cognome: "Admin",
-    ruolo: "admin",
-    password: admin_email,
-    encrypted_password: User.new(password: admin_email).encrypted_password,
-    confirmed_at: Time.now,
-    completed: 2,
-)
-puts "Created admin user #{admin.inspect}"
+# admin_email = "admin@admin.it"
+# admin = User.create!(
+#     email: admin_email,
+#     nome: "Admin",
+#     cognome: "Admin",
+#     ruolo: "admin",
+#     password: admin_email,
+#     encrypted_password: User.new(password: admin_email).encrypted_password,
+#     confirmed_at: Time.now,
+#     completed: 2,
+# )
+# puts "Created admin user #{admin.inspect}"
 
 
 ## Create some users
@@ -55,7 +55,7 @@ end
 
 
 30.times.with_index do |i|
-    menu = Menu.find_or_initialize_by(titolo: "Menu #{i}")
+    menu = Menu.find_or_initialize_by(titolo: Faker::Food.dish)
     menu.assign_attributes(
         descrizione: Faker::Food.description,
         prezzo_persona: Faker::Number.decimal(l_digits: 2, r_digits: 2),

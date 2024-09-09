@@ -2,6 +2,7 @@
 
 import { application } from "controllers/application";
 import Notification from "@stimulus-components/notification";
+import PlacesAutocomplete from "stimulus-places-autocomplete";
 
 // Eager load all controllers defined in the import map under controllers/**/*_controller
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading";
@@ -12,3 +13,4 @@ eagerLoadControllersFrom("controllers", application);
 // lazyLoadControllersFrom("controllers", application)
 
 application.register("notification", Notification);
+application.register("places-autocomplete", PlacesAutocomplete);

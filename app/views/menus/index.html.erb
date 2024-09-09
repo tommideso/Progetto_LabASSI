@@ -18,11 +18,9 @@
 <% end %>
 
 <div id="menu-list">
-   
    <% @menus.each do |menu| %>
       <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>
    <% end %>
-   
 </div>
 
 <% if user_signed_in? && current_user.chef? %>
@@ -30,6 +28,43 @@
 <% end %>
 
 
-<script type="module">
-   import "infinite_scroll"
+<script>
+   document.addEventListener("DOMContentLoaded", () => {
+    const menuList = document.getElementById("menu-list");
+    if (!menuList) return;
+    let page = 1;
+    const maxPages = <%= @total_pages %>;
+
+    const loadMore = () => {
+         const test = document.getElementById("menu-list");
+         if (!test) return;
+         const scrollPosition = window.innerHeight + window.scrollY;
+         const documentHeight = document.documentElement.scrollHeight;
+         const scrollThreshold = documentHeight * 0.6; // 60% della pagina
+         if (scrollPosition >= scrollThreshold && page < maxPages) {
+               page += 1;
+               fetch(`/menus?page=${page}`, {
+                  headers: { Accept: "text/vnd.turbo-stream.html" },
+               })
+                  .then((response) => response.text())
+                  .then((html) => Turbo.renderStreamMessage(html))
+                  .catch((error) => console.error("Error loading more menus:", error));
+         }
+    };
+
+    const debounce = (func, wait) => {
+        let timeout;
+        return function(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    };
+
+    window.addEventListener("scroll", debounce(loadMore, 200));
+});
+
 </script>

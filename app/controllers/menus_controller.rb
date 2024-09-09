@@ -14,18 +14,19 @@ class MenusController < ApplicationController
     #     page = params[:page].to_i
     #     page = 1 if page <= 0
     #     num_items = 10 # Number of items per page
+    #     total_items = Menu.all.count
+    #     @total_pages = (total_items.to_f / num_items).ceil
     #     begin
-    #         @pagy, @menu = pagy(Menu.all, page: page, items: num_items)
-    #         rescue Pagy::OverflowError
+    #         @pagy, @menus = pagy(Menu.all, page: page, items: num_items)
+    #     rescue Pagy::OverflowError
     #         return
     #     end
 
     #     respond_to do |format|
-    #     format.html # Renders the HTML view by default
-    #     format.turbo_stream # Handles Turbo Stream format
+    #         format.html # Renders the HTML view by default
+    #         format.turbo_stream # Handles Turbo Stream format
     #     end
-
-    #   end
+    # end
 
     def index
         page = params[:page].to_i
@@ -33,21 +34,20 @@ class MenusController < ApplicationController
 
         # Filtra solo i menu attivi
         total_items = Menu.where(disattivato: false).count
-        num_items = total_items > 10 ? 10 : total_items
-        total_pages = (total_items.to_f / num_items).ceil
+        num_items = 10
+        @total_pages = (total_items.to_f / num_items).ceil
 
 
         # Se la pagina richiesta supera il numero totale di pagine, non caricare nulla
-        if page > total_pages
-          render turbo_stream: turbo_stream.replace("menu-container", "") and return
+        if page > @total_pages
+          render turbo_stream: turbo_stream.replace("menu-list", "") and return
         end
 
         # Fa vedere solo menu attivi (da far vedere a admin)
         @pagy, @menus = pagy(Menu.where(disattivato: false), page: page, items: num_items)
-
         respond_to do |format|
-          format.html
-          format.turbo_stream
+            format.html
+            format.turbo_stream
         end
     end
 
