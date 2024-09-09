@@ -66,11 +66,13 @@ class ReservationsController < ApplicationController
         # TODO aggiungere anche extra
         @reservation.prezzo = menu.prezzo_persona.to_f * reservation_params[:num_persone].to_i
         if @reservation.save
-          redirect_to @reservation, notice: "Reservation was successfully created."
+          flash[:notice] = "Prenotazione effettuata con successo."
+          redirect_to @reservation
         else
           puts "ERRORE PRENOTAZIONE"
           logger.error @reservation.errors.full_messages.join(", ")
-          redirect_to menu_path(reservation_params[:menu_id]), alert: "Impossibile creare la prenotazione, controlla il log per ulteriori dettagli."
+          flash[:error] = "Impossibile creare la prenotazione."
+          redirect_to menu_path(reservation_params[:menu_id])
         end
       end
     end
@@ -88,17 +90,21 @@ class ReservationsController < ApplicationController
         reservation.stato = :confermata
         if reservation.save
           # Invia una mail di conferma se necessario
-          redirect_to reservation, notice: "Pagamento effettuato con successo."
+          flash[:notice] = "Pagamento effettuato con successo."
+          redirect_to reservation
         else
           puts "Errore nel salvataggio della prenotazione"
           logger.error reservation.errors.full_messages.join(", ")
-          redirect_to reservation, alert: "Impossibile salvare la prenotazione."
+          flash[:error] = "Impossibile salvare la prenotazione."
+          redirect_to reservation
         end
       else
-        redirect_to reservation, alert: "Pagamento non riuscito."
+        flash[:error] = "Pagamento non riuscito."
+        redirect_to reservation
       end
     rescue Stripe::StripeError => e
-      redirect_to reservation, alert: "Errore durante il pagamento: #{e.message}"
+      flash[:error] = "Errore durante il pagamento"
+      redirect_to reservation
     end
   end
 
@@ -115,12 +121,15 @@ class ReservationsController < ApplicationController
       refund_payment(@reservation)
     else
       # Non si può cancellare una prenotazione rimborsata o cancellata
-      redirect_to @reservation, alert: "Impossibile cancellare la prenotazione, controlla lo stato della prenotazione."
+      flash[:error] = "Impossibile cancellare la prenotazione, controlla lo stato della prenotazione."
+      redirect_to @reservation
     end
     if @reservation.save
-      redirect_to @reservation, notice: "Prenotazione cancellata con successo."
+      flash[:notice] = "Prenotazione cancellata con successo."
+      redirect_to @reservation
     else
-      redirect_to @reservation, alert: "Impossibile cancellare la prenotazione."
+      flash[:error] = "Impossibile cancellare la prenotazione."
+      redirect_to @reservation
     end
   end
 
@@ -138,7 +147,8 @@ class ReservationsController < ApplicationController
       })
     rescue Stripe::StripeError => e
       logger.error "Errore durante il rimborso: #{e.message}"
-      redirect_to reservation, alert: "Errore durante il rimborso: #{e.message}"
+      flash[:error] = "Errore durante il rimborso"
+      redirect_to reservation
     end
   end
 
@@ -147,7 +157,8 @@ class ReservationsController < ApplicationController
     unless current_user.client && reservation.client == current_user.client ||
       current_user.chef && reservation.chef == current_user.chef ||
       current_user.admin?
-      redirect_to reservations_path, alert: "Non hai i permessi necessari per visualizzare questa prenotazione."
+      flash[:alert] = "Non hai i permessi necessari per visualizzare questa prenotazione."
+      redirect_to reservations_path
     end
   end
 end

@@ -4,7 +4,8 @@ class CompleteRegistrationsController < ApplicationController
 
   def new
     if @user.completed == 2 # Profilo completato
-      redirect_to root_path, notice: "Profilo già completato."
+      flash[:notice] = "Profilo già completato."
+      redirect_to root_path
     elsif @user.completed == 1 # Ruolo selezionato
       @chef = @user.chef || @user.build_chef if @user.chef?
       @client = @user.client || @user.build_client if @user.client?
@@ -18,7 +19,8 @@ class CompleteRegistrationsController < ApplicationController
           @client = @user.client || @user.build_client if params[:role] == "client"
           clean_url_from_role_param_and_redirect
         else
-          redirect_to new_complete_registration_path, alert: "Ruolo non valido."
+          flash[:alert] = "Ruolo non valido."
+          redirect_to new_complete_registration_path
         end
     else
       render :role_selection
@@ -28,7 +30,8 @@ class CompleteRegistrationsController < ApplicationController
   def create
     if @user.update(user_params)
       @user.update_column(:completed, 2)
-      redirect_to root_path, notice: "Profilo completato con successo."
+      flash[:notice] = "Profilo completato con successo."
+      redirect_to root_path
     else
       # se la validazione fallisce, ri-inizializziamo gli attributi nestati (chef e client)
       @chef = @user.chef if @user.chef?

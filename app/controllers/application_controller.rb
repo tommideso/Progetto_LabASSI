@@ -21,18 +21,21 @@ class ApplicationController < ActionController::Base
   # Metodi per controllare il ruolo dell'utente
   def check_if_chef
     unless current_user.ruolo == "chef"
-        redirect_to root_path, alert: "Il ruolo non consente tale azione"
+        flash[:alert] = "Il ruolo non consente tale azione"
+        redirect_to root_path
     end
   end
   def check_if_client
     unless current_user.ruolo == "client"
-      redirect_to root_path, alert: "Il ruolo non consente tale azione"
+      flash[:alert] = "Il ruolo non consente tale azione"
+      redirect_to root_path
     end
   end
 
   def check_if_admin
     unless current_user.ruolo == "admin"
-      redirect_to root_path, alert: "Il ruolo non consente tale azione"
+      flash[:alert] = "Il ruolo non consente tale azione"
+      redirect_to root_path
     end
   end
 end

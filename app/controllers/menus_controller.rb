@@ -54,7 +54,8 @@ class MenusController < ApplicationController
     def show
         # Se il menu è disattivato, solo l'admin o lo chef che l'ha disattivato possono vederlo
         unless !@menu.disattivato || user_signed_in? && (current_user.admin? || (current_user.chef? && @menu.chef == current_user.chef))
-            redirect_to root_path, alert: "Il menu è stato disattivato."
+            flash[:error] = "Questo menu è stato disattivato e quindi non è visibile."
+            redirect_to root_path
         end
 
         if user_signed_in?
@@ -102,7 +103,8 @@ class MenusController < ApplicationController
             rescue Stripe::StripeError => e
                 Rails.logger.error "Errore durante l'aggiornamento del prodotto: #{e.message}"
             end
-            redirect_to @menu, notice: "Menu aggiornato con successo"
+            flash[:notice] = "Menu aggiornato con successo"
+            redirect_to @menu
 
         else
             render :edit, status: :unprocessable_entity
@@ -172,16 +174,19 @@ class MenusController < ApplicationController
         elsif current_user.admin?
           @menu.update(disattivato: true, disattivato_da: "admin")
         end
-        redirect_to @menu, notice: "Menu disattivato con successo."
+        flash[:notice] = "Menu disattivato con successo."
+        redirect_to @menu
     end
 
     def riattiva
         @menu = Menu.find(params[:id])
         if @menu.disattivato_da == current_user.ruolo
             @menu.update(disattivato: false, disattivato_da: nil)
-            redirect_to @menu, notice: "Menu riattivato con successo."
+            flash[:notice] = "Menu riattivato con successo."
+            redirect_to @menu
         else
-            redirect_to @menu, alert: "Non puoi riattivare un menu disattivato da un altro ruolo."
+            flash[:alert] = "Non puoi riattivare un menu disattivato da un altro ruolo."
+            redirect_to @menu
         end
     end
 
@@ -206,9 +211,11 @@ class MenusController < ApplicationController
         @menu = Menu.find(params[:id])
         # Controlla se l'utente ha il permesso di disattivare/riattivare il menu
         if current_user.chef? && @menu.disattivato_da == "admin"
-          redirect_to menus_path, alert: "Non puoi modificare un menu disattivato dall'admin."
+            flash[:error] = "Non puoi disattivare un menu disattivato dall'admin."
+            redirect_to menus_path
         elsif current_user.admin? && @menu.disattivato_da == "chef"
-          redirect_to menus_path, alert: "Non puoi modificare un menu disattivato dallo chef."
+            flash[:error] = "Non puoi disattivare un menu disattivato dallo chef."
+            redirect_to menus_path
         end
     end
 end
