@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     get "users", to: "devise/sessions#new"
   end
   # rotte per le stanze (cioè la chat); per ogni rotta dei messaggi definiamo le rotte nestate per i messaggi
-  resources :rooms do
+  resources :rooms, except: [:index] do
     resources :messages
   end
 

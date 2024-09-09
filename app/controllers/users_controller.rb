@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id]) # l'utente che abbiamo selezionato
     # TODO: RIMUOVERE quando avremo fatto la schermata di creazione di una chat
-    @users = User.all_except(current_user) # tutti gli utenti tranne l'attuale
+    # @users = User.all_except(current_user) # tutti gli utenti tranne l'attuale
 
     # crea la nuova stanza (dal punto di vista del modello) prende il nome della stanza
     # e controlla se esiste già una stanza con quel nome: se non esiste, viene creata

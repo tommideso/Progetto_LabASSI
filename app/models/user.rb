@@ -70,8 +70,7 @@ class User < ApplicationRecord
   end
 
   # TODO: rimuovere
-  # scope per la chat
-  scope :all_except, ->(user) { where.not(id: user) }
+  # scope :all_except, ->(user) { where.not(id: user) }
 
   private
 

@@ -10,6 +10,7 @@
 <% if @user.chef? %>
     <% if @menus.any? %>
         <h2> Profilo pubblico di <%= @user.nome %> </h2>
+        <%= link_to "Chatta con lo chef", user_path(@user) %>
         <div id="menu-list">
             <% @menus.each do |menu| %>
                 <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>

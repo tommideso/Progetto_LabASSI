@@ -1,12 +1,3 @@
-<div id="list_users">
-  <h5 class="text-lg font-semibold"> Utente corrente: <%= current_user.nome %> </h5>
-  <h4 class="text-xl font-bold"> Altri utenti: </h4>
-  <%= turbo_stream_from "users" %>
-  <div id="users">
-    <%= render @users %>
-  </div>
-</div>
-
 <div id="room_container" class="w-full h-96 md:w-2/3 bg-gray-800 text-white p-4 ml-20" style="overflow-y: auto;">
   <% if @single_room %>
     <div id="single_room">
