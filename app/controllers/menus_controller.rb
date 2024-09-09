@@ -52,12 +52,20 @@ class MenusController < ApplicationController
 
 
     def show
-        if user_signed_in? && current_user.client?
-            # Controllo se il menù è già tra i preferiti dell'utente
-            @favorite_exists = Favorite.where(menu: @menu, client: current_user.client) == []? false : true
-            disabled_dates_client = current_user.client.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
-            disabled_dates_chef = @menu.chef.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
-            @disabled_dates = (disabled_dates_client + disabled_dates_chef).map { |date| date.strftime("%Y-%m-%d") }
+        # Se il menu è disattivato, solo l'admin o lo chef che l'ha disattivato possono vederlo
+        unless !@menu.disattivato || user_signed_in? && (current_user.admin? || (current_user.chef? && @menu.chef == current_user.chef))
+            redirect_to root_path, alert: "Il menu è stato disattivato."
+        end
+
+        if user_signed_in?
+            if current_user.client?
+              # Controllo se il menù è già tra i preferiti dell'utente
+              @favorite_exists = Favorite.where(menu: @menu, client: current_user.client) == []? false : true
+              disabled_dates_client = current_user.client.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
+              disabled_dates_chef = @menu.chef.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
+              @disabled_dates = (disabled_dates_client + disabled_dates_chef).map { |date| date.strftime("%Y-%m-%d") }
+
+            end
         end
     end
 

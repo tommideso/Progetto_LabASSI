@@ -92,69 +92,72 @@
 
 <p><strong>Disattivato:</strong> <%= @menu.disattivato ? 'Sì' : 'No' %></p>
 
-<!-- Pulsante di disattivazione -->
-<p><strong>Stato del menu:</strong>
-  <% if @menu.disattivato %>
-    <% if @menu.disattivato_da == 'chef' %>
-      <span>Disattivato dallo Chef</span>
-      <% if current_user.admin? %>
-        <p>L'admin non può modificare questo menu disattivato dallo chef.</p>
+<% if user_signed_in? %>
+
+  <!-- Pulsante di disattivazione -->
+  <p><strong>Stato del menu:</strong>
+    <% if @menu.disattivato %>
+      <% if @menu.disattivato_da == 'chef' %>
+        <span>Disattivato dallo Chef</span>
+        <% if current_user.admin? %>
+          <p>L'admin non può modificare questo menu disattivato dallo chef.</p>
+        <% end %>
+      <% elsif @menu.disattivato_da == 'admin' %>
+        <span>Disattivato dall'Admin</span>
+        <% if current_user.chef? %>
+          <p>Lo chef non può modificare questo menu disattivato dall'admin.</p>
+        <% end %>
       <% end %>
-    <% elsif @menu.disattivato_da == 'admin' %>
-      <span>Disattivato dall'Admin</span>
-      <% if current_user.chef? %>
-        <p>Lo chef non può modificare questo menu disattivato dall'admin.</p>
+    <% else %>
+      <!-- Menu attivo -->
+      <span>Attivo</span>
+      <% if current_user.chef? || current_user.admin? %>
+        <%= button_to "Disattiva Menu", disattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
       <% end %>
     <% end %>
-  <% else %>
-    <!-- Menu attivo -->
-    <span>Attivo</span>
-    <% if current_user.chef? || current_user.admin? %>
-      <%= button_to "Disattiva Menu", disattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
-    <% end %>
+  </p>
+
+  <!-- Pulsante di riattivazione -->
+  <% if @menu.disattivato && ((current_user.admin? && @menu.disattivato_da != 'chef') || (current_user.chef? && @menu.disattivato_da != 'admin')) %>
+    <%= button_to "Riattiva Menu", riattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
   <% end %>
-</p>
-
-<!-- Pulsante di riattivazione -->
-<% if @menu.disattivato && ((current_user.admin? && @menu.disattivato_da != 'chef') || (current_user.chef? && @menu.disattivato_da != 'admin')) %>
-  <%= button_to "Riattiva Menu", riattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
-<% end %>
 
 
-<% if user_signed_in? && current_user.chef? %>
-  <h3> <%= link_to "Modifica il post", edit_menu_path %> </h3>
-<% end %>
+  <% if current_user.chef? %>
+    <h3> <%= link_to "Modifica il post", edit_menu_path %> </h3>
+  <% end %>
 
-<% if user_signed_in? && current_user.client? %>
-  <%= form_with model: Reservation, url: reservations_path, data: {
-    controller: "flatpickr",
-    flatpickr_disabled_dates_value: @disabled_dates.to_json
-  }, local: true do |f| %>
-    
-    <%= f.hidden_field :extra, value: @menu.extra %>
-    <%= f.hidden_field :menu_id, value: @menu.id %> 
-    <%# Num Persone, TipoPasto, Data, Indirizzo di consegna %>
-    <div>
-      <%= f.label :indirizzo_consegna %>
-      <%= f.text_field :indirizzo_consegna, class: "form-control", value: current_user.client.indirizzo %>
-    </div>
-    <div>
-      <%= f.label :num_persone %>
-      <%= f.number_field :num_persone, class: "form-control", min: @menu.min_persone, max: @menu.max_persone %>
-    </div>
-    <div>
-      <%= f.label :tipo_pasto %>
-      <%# Prendo i valori del campo tipo_pasto dalla classe Reservation e li mappo in un array di coppie chiave-valore, dove la chiave è il valore del campo e il valore è il campo con la prima lettera maiuscola %>
-      <%= f.select :tipo_pasto, Reservation.tipo_pastos.keys.map { |tipo_pasto| [tipo_pasto.humanize, tipo_pasto] }, class: "form-control" %>
-    </div>
-    <div>
-      <%= f.label :data_prenotazione %>
-      <%= f.date_field :data_prenotazione, class: "datepicker", min: Date.today, id: "data_prenotazione" %>
-    </div>
+  <% if current_user.client? %>
+    <%= form_with model: Reservation, url: reservations_path, data: {
+      controller: "flatpickr",
+      flatpickr_disabled_dates_value: @disabled_dates.to_json
+    }, local: true do |f| %>
+      
+      <%= f.hidden_field :extra, value: @menu.extra %>
+      <%= f.hidden_field :menu_id, value: @menu.id %> 
+      <%# Num Persone, TipoPasto, Data, Indirizzo di consegna %>
+      <div>
+        <%= f.label :indirizzo_consegna %>
+        <%= f.text_field :indirizzo_consegna, class: "form-control", value: current_user.client.indirizzo %>
+      </div>
+      <div>
+        <%= f.label :num_persone %>
+        <%= f.number_field :num_persone, class: "form-control", min: @menu.min_persone, max: @menu.max_persone %>
+      </div>
+      <div>
+        <%= f.label :tipo_pasto %>
+        <%# Prendo i valori del campo tipo_pasto dalla classe Reservation e li mappo in un array di coppie chiave-valore, dove la chiave è il valore del campo e il valore è il campo con la prima lettera maiuscola %>
+        <%= f.select :tipo_pasto, Reservation.tipo_pastos.keys.map { |tipo_pasto| [tipo_pasto.humanize, tipo_pasto] }, class: "form-control" %>
+      </div>
+      <div>
+        <%= f.label :data_prenotazione %>
+        <%= f.date_field :data_prenotazione, class: "datepicker", min: Date.today, id: "data_prenotazione" %>
+      </div>
 
 
-    <%# TODO inserire calcolo live del prezzo? %>
-    <%= f.submit "Prenota" %>
+      <%# TODO inserire calcolo live del prezzo? %>
+      <%= f.submit "Prenota" %>
+    <% end %>
   <% end %>
 <% end %>
 
