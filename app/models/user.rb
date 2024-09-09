@@ -24,10 +24,10 @@ class User < ApplicationRecord
 
   # metodi per determinare i ruoli
   def chef?
-    ruolo == "chef" && completed == 2
+    ruolo == "chef"
   end
   def client?
-    ruolo == "client" && completed == 2
+    ruolo == "client"
   end
   def admin?
     ruolo == "admin"
