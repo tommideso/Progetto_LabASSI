@@ -27,12 +27,14 @@
       html, body {
         height: 100%;
         margin: 0;
+        padding: 0;
+        overflow: hidden;
       }
     </style>
   </head>
 
-  <body class="flex flex-col items-center p-10 mb-10 min-h-screen">
-    <div class="prose w-full flex flex-col items-center">
+  <body class="flex flex-col items-center min-h-screen">
+    <div class="w-full flex flex-col items-center prose">
       <!-- <p class="notice"><%= notice %></p> -->
       <!-- <p class="alert"><%= alert %></p> -->
       <%= render partial: "shared_partials/notifications", locals: { message: flash[:notice], type: "success" } %>
