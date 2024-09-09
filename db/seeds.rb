@@ -1,18 +1,18 @@
 require 'open-uri'
 
 # Create a user for the admin
-# admin_email = "admin@admin.it"
-# admin = User.create!(
-#     email: admin_email,
-#     nome: "Admin",
-#     cognome: "Admin",
-#     ruolo: "admin",
-#     password: admin_email,
-#     encrypted_password: User.new(password: admin_email).encrypted_password,
-#     confirmed_at: Time.now,
-#     completed: 2,
-# )
-# puts "Created admin user #{admin.inspect}"
+admin_email = "admin@admin.it"
+admin = User.create!(
+    email: admin_email,
+    nome: "Admin",
+    cognome: "Admin",
+    ruolo: "admin",
+    password: admin_email,
+    encrypted_password: User.new(password: admin_email).encrypted_password,
+    confirmed_at: Time.now,
+    completed: 2,
+)
+puts "Created admin user #{admin.inspect}"
 
 
 ## Create some users

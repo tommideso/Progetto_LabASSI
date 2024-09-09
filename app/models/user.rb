@@ -24,10 +24,10 @@ class User < ApplicationRecord
 
   # metodi per determinare i ruoli
   def chef?
-    ruolo == "chef"
+    ruolo == "chef" && completed == 2
   end
   def client?
-    ruolo == "client"
+    ruolo == "client" && completed == 2
   end
   def admin?
     ruolo == "admin"
@@ -81,5 +81,4 @@ class User < ApplicationRecord
   def ruolo_presente_se_inizializzato
     errors.add(:base, "Il ruolo deve essere presente") if (completed==1) && (ruolo.blank?)
   end
-
 end
