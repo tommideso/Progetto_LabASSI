@@ -64,6 +64,8 @@
       <%= render partial: "shared_partials/notifications", locals: { message: flash[:error], type: "danger" } %>
 
       <%= yield %>
+    
+    <%= javascript_include_tag 'dishes' %>
     </div>
   </body>
 </html>

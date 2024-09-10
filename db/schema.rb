@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_07_011705) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_10_142608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_07_011705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_clients_on_user_id", unique: true
+  end
+
+  create_table "dishes", force: :cascade do |t|
+    t.string "nome"
+    t.string "tipo_portata"
+    t.text "ingredienti"
+    t.bigint "menu_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["menu_id"], name: "index_dishes_on_menu_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -204,6 +214,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_07_011705) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "piattos", force: :cascade do |t|
+    t.string "nome"
+    t.string "tipo_portata"
+    t.text "ingredienti"
+    t.bigint "menu_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["menu_id"], name: "index_piattos_on_menu_id"
+  end
+
   create_table "reservations", force: :cascade do |t|
     t.date "data_prenotazione"
     t.integer "stato", default: 0, null: false
@@ -292,6 +312,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_07_011705) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chefs", "users"
   add_foreign_key "clients", "users"
+  add_foreign_key "dishes", "menus"
   add_foreign_key "favorites", "clients"
   add_foreign_key "favorites", "menus"
   add_foreign_key "menus", "chefs"
@@ -303,6 +324,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_07_011705) do
   add_foreign_key "pay_charges", "pay_subscriptions", column: "subscription_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+  add_foreign_key "piattos", "menus"
   add_foreign_key "reservations", "chefs"
   add_foreign_key "reservations", "clients"
   add_foreign_key "reservations", "menus"

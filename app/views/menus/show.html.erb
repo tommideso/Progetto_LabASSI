@@ -22,6 +22,21 @@
 
 <p><strong>Descrizione:</strong> <%= @menu.descrizione %></p>
 
+<h2>Piatti</h2>
+<% if @menu.dishes.any? %>
+  <ul>
+    <% @menu.dishes.each do |piatto| %>
+      <li>
+        <p><strong>Nome:</strong> <%= piatto.nome %></p>
+        <p><strong>Ingredienti:</strong> <%= piatto.ingredienti %></p>
+        <p><strong>tipo_portata:</strong> <%= piatto.tipo_portata %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Non ci sono piatti associati a questo menu.</p>
+<% end %>
+
 <p><strong>Prezzo per Persona:</strong> <%= number_to_currency(@menu.prezzo_persona, unit: "€") %></p>
 
 <p><strong>Numero Minimo di Persone:</strong> <%= @menu.min_persone %></p>

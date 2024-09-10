@@ -73,9 +73,11 @@ class MenusController < ApplicationController
 
     def new
         @menu = Menu.new
+        @menu.dishes.build
     end
 
     def edit
+        
     end
 
     def update
@@ -204,7 +206,7 @@ class MenusController < ApplicationController
         params.require(:menu).permit(
             :titolo, :descrizione, :prezzo_persona, :min_persone, :max_persone, :tipo_cucina, :prezzo_extra,
             allergeni: {}, preferenze_alimentari: {}, adattabile: [ preferenze: {}, allergeni: {} ], extra: {},
-            images: []
+            images: [], dishes_attributes: [ :id, :nome, :tipo_portata, :ingredienti, :_destroy ]
           )
     end
 

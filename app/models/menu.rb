@@ -34,6 +34,10 @@ class Menu < ApplicationRecord
     # Recensioni
     has_many :reviews, as: :tipo_recensione
 
+    # Piatti
+    has_many :dishes, dependent: :destroy
+    accepts_nested_attributes_for :dishes, allow_destroy: true
+
     private
 
     def max_persone_maggior_di_min_persone
