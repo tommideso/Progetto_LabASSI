@@ -1,5 +1,5 @@
 class MenusController < ApplicationController
-    before_action :find_menu, only: [ :show, :edit, :update, :destroy, :versions, :show_version ]
+    before_action :find_menu, only: [ :show, :edit, :update, :destroy ]
     # prima di accedere alle funzioni di modifica o creazione di un menù l'utente deve essere autenticato
     before_action :authenticate_user!, only: [ :edit, :update, :destroy, :new, :create ]
     # oltre ad essere autenticato, il suo ruolo deve essere quello di chef
@@ -77,7 +77,6 @@ class MenusController < ApplicationController
     end
 
     def edit
-        
     end
 
     def update

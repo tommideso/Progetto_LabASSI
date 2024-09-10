@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "menu_versions/show"
+  get "menu_versions/index"
   # # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -34,11 +36,13 @@ Rails.application.routes.draw do
   # resources :menus # definiamo le rotte crud per il controller menus_controller
   # Per la gestione delle immagini
   resources :menus do
+    resources :versions, only: [ :show, :index ], controller: "menu_versions"
     member do
       # remove_image_menu_path(image)
       delete :remove_image
-      get :versions
-      get "versions/:version_id", to: "menus#show_version", as: "version"
+
+      # get :versions
+      # get "versions/:version_id", to: "menus#show_version", as: "version"
       # Rotte di attiva e disattiva
       post :disattiva
       post :riattiva
@@ -72,8 +76,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get "admin", to: "admin#index"
-  resources :profiles, only: [ :show ] do
+  resources :profiles, only: [ :show, :index ] do
     member do
       put "block", to: "profiles#block" # richiamo il metodo block del controller profiles
       put "unblock", to: "profiles#unblock" # richiamo il metodo unblock del controller profiles

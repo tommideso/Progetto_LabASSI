@@ -3,7 +3,7 @@
 <ul>
   <% @versions.each do |version| %>
     <li>
-      <%= link_to "Version #{version.index}", version_menu_path(version_id: version.id) %>
+      <%= link_to "Version #{version.index}", menu_version_path(@menu, version) %>
     </li>
   <% end %>
 </ul>

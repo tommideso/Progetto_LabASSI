@@ -19,6 +19,7 @@ class ReservationsController < ApplicationController
   def show
     @reservation = Reservation.find(params[:id])
     @review = Review.new
+    @version_menu = @reservation.menu.versions.find(@reservation.menu_version_id).reify
     puts "RESERVATION: #{@reservation.data_prenotazione}, #{Date.today}, #{@reservation.data_prenotazione > Date.today}"
     if @reservation.data_prenotazione < Date.today && @reservation.confermata?
       @reservation.stato = :completata
@@ -29,11 +30,10 @@ class ReservationsController < ApplicationController
       if @reservation.attesa_pagamento?
         current_user.client.set_payment_processor :stripe
         current_user.client.payment_processor.customer
-        menu = @reservation.menu.versions.find(@reservation.menu_version_id).reify
         @checkout_session = current_user.client.payment_processor.checkout(
             mode: "payment",
             line_items: [ {
-              price: menu.stripe_price_id,
+              price: version_menu.stripe_price_id,
               quantity: @reservation.num_persone
             }
               # {

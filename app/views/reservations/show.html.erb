@@ -1,7 +1,8 @@
 <h1>Reservation Details</h1>
 
-<p><strong>User:</strong> <%= @reservation.client.user.email %></p>
-<p><strong>Menu:</strong> <%= @reservation.menu.titolo %></p>
+<p><strong>User:</strong> <%= link_to @reservation.client.user.email, profile_path(@reservation.client.user) %></p>
+<p><strong>Chef:</strong> <%= link_to @reservation.chef.user.email, profile_path(@reservation.chef.user) %></p>
+<p><strong>Menu:</strong> <%= link_to @version_menu.titolo, menu_version_path(@reservation.menu_version_id) %></p>
 <p><strong>Data Prenotazione:</strong> <%= @reservation.data_prenotazione %></p>
 <p><strong>Stato:</strong> <%= @reservation.stato %></p>
 <p><strong>Prezzo:</strong> <%= number_to_currency(@reservation.prezzo, unit: "€") %></p>
@@ -104,6 +105,6 @@
   <% button_to 'Rimborso completo', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
 <% end %>
 
-<%= link_to 'Back to Menu', menu_path(@reservation.menu), class: 'btn btn-secondary' %>
-<%= link_to 'Back to Reservations', reservations_path, class: 'btn btn-secondary' %>
+<%= link_to 'All Reservations', reservations_path, class: 'btn btn-secondary' %>
 <%# <%= link_to 'Edit Reservation', edit_reservation_path(@reservation), class: 'btn btn-primary' %>
+
