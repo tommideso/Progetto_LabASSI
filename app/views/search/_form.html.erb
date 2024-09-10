@@ -29,6 +29,16 @@
     <% end %>
   </div>
 
+  <div class="field">
+    <%= f.label :search_date, "Data di prenotazione" %>
+    <%= text_field_tag :search_date, params[:search_date], class: "form-control datepicker", data: { controller: "flatpickr", target: "datepicker.input" }, id: "search-date" %>
+  </div>
+
+
+  
+
+ 
+
   <div class="actions">
     <%= f.submit "Search" %>
   </div>
