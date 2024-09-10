@@ -10,7 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
       # consentiamo di prendere anche gli altri attributi di client e chef durante la registrazone
       devise_parameter_sanitizer.permit(:sign_up, keys: [ :nome, :cognome ])
       # questi parametri devono poter essere aggiornati
-      devise_parameter_sanitizer.permit(:account_update, keys: [ :nome, :cognome,
+      devise_parameter_sanitizer.permit(:account_update, keys: [ :avatar, :nome, :cognome,
                                             chef_attributes: [ :indirizzo, :telefono, :raggio, :descrizione, :id ],
                                             client_attributes: [ :indirizzo, :telefono, { allergeni: {} }, :id ] ])
     end

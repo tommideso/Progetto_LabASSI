@@ -32,6 +32,7 @@ class User < ApplicationRecord
   def admin?
     ruolo == "admin"
   end
+  has_one_attached :avatar
 
 
   # funzione per fare retrieving dei dati sugli utenti loggati tramite oauth

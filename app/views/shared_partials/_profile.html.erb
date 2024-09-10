@@ -1,3 +1,14 @@
+  <%# Avatar %>
+<div class="field">
+  <%= f.label :avatar %><br />
+  <%= f.file_field :avatar %>
+  <% if @user.avatar.present? %>
+    <%= image_tag(@user.avatar, class: "avatar") %> <!-- immagine caricata -->
+  <% elsif @user.avatar_url.present? %>
+    <%= image_tag(@user.avatar_url, class: "avatar") %> <!-- immagine caricata -->
+  <% end %>
+</div>
+
 <div class="field">
   <%= f.label :nome %><br />
   <%= f.text_field :nome, value: f.object.persisted? ? (f.object.nome.presence || f.object.reload.nome) : f.object.nome %>
@@ -7,6 +18,9 @@
   <%= f.label :cognome %><br />
   <%= f.text_field :cognome, value: f.object.persisted? ? (f.object.cognome.presence || f.object.reload.cognome) : f.object.cognome %>
 </div>
+
+
+
 
 <% if @user.ruolo == "chef" %>
   <%= f.fields_for :chef, @chef || Chef.new do |chef_form| %>

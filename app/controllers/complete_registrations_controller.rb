@@ -47,9 +47,9 @@ class CompleteRegistrationsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:nome, :cognome, :ruolo, :completed,
+    params.require(:user).permit(:avatar, :nome, :cognome, :ruolo, :completed,
     chef_attributes: [ :indirizzo, :telefono, :raggio, :descrizione, :id ],
-    client_attributes: [ :indirizzo, :telefono, { allergeni: {} }, :id ])
+    client_attributes: [ :indirizzo, :telefono, { allergeni: {} }, :id ],)
   end
   def clean_url_from_role_param_and_redirect
     if params[:role].present? # Se il ruolo è stato selezionato, tolgo il parametro role dall'url per renderlo clean

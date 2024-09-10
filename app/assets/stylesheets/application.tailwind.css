@@ -11,3 +11,6 @@
 }
 
 */
+.avatar {
+    @apply w-24 h-24 rounded-full;
+}
