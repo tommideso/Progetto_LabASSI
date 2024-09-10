@@ -3,6 +3,7 @@ class SearchController < ApplicationController
     @q = Menu.ransack(params[:q])
     @menus = @q.result(distinct: true)
 
+
     #filtri personalizzati
     if params[:numero_persone].present?
       numero_persone = params[:numero_persone].to_i
@@ -19,9 +20,9 @@ class SearchController < ApplicationController
       @menus = @menus.where(preferenze_query)
     end
 
-    
-
-
+    if params[:search_date].present?
+      @menus = @menus.disponibili_per_data(params[:search_date])
+    end
 
   end
 

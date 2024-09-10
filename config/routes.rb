@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   # per la gestione (temporanea delle email)
   mount LetterOpenerWeb::Engine, at: "/letter_opener"
 
+  # rotte per la ricerca
   get "search", to: "search#index"
 
   # rotte per i preferiti
@@ -78,4 +79,8 @@ Rails.application.routes.draw do
       put "unblock", to: "profiles#unblock" # richiamo il metodo unblock del controller profiles
     end
   end
+
+  # tutte le rotte indefinite (cioè tutte quelle non raccolte dalle rotte sopra) 
+  # portano alla pagina 404 gestita dal controller application
+  match '*path', to: 'application#render_404', via: :all
 end

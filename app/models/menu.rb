@@ -16,6 +16,11 @@ class Menu < ApplicationRecord
     # collegamento verso prenotazione
     has_many :reservations
 
+    # definiamo uno scope che restituisce i menu disponibili per una certa data
+    scope :disponibili_per_data, ->(data) {
+        where.not(id: Reservation.where(data_prenotazione: data).select(:menu_id))
+    }
+
     # definiamo direttamente nel modello delle liste immutabili per la lista degli allergeni, le preferenze alimentari e il tipo di cucina
     # (così se vogliamo modificarli, li dobbiamo modificare solamente qua)
     # (il metodo freeze impedisce agli oggetti di essere modificati)

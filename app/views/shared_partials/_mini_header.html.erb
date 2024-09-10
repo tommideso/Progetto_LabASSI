@@ -1,3 +1,6 @@
+
+<%= render "search/form"%>
+
 <% if user_signed_in? %>
     <%= link_to "Profilo", edit_user_registration_path %>
     <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %> 
@@ -8,4 +11,8 @@
 
 <% if user_signed_in? and (current_user.completed == 0 || current_user.completed == 1) %>
     <h2 class="bg-red-700"> <%= link_to "Completa il profilo!", new_complete_registration_path %> </h2>
+<% end %>
+
+<% unless current_user.admin? %>
+    <%= link_to "Chatta con l'assistenza", user_path(1) %>
 <% end %>
