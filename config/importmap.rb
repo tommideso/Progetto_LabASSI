@@ -14,3 +14,4 @@ pin "stimulus-places-autocomplete" # @0.5.0
 # config/importmap.rb
 pin "menu_form", to: "menu_form.js"
 
+pin "tailwindcss-stimulus-components" # @5.1.1

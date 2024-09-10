@@ -1,12 +1,26 @@
 class ProfilesController < ApplicationController
-    before_action :check_if_admin, only: [ :block, :unblock ]
+    before_action :check_if_admin, only: [ :block, :unblock, :index ]
+
+    # Ho già controllo se l'utente è admin
+    def index
+        @users = User.all
+        @chefs = @users.where(ruolo: "chef")
+        @clients = @users.where(ruolo: "client")
+    end
 
     def show
         @user = User.find(params[:id])
         # solo se l'utente è uno chef voglio vedere i suoi menu
+        if @user.admin?
+            flash[:alert] = "Non puoi vedere il profilo di un amministratore"
+            redirect_to admin_path
+            return
+        end
         if @user.chef?
             @menus = Menu.where(chef: @user.chef)
         end
+        @reservations = @user.chef? ? @user.chef.reservations : @user.client.reservations
+        @reviews = @user.chef? ? @user.chef.reviews : @user.client.reviews
     end
 
     # Ci arrivo da richiesta PUT a /profiles/:id/block

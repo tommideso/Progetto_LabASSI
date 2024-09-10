@@ -2,8 +2,12 @@
 <% if @reservations.empty? %>
   <p>Non hai prenotazioni</p>
 <% else %>
+  <% if current_user.admin? %>
+    <h2>Tutte le prenotazioni</h2>
+  <% else %>
   <h2>Le tue prenotazioni</h2>
+  <% end %>
   <% @reservations.each do |reservation| %>
-    <%= render partial: 'reservation_card', locals: { reservation: reservation, link_text: "Vai alla prenotazione" } %>
+    <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
   <% end %>
 <% end %>

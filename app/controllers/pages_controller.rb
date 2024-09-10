@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   # Altrimenti viene reindirizzato alla pagina dei menu
   def index
     if user_signed_in? && current_user.admin?
-      redirect_to admin_path
+      redirect_to profiles_path
     elsif user_signed_in? && current_user.chef?
       redirect_to profile_path(current_user)
     else
