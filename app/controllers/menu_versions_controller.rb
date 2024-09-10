@@ -8,7 +8,10 @@ class MenuVersionsController < ApplicationController
   end
 
   def index
-    @versions = @menu.versions
+     @versions = @menu.versions
+     puts "AAAAAAAAAAAAA"
+      puts @versions.inspect
+      puts "AAAAAAAAAAAAA"
   end
 
   private

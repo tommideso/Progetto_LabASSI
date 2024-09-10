@@ -2,7 +2,7 @@
 
 <p><strong>User:</strong> <%= link_to @reservation.client.user.email, profile_path(@reservation.client.user) %></p>
 <p><strong>Chef:</strong> <%= link_to @reservation.chef.user.email, profile_path(@reservation.chef.user) %></p>
-<p><strong>Menu:</strong> <%= link_to @version_menu.titolo, menu_version_path(@reservation.menu_version_id) %></p>
+<p><strong>Menu:</strong> <%= link_to @version_menu.titolo, menu_version_path(@reservation.menu, @reservation.menu_version_id) %></p>
 <p><strong>Data Prenotazione:</strong> <%= @reservation.data_prenotazione %></p>
 <p><strong>Stato:</strong> <%= @reservation.stato %></p>
 <p><strong>Prezzo:</strong> <%= number_to_currency(@reservation.prezzo, unit: "€") %></p>
@@ -93,7 +93,7 @@
         </div>
 <% end %>
 
-<% if @reservation.attesa_pagamento? %>
+<% if @reservation.attesa_pagamento? && current_user.client? %>
   <%= render partial: 'pay/stripe/checkout_button', locals: { session: @checkout_session, title: "Checkout" } %>
 <% end %>
 
