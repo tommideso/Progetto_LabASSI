@@ -1,5 +1,6 @@
 <div class="form-group msg-form w-full">
-  <%= form_with(model: [@single_room, @message], remote: true, class: 'flex flex-col w-full') do |f| %>
+  <%= form_with(model: [@single_room, @message], remote: true, class: 'flex flex-col w-full',
+  data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset"}) do |f| %>
     <%= f.text_area :body, id: 'chat-text', class: 'form-control msg-content flex-grow p-2 border rounded mr-2 text-black text-lg resize-none w-full', rows: 1, autocomplete: 'off' %>
     <%= f.submit "Invia messaggio", data: {disable_with: false}, class: 'btn btn-primary bg-blue-500 text-white text-xl px-5 py-2 rounded mt-2 mx-auto mt-4' %>
   <% end %>
@@ -8,9 +9,18 @@
 <script>
   document.addEventListener("turbo:load", function() {
     const chatText = document.getElementById("chat-text");
+    const form = chatText.closest('form');
+
     chatText.addEventListener("input", function() {
       chatText.style.height = "auto";
       chatText.style.height = (chatText.scrollHeight) + "px";
+    });
+
+    chatText.addEventListener("keydown", function(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        form.requestSubmit();
+      }
     });
   });
 </script>
