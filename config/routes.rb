@@ -79,4 +79,8 @@ Rails.application.routes.draw do
       put "unblock", to: "profiles#unblock" # richiamo il metodo unblock del controller profiles
     end
   end
+
+  # tutte le rotte indefinite (cioè tutte quelle non raccolte dalle rotte sopra) 
+  # portano alla pagina 404 gestita dal controller application
+  match '*path', to: 'application#render_404', via: :all
 end

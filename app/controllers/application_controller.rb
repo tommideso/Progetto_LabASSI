@@ -16,6 +16,14 @@ class ApplicationController < ActionController::Base
 
   helper_method :favorite_text
 
+  # metodo per mostrare la pagina d'errore 404
+  def render_404
+    respond_to do |format|
+      format.html { render file: Rails.public_path.join('404.html'), status: :not_found, layout: false }
+      format.json { render json: { error: 'Not Found' }, status: :not_found }
+    end
+  end
+
   private
 
   # Metodi per controllare il ruolo dell'utente
