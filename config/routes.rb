@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     get "users", to: "devise/sessions#new"
   end
   # rotte per le stanze (cioè la chat); per ogni rotta dei messaggi definiamo le rotte nestate per i messaggi
-  resources :rooms, except: [:index] do
+  resources :rooms, except: [ :index ] do
     resources :messages
   end
 
@@ -80,7 +80,11 @@ Rails.application.routes.draw do
     end
   end
 
-  # tutte le rotte indefinite (cioè tutte quelle non raccolte dalle rotte sopra) 
+
+
+  # tutte le rotte indefinite (cioè tutte quelle non raccolte dalle rotte sopra)
   # portano alla pagina 404 gestita dal controller application
-  match '*path', to: 'application#render_404', via: :all
+  match "*path", to: "application#render_404", via: :all, constraints: lambda { |req|
+    req.path.exclude? "rails/active_storage"
+  }
 end
