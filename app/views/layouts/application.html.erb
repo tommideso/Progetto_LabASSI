@@ -41,6 +41,17 @@
         padding: 0;
         /* overflow-x: hidden;  */
       }
+      <%= ".msg-#{current_user&.id}" %> {
+        background-color: #90d5ff !important;
+        border-color: #90d5ff !important;
+      }
+      <%= ".cont-#{current_user&.id}" %> {
+        display: flex !important;
+        justify-content: flex-end !important;
+      }
+      .message-container p {
+        color: black;
+      }
     </style>
   </head>
 
