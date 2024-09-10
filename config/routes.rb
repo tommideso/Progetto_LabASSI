@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   # per la gestione (temporanea delle email)
   mount LetterOpenerWeb::Engine, at: "/letter_opener"
 
+  # rotte per la ricerca
   get "search", to: "search#index"
 
   # rotte per i preferiti
