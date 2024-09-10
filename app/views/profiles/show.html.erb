@@ -1,40 +1,66 @@
 <%= render partial: "shared_partials/mini_header" %>
 <!-- Solo gli amministratori possono vedere il pulsante Blocca/Sblocca -->
-<% if user_signed_in? && current_user.admin? %>
-    <%= @user.access_locked? ? 
-        button_to("Sblocca", unblock_profile_path(@user.id), method: :put) : 
-        button_to("Blocca", block_profile_path(@user.id), method: :put) 
-    %>
-<% end %>
-
-<% if @user.chef? %>
-    <% if @menus.any? %>
-        <h2> Profilo pubblico di <%= @user.nome %> </h2>
-        <%= link_to "Chatta con lo chef", user_path(@user) %>
-        <div id="menu-list">
-            <% @menus.each do |menu| %>
-                <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>
-            <% end %>
-        </div>
-    <% else %>
-        <p> <%= @user.nome %> non ha ancora creato nessun menù. </p>
+<% if user_signed_in? %>
+    <% if current_user.admin?%>
+        <%= @user.access_locked? ? 
+            button_to("Sblocca", unblock_profile_path(@user.id), method: :put) : 
+            button_to("Blocca", block_profile_path(@user.id), method: :put) 
+        %>
+    <% elsif current_user.client? && @user == current_user %>
+        <%= link_to "Modifica il tuo profilo", edit_user_registration_path %>
     <% end %>
-<% end %>
 
-<% if @user.client? %>
-  <div>
-    <h2>Informazioni del Cliente</h2>
-    <p><strong>Nome:</strong> <%= @user.nome %></p>
-    <p><strong>Cognome:</strong> <%= @user.cognome %></p>
-    <p><strong>Email:</strong> <%= @user.email %></p>
-    <p><strong>Allergeni:</strong> <%= @user.client.allergeni %></p>
-  </div>
 <% end %>
+<div>
+    <%= render partial: "avatar", locals: {user: @user} %>
+    <h2> Profilo di <%= @user.nome %> </h2>
+    <% if @user.chef? %>
+        <%= link_to "Chatta con lo chef", user_path(@user) %>
+    <% end %>
+    
+
+    <% if @user.client? %>
+        <div>
+            <h2>Informazioni del Cliente</h2>
+            <p><strong>Nome:</strong> <%= @user.nome %></p>
+            <p><strong>Cognome:</strong> <%= @user.cognome %></p>
+            <p><strong>Email:</strong> <%= @user.email %></p>
+            <p><strong>Allergeni:</strong> <%= @user.client.allergeni %></p>
+        </div>
+    <% elsif @user.chef? %>
+        <% if @menus.any? %>
+            <div id="menu-list">
+                <% @menus.each do |menu| %>
+                    <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>
+                <% end %>
+            </div>
+        <% else %>
+            <p> <%= @user.nome %> non ha ancora creato nessun menù. </p>
+        <% end %>
+    <% end %>
+</div>
+
+
 
 <% if user_signed_in? && current_user.chef? %>
    <h3> <%= link_to "Crea un nuovo menu", new_menu_path %> </h3>
 <% end %>
         
+<% if user_signed_in? %>
+    <%# Prenotazioni e Recensioni %>
+    <% if current_user.admin? || current_user == @user %>
+        <h2> Prenotazioni </h2>
+        <% if @reservations.any? %>
+            <div id="reservation-list">
+                <% @reservations.each do |reservation| %>
+                    <%= render partial: "reservations/reservation_card", locals: {reservation: reservation} %>
+                <% end %>
+            </div>
+        <% else %>
+            <p> Non hai ancora ricevuto nessuna prenotazione. </p>
+        <% end %>
+    <% end %>
+<% end %>
 
 
 

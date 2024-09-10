@@ -1,0 +1,8 @@
+
+<% if user.avatar.attached? %>
+        <%= image_tag user.avatar, class: "avatar" %>
+<% elsif user.avatar_url.present? %>
+        <%= image_tag user.avatar_url, class: "avatar" %>
+<% else %>
+        <%= image_tag "https://ui-avatars.com/api/?name="+user.nome+"+"+user.cognome, class: "avatar" %>
+<% end %>

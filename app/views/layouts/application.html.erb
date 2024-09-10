@@ -56,13 +56,12 @@
   </head>
 
   <body class="flex flex-col items-center min-h-screen">
+    <%= render partial: "shared_partials/notifications", locals: { message: flash[:notice], type: "success" } %>
+    <%= render partial: "shared_partials/notifications", locals: { message: flash[:alert], type: "warning" } %>
+    <%= render partial: "shared_partials/notifications", locals: { message: flash[:error], type: "danger" } %>
     <div class="w-full flex flex-col items-center prose">
       <!-- <p class="notice"><%= notice %></p> -->
       <!-- <p class="alert"><%= alert %></p> -->
-      <%= render partial: "shared_partials/notifications", locals: { message: flash[:notice], type: "success" } %>
-      <%= render partial: "shared_partials/notifications", locals: { message: flash[:alert], type: "warning" } %>
-      <%= render partial: "shared_partials/notifications", locals: { message: flash[:error], type: "danger" } %>
-
       <%= yield %>
     
     <%= javascript_include_tag 'dishes' %>
