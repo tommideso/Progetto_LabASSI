@@ -20,7 +20,11 @@ class ProfilesController < ApplicationController
             @menus = Menu.where(chef: @user.chef)
         end
         @reservations = @user.chef? ? @user.chef.reservations : @user.client.reservations
-        @reviews = @user.chef? ? @user.chef.reviews : @user.client.reviews
+        reviews = @user.chef? ? @user.chef.reviews : @user.client.reviews
+        puts reviews.map { |r| r.valutazione.to_f }
+        # Voglio controllare il tipo delle recensioni e metterlo in un array
+        @reviews_average = reviews.map { |r| r.valutazione.to_f }
+        @reviews_average = @reviews_average.sum / @reviews_average.size if @reviews_average.size > 0
     end
 
     # Ci arrivo da richiesta PUT a /profiles/:id/block

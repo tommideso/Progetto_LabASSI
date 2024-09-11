@@ -48,6 +48,9 @@ class MenusController < ApplicationController
 
             end
         end
+
+        # Recensioni
+        @menu_reviews = @menu.reservations.map { |r| r.reviews }.flatten.select { |r| r.tipo_recensione_type == "Menu" }
     end
 
     def new

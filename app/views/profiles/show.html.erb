@@ -13,6 +13,7 @@
 <div>
     <%= render partial: "avatar", locals: {user: @user} %>
     <h2> Profilo di <%= @user.nome %> </h2>
+    <p><strong>Media valutazioni:</strong> <%= @reviews_average %></p>
     <%# Toglierlo se io sono chef %>
 
     <% if @user.client? %>

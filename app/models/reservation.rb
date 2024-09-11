@@ -37,13 +37,13 @@ class Reservation < ApplicationRecord
   validate :max_three_reviews # non più di tre recensioni per prenotazione
 
   # Se il pagamento è stato effettuato, allora la prenotazione deve avere un session_id
-  validates :stripe_payment_intent_id, presence: true, if: -> { confermata? }
+  validates :stripe_payment_intent_id, presence: { message: "Deve essere presente il payment_intent_id se la prenotazione è confermata" }, if: -> { confermata? }
 
 
 
   # Chiavi per unica prenotazione attiva per cliente e giorno, e per chef e giorno se la prenotazione non è stata cancellata
-  validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: [ :cancellata, :rimborsata ]) } }
-  validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: [ :cancellata, :rimborsata ]) } }
+  validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: [ :cancellata, :rimborsata ]) }, message: "Esiste già una prenotazione per il cliente in questa data" }
+  validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: [ :cancellata, :rimborsata ]) }, message: "Esiste già una prenotazione per lo chef in questa data" }
 
 
   private

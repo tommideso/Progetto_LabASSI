@@ -11,4 +11,17 @@ class Review < ApplicationRecord
   # La recensione Menu ha un commento, mentre la recensione Chef e Cliente no.
   # Quindi controllo tipo_recensione
   validates :commento, presence: true, if: -> { tipo_recensione_type == "Menu" }
+
+  # Controllo che la recensione sia completata
+  validate :reservation_completed
+
+  # Controllo che ci sia una sola recensione per ogni tipo di recensione (Menu, Chef, Client) per ogni prenotazione
+  validates :tipo_recensione_type, uniqueness: { scope: :reservation_id, message: "Esiste già una recensione di questo tipo per questa prenotazione" }
+  private
+
+  def reservation_completed
+    unless reservation.present? && reservation.completata?
+      errors.add(:reservation, "La prenotazione deve essere completata prima di effettuare una recensione")
+    end
+  end
 end

@@ -26,7 +26,13 @@ class Client < ApplicationRecord
     user.cognome
   end
 
+  scope :disponibile_per_data, ->(date) {
+    where.not(id: Reservation.where(data_prenotazione: date, stato: [ :attesa_pagamento, :confermata, :completata ]).select(:client_id))
+  }
+
+
   private
+
   def allergeni_presence
     if allergeni.nil? || allergeni.empty? || allergeni.values.all?(&:blank?)
       errors.add(:allergeni, "can't be blank bro")

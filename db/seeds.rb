@@ -180,3 +180,61 @@ end
       puts "Created menu #{i}"
     end
   end
+
+
+# Creiamo delle prenotazioni
+100.times do |u|
+  # Da una settimana fa a tra una settimana
+  data_prenotazione = Faker::Date.between(from: 2.week.ago, to: 2.week.from_now)
+  # Cerco un menu disponibile per quella data
+  menu = Menu.disponibili_per_data(data_prenotazione).sample
+  # Cerco un cliente disponibile per quella data
+  client = Client.disponibile_per_data(data_prenotazione).sample
+  next if menu.nil? || client.nil? # Se non ci sono menu o clienti disponibili, salto la creazione della prenotazione
+
+  puts "Menu: #{menu.titolo}, Client: #{client.user.email}"
+
+  # Creo la prenotazione
+  reservation = Reservation.find_or_initialize_by(
+    menu: menu,
+    client: client,
+    data_prenotazione: data_prenotazione,
+    chef: menu.chef,
+    num_persone: Faker::Number.between(from: menu.min_persone, to: menu.max_persone),
+    tipo_pasto: Reservation.tipo_pastos.keys.sample,
+    indirizzo_consegna: client.indirizzo,
+    extra: {
+      "mise en place" => Faker::Boolean.boolean,
+      "vino" => Faker::Boolean.boolean
+    },
+    stato: Reservation.statos.keys.sample,
+    stripe_payment_intent_id: Faker::Alphanumeric.alphanumeric(number: 20),
+  )
+  reservation.prezzo = reservation.menu.prezzo_persona * reservation.num_persone
+  reservation.save!
+  puts "Created reservation #{reservation.inspect}"
+end
+
+
+# Creiamo delle recensioni
+# Per ogni prenotazione, se è completata, creiamo una recensione
+Reservation.where(stato: :completata).each do |reservation|
+    recensioneMenu = Review.create!(
+        valutazione: Faker::Number.between(from: 1, to: 5),
+        commento: Faker::Restaurant.review,
+        tipo_recensione: reservation.menu,
+        reservation: reservation,
+    )
+    valutazioneChef = Review.create!(
+        valutazione: Faker::Number.between(from: 1, to: 5),
+        tipo_recensione: reservation.menu.chef,
+        reservation: reservation,
+    )
+    valutazioneClient = Review.create!(
+        valutazione: Faker::Number.between(from: 1, to: 5),
+        tipo_recensione: reservation.client,
+        reservation: reservation,
+    )
+    puts "RecMenu #{recensioneMenu.tipo_recensione_type}, RecChef #{valutazioneChef.tipo_recensione_type}, RecClient #{valutazioneClient.tipo_recensione_type}"
+    puts "Created reviews for reservation #{reservation.id}"
+end
