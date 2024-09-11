@@ -42,6 +42,7 @@ class Menu < ApplicationRecord
     # Piatti
     has_many :dishes, dependent: :destroy
     accepts_nested_attributes_for :dishes, allow_destroy: true
+    validate :must_have_at_least_one_dish
 
     private
 
@@ -78,6 +79,13 @@ class Menu < ApplicationRecord
               errors.add(:images, "must be a JPEG, PNG, or GIF")
             end
           end
+        end
+    end
+
+    # definiamo un metodo per verificare che ci sia almeno un piatto
+    def must_have_at_least_one_dish
+        if dishes.empty?
+            errors.add(:dishes, "devono essere presenti almeno un piatto")
         end
     end
 end
