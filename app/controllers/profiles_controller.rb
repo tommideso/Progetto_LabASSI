@@ -13,7 +13,7 @@ class ProfilesController < ApplicationController
         # solo se l'utente è uno chef voglio vedere i suoi menu
         if @user.admin?
             flash[:alert] = "Non puoi vedere il profilo di un amministratore"
-            redirect_to admin_path
+            redirect_to root_path
             return
         end
         if @user.chef?

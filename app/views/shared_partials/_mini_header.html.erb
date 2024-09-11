@@ -14,7 +14,9 @@
     <%# User da mettere dropdown %>
     <div>
         <% if user_signed_in? %>
-            <%= link_to "Profilo", profile_path(current_user) %>
+            <% unless current_user.admin? %>
+                <%= link_to "Profilo", profile_path(current_user) %>
+            <% end %>
             <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %> 
             <% unless current_user.admin? %>
                 <%= link_to "Chatta con l'assistenza", user_path(1) %>
