@@ -1,6 +1,33 @@
-<div>
-  <h2> <%= link_to menu.titolo, menu_path(menu.id) %> </h2>
-  <p> <%= menu.descrizione %> </p>
-  <p> <%= menu.allergeni %> </p>
-
+<div class="menu-card">
+  <div class="menu-card__image">
+    <% if menu.images.attached? %>
+      <%= image_tag(menu.images.first, alt: menu.titolo, height: '100') %>
+    <% end %>
+  </div>
+  <div class="menu-card__content">
+    <h2> <%= link_to menu.titolo, menu_path(menu.id) %> </h2>
+    <p> <%= menu.descrizione %> </p>
+    <p> <%= menu.allergeni %> </p>
+   
+    <p> Prezzo a persona: <%= number_to_currency(menu.prezzo_persona) %> </p>
+  </div>
 </div>
+
+<style>
+  .menu-card {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .menu-card__image {
+    margin-right: 20px;
+  }
+
+  .menu-card__content {
+    flex: 1;
+  }
+
+  .menu-card__content p{
+    margin-bottom: 10px;
+  }
+</style>
