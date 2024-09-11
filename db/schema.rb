@@ -214,16 +214,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_10_142608) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "piattos", force: :cascade do |t|
-    t.string "nome"
-    t.string "tipo_portata"
-    t.text "ingredienti"
-    t.bigint "menu_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["menu_id"], name: "index_piattos_on_menu_id"
-  end
-
   create_table "reservations", force: :cascade do |t|
     t.date "data_prenotazione"
     t.integer "stato", default: 0, null: false
@@ -324,7 +314,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_10_142608) do
   add_foreign_key "pay_charges", "pay_subscriptions", column: "subscription_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
-  add_foreign_key "piattos", "menus"
   add_foreign_key "reservations", "chefs"
   add_foreign_key "reservations", "clients"
   add_foreign_key "reservations", "menus"

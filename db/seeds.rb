@@ -54,6 +54,7 @@ password = "password"
 end
 
 
+
 30.times.with_index do |i|
     menu = Menu.find_or_initialize_by(titolo: Faker::Food.dish)
     menu.assign_attributes(
@@ -122,7 +123,19 @@ end
     puts "Stripe product id: #{menu.stripe_product_id}"
     puts "Stripe price id: #{menu.stripe_price_id}"
 
-    puts "Created menu #{i}"
-
     menu.save!
+
+    # Creazione di piatti associati al menu
+    num_dishes = rand(1..6) # Numero casuale di piatti tra 1 e 10
+    portate = [ 'Antipasto', 'Primo', 'Secondo', 'Dolce' ]
+    num_dishes.times do |i|
+    Dish.create!(
+        menu: menu,
+        nome: Faker::Food.dish,
+        tipo_portata: portate[i % portate.length],
+        ingredienti: Faker::Food.ingredient
+    )
+    end
+
+    puts "Created menu #{i}"
 end
