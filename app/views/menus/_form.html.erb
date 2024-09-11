@@ -1,4 +1,4 @@
-<%= form_with model: @menu do |form| %>
+<%= form_with model: @menu, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |form| %>
     <!-- Mostriamo eventuali errori legati alla validazione del modello -->
     <% if form.object.errors.any? %>
         <% form.object.errors.full_messages.each do |message| %>
@@ -116,62 +116,26 @@
     </div>
 
     <!-- Sezione Piatti -->
-
     <h3>Piatti</h3>
-    <div id="dishes">
-        <%= form.fields_for :dishes do |dish_form| %>
-            <div class="dish-fields">
-            <div class="field">
-                <%= dish_form.label :nome, "Nome del piatto" %>
-                <%= dish_form.text_field :nome %>
-            </div>
-
-            <div class="field">
-                <%= dish_form.label :tipo_portata, "Tipo di portata" %>
-                <%= dish_form.select :tipo_portata, ['Antipasto', 'Primo', 'Secondo', 'Dolce'] %>
-            </div>
-
-            <div class="field">
-                <%= dish_form.label :ingredienti, "Ingredienti" %>
-                <%= dish_form.text_area :ingredienti %>
-            </div>
-
-            <%= dish_form.hidden_field :_destroy %>
-            <%= link_to 'Rimuovi', '', class: 'remove-dish' %>
-            </div>
+    
+    <!-- Stimulus Rails Nested Form -->
+    <template data-nested-form-target="template">
+        <%= form.fields_for :dishes, Dish.new, child_index: 'NEW_RECORD' do |dish_fields| %>
+            <%= render "dish_form", f: dish_fields %>
         <% end %>
-    </div>
+    </template>
 
-<%= link_to 'Aggiungi Piatto', '', id: 'add-dish' %>
+    <%= form.fields_for :dishes do |dish_fields| %>
+        <%= render "dish_form", f: dish_fields %>
+    <% end %>
+
+    <!-- Inserted elements will be injected before that target. -->
+    <div data-nested-form-target="target"></div>
+
+    <button type="button" data-action="nested-form#add">Aggiungi piatto</button>
 
 
 <%= form.submit %>
 
-<template id="dish-template">
-  <div class="dish-fields">
-    <div class="field">
-      <label for="menu_dishes_attributes_new_dish_nome">Nome del piatto</label>
-      <input type="text" name="menu[dishes_attributes][new_dish][nome]" id="menu_dishes_attributes_new_dish_nome">
-    </div>
-
-    <div class="field">
-      <label for="menu_dishes_attributes_new_dish_tipo_portata">Tipo di portata</label>
-      <select name="menu[dishes_attributes][new_dish][tipo_portata]" id="menu_dishes_attributes_new_dish_tipo_portata">
-        <option value="Antipasto">Antipasto</option>
-        <option value="Primo">Primo</option>
-        <option value="Secondo">Secondo</option>
-        <option value="Dolce">Dolce</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="menu_dishes_attributes_new_dish_ingredienti">Ingredienti</label>
-      <textarea name="menu[dishes_attributes][new_dish][ingredienti]" id="menu_dishes_attributes_new_dish_ingredienti"></textarea>
-    </div>
-
-     <input type="hidden" name="menu[dishes_attributes][new_dish][_destroy]" id="menu_dishes_attributes_new_dish__destroy">
-    <a href="" class="remove-dish">Rimuovi</a>
-  </div>
-</template>
 
 <% end %>

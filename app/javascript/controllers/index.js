@@ -11,7 +11,9 @@ import { application } from "controllers/application";
 import Notification from "@stimulus-components/notification";
 import PlacesAutocomplete from "stimulus-places-autocomplete";
 import { Tabs } from "tailwindcss-stimulus-components";
+import RailsNestedForm from '@stimulus-components/rails-nested-form'
 
 application.register("notification", Notification);
 application.register("places-autocomplete", PlacesAutocomplete);
 application.register("tabs", Tabs);
+application.register('nested-form', RailsNestedForm)
