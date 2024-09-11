@@ -30,23 +30,40 @@
 
         <div class="field">
           <h3>Filtra per allergeni:</h3>
+          <!-- Checkbox Seleziona Tutte -->
+          <label>
+            <input type="checkbox" data-action="change->search#toggleAll" data-search-target="selectAllAllergeni">
+            Seleziona Tutte
+          </label>
+          <br>
+
           <% ["noci", "soia", "glutine", "arachidi", "lattosio", "crostacei"].each do |allergene| %>
             <label>
-              <%= check_box_tag 'allergeni[]', allergene, params[:allergeni]&.include?(allergene) %>
+              <%= check_box_tag 'allergeni[]', allergene, params[:allergeni]&.include?(allergene), data: { search_target: "allergeneCheckbox" } %>
               <%= allergene.capitalize %>
             </label>
+            <br>
           <% end %>
         </div>
 
         <div class="field">
           <h3>Filtra per preferenze alimentari:</h3>
+          <!-- Checkbox Seleziona Tutte per preferenze alimentari -->
+          <label>
+            <input type="checkbox" data-action="change->search#toggleAll" data-search-target="selectAllPreferenze">
+            Seleziona Tutte
+          </label>
+          <br>
+
           <% ["vegano", "glutine"].each do |preferenza| %>
             <label>
-              <%= check_box_tag 'preferenze[]', preferenza, params[:preferenze]&.include?(preferenza) %>
+              <%= check_box_tag 'preferenze[]', preferenza, params[:preferenze]&.include?(preferenza), data: { search_target: "preferenzaCheckbox" } %>
               <%= preferenza.capitalize %>
             </label>
+            <br>
           <% end %>
         </div>
+
 
         <div class="actions">
           <%= f.submit "Search" %>

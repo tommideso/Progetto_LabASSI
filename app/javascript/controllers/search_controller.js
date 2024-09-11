@@ -1,17 +1,28 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-    static targets = ['modal', 'form']
+    static targets = ["modal", "form", "selectAllAllergeni", "allergeneCheckbox", "selectAllPreferenze", "preferenzaCheckbox"]
+
+    toggleAll(event) {
+        const target = event.target
+        if (target.dataset.searchTarget === "selectAllAllergeni") {
+          this.allergeneCheckboxTargets.forEach(checkbox => {
+            checkbox.checked = target.checked
+          })
+        } else if (target.dataset.searchTarget === "selectAllPreferenze") {
+          this.preferenzaCheckboxTargets.forEach(checkbox => {
+            checkbox.checked = target.checked
+          })
+        }
+      }
 
     connect() {
-        console.log("Search controller connected");
         this.clearForm();
         this.initializeDatepickers();
     }
 
     openModal(event) {
         event.preventDefault();
-        console.log("Opening modal");
         if (this.hasModalTarget) {
             this.modalTarget.style.display = 'flex';
         } else {
@@ -37,7 +48,6 @@ export default class extends Controller {
     }
 
     resetModal() {
-        console.log("Resetting modal");
         if (this.hasFormTarget) {
             console.log("Form target found:", this.formTarget);
             if (typeof this.formTarget.reset === 'function') {
@@ -62,7 +72,7 @@ export default class extends Controller {
     initializeDatepickers() {
         console.log("Initializing datepickers");
 
-        // Assicurarsi che l'inizializzazione avvenga solo una volta
+        // Si assicurara che l'inizializzazione avvenga solo una volta
         if (!this._initialized) {
             document.querySelectorAll(".datepicker").forEach((element) => {
                 if (!element._flatpickr) {
