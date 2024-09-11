@@ -13,8 +13,7 @@
 <div>
     <%= render partial: "avatar", locals: {user: @user} %>
     <h2> Profilo di <%= @user.nome %> </h2>
-    <p><strong>Media valutazioni:</strong> <%= @reviews_average %></p>
-    <%# Toglierlo se io sono chef %>
+    <p><strong>Media valutazioni:</strong> <%= @reviews_average ? @reviews_average.round(2) : "Non ci sono ancora recensioni" %></p>
 
     <% if @user.client? %>
         <div>
@@ -28,6 +27,9 @@
         <% if user_signed_in? && current_user != @user %>
             <%= link_to "Chatta con lo chef", user_path(@user) %>   
         <% end %>
+
+        <p><strong>Descrizione:</strong> <%= @user.chef.descrizione %></p>
+
         <% if @menus.any? %>
             <div id="menu-list">
                 <% @menus.each do |menu| %>

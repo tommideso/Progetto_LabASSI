@@ -17,6 +17,25 @@
         <%= form.text_area :descrizione, value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione %>
     </div>
 
+    <!-- Sezione Piatti -->
+    <h3>Piatti</h3>
+    
+    <!-- Stimulus Rails Nested Form -->
+    <template data-nested-form-target="template">
+        <%= form.fields_for :dishes, Dish.new, child_index: 'NEW_RECORD' do |dish_fields| %>
+            <%= render "dish_form", f: dish_fields %>
+        <% end %>
+    </template>
+
+    <%= form.fields_for :dishes do |dish_fields| %>
+        <%= render "dish_form", f: dish_fields %>
+    <% end %>
+
+    <div data-nested-form-target="target"></div>
+
+    <button type="button" data-action="nested-form#add">Aggiungi piatto</button>
+    
+
     <div>
         <%= form.label :prezzo_persona %>
         <%= form.number_field :prezzo_persona, step: '0.01', value: @menu.persisted? ? (@menu.prezzo_persona.presence || @menu.reload.prezzo_persona) : @menu.prezzo_persona %>
@@ -114,24 +133,6 @@
         <!-- Input per immagini -->
         <%= form.file_field :images, multiple: true , accept: 'image/*' %>
     </div>
-
-    <!-- Sezione Piatti -->
-    <h3>Piatti</h3>
-    
-    <!-- Stimulus Rails Nested Form -->
-    <template data-nested-form-target="template">
-        <%= form.fields_for :dishes, Dish.new, child_index: 'NEW_RECORD' do |dish_fields| %>
-            <%= render "dish_form", f: dish_fields %>
-        <% end %>
-    </template>
-
-    <%= form.fields_for :dishes do |dish_fields| %>
-        <%= render "dish_form", f: dish_fields %>
-    <% end %>
-
-    <div data-nested-form-target="target"></div>
-
-    <button type="button" data-action="nested-form#add">Aggiungi piatto</button>
 
 
 <%= form.submit %>
