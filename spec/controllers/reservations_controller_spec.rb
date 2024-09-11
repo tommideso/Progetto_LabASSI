@@ -13,10 +13,10 @@ RSpec.describe ReservationsController, type: :controller do
           extra: 'vino false mise en place true',
           menu_id: menu.id,
           data_prenotazione: '2024-10-01',
-          indirizzo_consegna: 'Via Esempio 123',
+          indirizzo_consegna: 'Via Esempio 123'
         }
       end
-      
+
      let(:invalid_attributes) do
         {
           num_persone: 'invalid', # valore non valido per num_persone
@@ -24,7 +24,7 @@ RSpec.describe ReservationsController, type: :controller do
           extra: 'Vino',
           menu_id: menu.id,
           data_prenotazione: 'invalid-date', # valore non valido per data_prenotazione
-          indirizzo_consegna: 'Via Esempio 123',
+          indirizzo_consegna: 'Via Esempio 123'
         }
       end
 
@@ -59,15 +59,11 @@ RSpec.describe ReservationsController, type: :controller do
     expect {
       post :create, params: { reservation: invalid_attributes }
     }.not_to change(Reservation, :count)
-  end 
+  end
 
   it 'redirects to the reservation page after creation' do
     post :create, params: { reservation: valid_attributes }
     expect(response).to redirect_to(Reservation.last)
-   
   end
 end
-
-
 end
-
