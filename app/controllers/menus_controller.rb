@@ -52,7 +52,6 @@ class MenusController < ApplicationController
 
     def new
         @menu = Menu.new
-        @menu.dishes.build
     end
 
     def edit

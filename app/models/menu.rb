@@ -84,8 +84,8 @@ class Menu < ApplicationRecord
 
     # definiamo un metodo per verificare che ci sia almeno un piatto
     def must_have_at_least_one_dish
-        if dishes.empty?
-            errors.add(:dishes, "devono essere presenti almeno un piatto")
+        if dishes.empty? || dishes.nil?
+            errors.add(:dishes, "Deve essere presente almeno un piatto")
         end
     end
 end
