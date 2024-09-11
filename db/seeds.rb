@@ -14,6 +14,42 @@ admin = User.create!(
 )
 puts "Created admin user #{admin.inspect}"
 
+# Creazione dell'utente chef con email: chef@chef.it e password: chef@chef.it
+user = User.create!(
+  email: "chef@chef.it",
+  nome: "Chef",
+  cognome: "Chef",
+  ruolo: "chef",
+  password: "chef@chef.it",
+  confirmed_at: Time.now,
+  completed: 2,
+)
+
+Chef.create!(
+  user: user,
+  telefono: Faker::PhoneNumber.cell_phone_in_e164.to_s,
+  indirizzo: Faker::Address.full_address,
+  raggio: Faker::Number.between(from: 5, to: 50),
+  descrizione: Faker::Restaurant.description,
+)
+
+# Creazione del client con email: client@client e password: client@client
+user = User.create!(
+  email: "client@client.it",
+  nome: "Client",
+  cognome: "Client",
+  ruolo: "client",
+  password: "client@client.it",
+  confirmed_at: Time.now,
+  completed: 2,
+)
+Client.create!(
+  user: user,
+  telefono: Faker::PhoneNumber.cell_phone_in_e164.to_s,
+  indirizzo: Faker::Address.full_address,
+  allergeni: { "glutine" => Faker::Boolean.boolean, "soia" => Faker::Boolean.boolean, "noci" => Faker::Boolean.boolean, "lattosio" => Faker::Boolean.boolean, "crostacei" => Faker::Boolean.boolean, "arachidi" => Faker::Boolean.boolean },
+)
+
 
 ## Create some users
 password = "password"
