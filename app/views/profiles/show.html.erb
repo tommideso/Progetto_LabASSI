@@ -5,7 +5,7 @@
             button_to("Sblocca", unblock_profile_path(@user.id), method: :put) : 
             button_to("Blocca", block_profile_path(@user.id), method: :put) 
         %>
-    <% elsif current_user.client? && @user == current_user %>
+    <% elsif (current_user.client? || current_user.chef?) && @user == current_user %>
         <%= link_to "Modifica il tuo profilo", edit_user_registration_path %>
     <% end %>
 
@@ -14,10 +14,6 @@
     <%= render partial: "avatar", locals: {user: @user} %>
     <h2> Profilo di <%= @user.nome %> </h2>
     <%# Toglierlo se io sono chef %>
-    <% if @user.chef? %>
-        <%= link_to "Chatta con lo chef", user_path(@user) %>
-    <% end %>
-    
 
     <% if @user.client? %>
         <div>
@@ -28,6 +24,9 @@
             <p><strong>Allergeni:</strong> <%= @user.client.allergeni %></p>
         </div>
     <% elsif @user.chef? %>
+        <% if user_signed_in? && current_user != @user %>
+            <%= link_to "Chatta con lo chef", user_path(@user) %>   
+        <% end %>
         <% if @menus.any? %>
             <div id="menu-list">
                 <% @menus.each do |menu| %>
