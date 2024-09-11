@@ -47,6 +47,11 @@ FactoryBot.define do
       prezzo_extra { Faker::Number.decimal(l_digits: 2, r_digits: 2) }
       disattivato { Faker::Boolean.boolean }
       association :chef
+
+      # Usa after(:build) per aggiungere i piatti prima della validazione
+      after(:build) do |menu|
+        menu.dishes << FactoryBot.build(:dish, menu: menu)
+      end
   
       # mockato nei test
       stripe_price_id { Faker::Alphanumeric.alpha(number: 10) }

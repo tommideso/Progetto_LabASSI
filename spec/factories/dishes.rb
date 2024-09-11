@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :dish do
-    nome { "MyString" }
-    tipo_portata { "MyString" }
-    ingredienti { "MyText" }
-    menu { nil }
+    nome { Faker::Food.dish }
+    tipo_portata { "Antipasto" }
+    ingredienti {Faker::Food.ingredient}
+    association :menu
   end
 end
