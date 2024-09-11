@@ -5,16 +5,32 @@ export default class extends Controller {
     // quando la pagina è caricata
     connect() {
         console.log("Connected to the room");
-        const messages = document.getElementById("messages");
-        messages.addEventListener("DOMNodeInserted", this.resetScroll);
-        this.resetScroll(messages);
+        this.messages = document.getElementById("messages");
+
+        // Crea un'istanza di MutationObserver
+        this.observer = new MutationObserver(this.resetScroll.bind(this));
+
+        // Configura l'osservatore per osservare i cambiamenti nei figli del nodo
+        const config = { childList: true };
+
+        // Avvia l'osservazione del nodo target
+        this.observer.observe(this.messages, config);
+
+        this.resetScroll();
     }
+
     // quando si esce dalla pagina
     disconnect() {
-        console.log("Disconnected to the room");
+        console.log("Disconnected from the room");
+
+        // Disconnetti l'osservatore quando il controller viene disconnesso
+        if (this.observer) {
+            this.observer.disconnect();
+        }
     }
 
     resetScroll() {
-        messages.scrollTop = messages.scrollHeight - messages.clientHeight
+        console.log("Resetting scroll");
+        this.messages.scrollTop = this.messages.scrollHeight - this.messages.clientHeight;
     }
 }
