@@ -13,7 +13,7 @@
 
 <% end %>
 
-<div id="menu-list">
+<div id="menu-list" class="grid grid-cols-1 gap-24">
    <% @menus.each do |menu| %>
       <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>
    <% end %>

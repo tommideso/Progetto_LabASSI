@@ -56,86 +56,91 @@ end
 
 
 30.times.with_index do |i|
-    menu = Menu.find_or_initialize_by(titolo: Faker::Food.dish)
-    menu.assign_attributes(
+    ActiveRecord::Base.transaction do
+      menu = Menu.find_or_initialize_by(titolo: Faker::Food.dish)
+      menu.assign_attributes(
         descrizione: Faker::Food.description,
         prezzo_persona: Faker::Number.decimal(l_digits: 2, r_digits: 2),
         min_persone: Faker::Number.between(from: 2, to: 10),
         max_persone: Faker::Number.between(from: 11, to: 20),
         tipo_cucina: Faker::Food.dish,
         allergeni: {
+          "glutine" => Faker::Boolean.boolean,
+          "soia" => Faker::Boolean.boolean,
+          "noci" => Faker::Boolean.boolean,
+          "lattosio" => Faker::Boolean.boolean,
+          "crostacei" => Faker::Boolean.boolean,
+          "arachidi" => Faker::Boolean.boolean
+        },
+        preferenze_alimentari: {
+          "vegano" => Faker::Boolean.boolean,
+          "glutine" => Faker::Boolean.boolean
+        },
+        adattabile: {
+          "preferenze" => {
+            "vegano" => Faker::Boolean.boolean,
+            "glutine" => Faker::Boolean.boolean
+          },
+          "allergeni" => {
             "glutine" => Faker::Boolean.boolean,
             "soia" => Faker::Boolean.boolean,
             "noci" => Faker::Boolean.boolean,
             "lattosio" => Faker::Boolean.boolean,
             "crostacei" => Faker::Boolean.boolean,
             "arachidi" => Faker::Boolean.boolean
-        },
-        preferenze_alimentari: {
-            "vegano" => Faker::Boolean.boolean,
-            "glutine" => Faker::Boolean.boolean
-        },
-        adattabile: {
-            "preferenze" => {
-                "vegano" => Faker::Boolean.boolean,
-                "glutine" => Faker::Boolean.boolean
-            },
-            "allergeni" => {
-                "glutine" => Faker::Boolean.boolean,
-                "soia" => Faker::Boolean.boolean,
-                "noci" => Faker::Boolean.boolean,
-                "lattosio" => Faker::Boolean.boolean,
-                "crostacei" => Faker::Boolean.boolean,
-                "arachidi" => Faker::Boolean.boolean
-            }
+          }
         },
         extra: {
-            "mise en place" => "true",
-            "vino" => Faker::Boolean.boolean
+          "mise en place" => "true",
+          "vino" => Faker::Boolean.boolean
         },
         prezzo_extra: Faker::Number.decimal(l_digits: 2, r_digits: 2),
         chef: Chef.all.sample,
-    )
-    # menu.chef = Chef.all.sample
-    # Download and attach the image
-    Faker::Number.between(from: 1, to: 5).times do |j|
+      )
+
+      # Download and attach the image
+      Faker::Number.between(from: 1, to: 5).times do |j|
         image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'food', 'menu' ])
         downloaded_image = URI.open(image_url)
         menu.images.attach(io: downloaded_image, filename: "menu_#{j + 1}.jpg")
-    end
+      end
 
-
-    product = Stripe::Product.create({
+      product = Stripe::Product.create({
         name: menu.titolo,
         active: true,
         description: menu.descrizione,
         metadata: {
-            menu_id: menu.id
-    } })
-    menu.stripe_product_id = product.id
+          menu_id: menu.id
+        }
+      })
+      menu.stripe_product_id = product.id
 
-    price = Stripe::Price.create({
+      price = Stripe::Price.create({
         product: menu.stripe_product_id,
         unit_amount: (menu.prezzo_persona * 100).to_i,
         currency: "eur"
-    })
-    menu.stripe_price_id = price.id
-    puts "Stripe product id: #{menu.stripe_product_id}"
-    puts "Stripe price id: #{menu.stripe_price_id}"
+      })
+      menu.stripe_price_id = price.id
+      puts "Stripe product id: #{menu.stripe_product_id}"
+      puts "Stripe price id: #{menu.stripe_price_id}"
 
-    menu.save!
+      # Salva il menu temporaneamente senza validazioni
+      menu.save!(validate: false)
 
-    # Creazione di piatti associati al menu
-    num_dishes = rand(1..6) # Numero casuale di piatti tra 1 e 10
-    portate = [ 'Antipasto', 'Primo', 'Secondo', 'Dolce' ]
-    num_dishes.times do |i|
-    Dish.create!(
-        menu: menu,
-        nome: Faker::Food.dish,
-        tipo_portata: portate[i % portate.length],
-        ingredienti: Faker::Food.ingredient
-    )
+      # Creazione di piatti associati al menu
+      num_dishes = rand(1..6) # Numero casuale di piatti tra 1 e 6
+      portate = [ 'Antipasto', 'Primo', 'Secondo', 'Dolce' ]
+      num_dishes.times do |j|
+        Dish.create!(
+          menu: menu,
+          nome: Faker::Food.dish,
+          tipo_portata: portate[j % portate.length],
+          ingredienti: Faker::Food.ingredient
+        )
+      end
+
+      # Salva il menu con i piatti associati
+      menu.save!
+      puts "Created menu #{i}"
     end
-
-    puts "Created menu #{i}"
-end
+  end
