@@ -25,11 +25,11 @@
 <h2>Piatti</h2>
 <% if @menu.dishes.any? %>
   <ul>
-    <% @menu.dishes.each do |piatto| %>
+    <% @menu.dishes.sort_by { |piatto| ['Antipasto', 'Primo', 'Secondo', 'Dolce'].index(piatto.tipo_portata) }.each do |piatto| %>
       <li>
         <p><strong>Nome:</strong> <%= piatto.nome %></p>
         <p><strong>Ingredienti:</strong> <%= piatto.ingredienti %></p>
-        <p><strong>tipo_portata:</strong> <%= piatto.tipo_portata %></p>
+        <p><strong>Tipo portata:</strong> <%= piatto.tipo_portata %></p>
       </li>
     <% end %>
   </ul>
