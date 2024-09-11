@@ -7,27 +7,6 @@ class MenusController < ApplicationController
     # attiva,disattiva menu
     before_action :check_permission, only: [ :disattiva, :riattiva ]
 
-
-    # Altro metodo funzionante per infinite scroll, con rescue per evitare errori
-    # def index
-    #     # Default to page 1 if params[:page] is not a valid positive integer
-    #     page = params[:page].to_i
-    #     page = 1 if page <= 0
-    #     num_items = 10 # Number of items per page
-    #     total_items = Menu.all.count
-    #     @total_pages = (total_items.to_f / num_items).ceil
-    #     begin
-    #         @pagy, @menus = pagy(Menu.all, page: page, items: num_items)
-    #     rescue Pagy::OverflowError
-    #         return
-    #     end
-
-    #     respond_to do |format|
-    #         format.html # Renders the HTML view by default
-    #         format.turbo_stream # Handles Turbo Stream format
-    #     end
-    # end
-
     def index
         page = params[:page].to_i
         page = 1 if page <= 0
@@ -155,17 +134,6 @@ class MenusController < ApplicationController
         @image = ActiveStorage::Attachment.find(params[:id])
         @image.purge_later
         redirect_back(fallback_location: request.referer)
-    end
-
-    # metodi per accedere alle versioni
-    def versions
-        @versions = @menu.versions
-    end
-
-    # per mostrare una versione specifica
-    def show_version
-        @menu = @menu.versions.find(params[:version_id]).reify
-        @version = @menu.versions.find(params[:version_id])
     end
 
     # Attiva e disattiva menu

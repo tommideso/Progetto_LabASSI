@@ -2,7 +2,7 @@
 
 <p><strong>User:</strong> <%= link_to @reservation.client.user.email, profile_path(@reservation.client.user) %></p>
 <p><strong>Chef:</strong> <%= link_to @reservation.chef.user.email, profile_path(@reservation.chef.user) %></p>
-<p><strong>Menu:</strong> <%= link_to @version_menu.titolo, menu_version_path(@reservation.menu, @reservation.menu_version_id) %></p>
+<p><strong>Menu:</strong> <%= link_to @menu.titolo, menu_path(@menu) %></p>
 <p><strong>Data Prenotazione:</strong> <%= @reservation.data_prenotazione %></p>
 <p><strong>Stato:</strong> <%= @reservation.stato %></p>
 <p><strong>Prezzo:</strong> <%= number_to_currency(@reservation.prezzo, unit: "€") %></p>
@@ -101,8 +101,11 @@
   <%= button_to 'Annulla Prenotazione', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
 <% end %>
 
-<% if @current_user.admin? && @reservation.completata? %>
-  <% button_to 'Rimborso completo', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
+<% if @current_user.admin? %>
+  <%= link_to "Menu al momento della prenotazione", menu_version_path(@reservation.menu, @reservation.menu_version_id) %></p>
+  <% if @reservation.completata? %>
+    <% button_to 'Rimborso completo', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
+  <% end %>
 <% end %>
 
 <%= link_to 'All Reservations', reservations_path, class: 'btn btn-secondary' %>

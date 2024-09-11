@@ -1,6 +1,7 @@
 <%= render partial: "shared_partials/mini_header" %>
 
-<h1><%= @menu.titolo %></h1>
+<h1>Versione del menu al momento della prenotazione</h1>
+<h2> <%= @menu.titolo %> </h2>
 <!-- Immagini -->
 <div>
   <% if @version.version_images.present? %>
@@ -90,3 +91,5 @@
 <% if user_signed_in? && current_user.chef? %>
   <h3> <%= link_to "Modifica il post", edit_menu_path %> </h3>
 <% end %>
+
+<%= link_to "Torna al menu originale", menu_path(@menu) %>

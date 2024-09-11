@@ -33,7 +33,7 @@ class ReservationsController < ApplicationController
         @checkout_session = current_user.client.payment_processor.checkout(
             mode: "payment",
             line_items: [ {
-              price: version_menu.stripe_price_id,
+              price: @version_menu.stripe_price_id,
               quantity: @reservation.num_persone
             }
               # {
