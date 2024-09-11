@@ -1,4 +1,3 @@
-<%= render partial: "shared_partials/mini_header" %>
 <!-- Solo gli amministratori possono vedere il pulsante Blocca/Sblocca -->
 <% if user_signed_in? %>
     <% if current_user.admin?%>
@@ -14,6 +13,7 @@
 <div>
     <%= render partial: "avatar", locals: {user: @user} %>
     <h2> Profilo di <%= @user.nome %> </h2>
+    <%# Toglierlo se io sono chef %>
     <% if @user.chef? %>
         <%= link_to "Chatta con lo chef", user_path(@user) %>
     <% end %>

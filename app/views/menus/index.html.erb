@@ -1,5 +1,4 @@
 
-<%= render partial: "shared_partials/mini_header" %>
 
 <h1 class="align-middle"> Benvenuto su AOCHEF </h1>
 
@@ -11,10 +10,7 @@
    <% elsif current_user.admin? %>
    <h2> Benvenuto admin </h2>
    <% end %>
-   <% if current_user.client? %>
-      <%= link_to "Menu preferiti", favorites_path %>
-      <%= link_to "Le mie prenotazioni", reservations_path%>
-   <% end %>
+
 <% end %>
 
 <div id="menu-list">

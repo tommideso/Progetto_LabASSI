@@ -35,12 +35,6 @@
     </script>
 
     <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        /* overflow-x: hidden;  */
-      }
       <%= ".msg-#{current_user&.id}" %> {
         background-color: #90d5ff !important;
         border-color: #90d5ff !important;
@@ -55,16 +49,17 @@
     </style>
   </head>
 
-  <body class="flex flex-col items-center min-h-screen">
+  <body class="container">
     <%= render partial: "shared_partials/notifications", locals: { message: flash[:notice], type: "success" } %>
     <%= render partial: "shared_partials/notifications", locals: { message: flash[:alert], type: "warning" } %>
     <%= render partial: "shared_partials/notifications", locals: { message: flash[:error], type: "danger" } %>
-    <div class="w-full flex flex-col items-center prose">
-      <!-- <p class="notice"><%= notice %></p> -->
-      <!-- <p class="alert"><%= alert %></p> -->
+    <%= render partial: "shared_partials/mini_header" %> 
+
+    <%= render partial: "shared_partials/sidebar" %>
+    <div class="">
       <%= yield %>
+    </div>
     
     <%= javascript_include_tag 'dishes' %>
-    </div>
   </body>
 </html>

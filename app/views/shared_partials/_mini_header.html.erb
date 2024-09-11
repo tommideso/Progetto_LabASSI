@@ -1,18 +1,27 @@
+<%# NAVBAR %>
+<div class="flex gap-5 items-center justify-between py-5 h-28">
+    <%# Logo %>
+    <div>
+        <%= link_to root_path do %>
+            <%= image_tag "logo.png", alt: "logo", class: "h-20" %>
+        <% end %>
+    </div>
 
-<%= render "search/form"%>
+    <div>
+        <%= render "search/form"%>
+    </div>
 
-<% if user_signed_in? %>
-    <%= link_to "Profilo", profile_path(current_user) %>
-    <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %> 
-<% else %>
-    <%= link_to "Login", new_user_session_path %>
-    <%= link_to "Sign up", new_user_registration_path %>
-<% end %>
-
-<% if user_signed_in? and (current_user.completed == 0 || current_user.completed == 1) %>
-    <h2 class="bg-red-700"> <%= link_to "Completa il profilo!", new_complete_registration_path %> </h2>
-<% end %>
-
-<% unless user_signed_in? && current_user.admin? %>
-    <%= link_to "Chatta con l'assistenza", user_path(1) %>
-<% end %>
+    <%# User da mettere dropdown %>
+    <div>
+        <% if user_signed_in? %>
+            <%= link_to "Profilo", profile_path(current_user) %>
+            <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %> 
+            <% unless current_user.admin? %>
+                <%= link_to "Chatta con l'assistenza", user_path(1) %>
+            <% end %>
+        <% else %>
+            <%= link_to "Login", new_user_session_path %>
+            <%= link_to "Sign up", new_user_registration_path %>
+        <% end %>
+    </div>
+</div>

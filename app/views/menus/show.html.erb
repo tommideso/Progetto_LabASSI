@@ -1,22 +1,24 @@
-<%= render partial: "shared_partials/mini_header" %>
 
-<h1><%= @menu.titolo %></h1>
 <!-- Immagini -->
-<div>
+<div class="flex gap-1">
   <% if @menu.images.attached? %>
       <% @menu.images.each do |image| %>
-        <%= image_tag(image, height: '100') %>
+        <%= image_tag(image, class: "h-72") %>
         <br/>
       <% end %>
   <% end %>
 </div>
-
-<!-- Preferiti -->
-<div id="favorite-button">
+<div class="w-full flex justify-between items-center">
+  <h1><%= @menu.titolo %></h1>
+  <div id="favorite-button">
   <% if user_signed_in? && current_user.client? %>
     <%= button_to favorite_text, favorites_menu_path, method: :put %>
   <% end %>
 </div>
+</div>
+
+<!-- Preferiti -->
+
 
 <p><strong>Chef:</strong> <%= link_to @menu.chef.user.nome, profile_path(@menu.chef.user) %></p>
 <%= render partial: "profiles/avatar", locals: {user: @menu.chef.user} %>

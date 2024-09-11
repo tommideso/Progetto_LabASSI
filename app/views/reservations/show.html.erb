@@ -2,7 +2,7 @@
 
 <p><strong>User:</strong> <%= link_to @reservation.client.user.email, profile_path(@reservation.client.user) %></p>
 <p><strong>Chef:</strong> <%= link_to @reservation.chef.user.email, profile_path(@reservation.chef.user) %></p>
-<p><strong>Menu:</strong> <%= link_to @menu.titolo, menu_path(@menu) %></p>
+<p><strong>Menu:</strong> <%= link_to @reservation.menu.titolo, menu_path(@reservation.menu) %></p>
 <p><strong>Data Prenotazione:</strong> <%= @reservation.data_prenotazione %></p>
 <p><strong>Stato:</strong> <%= @reservation.stato %></p>
 <p><strong>Prezzo:</strong> <%= number_to_currency(@reservation.prezzo, unit: "€") %></p>
