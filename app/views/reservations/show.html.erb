@@ -14,7 +14,7 @@
 <p><strong>Indirizzo di Consegna:</strong> <%= @reservation.indirizzo_consegna %></p>
 
 <!-- Recensioni -->
-<% if @reservation.confermata? %>
+<% if @reservation.completata? %>
   <% if current_user.client? %>
     <% if @reservation.reviews.empty? || @reservation.reviews.length == 1 %>
       <%= form_with(model: [@reservation, @review], url: create_by_client_reservation_reviews_path(@reservation), local: true) do |form| %>
@@ -148,7 +148,7 @@
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("turbo:load", function() {
     console.log("DOM fully loaded and parsed");
 
     // Funzione per aggiornare il colore delle stelle
