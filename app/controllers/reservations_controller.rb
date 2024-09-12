@@ -12,6 +12,10 @@ class ReservationsController < ApplicationController
     elsif current_user.admin?
       @reservations = Reservation.all
     end
+
+    @next_reservations = @reservations.where("data_prenotazione >= ?", Date.today).where(stato: [ :attesa_pagamento, :confermata ]).order(data_prenotazione: :asc)
+    @cancelled_reservations = @reservations.where(stato: [ :cancellata ]).order(data_prenotazione: :desc)
+    @completed_reservations = @reservations.where(stato: [ :completata, :rimborsata ]).order(data_prenotazione: :desc)
   end
 
 

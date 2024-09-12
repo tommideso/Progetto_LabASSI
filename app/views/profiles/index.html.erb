@@ -1,60 +1,73 @@
 
-<div data-controller="tabs" data-tabs-active-tab-class="-mb-px border-l border-t border-r rounded-t">
-  <div class="list-reset flex border-b">
-    <div class="-mb-px mr-1 cursor-pointer" data-tabs-target="tab" data-action="click->tabs#change:prevent" id >
-      <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-700 font-semibold no-underline"
-        data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent"
+<div data-controller="tabs" data-tabs-active-tab-class="-mb-px" class="tabs">
+  <div class="tabs-tabs">
+    <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent" id="Chef" >
+      <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent"
       >Chef</a>
     </div>
-    <div class="mr-1 cursor-pointer" data-tabs-target="tab" data-action="click->tabs#change:prevent" id="clienti">
-      <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-700 font-semibold no-underline"
-        data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent"
+    <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent" id="clienti">
+      <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent"
       >Clienti</a>
     </div>
-    <div class="mr-1 cursor-pointer" data-tabs-target="tab" data-action="click->tabs#change:prevent">
-      <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-700 font-semibold no-underline" data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent">Tutti</a>
+    <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent" id="all">
+      <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent">Tutti</a>
     </div>
+    <div>
+      <input data-action="click->tabs#change" data-id="all" type="text" id="userSearch" placeholder="Cerca utenti..." class="input">
+    </div>
+  
   </div>
 
-  <div class="hidden py-4 px-4 border-l border-b border-r" data-tabs-target="panel" data-id="chef">
+
+  <div class="hidden" data-tabs-target="panel" data-id="chef">
     <% if @chefs.any? %>
-        <% @chefs.each do |user| %>
-            <div>
-                <%= user.email %>
-                <%= user.nome %>
-                <%= user.ruolo %>
-                <%= link_to "Show", profile_path(user.id) %>
-            </div>
-        <% end %>
+        <div class="grid grid-cols-3 gap-4">
+          <% @chefs.each do |user| %>
+            <%= render partial: "profile_card", locals: { user: user } %>
+          <% end %>
+      </div>
     <% end %>
 
   </div>
-<div class="hidden py-4 px-4 border-l border-b border-r" data-tabs-target="panel" data-id="client">
-    
+  <div class="hidden" data-tabs-target="panel" data-id="client">
+  
     <% if @clients.any? %>
+        <div class="grid grid-cols-3 gap-4">
         <% @clients.each do |user| %>
-            <div>
-                <%= user.email %>
-                <%= user.nome %>
-                <%= user.ruolo %>
-                <%= link_to "Show", profile_path(user.id) %>
-            </div>
+          <%= render partial: "profile_card", locals: { user: user } %>
         <% end %>
+      </div>
     <% end %>
 
   </div>
-  <div class="hidden py-4 px-4 border-l border-b border-r" data-tabs-target="panel" data-id="all">
-
+  <div class="hidden" data-tabs-target="panel" data-id="all">
     <% if @users.any? %>
+      <div class="grid grid-cols-3 gap-4" id="user_profiles">
         <% @users.each do |user| %>
-            <div>
-                <%= user.email %>
-                <%= user.nome %>
-                <%= user.ruolo %>
-                <%= link_to "Show", profile_path(user.id) %>
-            </div>
+          <%= render partial: "profile_card", locals: { user: user } %>
         <% end %>
+      </div>
     <% end %>
   </div>
 
 </div>
+
+
+<script>
+
+  document.getElementById('userSearch').addEventListener('input', function() {
+    var searchValue = this.value.toLowerCase();
+    var userProfiles = document.getElementById('user_profiles').children;
+
+    for (var i = 0; i < userProfiles.length; i++) {
+      var userProfile = userProfiles[i];
+      var userName = userProfile.textContent.toLowerCase();
+
+      if (userName.includes(searchValue)) {
+        userProfile.classList.remove('hidden');
+      } else {
+        userProfile.classList.add('hidden');
+      }
+    }
+  });
+</script>

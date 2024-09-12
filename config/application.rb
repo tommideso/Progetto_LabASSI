@@ -15,7 +15,7 @@ module App
     config.i18n.default_locale = :it
 
     # Abilita il fallback alle traduzioni inglesi quando quelle italiane non sono disponibili
-    config.i18n.fallbacks = { 'it' => 'en' }
+    config.i18n.fallbacks = { "it" => "en" }
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

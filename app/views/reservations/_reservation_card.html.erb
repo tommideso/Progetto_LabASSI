@@ -1,4 +1,33 @@
-<div class="border rounded flex flex-col gap-0 p-5" >
-    <p> <%= reservation.num_persone %> persone, <%= reservation.tipo_pasto.humanize %> il <%= reservation.data_prenotazione %> </p>
-    <p> <%= link_to "Vai alla prenotazione", reservation_path(reservation.id) %> </p>
-</div>
+
+<%= link_to reservation_path(reservation.id) do %>
+    <div class="grow card flex items-center justify-between gap-10" id=<%= reservation.id %>>
+        <div class="flex gap-4">
+            <% if reservation.menu.images.attached? %>
+                <%= image_tag(reservation.menu.images.first, alt: reservation.menu.titolo, class:"h-32 w-32 object-cover rounded") %>
+            <% end %>
+            <div class="flex flex-col justify-center">
+                <%# Nome menu, data + tipo_pasto, nome cliente, n.persone %>
+                <%# Se sono loggato come client vedo chef altrimenti vedo client %>
+                <h3> <%= reservation.menu.titolo %> </h3>
+                <p> <%= reservation.tipo_pasto.humanize %>, il <%= reservation.data_prenotazione.strftime("%d %B %Y") %> </p>
+                <% if current_user.client? %>
+                    <p> Chef: <%= reservation.chef.user.nome %> <%= reservation.chef.user.cognome %> </p>
+                <% else %>
+                    <p> Cliente: <%= reservation.client.user.nome %> <%= reservation.client.user.cognome %> </p>
+                <% end %>
+                <p> <%= reservation.num_persone %> persone </p>
+            </div>
+        </div>
+        <div>
+            <% colore = case reservation.stato  
+                when "completata" then "blue"
+                when "cancellata" then "destructive"
+                when "attesa_pagamento" then "yellow"
+                when "confermata" then "success"
+                when "rimborso" then "orange"
+                else "blue"
+            end %>
+            <%= render partial: "shared_partials/status", locals: {colore: colore, testo: reservation.stato.humanize } %>
+        </div>
+    </div>
+<% end %>
