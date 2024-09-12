@@ -13,14 +13,18 @@ class ApplicationController < ActionController::Base
   def favorite_text
     @favorite_exists ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"
   end
+  def favorite_image
+    @favorite_exists ? "favorite_fill.png" : "favorite.png"
+  end
 
   helper_method :favorite_text
+  helper_method :favorite_image
 
   # metodo per mostrare la pagina d'errore 404
   def render_404
     respond_to do |format|
-      format.html { render file: Rails.public_path.join('404.html'), status: :not_found, layout: false }
-      format.json { render json: { error: 'Not Found' }, status: :not_found }
+      format.html { render file: Rails.public_path.join("404.html"), status: :not_found, layout: false }
+      format.json { render json: { error: "Not Found" }, status: :not_found }
     end
   end
 
