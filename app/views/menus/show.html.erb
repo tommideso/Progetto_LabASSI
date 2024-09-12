@@ -22,7 +22,7 @@
 
 <p><strong>Chef:</strong> <%= link_to @menu.chef.user.nome, profile_path(@menu.chef.user) %></p>
 <%= render partial: "profiles/avatar", locals: {user: @menu.chef.user} %>
-<p><strong>Descrizione:</strong> <%= @menu.descrizione %></p>
+<p><strong>Descrizione:</strong> <%= raw @menu.descrizione %></p>
 
 <h2>Piatti</h2>
 <% if @menu.dishes.any? %>

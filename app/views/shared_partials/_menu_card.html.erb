@@ -6,7 +6,7 @@
   </div>
   <div class="menu-card__content">
     <h2> <%= link_to menu.titolo, menu_path(menu.id) %> </h2>
-    <p> <%= menu.descrizione %> </p>
+    <p> <%= raw menu.descrizione %> </p>
     <p> <%= menu.allergeni %> </p>
    
     <p> Prezzo a persona: <%= number_to_currency(menu.prezzo_persona) %> </p>

@@ -15,3 +15,5 @@ pin "stimulus-places-autocomplete" # @0.5.0
 
 pin "tailwindcss-stimulus-components" # @5.1.1
 pin "@stimulus-components/rails-nested-form", to: "@stimulus-components--rails-nested-form.js" # @5.0.0
+pin "trix"
+pin "@rails/actiontext", to: "actiontext.esm.js"

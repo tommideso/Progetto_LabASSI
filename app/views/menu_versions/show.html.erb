@@ -13,7 +13,7 @@
   <% end %>
 </div>
 
-<p><strong>Descrizione:</strong> <%= @menu.descrizione %></p>
+<p><strong>Descrizione:</strong> <%= raw @menu.descrizione %></p>
 
 <p><strong>Prezzo per Persona:</strong> <%= number_to_currency(@menu.prezzo_persona, unit: "€") %></p>
 

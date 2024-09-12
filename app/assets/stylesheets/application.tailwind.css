@@ -11,6 +11,16 @@
 }
 
 */
+/*Definisco variabili per colori personalizzati*/
+:root {
+    --primary: #3490dc; 
+    --secondary: #ffed4a;
+    --danger: #e3342f;
+    --light: #f8f9fa;
+    --dark: #343a40;
+}
+
+
 .avatar {
     @apply w-24 h-24 rounded-full;
 }
@@ -50,3 +60,4 @@ li {
 button {
     @apply py-2 px-4 bg-blue-200;
 }
+@import 'actiontext.css';

@@ -28,7 +28,7 @@
             <%= link_to "Chatta con lo chef", user_path(@user) %>   
         <% end %>
 
-        <p><strong>Descrizione:</strong> <%= @user.chef.descrizione %></p>
+        <p><strong>Descrizione:</strong> <%= raw @user.chef.descrizione %></p>
 
         <% if @menus.any? %>
             <div id="menu-list">

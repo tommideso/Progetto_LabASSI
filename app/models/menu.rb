@@ -15,6 +15,9 @@ class Menu < ApplicationRecord
     belongs_to :chef
     # collegamento verso prenotazione
     has_many :reservations
+    
+
+    #has_rich_text :descrizione
 
     # definiamo uno scope che restituisce i menu disponibili per una certa data, con stato della prenotazione :attesa_pagamento o :confermata
     # Mi basta sapere se c'è una prenotazione per quel giorno per lo chef

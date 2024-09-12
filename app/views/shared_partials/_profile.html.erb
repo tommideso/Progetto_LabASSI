@@ -41,7 +41,7 @@
 
     <div class="field">
       <%= chef_form.label :descrizione %><br />
-      <%= chef_form.text_area :descrizione, value: @chef.persisted? ? (@chef.descrizione.presence || @chef.reload.descrizione) : @chef.descrizione %>
+      <%= chef_form.rich_text_area :descrizione, value: @chef.persisted? ? (@chef.descrizione.presence || @chef.reload.descrizione) : @chef.descrizione %>
     </div>
   <% end %>
   

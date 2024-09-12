@@ -14,7 +14,7 @@
 
     <div>
         <%= form.label :descrizione %>
-        <%= form.text_area :descrizione, value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione %>
+        <%= form.rich_text_area :descrizione, value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione %>
     </div>
 
     <!-- Sezione Piatti -->
