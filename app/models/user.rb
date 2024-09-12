@@ -70,6 +70,8 @@ class User < ApplicationRecord
     user
   end
 
+  # TODO: rimuovere
+  # scope :all_except, ->(user) { where.not(id: user) }
 
   private
 
