@@ -201,7 +201,7 @@
     <div class="border border-gray-200 p-4 rounded-lg mb-4">
       <p><strong>Valutazione:</strong> <%= review.valutazione %></p>
       <p><strong>Commento:</strong> <%= review.commento %></p>
-      <p><strong>Scritta da:</strong> <%= link_to review.reservation.client.user.nome, profile_path(review.reservation.client.user) %></p>
+      <p><strong>Scritta da:</strong> <%= review.reservation.client.user.nome %></p>
       <%# Se admin  %>
       <% if user_signed_in? && current_user.admin? %>
         <p><strong>Prenotazione numero:</strong> <%= link_to review.reservation.id, reservation_path(review.reservation) %></p>
