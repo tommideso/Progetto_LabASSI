@@ -65,5 +65,11 @@ RSpec.describe ReservationsController, type: :controller do
     post :create, params: { reservation: valid_attributes }
     expect(response).to redirect_to(Reservation.last)
   end
+
+  it 'ensures the reservation chef matches the menu chef' do
+    post :create, params: { reservation: valid_attributes }
+    reservation = Reservation.last
+    expect(reservation.chef).to eq(menu.chef)
+  end
 end
 end
