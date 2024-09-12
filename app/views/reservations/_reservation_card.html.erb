@@ -1,6 +1,6 @@
 
 <%= link_to reservation_path(reservation.id) do %>
-    <div class="grow card flex items-center justify-between gap-10" id=<%= reservation.id %>>
+    <div class="grow card card-content flex items-center justify-between gap-10" id=<%= reservation.id %>>
         <div class="flex gap-4">
             <% if reservation.menu.images.attached? %>
                 <%= image_tag(reservation.menu.images.first, alt: reservation.menu.titolo, class:"h-32 w-32 object-cover rounded") %>

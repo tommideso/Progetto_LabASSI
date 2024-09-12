@@ -1,10 +1,10 @@
 <%= link_to profile_path(user) do %>
-    <div class="card flex items-center justify-between gap-10" id=<%= user.id %>>
+    <div class="card card-content flex items-center justify-between gap-10" id=<%= user.id %>>
         <div class="flex gap-4">
             <%= render partial: "avatar", locals: { user: user, size_class: "h-16 w-16" } %>
-            <div class="flex flex-col justify-center">
+            <h3 class="flex flex-col justify-center">
                 <%= user.nome + " " + user.cognome%>
-            </div>
+            </h3>
         </div>
         <div>
             <% if user.access_locked? %>

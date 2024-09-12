@@ -1,9 +1,9 @@
 <h1>I tuoi preferiti </h1>
 
 <% if @favorites.any? %>
-  <div id="menu-favorites-list">
+  <div id="menu-favorites-list" class="grid grid-cols-4 gap-8 ">
     <% @favorites.each do |fav| %>
-        <%= render partial: "shared_partials/menu_card", locals: {menu: fav.menu} %>
+        <%= render partial: "menus/menu_card", locals: {menu: fav.menu} %>
 
     <% end %>
   </div>

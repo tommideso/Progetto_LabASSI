@@ -33,7 +33,7 @@
         <% if @menus.any? %>
             <div id="menu-list">
                 <% @menus.each do |menu| %>
-                    <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>
+                    <%= render partial: "menus/menu_card", locals: {menu: menu} %>
                 <% end %>
             </div>
         <% else %>

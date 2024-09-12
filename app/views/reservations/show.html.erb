@@ -16,7 +16,7 @@
 
 
 <!-- Recensioni -->
-<% if @reservation.confermata? %> <!-- da cambiare-->
+<% if @reservation.confermata? %> <!-- TODO da cambiare-->
   <% if current_user.client? %>
     <% if @reservation.reviews.empty? || @reservation.reviews.length == 1 %>
       <%= form_with(model: [@reservation, @review], url: create_by_client_reservation_reviews_path(@reservation), local: true) do |form| %>

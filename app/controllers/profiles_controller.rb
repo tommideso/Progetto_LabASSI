@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
         end
         # solo se l'utente è uno chef voglio vedere i suoi menu
         if @user.chef?
-            @menus = Menu.where(chef: @user.chef)
+            @menus = Menu.where(chef: @user.chef).order(created_at: :desc).limit(5)
         end
         # il profilo di un cliente può essere visto solo dall'admin o dal cliente stesso
         if @user.client?
@@ -27,7 +27,7 @@ class ProfilesController < ApplicationController
                 return
             end
         end
-        @reservations = @user.chef? ? @user.chef.reservations : @user.client.reservations
+        @reservations = (@user.chef? ? @user.chef.reservations : @user.client.reservations).order(created_at: :desc).limit(5)
         reviews = @user.chef? ? @user.chef.reviews : @user.client.reviews
         puts reviews.map { |r| r.valutazione.to_f }
         # Voglio controllare il tipo delle recensioni e metterlo in un array

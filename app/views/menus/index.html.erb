@@ -1,21 +1,9 @@
 
+<h2 class="mt-8">Menu</h2>
 
-<h1 class="align-middle"> Benvenuto su AOCHEF </h1>
-
-<% if user_signed_in? %>
-   <% if current_user.chef? %>
-   <h2> Benvenuto chef </h2>
-   <% elsif current_user.client? %>
-   <h2> Benvenuto client </h2>
-   <% elsif current_user.admin? %>
-   <h2> Benvenuto admin </h2>
-   <% end %>
-
-<% end %>
-
-<div id="menu-list" class="grid grid-cols-1 gap-24">
+<div id="menu-list" class="grid grid-cols-4 gap-8 ">
    <% @menus.each do |menu| %>
-      <%= render partial: "shared_partials/menu_card", locals: {menu: menu} %>
+      <%= render partial: "menu_card", locals: {menu: menu} %>
    <% end %>
 </div>
 
