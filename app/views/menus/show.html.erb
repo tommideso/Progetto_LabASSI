@@ -1,217 +1,212 @@
-<div class=" "> <!-- mx-0 lg:mx-[5%] 2xl:mx-[15%] -->
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-4xl font-bold"><%= @menu.titolo %></h2>
-    <div>
-      <div id="favorite-button">
-        <% if user_signed_in? && current_user.client? %>
-          <%= button_to favorites_menu_path, method: :put do %>
-            <%= image_tag favorite_image, alt: favorite_text, class: "w-12 h-12 mt-2" %>
-          <% end %>
-        <% end %>
-      </div>  
-    </div>
-  </div>
-  <!-- Immagini -->
-  <div class="flex gap-1 flex-wrap">
-    <% if @menu.images.attached? %>
-        <% @menu.images.each do |image| %>
-          <%= image_tag(image, class: "h-72") %>
-          <br/>
-        <% end %>
+<div class="">
+  <div class="flex flex-col lg:flex-row gap-4">
+    <% if user_signed_in? && current_user.client? %>
+      <div class="lg:w-2/3 flex flex-col gap-4"> <!-- mx-0 lg:mx-[5%] 2xl:mx-[15%] -->
+    <% else %>
+      <div class="lg:w-full flex flex-col gap-4"> <!-- mx-0 lg:mx-[5%] 2xl:mx-[15%] -->
     <% end %>
-  </div>
- 
- 
+      <!-- Titolo, preferiti e immagini -->
+      <div class="card card-content flex flex-col gap-4">
+        <div class="flex justify-between items-center gap-4">
+          <h2 class="text-4xl font-bold"><%= @menu.titolo %></h2>
+              <% if user_signed_in? && current_user.client? %>
+                <%= button_to favorites_menu_path, method: :put do %>
+                  <div id="favorite-button" class="btn btn-outline flex items-center gap-4">
+                    <%= favorite_text %>
+                    <%= image_tag favorite_image, alt: favorite_text, class: "w-8 h-8" %>
+                  </div>
+                <% end %>
+              <% end %>
+        </div>
+        <div class="flex gap-1 justify-between flex-wrap">
+          <% if @menu.images.attached? %>
+              <% @menu.images.first(3).each do |image| %>
+                  <%= image_tag(image, class: "h-72") %>
+              <% end %>
+          <% end %>
+        </div>
+        <div>
+          <p class="text-lg"><%= raw @menu.descrizione %></p>
+          
+        </div>
+      </div>
 
-  <!-- Preferiti -->
+      <!-- Chef -->
+      <%= link_to profile_path(@menu.chef.user) do %>
+        <div class="card card-content">
+          <div class="flex items-center gap-4">
+            <%= render partial: "profiles/avatar", locals: {user: @menu.chef.user, size_class:"h-20 w-20"} %>
+            <div class="space-y-2 w-full">
+              <div class="flex justify-between items-center">
+                <p class="text-2xl font-bold"><%= @menu.chef.user.nome %> <%= @menu.chef.user.cognome %></p>
+                <div class="flex">
+                  <% if @chef_valutation.present? && !@chef_valutation.nan? %>
+                    <% full_stars = @chef_valutation.floor %>
+                    <% half_star = (@chef_valutation - full_stars) >= 0.5 %>
+                    <% empty_stars = 5 - full_stars - (half_star ? 1 : 0) %>
 
+                    <% full_stars.times do %>
+                      <%= image_tag "yellow_star_fill.png", alt: "Valutazione Chef", class: "w-6 h-6" %>
+                    <% end %>
 
-  <p><strong>Chef:</strong> <%= link_to @menu.chef.user.nome, profile_path(@menu.chef.user) %></p>
-  <%= render partial: "profiles/avatar", locals: {user: @menu.chef.user} %>
-  <p><strong>Descrizione:</strong> <%= raw @menu.descrizione %></p>
+                    <% if half_star %>
+                      <%= image_tag "yellow_star_half.png", alt: "Mezza Valutazione Chef", class: "w-6 h-6" %>
+                    <% end %>
 
-  <h2>Piatti</h2>
+                    <% empty_stars.times do %>
+                      <%= image_tag "yellow_star_empty.png", alt: "Stella Vuota", class: "w-6 h-6" %>
+                    <% end %> 
+                  <% end %> 
 
-  <% if @menu.dishes.any? %>
-    <div class="flex flex-col gap-4">
-        <% @menu.dishes.sort_by { |piatto| ['Antipasto', 'Primo', 'Secondo', 'Dolce'].index(piatto.tipo_portata) }.each do |piatto| %>
-          <div>
-            <p><strong>Nome:</strong> <%= piatto.nome %></p>
-            <p><strong>Ingredienti:</strong> <%= piatto.ingredienti %></p>
-            <p><strong>Tipo portata:</strong> <%= piatto.tipo_portata %></p>
+                  
+                </div>
+              </div>
+              <div class="">
+                <p class="text-lg line-clamp-3 "><%= raw @menu.chef.descrizione %></p>
+              </div>
+            </div>
+
           </div>
-        <% end %>
-    </div>
-  <% else %>
-    <p>Non ci sono piatti associati a questo menu.</p>
-  <% end %>
-
-  <p><strong>Prezzo per Persona:</strong> <%= number_to_currency(@menu.prezzo_persona, unit: "€") %></p>
-
-  <p><strong>Numero Minimo di Persone:</strong> <%= @menu.min_persone %></p>
-
-  <p><strong>Numero Massimo di Persone:</strong> <%= @menu.max_persone %></p>
-
-  <p><strong>Tipo di Cucina:</strong> <%= @menu.tipo_cucina %></p>
-
-  <p><strong>Allergeni:</strong>
-    <% if @menu.allergeni.present? %>
-      <ul class="m-0">
-        <% @menu.allergeni.each do |allergene, presente| %>
-          <li><%= "#{allergene.capitalize}: #{presente == 'true' ? 'Sì' : 'No'}" %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>Nessun allergene registrato.</p>
-    <% end %>
-  </p>
-
-  <p><strong>Preferenze Alimentari:</strong>
-    <% if @menu.preferenze_alimentari.present? %>
-      <ul>
-        <% @menu.preferenze_alimentari.each do |preferenza, presente| %>
-          <li><%= "#{preferenza.capitalize}: #{presente == 'true' ? 'Sì' : 'No'}" %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>Nessuna preferenza alimentare registrata.</p>
-    <% end %>
-  </p>
-
-  <p><strong>Adattabile per allergeni:</strong>
-    <% if @menu.adattabile.present? && @menu.adattabile["allergeni"].present? %>
-      <ul>
-        <% @menu.adattabile["allergeni"].each do |adattamento, presente| %>
-          <li><%= "#{adattamento.capitalize}: #{presente == 'true' ? 'Sì' : 'No'}" %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p> Nessun adattamento per allergeni.</p>
-    <% end %>
-  </p>
-
-  <p><strong>Adattabile per preferenze alimentari:</strong>
-    <% if @menu.adattabile.present? && @menu.adattabile["preferenze"].present? %>
-      <ul>
-        <% @menu.adattabile["preferenze"].each do |adattamento, presente| %>
-          <li><%= "#{adattamento.capitalize}: #{presente == 'true' ? 'Sì' : 'No'}" %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>Nessun adattamento per preferenze alimentari.</p>
-    <% end %>
-  </p>
-
-  <p><strong>Extra:</strong>
-    <% if @menu.extra.present? %>
-      <ul>
-        <% @menu.extra.each do |extra, valore| %>
-          <li><%= "#{extra.capitalize}: #{valore.nil? ? "No" : valore }€ a persona" %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>Nessun extra registrato.</p>
-    <% end %>
-  </p>
-
-  <p><strong>Prezzo Extra:</strong> <%= number_to_currency(@menu.prezzo_extra, unit: "€") %></p>
-
-  <p><strong>Disattivato:</strong> <%= @menu.disattivato ? 'Sì' : 'No' %></p>
-
-  <% if user_signed_in? %>
-
-    <!-- Pulsante di disattivazione -->
-    <p><strong>Stato del menu:</strong>
-      <% if @menu.disattivato %>
-        <% if @menu.disattivato_da == 'chef' %>
-          <span>Disattivato dallo Chef</span>
-          <% if current_user.admin? %>
-            <p>L'admin non può modificare questo menu disattivato dallo chef.</p>
-          <% end %>
-        <% elsif @menu.disattivato_da == 'admin' %>
-          <span>Disattivato dall'Admin</span>
-          <% if current_user.chef? %>
-            <p>Lo chef non può modificare questo menu disattivato dall'admin.</p>
-          <% end %>
-        <% end %>
-      <% else %>
-        <!-- Menu attivo -->
-        <span>Attivo</span>
-        <% if current_user.chef? || current_user.admin? %>
-          <%= button_to "Disattiva Menu", disattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
-        <% end %>
+        </div>
       <% end %>
-    </p>
+     
 
-    <!-- Pulsante di riattivazione -->
-    <% if @menu.disattivato && ((current_user.admin? && @menu.disattivato_da != 'chef') || (current_user.chef? && @menu.disattivato_da != 'admin')) %>
-      <%= button_to "Riattiva Menu", riattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
-    <% end %>
+      <!-- Piatti -->
+      <div>
+        <h2>Piatti</h2>
 
-
-    <% if current_user.chef? %>
-      <h3> <%= link_to "Modifica il menu", edit_menu_path %> </h3>
-    <% end %>
-
-    <% if current_user.client? %>
-      <%= form_with model: Reservation, url: reservations_path, data: {
-        controller: "flatpickr",
-        flatpickr_disabled_dates_value: @disabled_dates.to_json
-      }, local: true do |f| %>
-        
-
-        <%= f.hidden_field :menu_id, value: @menu.id %> 
-        <%# Num Persone, TipoPasto, Data, Indirizzo di consegna %>
-        <div
-          data-controller="places-autocomplete"
-          data-action="google-maps-callback@window->places-autocomplete#initAutocomplete"
-          data-places-autocomplete-country-value='["it"]'
-        >
-          <%= f.label :indirizzo_consegna %><br />
-          <%= f.text_field :indirizzo_consegna, id: "indirizzo_consegna", value: current_user.client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
-        </div>  
-      
-        <div>
-          <%= f.label :num_persone %>
-          <%= f.number_field :num_persone, class: "", min: @menu.min_persone, max: @menu.max_persone, id: "num_persone" %>
-        </div>
-        <div>
-          <%= f.label :tipo_pasto %>
-          <%# Prendo i valori del campo tipo_pasto dalla classe Reservation e li mappo in un array di coppie chiave-valore, dove la chiave è il valore del campo e il valore è il campo con la prima lettera maiuscola %>
-          <%= f.select :tipo_pasto, Reservation.tipo_pastos.keys.map { |tipo_pasto| [tipo_pasto.humanize, tipo_pasto] } %>
-        </div>
-        <div>
-          <%= f.label :data_prenotazione %>
-          <%= f.date_field :data_prenotazione, class: "datepicker", min: Date.today, id: "data_prenotazione" %>
-        </div>
-        <% if @menu.extra["vino"] > 0 %>
-          <div>
-            <%= f.label :vino, "Vino" %>
-            <%= f.hidden_field :vino, value: false %>
-            <%= f.check_box :vino, {id: "vino"}, true, false %>
+        <% if @menu.dishes.any? %>
+          <div class="flex flex-col gap-4">
+              <% @menu.dishes.sort_by { |piatto| ['Antipasto', 'Primo', 'Secondo', 'Dolce'].index(piatto.tipo_portata) }.each do |piatto| %>
+                <div>
+                  <p><strong>Nome:</strong> <%= piatto.nome %></p>
+                  <p><strong>Ingredienti:</strong> <%= piatto.ingredienti %></p>
+                  <p><strong>Tipo portata:</strong> <%= piatto.tipo_portata %></p>
+                </div>
+              <% end %>
           </div>
         <% else %>
-          <%= f.hidden_field :vino, value: false %>
+          <p>Non ci sono piatti associati a questo menu.</p>
         <% end %>
+      </div>
 
-        <% if @menu.extra["miseenplace"] > 0 %>
-          <div>
-            <%= f.label :miseenplace, "Mise en place" %>
-            <%= f.hidden_field :miseenplace, value: false %>
-            <%= f.check_box :miseenplace, {id: "miseenplace"}, true, false %>
-          </div>
-        <% else %>
-
-          <%= f.hidden_field :miseenplace, value: false %>
-        <% end %>
-        <div>
-          <p> Prezzo totale: <span id="prezzo_totale"></span> </p>
+      <!-- Dettagli -->
+      <div>
+        <h2>Dettagli</h2>
+        <p><strong>Prezzo per Persona:</strong> <%= number_to_currency(@menu.prezzo_persona, unit: "€") %></p>
+        <p><strong>Numero Minimo di Persone:</strong> <%= @menu.min_persone %></p>
+        <p><strong>Numero Massimo di Persone:</strong> <%= @menu.max_persone %></p>
+        <div class="flex gap-2 items-center py-2  w-fit">
+            <%= image_tag "restaurant.png", alt: "Tipo di cucina", class: "w-6 h-6" %>
+            <p>Tipo di cucina: <%= @menu.tipo_cucina %></p>
         </div>
-        <%# TODO inserire calcolo live del prezzo? %>
-        <%= f.submit "Prenota" %>
+      </div>
+
+      <!-- Allergeni, Preferenze Alimentari, Adattabile, Extra -->
+      <div>
+        <p><strong>Allergeni:</strong>
+          <% if @menu.allergeni.present? %>
+            <ul class="m-0">
+              <% @menu.allergeni.each do |allergene, presente| %>
+                <li><%= "#{allergene.capitalize}: #{presente == 'true' ? 'Sì' : 'No'}" %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p>Nessun allergene registrato.</p>
+          <% end %>
+        </p>
+
+        <p><strong>Preferenze Alimentari:</strong>
+          <% if @menu.preferenze_alimentari.present? %>
+            <ul>
+              <% @menu.preferenze_alimentari.each do |preferenza, presente| %>
+                <li><%= "#{preferenza.capitalize}: #{presente == 'true' ? 'Sì' : 'No'}" %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p>Nessuna preferenza alimentare registrata.</p>
+          <% end %>
+        </p>
+
+        <p><strong>Adattabile per allergeni:</strong>
+          <% if @menu.adattabile.present? && @menu.adattabile["allergeni"].present? %>
+            <ul>
+              <% @menu.adattabile["allergeni"].each do |adattamento, presente| %>
+                <li><%= "#{adattamento.capitalize}: #{presente == 'true' ? 'Sì' : 'No'}" %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p> Nessun adattamento per allergeni.</p>
+          <% end %>
+        </p>
+
+        <p><strong>Adattabile per preferenze alimentari:</strong>
+          <% if @menu.adattabile.present? && @menu.adattabile["preferenze"].present? %>
+            <ul>
+              <% @menu.adattabile["preferenze"].each do |adattamento, presente| %>
+                <li><%= "#{adattamento.capitalize}: #{presente == 'true' ? 'Sì' : 'No'}" %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p>Nessun adattamento per preferenze alimentari.</p>
+          <% end %>
+        </p>
+      </div>
+
+      <!-- Extra -->
+      <div>
+        <p><strong>Extra:</strong>
+          <% if @menu.extra.present? %>
+            <ul>
+              <% @menu.extra.each do |extra, valore| %>
+                <li><%= "#{extra.capitalize}: #{valore.nil? ? "No" : valore }€ a persona" %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p>Nessun extra registrato.</p>
+          <% end %>
+        </p>
+
+        <p><strong>Prezzo Extra:</strong> <%= number_to_currency(@menu.prezzo_extra, unit: "€") %></p>
+      </div>
+
+
+    <% if user_signed_in? %>
+
+        <!-- Pulsante di disattivazione -->
+        <p><strong>Stato del menu:</strong>
+          <% if @menu.disattivato %>
+            <% if @menu.disattivato_da == 'chef' %>
+              <span>Disattivato dallo Chef</span>
+              <% if current_user.admin? %>
+                <p>L'admin non può modificare questo menu disattivato dallo chef.</p>
+              <% end %>
+            <% elsif @menu.disattivato_da == 'admin' %>
+              <span>Disattivato dall'Admin</span>
+              <% if current_user.chef? %>
+                <p>Lo chef non può modificare questo menu disattivato dall'admin.</p>
+              <% end %>
+            <% end %>
+          <% else %>
+            <!-- Menu attivo -->
+            <span>Attivo</span>
+            <% if current_user.chef? || current_user.admin? %>
+              <%= button_to "Disattiva Menu", disattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
+            <% end %>
+          <% end %>
+        </p>
+
+        <!-- Pulsante di riattivazione -->
+        <% if @menu.disattivato && ((current_user.admin? && @menu.disattivato_da != 'chef') || (current_user.chef? && @menu.disattivato_da != 'admin')) %>
+          <%= button_to "Riattiva Menu", riattiva_menu_path(@menu), method: :post, data: { turbo: false } %>
+        <% end %>
+
+
+        <% if current_user.chef? %>
+          <h3> <%= link_to "Modifica il menu", edit_menu_path %> </h3>
+        <% end %>
+
       <% end %>
-    <% end %>
-  <% end %>
 
 
   <!-- Recensioni -->
@@ -288,8 +283,13 @@
     }
 
     numPersoneInput.addEventListener("input", calcolaPrezzoTotale);
-    vinoCheckbox.addEventListener("change", calcolaPrezzoTotale);
-    miseenplaceCheckbox.addEventListener("change", calcolaPrezzoTotale);
+    if (vinoCheckbox) {
+      vinoCheckbox.addEventListener("change", calcolaPrezzoTotale);
+    }
+    if (miseenplaceCheckbox) {
+      miseenplaceCheckbox.addEventListener("change", calcolaPrezzoTotale);
+    }
+
 
     // Calcola il prezzo totale iniziale
     calcolaPrezzoTotale();

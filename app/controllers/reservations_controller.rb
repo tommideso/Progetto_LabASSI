@@ -79,7 +79,6 @@ class ReservationsController < ApplicationController
       update_params.delete(:miseenplace)
       PaperTrail.request(enabled: true) do
         @reservation = Reservation.new(update_params)
-        # TODO aggiungere anche extra
         @reservation.prezzo = menu.prezzo_persona.to_f * reservation_params[:num_persone].to_i
         if @reservation.save
           flash[:notice] = "Prenotazione effettuata con successo."
