@@ -8,28 +8,28 @@
   <div id="searchTarget" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style="display: none;" data-search-target="modal">
     <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/3">
       <button id="closeModalButton" class="text-gray-500 hover:text-gray-700" data-action="search#closeModal">&times;</button>
-      <h2 class="text-lg font-bold mb-4">Filtra la tua ricerca</h2>
+      <h1 class="text-lg font-bold mb-4">Filtra la tua ricerca</h1>
       <form id="searchForm" data-search-target="form" data-action="submit->search#submitForm">
         <!-- Aggiungi qui i tuoi campi di input -->
         
-        <div class="field">
+        <div class="field search-field">
           <%= f.label :titolo_cont, "Nome menu" %>
           <%= f.search_field :titolo_cont %>
         </div>
 
-        <div class="field">
+        <div class="field search-field">
           <%= f.label :numero_persone, "Numero di persone" %>
           <%= text_field_tag :numero_persone, params[:numero_persone], placeholder: "Es. 5" %>
         </div>
 
-        <div class="field">
+        <div class="field search-field">
           <%= f.label :search_date, "Data" %>
           <%= text_field_tag :search_date, params[:search_date], class: "form-control datepicker", id: "search-date" %>
         </div>
 
 
         <div class="field">
-          <h3>Filtra per allergeni:</h3>
+          <h4>Filtra per allergeni:</h4>
           <!-- Checkbox Seleziona Tutte -->
           <label>
             <input type="checkbox" data-action="change->search#toggleAll" data-search-target="selectAllAllergeni">
@@ -47,7 +47,7 @@
         </div>
 
         <div class="field">
-          <h3>Filtra per preferenze alimentari:</h3>
+          <h4>Filtra per preferenze alimentari:</h4>
           <!-- Checkbox Seleziona Tutte per preferenze alimentari -->
           <label>
             <input type="checkbox" data-action="change->search#toggleAll" data-search-target="selectAllPreferenze">
@@ -66,9 +66,41 @@
 
 
         <div class="actions">
-          <%= f.submit "Search" %>
+          <%= f.submit "Search", class: "search-button" %>
         </div>
       </form>
     </div>
   </div>
 <% end %>
+
+<style>
+  .search-field {
+    margin-bottom: 0.3rem; /* Add space between fields */
+  }
+
+  .search-button {
+   background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: 2px solid #007bff; /* Blue border */
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+
+  .search-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    border-color: #0056b3; /* Darker blue border on hover */
+  }
+
+  .search-field label {
+    display: block;
+    margin-bottom: 0.3rem; /* Add space between label and input */
+  }
+
+  .search-field input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+  }
+</style>
