@@ -14,7 +14,7 @@
 <p><strong>Indirizzo di Consegna:</strong> <%= @reservation.indirizzo_consegna %></p>
 
 <!-- Recensioni -->
-<% if @reservation.completata? %>
+<% if @reservation.confermata? %>
   <% if current_user.client? %>
     <% if @reservation.reviews.empty? || @reservation.reviews.length == 1 %>
       <%= form_with(model: [@reservation, @review], url: create_by_client_reservation_reviews_path(@reservation), local: true) do |form| %>
@@ -36,7 +36,7 @@
           <%= form.label :valutazione_chef, "Valutazione per Chef" %>
           <div class="star-rating">
             <% (1..5).each do |i| %>
-              <%= form.radio_button :valutazione_chef, i, id: "valutazione_chef_#{i}", class: "d-none" %>
+              <%= form.radio_button :valutazione_chef, i, id: "valutazione_chef_#{i}" %>
               <label for="valutazione_chef_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
             <% end %>
           </div>
@@ -47,7 +47,7 @@
           <%= form.label :valutazione_menu, "Valutazione per Menu" %>
           <div class="star-rating">
             <% (1..5).each do |i| %>
-              <%= form.radio_button :valutazione_menu, i, id: "valutazione_menu_#{i}", class: "d-none" %>
+              <%= form.radio_button :valutazione_menu, i, id: "valutazione_menu_#{i}" %>
               <label for="valutazione_menu_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
             <% end %>
           </div>
@@ -84,7 +84,7 @@
           <%= form.label :valutazione_cliente, "Valutazione Cliente" %>
           <div class="star-rating">
             <% (1..5).each do |i| %>
-              <%= form.radio_button :valutazione_menu, i, id: "valutazione_cliente_#{i}", class: "d-none" %>
+              <%= form.radio_button :valutazione_cliente, i, id: "valutazione_cliente_#{i}" %>
               <label for="valutazione_cliente_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
             <% end %>
           </div>
@@ -183,6 +183,8 @@
           container.setAttribute("data-rating", selectedValue);
           console.log("Star clicked with value", selectedValue);
           updateStars(container, selectedValue);
+          const radioButton = container.querySelector(`input[type="radio"][value="${selectedValue}"]`);
+          if (radioButton) radioButton.checked = true;
         }
       });
     });
