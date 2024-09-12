@@ -88,7 +88,7 @@
 <p><strong>Disattivato:</strong> <%= @menu.disattivato ? 'Sì' : 'No' %></p>
 
 <% if user_signed_in? && current_user.chef? %>
-  <h3> <%= link_to "Modifica il post", edit_menu_path %> </h3>
+  <h3> <%= link_to "Modifica il menu", edit_menu_path %> </h3>
 <% end %>
 
 <%= link_to "Torna al menu originale", menu_path(@menu) %>

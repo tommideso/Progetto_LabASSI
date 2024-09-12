@@ -2,4 +2,4 @@
 
 <%= render partial: "form", locals: {post: @menu}%>
 
-<%= button_to "Cancella il post", menu_path(@menu), method: :delete, data: {turbo_confirm: "Sei sicuro di eliminare il menu?"}%>
+<%= button_to "Cancella il menu", menu_path(@menu), method: :delete, data: {turbo_confirm: "Sei sicuro di eliminare il menu?"}%>

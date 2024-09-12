@@ -10,14 +10,21 @@ class ProfilesController < ApplicationController
 
     def show
         @user = User.find(params[:id])
-        # solo se l'utente è uno chef voglio vedere i suoi menu
         if @user.admin?
             flash[:alert] = "Non puoi vedere il profilo di un amministratore"
             redirect_to root_path
             return
         end
+        # solo se l'utente è uno chef voglio vedere i suoi menu
         if @user.chef?
             @menus = Menu.where(chef: @user.chef)
+        end
+        # il profilo di un cliente può essere visto solo dall'admin o dal cliente stesso
+        if @user.client?
+            if !current_user.admin? && current_user.id != @user.id
+                redirect_to root_path
+                return
+            end
         end
         @reservations = @user.chef? ? @user.chef.reservations : @user.client.reservations
         reviews = @user.chef? ? @user.chef.reviews : @user.client.reviews
