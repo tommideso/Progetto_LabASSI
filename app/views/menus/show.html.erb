@@ -155,10 +155,15 @@
 
       <%= f.hidden_field :menu_id, value: @menu.id %> 
       <%# Num Persone, TipoPasto, Data, Indirizzo di consegna %>
-      <div>
-        <%= f.label :indirizzo_consegna %>
-        <%= f.text_field :indirizzo_consegna, class: "form-control", value: current_user.client.indirizzo %>
-      </div>
+      <div
+        data-controller="places-autocomplete"
+        data-action="google-maps-callback@window->places-autocomplete#initAutocomplete"
+        data-places-autocomplete-country-value='["it"]'
+      >
+        <%= f.label :indirizzo_consegna %><br />
+        <%= f.text_field :indirizzo_consegna, value: current_user.client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
+      </div>  
+     
       <div>
         <%= f.label :num_persone %>
         <%= f.number_field :num_persone, class: "form-control", min: @menu.min_persone, max: @menu.max_persone, id: "num_persone" %>
