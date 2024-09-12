@@ -1,4 +1,3 @@
-
 <!-- Immagini -->
 <div class="flex gap-1">
   <% if @menu.images.attached? %>
@@ -98,8 +97,8 @@
 <p><strong>Extra:</strong>
   <% if @menu.extra.present? %>
     <ul>
-      <% @menu.extra.each do |extra, presente| %>
-        <li><%= "#{extra.capitalize}: #{presente == 'true' ? 'Sì' : 'No'}" %></li>
+      <% @menu.extra.each do |extra, valore| %>
+        <li><%= "#{extra.capitalize}: #{valore.nil? ? "No" : valore }€ a persona" %></li>
       <% end %>
     </ul>
   <% else %>
@@ -151,8 +150,6 @@
       controller: "flatpickr",
       flatpickr_disabled_dates_value: @disabled_dates.to_json
     }, local: true do |f| %>
-      
-      <%= f.hidden_field :extra, value: @menu.extra %>
       <%= f.hidden_field :menu_id, value: @menu.id %> 
       <%# Num Persone, TipoPasto, Data, Indirizzo di consegna %>
       <div>
@@ -172,7 +169,24 @@
         <%= f.label :data_prenotazione %>
         <%= f.date_field :data_prenotazione, class: "datepicker", min: Date.today, id: "data_prenotazione" %>
       </div>
+      <% if @menu.extra["vino"] > 0 %>
+        <div>
+          <%= f.label :vino, "Vino" %>
+          <%= f.check_box :vino %>
+        </div>
+      <% else %>
+        <%= f.hidden_field :vino, value: false %>
+      <% end %>
 
+      <% if @menu.extra["miseenplace"] > 0 %>
+        <div>
+          <%= f.label :miseenplace, "Mise en place" %>
+          <%= f.check_box :miseenplace %>
+        </div>
+      <% else %>
+
+        <%= f.hidden_field :miseenplace, value: false %>
+      <% end %>
 
       <%# TODO inserire calcolo live del prezzo? %>
       <%= f.submit "Prenota" %>

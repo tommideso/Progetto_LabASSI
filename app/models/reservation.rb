@@ -29,9 +29,6 @@ class Reservation < ApplicationRecord
   after_create :create_menu_version
 
 
-
-
-
   # Recensioni
   has_many :reviews
   validate :max_three_reviews # non più di tre recensioni per prenotazione
@@ -45,13 +42,13 @@ class Reservation < ApplicationRecord
   validates :client_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: [ :cancellata, :rimborsata ]) }, message: "Esiste già una prenotazione per il cliente in questa data" }
   validates :chef_id, uniqueness: { scope: :data_prenotazione, conditions: -> { where.not(stato: [ :cancellata, :rimborsata ]) }, message: "Esiste già una prenotazione per lo chef in questa data" }
 
+  validate :extra_must_be_valid
 
   private
 
   def create_menu_version
     # TODO HO MESSO DEL DEBUGGING CHE PERÒ PUÒ ESSERE TOLTO SE SIAMO SICURI FUNZIONI :)
     Rails.logger.debug "Menu: #{menu.inspect}"
-
     if menu.present?
       Rails.logger.debug "Menu is present. Attempting to create version."
 
@@ -84,6 +81,16 @@ class Reservation < ApplicationRecord
   def max_three_reviews
     if reviews.size > 3
       errors.add(:base, "Ogni prenotazione può avere al massimo tre recensioni")
+    end
+  end
+
+  def extra_must_be_valid
+    if extra.present?
+      extra.each do |key, value|
+        unless Menu::EXTRA.include?(key)
+          errors.add(:extra, "Chiave #{key} non valida")
+        end
+      end
     end
   end
 end

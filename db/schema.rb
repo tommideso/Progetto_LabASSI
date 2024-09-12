@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_12_091754) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_12_112008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -111,6 +111,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_12_091754) do
     t.string "stripe_price_id"
     t.string "stripe_product_id"
     t.string "disattivato_da"
+    t.string "stripe_vino_price_id"
+    t.string "stripe_miseenplace_price_id"
     t.index ["chef_id"], name: "index_menus_on_chef_id"
   end
 

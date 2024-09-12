@@ -5,8 +5,7 @@ class Menu < ApplicationRecord
 
     # per l'attributo booleano definisco il validates usando incluse per evitare problemi se è false
     validates :disattivato, inclusion: { in: [ true, false ] }
-    # per extra e prezzo_extra definisco una validazione con un metodo
-    validate :prezzo_and_extra
+
     validate :max_persone_maggior_di_min_persone
 
 
@@ -15,9 +14,7 @@ class Menu < ApplicationRecord
     belongs_to :chef
     # collegamento verso prenotazione
     has_many :reservations
-    
 
-    #has_rich_text :descrizione
 
     # definiamo uno scope che restituisce i menu disponibili per una certa data, con stato della prenotazione :attesa_pagamento o :confermata
     # Mi basta sapere se c'è una prenotazione per quel giorno per lo chef
@@ -31,7 +28,7 @@ class Menu < ApplicationRecord
     PREFERENZE_ALIMENTARI = [ "vegano", "glutine" ].freeze
     ALLERGENI = [ "glutine", "lattosio", "crostacei", "soia", "arachidi", "noci" ].freeze
     TIPI_CUCINA = [ "mare", "terra", "cinese", "indiano" ].freeze
-    EXTRA = [ "vino", "mise en place" ].freeze
+    EXTRA = [ "vino", "miseenplace" ].freeze
 
     # immagini
     has_many_attached :images
@@ -48,6 +45,10 @@ class Menu < ApplicationRecord
     accepts_nested_attributes_for :dishes, allow_destroy: true
     validate :must_have_at_least_one_dish
 
+    # Definiamo un metodo per verificare che le chiavi dell'hash extra siano presenti nell'array EXTRA
+    validate :validate_extra
+    before_validation :set_default_extra
+
     private
 
     def max_persone_maggior_di_min_persone
@@ -57,15 +58,15 @@ class Menu < ApplicationRecord
         end
     end
 
-    def prezzo_and_extra
-        # se un extra è stato selezionato (quindi ci sta almeno uno con un valore true) e prezzo_extra è vuoto, restituisci errore
-        if extra.values.any? { |value| value == "true" } && prezzo_extra.blank?
-            errors.add(:prezzo_extra, "deve essere presente se selezioni un extra")
-        # se il prezzo è stato inserito ma non ci sta nessun extra (non c'è ne sta nemmeno una true), restituisci errore
-        elsif prezzo_extra.present? && !extra.values.any? { |value| value == "true" }
-            errors.add(:extra, "deve avere almeno una selezione se ci sta un prezzo")
-        end
-    end
+    # def prezzo_and_extra
+    #     # se un extra è stato selezionato (quindi ci sta almeno uno con un valore true) e prezzo_extra è vuoto, restituisci errore
+    #     if extra.values.any? { |value| value == "true" } && prezzo_extra.blank?
+    #         errors.add(:prezzo_extra, "deve essere presente se selezioni un extra")
+    #     # se il prezzo è stato inserito ma non ci sta nessun extra (non c'è ne sta nemmeno una true), restituisci errore
+    #     elsif prezzo_extra.present? && !extra.values.any? { |value| value == "true" }
+    #         errors.add(:extra, "deve avere almeno una selezione se ci sta un prezzo")
+    #     end
+    # end
 
     def self.ransackable_attributes(auth_object = nil)
         [ "allergeni", "preferenze_alimentari", "titolo", "min_persone", "max_persone" ]
@@ -91,5 +92,19 @@ class Menu < ApplicationRecord
         if dishes.empty? || dishes.nil?
             errors.add(:dishes, "Deve essere presente almeno un piatto")
         end
+    end
+
+    def validate_extra
+        if extra.present?
+            extra.each do |key, value|
+                unless key.in?(EXTRA)
+                    errors.add(:extra, "La chiave #{key} non è valida")
+                end
+            end
+        end
+    end
+
+    def set_default_extra
+        self.extra ||= EXTRA_KEYS.map { |key| [ key, 0 ] }.to_h
     end
 end

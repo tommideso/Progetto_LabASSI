@@ -1,3 +1,4 @@
+## Seeds
 require 'open-uri'
 
 # Create a user for the admin
@@ -127,10 +128,9 @@ end
           }
         },
         extra: {
-          "mise en place" => "true",
-          "vino" => Faker::Boolean.boolean
+          "miseenplace" => Faker::Boolean.boolean ? Faker::Number.decimal(l_digits: 2, r_digits: 2) : 0,
+          "vino" => Faker::Boolean.boolean ? Faker::Number.decimal(l_digits: 2, r_digits: 2) : 0
         },
-        prezzo_extra: Faker::Number.decimal(l_digits: 2, r_digits: 2),
         chef: Chef.all.sample,
       )
 
@@ -159,6 +159,21 @@ end
       menu.stripe_price_id = price.id
       puts "Stripe product id: #{menu.stripe_product_id}"
       puts "Stripe price id: #{menu.stripe_price_id}"
+      if menu.extra["vino"].to_f > 0
+        menu.stripe_vino_price_id = Stripe::Price.create({
+        product: "prod_QpoyNULQRqG7ES",
+        unit_amount: (menu.extra["vino"].to_f * 100).to_i,
+        currency: "eur"
+      }).id
+      end
+      if menu.extra["miseenplace"].to_f > 0
+        menu.stripe_miseenplace_price_id = Stripe::Price.create({
+          product: "prod_QpoyYxH4483LdR",
+          unit_amount: (menu.extra["miseenplace"].to_f * 100).to_i,
+          currency: "eur"
+        }).id
+      end
+
 
       # Salva il menu temporaneamente senza validazioni
       menu.save!(validate: false)
@@ -193,19 +208,19 @@ end
   next if menu.nil? || client.nil? # Se non ci sono menu o clienti disponibili, salto la creazione della prenotazione
 
   puts "Menu: #{menu.titolo}, Client: #{client.user.email}"
-
+  num_persone = Faker::Number.between(from: menu.min_persone, to: menu.max_persone)
   # Creo la prenotazione
   reservation = Reservation.find_or_initialize_by(
     menu: menu,
     client: client,
     data_prenotazione: data_prenotazione,
     chef: menu.chef,
-    num_persone: Faker::Number.between(from: menu.min_persone, to: menu.max_persone),
+    num_persone: num_persone,
     tipo_pasto: Reservation.tipo_pastos.keys.sample,
     indirizzo_consegna: client.indirizzo,
     extra: {
-      "mise en place" => Faker::Boolean.boolean,
-      "vino" => Faker::Boolean.boolean
+      "miseenplace" => menu.extra["miseenplace"] > 0 ? Faker::Boolean.boolean : false,
+      "vino" => menu.extra["vino"] > 0 ? Faker::Boolean.boolean : false
     },
     stato: Reservation.statos.keys.sample,
     stripe_payment_intent_id: Faker::Alphanumeric.alphanumeric(number: 20),
