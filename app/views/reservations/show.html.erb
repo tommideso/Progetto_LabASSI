@@ -14,7 +14,7 @@
 <p><strong>Indirizzo di Consegna:</strong> <%= @reservation.indirizzo_consegna %></p>
 
 <!-- Recensioni -->
-<% if @reservation.confermata? %>
+<% if @reservation.completata? %>
   <% if current_user.client? %>
     <% if @reservation.reviews.empty? || @reservation.reviews.length == 1 %>
       <%= form_with(model: [@reservation, @review], url: create_by_client_reservation_reviews_path(@reservation), local: true) do |form| %>
@@ -34,22 +34,24 @@
         <!-- Valutazione per Chef -->
         <div class="field">
           <%= form.label :valutazione_chef, "Valutazione per Chef" %>
-          <div class="star-rating">
+          <div class="star-rating" id="star-rating-chef">
             <% (1..5).each do |i| %>
               <%= form.radio_button :valutazione_chef, i, id: "valutazione_chef_#{i}" %>
               <label for="valutazione_chef_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
             <% end %>
+            <%= form.number_field :valutazione_chef, id: 'valutazione_chef_value', style: 'opacity: 0;', class: "hidden_form", required: true %>
           </div>
         </div>
 
         <!-- Valutazione per Menu -->
         <div class="field">
           <%= form.label :valutazione_menu, "Valutazione per Menu" %>
-          <div class="star-rating">
+          <div class="star-rating" id="star-rating-menu">
             <% (1..5).each do |i| %>
               <%= form.radio_button :valutazione_menu, i, id: "valutazione_menu_#{i}" %>
               <label for="valutazione_menu_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
             <% end %>
+            <%= form.number_field :valutazione_menu, id: 'valutazione_menu_value', style: 'opacity: 0;', class: "hidden_form", required: true %>
           </div>
         </div>
 
@@ -80,13 +82,15 @@
 
         <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
       
+        <!-- Valutazione per Cliente -->
         <div class="field">
           <%= form.label :valutazione_cliente, "Valutazione Cliente" %>
-          <div class="star-rating">
+          <div class="star-rating" id="star-rating-client">
             <% (1..5).each do |i| %>
               <%= form.radio_button :valutazione_cliente, i, id: "valutazione_cliente_#{i}" %>
               <label for="valutazione_cliente_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
             <% end %>
+            <%= form.number_field :valutazione_cliente, id: 'valutazione_cliente_value', style: 'opacity: 0;', class: "hidden_form", required: true %>
           </div>
         </div>
         
@@ -128,6 +132,16 @@
 <%= link_to 'All Reservations', reservations_path, class: 'btn btn-secondary' %>
 
 <style>
+  .hidden_form {
+    width: 0;
+    height: 0;
+    position: absolute;
+    height: 40px;
+    margin-left: 50px;
+    cursor: none;
+    pointer-events: none;
+  }
+
   .star-rating {
     display: inline-flex;
   }
@@ -148,45 +162,49 @@
 </style>
 
 <script>
-  document.addEventListener("turbo:load", function() {
-    console.log("DOM fully loaded and parsed");
+document.addEventListener("turbo:load", function() {
+  console.log("DOM fully loaded and parsed");
 
-    // Funzione per aggiornare il colore delle stelle
-    function updateStars(container, value) {
-      const stars = container.querySelectorAll("label");
-      stars.forEach((star, index) => {
-        star.style.color = index < value ? "#ffc700" : "#ddd"; // Giallo se selezionato, altrimenti grigio
-      });
-    }
+  // Funzione per aggiornare il colore delle stelle
+  function updateStars(container, value) {
+    const stars = container.querySelectorAll("label");
+    stars.forEach((star, index) => {
+      star.style.color = index < value ? "#ffc700" : "#ddd"; // Giallo se selezionato, altrimenti grigio
+    });
+  }
 
-    // Inizializza ogni star-rating
-    document.querySelectorAll(".star-rating").forEach(container => {
-      let selectedValue = parseInt(container.getAttribute("data-rating")) || 0;
+  // Inizializza ogni star-rating
+  document.querySelectorAll(".star-rating").forEach(container => {
+    let selectedValue = parseInt(container.getAttribute("data-rating")) || 0;
+    updateStars(container, selectedValue);
+
+    container.addEventListener("mouseover", function(event) {
+      if (event.target.classList.contains("star")) {
+        const value = parseInt(event.target.getAttribute("data-value"));
+        console.log("Mouse over star with value", value);
+        updateStars(container, value);
+      }
+    });
+
+    container.addEventListener("mouseout", function() {
+      console.log("Mouse out of star rating");
       updateStars(container, selectedValue);
+    });
 
-      container.addEventListener("mouseover", function(event) {
-        if (event.target.classList.contains("star")) {
-          const value = parseInt(event.target.getAttribute("data-value"));
-          console.log("Mouse over star with value", value);
-          updateStars(container, value);
-        }
-      });
-
-      container.addEventListener("mouseout", function() {
-        console.log("Mouse out of star rating");
+    container.addEventListener("click", function(event) {
+      if (event.target.classList.contains("star")) {
+        selectedValue = parseInt(event.target.getAttribute("data-value"));
+        container.setAttribute("data-rating", selectedValue);
+        console.log("Star clicked with value", selectedValue);
         updateStars(container, selectedValue);
-      });
+        const radioButton = container.querySelector(`input[type="radio"][value="${selectedValue}"]`);
+        if (radioButton) radioButton.checked = true;
 
-      container.addEventListener("click", function(event) {
-        if (event.target.classList.contains("star")) {
-          selectedValue = parseInt(event.target.getAttribute("data-value"));
-          container.setAttribute("data-rating", selectedValue);
-          console.log("Star clicked with value", selectedValue);
-          updateStars(container, selectedValue);
-          const radioButton = container.querySelector(`input[type="radio"][value="${selectedValue}"]`);
-          if (radioButton) radioButton.checked = true;
-        }
-      });
+        // Update the hidden number field to make it required
+        const hiddenField = container.querySelector('input[type="number"]');
+        if (hiddenField) hiddenField.value = selectedValue;
+      }
     });
   });
+});
 </script>
