@@ -161,7 +161,7 @@
         data-places-autocomplete-country-value='["it"]'
       >
         <%= f.label :indirizzo_consegna %><br />
-        <%= f.text_field :indirizzo_consegna, value: current_user.client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
+        <%= f.text_field :indirizzo_consegna, id: "indirizzo_consegna", value: current_user.client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
       </div>  
      
       <div>

@@ -80,9 +80,11 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem 'capybara'
-  gem 'selenium-webdriver', '4.6.0'
-  gem 'webdrivers'
+  gem 'selenium-webdriver', '>= 4.11'
 end
+
+  
+
 
 # Per tradurre devise in italiano
 gem 'devise-i18n'

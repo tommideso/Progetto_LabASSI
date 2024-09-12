@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-#TO DO intanto lo pusho cosi
+
+#TODO intanto lo pusho cosi
 RSpec.feature "Reservation", type: :feature, js: true do
   let(:client) { create(:client) }
   let(:chef) { create(:chef) }
@@ -17,15 +18,24 @@ RSpec.feature "Reservation", type: :feature, js: true do
     # Visita la pagina del menu
     visit menu_path(menu)
 
-    # # Compila i campi di prenotazione
-    # fill_in 'indirizzo_consegna', with: 'Via Esempio 123'
-    # fill_in 'num_persone', with: '4'
-    # select 'Pranzo', from: 'tipo_pasto'
-    # fill_in 'data_prenotazione', with: '2024-10-01'
+   # Compila i campi di prenotazione utilizzando gli attributi `id`
+   fill_in id:"indirizzo_consegna", with: 'Via Esempio 123'
+   fill_in id:"num_persone", with: '4'
+   select 'Pranzo', from: 'reservation_tipo_pasto'
+   fill_in id:"data_prenotazione", with: '2024-10-01'
+   check 'vino' if @menu.extra["vino"] > 0
+   check 'miseenplace' if @menu.extra["miseenplace"] > 0
 
-    # # Clicca sul pulsante per effettuare la prenotazione
-    # click_button 'Prenota'
+   # Clicca sul pulsante per effettuare la prenotazione
+   click_button 'Prenota'
 
+   # Verifica che la prenotazione sia stata creata con successo
+   expect(page).to have_content('Prenotazione creata con successo')
+   expect(page).to have_content('Via Esempio 123')
+   expect(page).to have_content('4')
+   expect(page).to have_content('Pranzo')
+   expect(page).to have_content('2024-10-01')
+     
     # # Verifica che la pagina di conferma della prenotazione sia visualizzata
     # expect(page).to have_current_path(reservation_path(Reservation.last))
     # expect(page).to have_content('Prenotazione creata con successo')
