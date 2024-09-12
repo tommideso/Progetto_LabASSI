@@ -21,6 +21,12 @@
       <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent">
         <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent">Completate</a>
       </div>
+      <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent" id="all">
+        <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent">Tutte</a>
+      </div>
+      <div>
+        <input data-action="click->tabs#change" data-id="all" type="text" id="reservationSearch" placeholder="Cerca prenotazione..." class="input">
+      </div>
     </div>
 
     <div class="hidden" data-tabs-target="panel" data-id="next">
@@ -39,9 +45,16 @@
       </div>
 
     </div>
-    <div class="hidden" data-tabs-target="panel" data-id="all">
+    <div class="hidden" data-tabs-target="panel" data-id="compl">
       <div class="flex flex-col gap-4">
         <% @completed_reservations.each do |reservation| %>
+          <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
+        <% end %>
+      </div>
+    </div>
+    <div class="hidden" data-tabs-target="panel" data-id="all">
+      <div class="flex flex-col gap-4" id="reservation-list">
+        <% @reservations.each do |reservation| %>
           <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
         <% end %>
       </div>
@@ -49,6 +62,26 @@
   </div>
 <% end %>
 
+
+
+<script>
+  document.getElementById('reservationSearch').addEventListener('input', function() {
+    var searchValue = this.value.toLowerCase();
+    var reservationCards = document.getElementById('reservation-list').children;
+
+    for (var i = 0; i < reservationCards.length; i++) {
+      var resCard = reservationCards[i];
+      var resText = resCard.textContent.toLowerCase();
+
+      if (resText.includes(searchValue)) {
+        resCard.classList.remove('hidden');
+      } else {
+        resCard.classList.add('hidden');
+      }
+    }
+  });
+  
+</script>
 
 
 

@@ -166,12 +166,12 @@
      
       <div>
         <%= f.label :num_persone %>
-        <%= f.number_field :num_persone, class: "form-control", min: @menu.min_persone, max: @menu.max_persone, id: "num_persone" %>
+        <%= f.number_field :num_persone, class: "", min: @menu.min_persone, max: @menu.max_persone, id: "num_persone" %>
       </div>
       <div>
         <%= f.label :tipo_pasto %>
         <%# Prendo i valori del campo tipo_pasto dalla classe Reservation e li mappo in un array di coppie chiave-valore, dove la chiave è il valore del campo e il valore è il campo con la prima lettera maiuscola %>
-        <%= f.select :tipo_pasto, Reservation.tipo_pastos.keys.map { |tipo_pasto| [tipo_pasto.humanize, tipo_pasto] }, class: "form-control" %>
+        <%= f.select :tipo_pasto, Reservation.tipo_pastos.keys.map { |tipo_pasto| [tipo_pasto.humanize, tipo_pasto] } %>
       </div>
       <div>
         <%= f.label :data_prenotazione %>

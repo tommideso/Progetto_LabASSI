@@ -98,11 +98,11 @@ button {
 
 /* TABS */
 .tabs .tabs-tabs {
-    @apply flex gap-1 my-4;
+    @apply flex gap-1 my-4 items-center;
 }
 .tabs .tab {
-    @apply data-[active=true]:bg-accent;
     @apply btn btn-outline cursor-pointer;
+    @apply data-[active=true]:bg-accent data-[active=true]:border-primary;
 }
 .tabs .tab a {
     @apply text-base;
@@ -111,4 +111,9 @@ button {
 /* Card */
 .card {
     @apply rounded-lg border bg-card text-card-foreground shadow-sm p-6;
+}
+
+/* Form */
+.input {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50;
 }

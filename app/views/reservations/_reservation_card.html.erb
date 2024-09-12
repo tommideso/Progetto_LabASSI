@@ -9,7 +9,7 @@
                 <%# Nome menu, data + tipo_pasto, nome cliente, n.persone %>
                 <%# Se sono loggato come client vedo chef altrimenti vedo client %>
                 <h3> <%= reservation.menu.titolo %> </h3>
-                <p> <%= reservation.tipo_pasto.humanize %> il <%= reservation.data_prenotazione.strftime("%d %B %Y") %> </p>
+                <p> <%= reservation.tipo_pasto.humanize %>, il <%= reservation.data_prenotazione.strftime("%d %B %Y") %> </p>
                 <% if current_user.client? %>
                     <p> Chef: <%= reservation.chef.user.nome %> <%= reservation.chef.user.cognome %> </p>
                 <% else %>

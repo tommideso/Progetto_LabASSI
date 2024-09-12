@@ -9,10 +9,15 @@
       <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent"
       >Clienti</a>
     </div>
-    <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent">
+    <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent" id="all">
       <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent">Tutti</a>
     </div>
+    <div>
+      <input data-action="click->tabs#change" data-id="all" type="text" id="userSearch" placeholder="Cerca utenti..." class="input">
+    </div>
+  
   </div>
+
 
   <div class="hidden" data-tabs-target="panel" data-id="chef">
     <% if @chefs.any? %>
@@ -36,10 +41,6 @@
 
   </div>
   <div class="hidden" data-tabs-target="panel" data-id="all">
-    <div class="mb-4">
-      <%= label_tag :user_search, "Cerca Utenti per ID:" %>
-      <%= text_field_tag :user_search, nil, class: "border rounded p-2", onkeyup: "filterProfilesById('user_search', 'user_profiles')" %>
-    </div>
     <% if @users.any? %>
       <div class="grid grid-cols-3 gap-4" id="user_profiles">
         <% @users.each do |user| %>
@@ -50,22 +51,23 @@
   </div>
 
 </div>
-<script>
-  function filterProfilesById(searchInputId, profilesContainerId) {
-    var input, filter, container, cards, card, i, userId;
-    input = document.getElementById(searchInputId);
-    filter = input.value.toUpperCase();
-    container = document.getElementById(profilesContainerId);
-    cards = container.getElementsByClassName('profile-card');
 
-    for (i = 0; i < cards.length; i++) {
-      card = cards[i];
-      userId = card.getAttribute('data-user-id');
-      if (userId.toUpperCase().indexOf(filter) > -1) {
-        card.style.display = "";
+
+<script>
+
+  document.getElementById('userSearch').addEventListener('input', function() {
+    var searchValue = this.value.toLowerCase();
+    var userProfiles = document.getElementById('user_profiles').children;
+
+    for (var i = 0; i < userProfiles.length; i++) {
+      var userProfile = userProfiles[i];
+      var userName = userProfile.textContent.toLowerCase();
+
+      if (userName.includes(searchValue)) {
+        userProfile.classList.remove('hidden');
       } else {
-        card.style.display = "none";
+        userProfile.classList.add('hidden');
       }
     }
-  }
+  });
 </script>

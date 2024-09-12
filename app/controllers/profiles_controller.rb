@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+    before_action :authenticate_user!, only: [ :block, :unblock, :index ]
     before_action :check_if_admin, only: [ :block, :unblock, :index ]
 
     # Ho già controllo se l'utente è admin
