@@ -6,7 +6,17 @@ FactoryBot.define do
       ruolo { ['chef', 'client'].sample }      
       password { "password" }                   
       confirmed_at { Time.now }                 
-      completed { 1 }                           
+      completed { 1 }
+      
+        # Factory per l'admin
+      factory :admin do
+        email { "admin@admin.it" }  # Specifica l'email dell'admin
+        nome { "Admin" }
+        cognome { "Admin" }
+        ruolo { "admin" }  # Ruolo impostato a 'admin'
+        password { "admin@admin.it" }
+        completed { 2 }  # Il valore completato specificato per l'admin
+      end
     end
   end
   
