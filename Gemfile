@@ -77,14 +77,15 @@ gem "pay", "~> 7.3"
 group :development, :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "rspec-rails", "~> 7.0.0"
-  gem 'rails-controller-testing'
-  gem 'factory_bot_rails'
-  gem 'capybara'
-  gem 'selenium-webdriver', '4.6.0'
-  gem 'webdrivers'
+  gem "rails-controller-testing"
+  gem "factory_bot_rails"
+  gem "capybara"
+  gem "selenium-webdriver", "4.6.0"
+  gem "webdrivers"
 end
 
 # Per tradurre devise in italiano
-gem 'devise-i18n'
+gem "devise-i18n"
 
 
+gem "rails-i18n"

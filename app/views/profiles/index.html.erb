@@ -36,8 +36,12 @@
 
   </div>
   <div class="hidden" data-tabs-target="panel" data-id="all">
+    <div class="mb-4">
+      <%= label_tag :user_search, "Cerca Utenti per ID:" %>
+      <%= text_field_tag :user_search, nil, class: "border rounded p-2", onkeyup: "filterProfilesById('user_search', 'user_profiles')" %>
+    </div>
     <% if @users.any? %>
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-3 gap-4" id="user_profiles">
         <% @users.each do |user| %>
           <%= render partial: "profile_card", locals: { user: user } %>
         <% end %>
@@ -46,3 +50,22 @@
   </div>
 
 </div>
+<script>
+  function filterProfilesById(searchInputId, profilesContainerId) {
+    var input, filter, container, cards, card, i, userId;
+    input = document.getElementById(searchInputId);
+    filter = input.value.toUpperCase();
+    container = document.getElementById(profilesContainerId);
+    cards = container.getElementsByClassName('profile-card');
+
+    for (i = 0; i < cards.length; i++) {
+      card = cards[i];
+      userId = card.getAttribute('data-user-id');
+      if (userId.toUpperCase().indexOf(filter) > -1) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    }
+  }
+</script>
