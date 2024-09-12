@@ -24,16 +24,17 @@
 <p><strong>Descrizione:</strong> <%= raw @menu.descrizione %></p>
 
 <h2>Piatti</h2>
+
 <% if @menu.dishes.any? %>
-  <ul>
-    <% @menu.dishes.sort_by { |piatto| ['Antipasto', 'Primo', 'Secondo', 'Dolce'].index(piatto.tipo_portata) }.each do |piatto| %>
-      <li>
-        <p><strong>Nome:</strong> <%= piatto.nome %></p>
-        <p><strong>Ingredienti:</strong> <%= piatto.ingredienti %></p>
-        <p><strong>Tipo portata:</strong> <%= piatto.tipo_portata %></p>
-      </li>
-    <% end %>
-  </ul>
+  <div class="flex flex-col gap-4">
+      <% @menu.dishes.sort_by { |piatto| ['Antipasto', 'Primo', 'Secondo', 'Dolce'].index(piatto.tipo_portata) }.each do |piatto| %>
+        <div>
+          <p><strong>Nome:</strong> <%= piatto.nome %></p>
+          <p><strong>Ingredienti:</strong> <%= piatto.ingredienti %></p>
+          <p><strong>Tipo portata:</strong> <%= piatto.tipo_portata %></p>
+        </div>
+      <% end %>
+  </div>
 <% else %>
   <p>Non ci sono piatti associati a questo menu.</p>
 <% end %>
