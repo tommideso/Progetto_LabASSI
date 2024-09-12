@@ -1,8 +1,8 @@
 <h1>Reservation Details</h1>
 
-<p><strong>User:</strong> <%= link_to @reservation.client.user.email, profile_path(@reservation.client.user) %></p>
-<p><strong>Chef:</strong> <%= link_to @reservation.chef.user.email, profile_path(@reservation.chef.user) %></p>
-<p><strong>Menu:</strong> <%= link_to @reservation.menu.titolo, menu_path(@reservation.menu) %></p>
+<p><strong>User:</strong> <%= link_to @reservation.client.user.email, profile_path(@reservation.client.user) , style: "color: blue;"%></p>
+<p><strong>Chef:</strong> <%= link_to @reservation.chef.user.email, profile_path(@reservation.chef.user), style: "color: blue;" %></p>
+<p><strong>Menu:</strong> <%= link_to @reservation.menu.titolo, menu_path(@reservation.menu), style: "color: blue;" %></p>
 <p><strong>Data Prenotazione:</strong> <%= @reservation.data_prenotazione %></p>
 <p><strong>Stato:</strong> <%= @reservation.stato %></p>
 <p><strong>Prezzo:</strong> <%= number_to_currency(@reservation.prezzo, unit: "€") %></p>
@@ -16,7 +16,7 @@
 
 
 <!-- Recensioni -->
-<% if @reservation.completata? %>
+<% if @reservation.confermata? %> <!-- da cambiare-->
   <% if current_user.client? %>
     <% if @reservation.reviews.empty? || @reservation.reviews.length == 1 %>
       <%= form_with(model: [@reservation, @review], url: create_by_client_reservation_reviews_path(@reservation), local: true) do |form| %>
