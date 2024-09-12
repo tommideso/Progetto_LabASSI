@@ -5,9 +5,50 @@
   <% if current_user.admin? %>
     <h2>Tutte le prenotazioni</h2>
   <% else %>
-  <h2>Le tue prenotazioni</h2>
+    <h2>Prenotazioni</h2>
   <% end %>
-  <% @reservations.each do |reservation| %>
-    <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
-  <% end %>
+  
+  <div data-controller="tabs" data-tabs-active-tab-class="-mb-px" class="tabs">
+    <div class="tabs-tabs">
+      <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent" id="next">
+        <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent"
+        >Le tue prossime prenotazioni</a>
+      </div>
+      <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent" id="canc">
+        <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent"
+        >Cancellate</a>
+      </div>
+      <div class="tab" data-tabs-target="tab" data-action="click->tabs#change:prevent">
+        <a data-action="keydown.left->tabs#previousTab keydown.right->tabs#nextTab keydown.home->tabs#firstTab:prevent keydown.end->tabs#lastTab:prevent">Completate</a>
+      </div>
+    </div>
+
+    <div class="hidden" data-tabs-target="panel" data-id="next">
+      <div class="flex flex-col gap-4">
+        <% @next_reservations.each do |reservation| %>
+          <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
+        <% end %>
+      </div>
+
+    </div>
+    <div class="hidden" data-tabs-target="panel" data-id="canc">
+      <div class="flex flex-col gap-4">
+        <% @cancelled_reservations.each do |reservation| %>
+          <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
+        <% end %>
+      </div>
+
+    </div>
+    <div class="hidden" data-tabs-target="panel" data-id="all">
+      <div class="flex flex-col gap-4">
+        <% @completed_reservations.each do |reservation| %>
+          <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end %>
+
+
+
+

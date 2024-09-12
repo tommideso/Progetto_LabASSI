@@ -15,7 +15,7 @@ module App
     config.i18n.default_locale = :it
 
     # Abilita il fallback alle traduzioni inglesi quando quelle italiane non sono disponibili
-    config.i18n.fallbacks = { 'it' => 'en' }
+    config.i18n.fallbacks = { "it" => "en" }
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -30,5 +30,8 @@ module App
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.rails_i18n.enabled_modules = [ :locale, :ordinals, :pluralization, :transliteration ]
+    config.i18n.available_locales = [ :it ]
   end
 end
