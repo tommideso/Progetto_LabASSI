@@ -20,7 +20,6 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.find(params[:id])
     @review = Review.new
     @version_menu = @reservation.menu.versions.find(@reservation.menu_version_id).reify
-    puts "RESERVATION: #{@reservation.data_prenotazione}, #{Date.today}, #{@reservation.data_prenotazione > Date.today}"
     if @reservation.data_prenotazione < Date.today && @reservation.confermata?
       @reservation.stato = :completata
     elsif @reservation.data_prenotazione < Date.today && @reservation.attesa_pagamento?
@@ -30,18 +29,25 @@ class ReservationsController < ApplicationController
       if @reservation.attesa_pagamento?
         current_user.client.set_payment_processor :stripe
         current_user.client.payment_processor.customer
+        line_items = [ {
+          price: @version_menu.stripe_price_id,
+          quantity: @reservation.num_persone
+        } ]
+        if @reservation.extra["miseenplace"] && @version_menu.stripe_miseenplace_price_id.present?
+          line_items << {
+            price: @version_menu.stripe_miseenplace_price_id,
+            quantity: @reservation.num_persone
+          }
+        end
+        if @reservation.extra["vino"] && @version_menu.stripe_vino_price_id.present?
+          line_items << {
+            price: @version_menu.stripe_vino_price_id,
+            quantity: @reservation.num_persone
+          }
+        end
         @checkout_session = current_user.client.payment_processor.checkout(
             mode: "payment",
-            line_items: [ {
-              price: @version_menu.stripe_price_id,
-              quantity: @reservation.num_persone
-            }
-              # {
-              #   price: menu.stripe_price_id,
-              #   quantity: 1
-              # }
-              # TODO aggiungere extra
-            ],
+            line_items: line_items,
             metadata: {
               reservation_id: @reservation.id
             },
@@ -60,7 +66,13 @@ class ReservationsController < ApplicationController
       update_params = reservation_params.dup
       update_params[:client_id] = current_user.client.id
       update_params[:chef_id] = menu.chef.id
-
+      update_params[:extra] = {
+        "miseenplace" => reservation_params[:miseenplace],
+        "vino" => reservation_params[:vino]
+      }
+      # Delete vino and miseenplace from update_params
+      update_params.delete(:vino)
+      update_params.delete(:miseenplace)
       PaperTrail.request(enabled: true) do
         @reservation = Reservation.new(update_params)
         # TODO aggiungere anche extra
@@ -136,7 +148,7 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:num_persone, :tipo_pasto, :extra, :menu_id, :data_prenotazione, :indirizzo_consegna)
+    params.require(:reservation).permit(:num_persone, :tipo_pasto, :vino, :menu_id, :data_prenotazione, :indirizzo_consegna, :miseenplace)
   end
 
   def refund_payment(reservation)

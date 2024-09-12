@@ -40,11 +40,10 @@ FactoryBot.define do
       }
       extra {
         {
-          "mise en place" => "true",
-          "vino" => Faker::Boolean.boolean
+          "miseenplace" => Faker::Boolean.boolean ? Faker::Number.decimal(l_digits: 2, r_digits: 2) : 0,
+          "vino" => Faker::Boolean.boolean ? Faker::Number.decimal(l_digits: 2, r_digits: 2) : 0
         }
       }
-      prezzo_extra { Faker::Number.decimal(l_digits: 2, r_digits: 2) }
       disattivato { Faker::Boolean.boolean }
       association :chef
 

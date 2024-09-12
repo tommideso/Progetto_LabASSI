@@ -50,12 +50,6 @@ group :development do
   gem "web-console"
 end
 
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
-end
-
 gem "tailwindcss-rails", "~> 2.7"
 
 gem "foreman", "~> 0.88.1"
@@ -81,11 +75,16 @@ gem "stripe", "~> 12.5"
 gem "pay", "~> 7.3"
 
 group :development, :test do
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "rspec-rails", "~> 7.0.0"
+  gem 'rails-controller-testing'
+  gem 'factory_bot_rails'
+  gem 'capybara'
+  gem 'selenium-webdriver', '4.6.0'
+  gem 'webdrivers'
 end
-
-gem "factory_bot_rails", group: [ :development, :test ]
 
 # Per tradurre devise in italiano
 gem 'devise-i18n'
+
 

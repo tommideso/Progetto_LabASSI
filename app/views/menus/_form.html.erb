@@ -101,20 +101,14 @@
         </div>
     </div>
 
-    <div>
-        <%= form.label :extra, 'Seleziona gli extra:' %><br>
-        <% Menu::EXTRA.each do |extra| %>
-        <div>
-            <%= hidden_field_tag "menu[extra][#{extra}]", "false" %>
-            <%= check_box_tag "menu[extra][#{extra}]", "true", @menu.extra&.dig(extra) == "true" %>
-            <%= label_tag "menu_extra_#{extra}", extra.capitalize %>
-        </div>
-        <% end %>
+    <div class="field">
+        <%= form.label :misenplace, "Mise en place (prezzo a persona)" %>
+        <%= form.number_field :extra_misenplace, step: '0.01', value: @menu.extra ? @menu.extra['miseenplace'].to_f : 0, min: 0 %>
     </div>
-    
-    <div>
-        <%= form.label :prezzo_extra %>
-        <%= form.number_field :prezzo_extra, step: '0.01' %>
+
+    <div class="field">
+        <%= form.label :vino, "Vino (prezzo a persona)" %>
+        <%= form.text_field :extra_vino, step: '0.01', value: @menu.extra ? @menu.extra['vino'].to_f : 0, min: 0 %>
     </div>
 
     <!-- Upload delle immagini -->

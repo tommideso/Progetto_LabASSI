@@ -9,6 +9,24 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # return unless Rails.env.test?
 require 'rspec/rails'
 require 'devise'
+require 'capybara/rails'
+require 'capybara/rspec'
+require 'webdrivers'
+
+Capybara.javascript_driver = :selenium_chrome_headless
+# Capybara.javascript_driver = :selenium_chrome
+# Webdrivers::Chromedriver.required_version = '128.0.6613.138' # Sostituisci con la versione corretta 1
+
+# Include Devise test helpers
+RSpec.configure do |config|
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+  # config.before(:each, type: :system) do
+  #   driven_by :selenium, using: :chrome, screen_size: [1920, 1080]
+  # end
+end
+
+
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

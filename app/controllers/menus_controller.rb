@@ -42,8 +42,8 @@ class MenusController < ApplicationController
             if current_user.client?
               # Controllo se il menù è già tra i preferiti dell'utente
               @favorite_exists = Favorite.where(menu: @menu, client: current_user.client) == []? false : true
-              disabled_dates_client = current_user.client.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
-              disabled_dates_chef = @menu.chef.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
+              disabled_dates_client = current_user.client.reservations.where(stato: [ :confermata, :attesa_pagamento, :completata ]).pluck(:data_prenotazione)
+              disabled_dates_chef = @menu.chef.reservations.where(stato: [ :confermata, :attesa_pagamento, :completata ]).pluck(:data_prenotazione)
               @disabled_dates = (disabled_dates_client + disabled_dates_chef).map { |date| date.strftime("%Y-%m-%d") }
 
             end
@@ -113,6 +113,23 @@ class MenusController < ApplicationController
             })
             @menu.stripe_product_id = product.id
             @menu.stripe_price_id = price.id
+
+            if @menu.extra["vino"].to_f > 0
+                @menu.stripe_vino_price_id = Stripe::Price.create({
+                    product: "prod_QpoyNULQRqG7ES",
+                    unit_amount: (@menu.extra["vino"].to_f * 100).to_i,
+                    currency: "eur"
+                }).id
+            end
+            if @menu.extra["miseenplace"].to_f > 0
+                @menu.stripe_miseenplace_price_id = Stripe::Price.create({
+                    product: "prod_QpoyNULQRqG7ES",
+                    unit_amount: (@menu.extra["miseenplace"].to_f * 100).to_i,
+                    currency: "eur"
+                }).id
+            end
+
+
         rescue Stripe::StripeError => e
             @menu.errors.add(:base, "Errore durante la creazione del prodotto o del prezzo (Stripe): #{e.message}")
         end
@@ -176,7 +193,12 @@ class MenusController < ApplicationController
             :titolo, :descrizione, :prezzo_persona, :min_persone, :max_persone, :tipo_cucina, :prezzo_extra,
             allergeni: {}, preferenze_alimentari: {}, adattabile: [ preferenze: {}, allergeni: {} ], extra: {},
             images: [], dishes_attributes: [ :id, :nome, :tipo_portata, :ingredienti, :_destroy ]
-          )
+          ).tap do |whitelisted|
+            whitelisted[:extra] = {
+                miseenplace: params[:menu][:extra_misenplace],
+                vino: params[:menu][:extra_vino]
+            }
+          end
     end
 
     def check_permission
