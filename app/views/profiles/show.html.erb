@@ -13,7 +13,7 @@
 <div>
     <%= render partial: "avatar", locals: {user: @user} %>
     <h2> Profilo di <%= @user.nome %> </h2>
-    <p><strong>Media valutazioni:</strong> <%= @reviews_average ? @reviews_average.round(2) : "Non ci sono ancora recensioni" %></p>
+    <p><strong>Media valutazioni:</strong> <%= @reviews_average ? @reviews_average : "Non ci sono ancora recensioni" %></p>
 
     <% if @user.client? %>
         <div>
