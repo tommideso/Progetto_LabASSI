@@ -24,16 +24,17 @@
 <p><strong>Descrizione:</strong> <%= raw @menu.descrizione %></p>
 
 <h2>Piatti</h2>
+
 <% if @menu.dishes.any? %>
-  <ul>
-    <% @menu.dishes.sort_by { |piatto| ['Antipasto', 'Primo', 'Secondo', 'Dolce'].index(piatto.tipo_portata) }.each do |piatto| %>
-      <li>
-        <p><strong>Nome:</strong> <%= piatto.nome %></p>
-        <p><strong>Ingredienti:</strong> <%= piatto.ingredienti %></p>
-        <p><strong>Tipo portata:</strong> <%= piatto.tipo_portata %></p>
-      </li>
-    <% end %>
-  </ul>
+  <div class="flex flex-col gap-4">
+      <% @menu.dishes.sort_by { |piatto| ['Antipasto', 'Primo', 'Secondo', 'Dolce'].index(piatto.tipo_portata) }.each do |piatto| %>
+        <div>
+          <p><strong>Nome:</strong> <%= piatto.nome %></p>
+          <p><strong>Ingredienti:</strong> <%= piatto.ingredienti %></p>
+          <p><strong>Tipo portata:</strong> <%= piatto.tipo_portata %></p>
+        </div>
+      <% end %>
+  </div>
 <% else %>
   <p>Non ci sono piatti associati a questo menu.</p>
 <% end %>
@@ -150,15 +151,22 @@
       controller: "flatpickr",
       flatpickr_disabled_dates_value: @disabled_dates.to_json
     }, local: true do |f| %>
+      
+
       <%= f.hidden_field :menu_id, value: @menu.id %> 
       <%# Num Persone, TipoPasto, Data, Indirizzo di consegna %>
-      <div>
-        <%= f.label :indirizzo_consegna %>
-        <%= f.text_field :indirizzo_consegna, class: "form-control", value: current_user.client.indirizzo %>
-      </div>
+      <div
+        data-controller="places-autocomplete"
+        data-action="google-maps-callback@window->places-autocomplete#initAutocomplete"
+        data-places-autocomplete-country-value='["it"]'
+      >
+        <%= f.label :indirizzo_consegna %><br />
+        <%= f.text_field :indirizzo_consegna, value: current_user.client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
+      </div>  
+     
       <div>
         <%= f.label :num_persone %>
-        <%= f.number_field :num_persone, class: "form-control", min: @menu.min_persone, max: @menu.max_persone %>
+        <%= f.number_field :num_persone, class: "form-control", min: @menu.min_persone, max: @menu.max_persone, id: "num_persone" %>
       </div>
       <div>
         <%= f.label :tipo_pasto %>
@@ -172,7 +180,8 @@
       <% if @menu.extra["vino"] > 0 %>
         <div>
           <%= f.label :vino, "Vino" %>
-          <%= f.check_box :vino %>
+          <%= f.hidden_field :vino, value: false %>
+          <%= f.check_box :vino, {id: "vino"}, true, false %>
         </div>
       <% else %>
         <%= f.hidden_field :vino, value: false %>
@@ -181,13 +190,16 @@
       <% if @menu.extra["miseenplace"] > 0 %>
         <div>
           <%= f.label :miseenplace, "Mise en place" %>
-          <%= f.check_box :miseenplace %>
+          <%= f.hidden_field :miseenplace, value: false %>
+          <%= f.check_box :miseenplace, {id: "miseenplace"}, true, false %>
         </div>
       <% else %>
 
         <%= f.hidden_field :miseenplace, value: false %>
       <% end %>
-
+      <div>
+        <p> Prezzo totale: <span id="prezzo_totale"></span> </p>
+      </div>
       <%# TODO inserire calcolo live del prezzo? %>
       <%= f.submit "Prenota" %>
     <% end %>
@@ -201,7 +213,7 @@
     <div class="border border-gray-200 p-4 rounded-lg mb-4">
       <p><strong>Valutazione:</strong> <%= review.valutazione %></p>
       <p><strong>Commento:</strong> <%= review.commento %></p>
-      <p><strong>Scritta da:</strong> <%= link_to review.reservation.client.user.nome, profile_path(review.reservation.client.user) %></p>
+      <p><strong>Scritta da:</strong> <%= review.reservation.client.user.nome %></p>
       <%# Se admin  %>
       <% if user_signed_in? && current_user.admin? %>
         <p><strong>Prenotazione numero:</strong> <%= link_to review.reservation.id, reservation_path(review.reservation) %></p>
@@ -209,3 +221,39 @@
     </div>
   <% end %>
 <% end %>
+
+<script>
+document.addEventListener("turbo:load", function() {
+  const numPersoneInput = document.getElementById("num_persone");
+  const vinoCheckbox = document.getElementById("vino");
+  const miseenplaceCheckbox = document.getElementById("miseenplace");
+  const prezzoTotaleInput = document.getElementById("prezzo_totale");
+
+  const prezzoMenuPerPersona = <%= @menu.prezzo_persona %>;
+  const prezzoVino = <%= @menu.extra["vino"] || 0 %>;
+  const prezzoMiseenplace = <%= @menu.extra["miseenplace"] || 0 %>;
+  function calcolaPrezzoTotale() {
+    const numPersone = parseInt(numPersoneInput.value) || 0;
+    const includeVino = vinoCheckbox ? vinoCheckbox.checked : false;
+    const includeMiseenplace = miseenplaceCheckbox ? miseenplaceCheckbox.checked : false;
+
+    let prezzoTotale = numPersone * prezzoMenuPerPersona;
+    if (includeVino) {
+      prezzoTotale += numPersone * prezzoVino;
+    }
+    if (includeMiseenplace) {
+      prezzoTotale += numPersone * prezzoMiseenplace;
+    }
+
+    prezzoTotaleInput.textContent = prezzoTotale.toFixed(2) + "€";
+  }
+
+  numPersoneInput.addEventListener("input", calcolaPrezzoTotale);
+  vinoCheckbox.addEventListener("change", calcolaPrezzoTotale);
+  miseenplaceCheckbox.addEventListener("change", calcolaPrezzoTotale);
+
+  // Calcola il prezzo totale iniziale
+  calcolaPrezzoTotale();
+});
+
+</script>

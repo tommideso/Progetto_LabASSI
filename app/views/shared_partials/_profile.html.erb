@@ -24,10 +24,14 @@
 
 <% if @user.ruolo == "chef" %>
   <%= f.fields_for :chef, @chef || Chef.new do |chef_form| %>
-    <div class="field">
-      <%= chef_form.label :indirizzo %><br />
-      <%= chef_form.text_field :indirizzo, value: @chef.persisted? ? (@chef.indirizzo.presence || @chef.reload.indirizzo) : @chef.indirizzo %>
-    </div>
+    <div
+        data-controller="places-autocomplete"
+        data-action="google-maps-callback@window->places-autocomplete#initAutocomplete"
+        data-places-autocomplete-country-value='["it"]'
+      >
+        <%= chef_form.label :indirizzo %><br />
+        <%= chef_form.text_field :indirizzo, value: @chef.persisted? ? (@chef.indirizzo.presence || @chef.reload.indirizzo) : @chef.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
+      </div>  
 
     <div class="field">
       <%= chef_form.label :telefono %><br />
@@ -54,7 +58,7 @@
         data-places-autocomplete-country-value='["it"]'
       >
         <%= client_form.label :indirizzo %><br />
-        <%= client_form.text_field :indirizzo, value: @client.persisted? ? (@client.indirizzo.presence || @client.reload.indirizzo) : @client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Search a location" %>
+        <%= client_form.text_field :indirizzo, value: @client.persisted? ? (@client.indirizzo.presence || @client.reload.indirizzo) : @client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
       </div>  
     </div>
 

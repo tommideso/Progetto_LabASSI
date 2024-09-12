@@ -31,7 +31,8 @@ class ProfilesController < ApplicationController
         puts reviews.map { |r| r.valutazione.to_f }
         # Voglio controllare il tipo delle recensioni e metterlo in un array
         @reviews_average = reviews.map { |r| r.valutazione.to_f }
-        @reviews_average = @reviews_average.sum / @reviews_average.size if @reviews_average.size > 0
+        puts "AAAAAAAAAAAAAAA #{@reviews_average}"
+        @reviews_average = @reviews_average.size > 0 ? (@reviews_average.sum / @reviews_average.size).round(2) : nil
     end
 
     # Ci arrivo da richiesta PUT a /profiles/:id/block

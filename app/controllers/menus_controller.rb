@@ -42,8 +42,8 @@ class MenusController < ApplicationController
             if current_user.client?
               # Controllo se il menù è già tra i preferiti dell'utente
               @favorite_exists = Favorite.where(menu: @menu, client: current_user.client) == []? false : true
-              disabled_dates_client = current_user.client.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
-              disabled_dates_chef = @menu.chef.reservations.where(stato: [ :confermata, :attesa_pagamento ]).pluck(:data_prenotazione)
+              disabled_dates_client = current_user.client.reservations.where(stato: [ :confermata, :attesa_pagamento, :completata ]).pluck(:data_prenotazione)
+              disabled_dates_chef = @menu.chef.reservations.where(stato: [ :confermata, :attesa_pagamento, :completata ]).pluck(:data_prenotazione)
               @disabled_dates = (disabled_dates_client + disabled_dates_chef).map { |date| date.strftime("%Y-%m-%d") }
 
             end
