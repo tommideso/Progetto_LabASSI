@@ -84,7 +84,7 @@
           <%= form.label :valutazione_cliente, "Valutazione Cliente" %>
           <div class="star-rating">
             <% (1..5).each do |i| %>
-              <%= form.radio_button :valutazione_menu, i, id: "valutazione_cliente_#{i}", class: "d-none" %>
+              <%= form.radio_button :valutazione_cliente, i, id: "valutazione_cliente_#{i}", class: "d-none" %>
               <label for="valutazione_cliente_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
             <% end %>
           </div>
