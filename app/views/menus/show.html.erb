@@ -213,7 +213,16 @@
       <% if @menu_reviews && @menu_reviews.any? %>
         <% @menu_reviews.each do |review| %>
           <div class="border border-gray-200 p-4 rounded-lg mb-4">
-            <p><strong>Valutazione:</strong> <%= review.valutazione %></p>
+            <div class="star-rating">
+              <p><strong>Valutazione:</strong> </p>
+                <% (1..5).each do |i| %>
+                  <% if (i<= review.valutazione)%>
+                    <label class="star selected" > &#9733;</label>
+                  <% else %>
+                    <label class="star" > &#9733;</label>
+                  <%end%>
+                <% end %>
+            </div>
             <p><strong>Commento:</strong> <%= review.commento %></p>
             <p><strong>Scritta da:</strong> <%= review.reservation.client.user.nome %></p>
             <%# Se admin  %>
@@ -297,6 +306,25 @@
 </div>
 
 
+<style>
+
+  .star-rating {
+      display: inline-flex;
+  }
+
+  .star.selected {
+    color: #f8d64e;
+  }
+
+  .star-rating p{
+    margin-top: 8px;
+  }
+
+    .star-rating label {
+      font-size: 2rem;
+      color: #ddd; /* Colore grigio iniziale */
+    }
+  </style>
 
 
 
