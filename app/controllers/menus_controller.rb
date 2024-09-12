@@ -50,8 +50,7 @@ class MenusController < ApplicationController
         end
 
         # Recensioni
-        @menu_reviews = @menu.reviews
-        @chef_valutation = (@menu.chef.reviews.map { |r| r.valutazione }.sum / @menu.chef.reviews.count.to_f).round(1)
+        @menu_reviews = @menu.reservations.map { |r| r.reviews }.flatten.select { |r| r.tipo_recensione_type == "Menu" }
     end
 
     def new
