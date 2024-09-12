@@ -8,8 +8,8 @@ class CreateActionTextTables < ActiveRecord::Migration[6.0]
         t.bigint :record_id, null: false
         t.bigint :blob_id, null: false
         t.datetime :created_at, null: false
-        t.index [:blob_id], name: "index_active_storage_attachments_on_blob_id"
-        t.index [:record_type, :record_id, :name, :blob_id], name: "index_active_storage_attachments_uniqueness", unique: true
+        t.index [:blob_id], name: "index_action_text_rich_texts_on_blob_id"
+        t.index [:record_type, :record_id, :name, :blob_id], name: "index_action_text_rich_texts_uniqueness", unique: true
       end
     end
   end

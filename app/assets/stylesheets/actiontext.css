@@ -47,3 +47,16 @@ trix-toolbar .trix-button--icon-link {
   padding: 3px;
   margin: 3px;
 }
+
+/* Stili per elenchi puntati e numerati */
+trix-editor ul {
+  list-style-type: disc; /* Assicura che i pallini siano di tipo "disc" */
+  margin-left: 40px; /* Aggiungi margine a sinistra per indentare l'elenco */
+}
+trix-editor li {
+  margin-bottom: 5px; /* Aggiungi spazio tra gli elementi dell'elenco */
+}
+trix-editor ol {
+  list-style-type: decimal; /* Assicura che i numeri siano di tipo "decimal" */
+  margin-left: 40px; /* Aggiungi margine a sinistra per indentare l'elenco */
+}
