@@ -24,7 +24,7 @@
                 when "cancellata" then "destructive"
                 when "attesa_pagamento" then "yellow"
                 when "confermata" then "success"
-                when "rimborso" then "orange"
+                when "rimborsata" then "orange"
                 else "blue"
             end %>
             <%= render partial: "shared_partials/status", locals: {colore: colore, testo: reservation.stato.humanize } %>
