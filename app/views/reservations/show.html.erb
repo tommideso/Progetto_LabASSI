@@ -1,22 +1,20 @@
 <h1>Reservation Details</h1>
 
-<p><strong>User:</strong> <%= link_to @reservation.client.user.email, profile_path(@reservation.client.user) , style: "color: blue;"%></p>
-<p><strong>Chef:</strong> <%= link_to @reservation.chef.user.email, profile_path(@reservation.chef.user), style: "color: blue;" %></p>
-<p><strong>Menu:</strong> <%= link_to @reservation.menu.titolo, menu_path(@reservation.menu), style: "color: blue;" %></p>
+<p><strong>User:</strong> <%= link_to @reservation.client.user.email, profile_path(@reservation.client.user) %></p>
+<p><strong>Chef:</strong> <%= link_to @reservation.chef.user.email, profile_path(@reservation.chef.user) %></p>
+<p><strong>Menu:</strong> <%= link_to @reservation.menu.titolo, menu_path(@reservation.menu) %></p>
 <p><strong>Data Prenotazione:</strong> <%= @reservation.data_prenotazione %></p>
 <p><strong>Stato:</strong> <%= @reservation.stato %></p>
 <p><strong>Prezzo:</strong> <%= number_to_currency(@reservation.prezzo, unit: "€") %></p>
 <p><strong>Numero di Persone:</strong> <%= @reservation.num_persone %></p>
 <p><strong>Tipo di Pasto:</strong> <%= @reservation.tipo_pasto %></p>
 <p><strong>Extra:</strong> <%= @reservation.extra %></p>
-<%# Prezzo extra %>
 <p><strong>Prezzo extra a persona:</strong> <%= @version_menu.extra %></p>
 <p><strong>Modifiche Richieste:</strong> <%= @reservation.modifiche_richieste %></p>
 <p><strong>Indirizzo di Consegna:</strong> <%= @reservation.indirizzo_consegna %></p>
 
-
 <!-- Recensioni -->
-<% if @reservation.confermata? %> <!-- TODO da cambiare-->
+<% if @reservation.confermata? %>
   <% if current_user.client? %>
     <% if @reservation.reviews.empty? || @reservation.reviews.length == 1 %>
       <%= form_with(model: [@reservation, @review], url: create_by_client_reservation_reviews_path(@reservation), local: true) do |form| %>
@@ -31,27 +29,41 @@
           </div>
         <% end %>
 
-          <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
+        <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
+
+        <!-- Valutazione per Chef -->
         <div class="field">
           <%= form.label :valutazione_chef, "Valutazione per Chef" %>
-          <%= form.number_field :valutazione_chef, in: 1..5, required: true %>
-        </div>
-        
-        <div class="field">
-          <%= form.label :valutazione_menu, "Valutazione per Menu" %>
-          <%= form.number_field :valutazione_menu, in: 1..5, required: true %>
+          <div class="star-rating">
+            <% (1..5).each do |i| %>
+              <%= form.radio_button :valutazione_chef, i, id: "valutazione_chef_#{i}", class: "d-none" %>
+              <label for="valutazione_chef_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
+            <% end %>
+          </div>
         </div>
 
-          <div class="field">
-              <%= form.label :commento, "Commento per menu" %>
-              <%= form.text_area :commento, required: true %>
+        <!-- Valutazione per Menu -->
+        <div class="field">
+          <%= form.label :valutazione_menu, "Valutazione per Menu" %>
+          <div class="star-rating">
+            <% (1..5).each do |i| %>
+              <%= form.radio_button :valutazione_menu, i, id: "valutazione_menu_#{i}", class: "d-none" %>
+              <label for="valutazione_menu_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
+            <% end %>
           </div>
+        </div>
+
+        <div class="field">
+          <%= form.label :commento, "Commento per menu" %>
+          <%= form.text_area :commento, required: true %>
+        </div>
         
         <div class="actions">
           <%= form.submit %>
         </div>
-      <% end %>    
+      <% end %>
     <% end %>
+
   <% elsif current_user.chef? %>
     <% if @reservation.reviews.empty? || @reservation.reviews.length == 2 %>
       <%= form_with(model: [@reservation, @review], url: create_by_chef_reservation_reviews_path(@reservation), local: true) do |form| %>
@@ -65,32 +77,37 @@
             </ul>
           </div>
         <% end %>
-      
-      <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
 
-        
+        <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
+      
         <div class="field">
-          <%= form.label :valutazione_cliente, "Rating for Customer" %>
-          <%= form.number_field :valutazione_cliente, in: 1..5 %>
+          <%= form.label :valutazione_cliente, "Valutazione Cliente" %>
+          <div class="star-rating">
+            <% (1..5).each do |i| %>
+              <%= form.radio_button :valutazione_menu, i, id: "valutazione_cliente_#{i}", class: "d-none" %>
+              <label for="valutazione_cliente_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
+            <% end %>
+          </div>
         </div>
         
         <div class="actions">
           <%= form.submit %>
         </div>
+
       <% end %>
     <% end %>
   <% end %>
 <% end %>
 
-
+<!-- Recensioni esistenti -->
 <% @reservation.reviews.each do |review| %>
-        <div class="review">
-            <p><strong>Recensione a:</strong> <%= review.tipo_recensione_type %></p>
-            <p><strong>Valutazione:</strong> <%= review.valutazione %></p>
-            <% if review.commento.present? %>
-            <p><strong>Commento:</strong> <%= review.commento %></p>
-            <% end %>
-        </div>
+  <div class="review">
+    <p><strong>Recensione a:</strong> <%= review.tipo_recensione_type %></p>
+    <p><strong>Valutazione:</strong> <%= review.valutazione %></p>
+    <% if review.commento.present? %>
+      <p><strong>Commento:</strong> <%= review.commento %></p>
+    <% end %>
+  </div>
 <% end %>
 
 <% if @reservation.attesa_pagamento? && current_user.client? %>
@@ -102,12 +119,72 @@
 <% end %>
 
 <% if @current_user.admin? %>
-  <%= link_to "Menu al momento della prenotazione", menu_version_path(@reservation.menu, @reservation.menu_version_id) %></p>
+  <%= link_to "Menu al momento della prenotazione", menu_version_path(@reservation.menu, @reservation.menu_version_id) %>
   <% if @reservation.completata? %>
-    <% button_to 'Rimborso completo', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
+    <%= button_to 'Rimborso completo', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
   <% end %>
 <% end %>
 
 <%= link_to 'All Reservations', reservations_path, class: 'btn btn-secondary' %>
-<%# <%= link_to 'Edit Reservation', edit_reservation_path(@reservation), class: 'btn btn-primary' %>
 
+<style>
+  .star-rating {
+    display: inline-flex;
+  }
+
+  .star-rating input[type="radio"] {
+    display: none; /* Nascondi i radio button */
+  }
+
+  .star-rating label {
+    font-size: 2rem;
+    color: #ddd; /* Colore grigio iniziale */
+    cursor: pointer;
+  }
+
+  .star-rating .selected {
+    color: #ffc700; /* Colore giallo quando selezionate */
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOM fully loaded and parsed");
+
+    // Funzione per aggiornare il colore delle stelle
+    function updateStars(container, value) {
+      const stars = container.querySelectorAll("label");
+      stars.forEach((star, index) => {
+        star.style.color = index < value ? "#ffc700" : "#ddd"; // Giallo se selezionato, altrimenti grigio
+      });
+    }
+
+    // Inizializza ogni star-rating
+    document.querySelectorAll(".star-rating").forEach(container => {
+      let selectedValue = parseInt(container.getAttribute("data-rating")) || 0;
+      updateStars(container, selectedValue);
+
+      container.addEventListener("mouseover", function(event) {
+        if (event.target.classList.contains("star")) {
+          const value = parseInt(event.target.getAttribute("data-value"));
+          console.log("Mouse over star with value", value);
+          updateStars(container, value);
+        }
+      });
+
+      container.addEventListener("mouseout", function() {
+        console.log("Mouse out of star rating");
+        updateStars(container, selectedValue);
+      });
+
+      container.addEventListener("click", function(event) {
+        if (event.target.classList.contains("star")) {
+          selectedValue = parseInt(event.target.getAttribute("data-value"));
+          container.setAttribute("data-rating", selectedValue);
+          console.log("Star clicked with value", selectedValue);
+          updateStars(container, selectedValue);
+        }
+      });
+    });
+  });
+</script>
