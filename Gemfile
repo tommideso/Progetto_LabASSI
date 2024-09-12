@@ -85,3 +85,7 @@ group :development, :test do
 end
 
 gem "factory_bot_rails", group: [ :development, :test ]
+
+# Per tradurre devise in italiano
+gem 'devise-i18n'
+

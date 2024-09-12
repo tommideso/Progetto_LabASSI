@@ -3,12 +3,13 @@
     <h2>
       <%= I18n.t("errors.messages.not_saved",
                  count: resource.errors.count,
-                 resource: resource.class.model_name.human.downcase)
+                 resource: resource.class.model_name.human.downcase,
+                 default: "Could not save the %{resource} (#{resource.errors.count} errors).")
        %>
     </h2>
     <ul>
       <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li><%= I18n.t(message, default: message) %></li>
       <% end %>
     </ul>
   </div>
