@@ -47,7 +47,6 @@ class Reservation < ApplicationRecord
   private
 
   def create_menu_version
-    # TODO HO MESSO DEL DEBUGGING CHE PERÒ PUÒ ESSERE TOLTO SE SIAMO SICURI FUNZIONI :)
     Rails.logger.debug "Menu: #{menu.inspect}"
     if menu.present?
       Rails.logger.debug "Menu is present. Attempting to create version."
