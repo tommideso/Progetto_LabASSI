@@ -1,6 +1,8 @@
 <%= search_form_for @q, url: search_path, method: :get, data: { controller: 'search' } do |f| %>
   <div class="relative">
-    <input type="text" id="searchInput" class="block w-full px-4 py-2 border rounded-lg" placeholder="Cerca..." data-action="focus->search#openModal" autocomplete="off">
+    <button type="button" id="searchButton" class="block w-full px-6 py-3 border rounded-lg bg-blue-500 text-white text-lg font-bold" data-action="click->search#openModal">
+      Cerca
+    </button>
   </div>
 
   <!-- Modale -->
@@ -64,7 +66,7 @@
 
 
         <div class="actions">
-          <%= f.submit "Search", class: "search-button" %>
+          <%= f.submit "Cerca", class: "search-button" %>
         </div>
       </form>
     </div>
