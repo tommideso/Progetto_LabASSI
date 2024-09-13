@@ -473,7 +473,7 @@ DEPENDENCIES
   redis (~> 4.0)
   rspec-rails (~> 7.0.0)
   rubocop-rails-omakase
-  selenium-webdriver (>= 4.11)
+  selenium-webdriver
   sprockets-rails
   stimulus-rails
   stripe (~> 12.5)

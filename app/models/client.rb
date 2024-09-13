@@ -34,8 +34,9 @@ class Client < ApplicationRecord
   private
 
   def allergeni_presence
-    if allergeni.nil? || allergeni.empty? || allergeni.values.all?(&:blank?)
-      errors.add(:allergeni, "can't be blank bro")
+    if allergeni.nil? || allergeni.empty? 
+      puts "Allergeni: #{allergeni.inspect}"
+      errors.add(:allergeni, "Non può essere vuoto")
     end
   end
 

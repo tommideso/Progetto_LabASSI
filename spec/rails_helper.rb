@@ -13,29 +13,7 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 
-
-# TODO: Da togliere 
-# Capybara.javascript_driver = :selenium_chrome
-# Webdrivers::Chromedriver.required_version = '128.0.6613.138' # Sostituisci con la versione corretta 1
-# Configura Capybara per utilizzare Selenium con Chrome
-# Capybara.register_driver :selenium do |app|
-#   options = Selenium::WebDriver::Chrome::Options.new
-#   options.add_argument('--headless')
-#   options.add_argument('--disable-gpu')
-#   options.add_argument('--window-size=1920,1080')
-
-#   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-# end
-Capybara.javascript_driver = :selenium_chrome_headless
-
-# Include Devise test helpers
-RSpec.configure do |config|
-  config.include Devise::Test::IntegrationHelpers, type: :feature
-  # config.before(:each, type: :system) do
-  #   driven_by :selenium, using: :chrome, screen_size: [1920, 1080]
-  # end
-end
-
+Capybara.javascript_driver = :selenium_chrome
 
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -70,6 +48,8 @@ RSpec.configure do |config|
   # Include Devise test helpers for integration (request) specs
   config.include Devise::Test::IntegrationHelpers, type: :request
 
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+
   # Include FactoryBot syntax methods
   config.include FactoryBot::Syntax::Methods
 
@@ -100,4 +80,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Resetta le sessioni di Capybara dopo ogni test
+  config.after(:each) do
+    Capybara.reset_sessions!
+  end
 end
