@@ -32,7 +32,6 @@ RSpec.describe ReservationsController, type: :controller do
         # Autentica l'utente come client
         sign_in client.user
         # Verifica che l'utente sia autenticato
-        puts "Current userAAAA: #{controller.current_user.inspect}"
         expect(controller.current_user).to eq(client.user)
         # Verifica che il client sia associato all'utente corretto
         expect(client.user).to be_present

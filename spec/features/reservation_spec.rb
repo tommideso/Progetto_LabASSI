@@ -14,13 +14,16 @@ RSpec.feature "Reservation", type: :feature, js: true do
 
     # Visita la pagina del menu
     visit menu_path(menu)
+    sleep 1
 
     # Compila i campi di prenotazione utilizzando gli attributi `id`
      fill_in 'indirizzo_consegna', with: 'Via Esempio 123'
+     sleep 1
      fill_in 'num_persone', with: menu.min_persone
+     sleep 1
      select 'Pranzo', from: 'reservation_tipo_pasto'
-     #TODO non lo preme
-    #  page.execute_script("document.querySelector('#data_prenotazione').datepicker('setDate', '01/01/2010')")
+    
+    # Uso jQuery per selezionare una data
      page.execute_script("document.querySelector('#data_prenotazione').value = '2024-10-01'")
 
      # Seleziona la checkbox per il vino se è presente nel menu
@@ -34,12 +37,9 @@ RSpec.feature "Reservation", type: :feature, js: true do
        check 'miseenplace' # Usa il nome della checkbox o il suo ID per selezionarla
      end
 
-     # Aspetta 3 secondi
-      sleep 1
-
     # Clicca sul pulsante per effettuare la prenotazione
     click_button 'Prenota'
-    sleep 3
+    sleep 1
 
     # Verifica che la prenotazione sia stata creata con successo
     expect(page).to have_content('Reservation Details')     
@@ -48,7 +48,7 @@ RSpec.feature "Reservation", type: :feature, js: true do
     expect(page).to have_content('pranzo')
     expect(page).to have_content('2024-10-01')
    
-    sleep 2
+    sleep 1
     expect(page).to have_current_path(reservation_path(Reservation.last))
 
   end
@@ -68,9 +68,7 @@ RSpec.feature "Reservation", type: :feature, js: true do
     fill_in 'num_persone', with: menu.min_persone
     select 'Pranzo', from: 'reservation_tipo_pasto'
     page.execute_script("document.querySelector('#data_prenotazione').value = '2024-10-01'")
-
-    # Aspetta 3 secondi
-    sleep 1
+    sleep 2
 
     # Clicca sul pulsante per effettuare la prenotazione
     click_button 'Prenota'
@@ -81,6 +79,14 @@ RSpec.feature "Reservation", type: :feature, js: true do
     expect(page).to have_content("Impossibile creare la prenotazione")
   end
 
+  scenario "Utente non loggato non riesce a prenotare" do
+    # Utente preme il pulsante del logout
+    visit menu_path(menu)
+    sleep 3
+    # Non deve esserci il bottone prenota
+    expect(page).not_to have_button('Prenota')
+
+  end
 
 end
 
