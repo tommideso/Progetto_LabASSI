@@ -389,7 +389,7 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.1)
-    stripe (12.5.0)
+    stripe (12.6.0)
     tailwindcss-rails (2.7.3)
       railties (>= 7.0.0)
     tailwindcss-rails (2.7.3-aarch64-linux)
@@ -480,7 +480,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   stimulus-rails
-  stripe (~> 12.5)
+  stripe (~> 12.6)
   tailwindcss-rails (~> 2.7)
   turbo-rails
   tzinfo-data
