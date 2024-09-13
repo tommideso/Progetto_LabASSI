@@ -77,6 +77,9 @@ li {
 .btn-default {
     @apply bg-primary text-primary-foreground hover:bg-primary/90;
 }
+.btn-default-bigger {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 text-lg;
+}
 .btn-destructive {
     @apply bg-destructive text-destructive-foreground hover:bg-destructive/90;
 }
