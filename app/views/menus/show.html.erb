@@ -16,7 +16,7 @@
               <% elsif current_user.chef? && @menu.chef == current_user.chef %>
                 <%= button_to edit_menu_path, method: :get do %>
                   <div class="btn btn-outline flex items-center gap-4">
-                    <%= inline_svg_tag "icons/edit.svg", class: 'w-6 h-6 fill-slate-600' %>
+                    <%= inline_svg_tag "icons/edit.svg", class: 'w-6 h-6 icon-secondary' %>
                     <p>Modifica</p> 
                   </div>
                 <% end %>
@@ -25,14 +25,14 @@
                 <% if @menu.disattivato %>
                   <%= button_to riattiva_menu_path(@menu), method: :post do %>
                     <div class="btn btn-secondary flex items-center gap-4">
-                      <%= inline_svg_tag "icons/show.svg", class: 'w-6 h-6 fill-slate-600' %>
+                      <%= inline_svg_tag "icons/show.svg", class: 'w-6 h-6 icon-secondary' %>
                       <p>Attiva</p>
                     </div>
                   <% end %>
                 <% else %>
                   <%= button_to disattiva_menu_path(@menu), method: :post do %>
                     <div class="btn btn-secondary flex items-center gap-4">
-                      <%= inline_svg_tag "icons/no-show.svg", class: 'w-6 h-6 fill-slate-600' %>
+                      <%= inline_svg_tag "icons/no-show.svg", class: 'w-6 h-6 icon-secondary' %>
                       <p>Disattiva</p>
                     </div>
                   <% end %>
