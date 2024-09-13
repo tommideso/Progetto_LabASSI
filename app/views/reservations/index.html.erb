@@ -3,7 +3,11 @@
   <p>Non hai prenotazioni</p>
 <% else %>
   <% if current_user.admin? %>
-    <h2 class="page-title">Prenotazioni</h2>
+    <% if @user.present? %>
+      <h2 class="page-title">Prenotazioni di <%= @user.nome %> <%= @user.cognome %></h2>
+    <% else %>
+      <h2 class="page-title">Prenotazioni</h2>
+    <% end %>
   <% else %>
     <h2 class="page-title">Le tue prenotazioni</h2>
   <% end %>
@@ -33,7 +37,7 @@
     <div class="hidden" data-tabs-target="panel" data-id="next">
       <div class="flex flex-col gap-4">
         <% @next_reservations.each do |reservation| %>
-          <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
+          <%= render partial: 'reservations/reservation_card', locals: { reservation: reservation } %>
         <% end %>
       </div>
 
@@ -41,7 +45,7 @@
     <div class="hidden" data-tabs-target="panel" data-id="canc">
       <div class="flex flex-col gap-4">
         <% @cancelled_reservations.each do |reservation| %>
-          <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
+          <%= render partial: 'reservations/reservation_card', locals: { reservation: reservation } %>
         <% end %>
       </div>
 
@@ -49,14 +53,14 @@
     <div class="hidden" data-tabs-target="panel" data-id="compl">
       <div class="flex flex-col gap-4">
         <% @completed_reservations.each do |reservation| %>
-          <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
+          <%= render partial: 'reservations/reservation_card', locals: { reservation: reservation } %>
         <% end %>
       </div>
     </div>
     <div class="hidden" data-tabs-target="panel" data-id="all">
       <div class="flex flex-col gap-4" id="reservation-list">
         <% @reservations.each do |reservation| %>
-          <%= render partial: 'reservation_card', locals: { reservation: reservation } %>
+          <%= render partial: 'reservations/reservation_card', locals: { reservation: reservation } %>
         <% end %>
       </div>
     </div>

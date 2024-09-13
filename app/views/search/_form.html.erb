@@ -1,106 +1,89 @@
 <%= search_form_for @q, url: search_path, method: :get, data: { controller: 'search' } do |f| %>
   <div class="relative">
-    <button type="button" id="searchButton" class="block w-full px-6 py-3 border rounded-lg bg-blue-500 text-white text-lg font-bold" data-action="click->search#openModal">
-      Cerca
+    <button type="button" id="searchButton"  data-action="click->search#openModal" class="btn btn-default flex items-center gap-3">
+      <%= inline_svg_tag "icons/search.svg", class: "w-6 h-6 icon-default" %>
+      <p>Cerca</p> 
     </button>
   </div>
 
   <!-- Modale -->
-  <div id="searchTarget" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30" style="display: none;" data-search-target="modal">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/3">
-      <button id="closeModalButton" class="text-gray-500 hover:text-gray-700" data-action="search#closeModal">&times;</button>
-      <h1 class="text-lg font-bold mb-4">Filtra la tua ricerca</h1>
-      <form id="searchForm" data-search-target="form" data-action="submit->search#submitForm">
-        
-        <div class="field search-field">
-          <%= f.label :titolo_cont, "Nome menu" %>
-          <%= f.search_field :titolo_cont %>
+  <div id="searchTarget" class="fixed inset-0 flex items-center justify-center bg-black/50 z-30" style="display: none;" data-search-target="modal">
+    <div class="card w-11/12 md:w-2/3 2xl:w-1/3 max-h-[90vh] overflow-y-auto	">
+      <div class="card-content">
+        <div class="flex justify-between items-start">
+          <h2 class="card-title">Filtra la tua ricerca</h2>
+          <button id="closeModalButton" class="" data-action="search#closeModal">
+            <%= inline_svg_tag "icons/close.svg", class: "w-6 h-6 fill-slate-500 hover:fill-slate-700 " %> 
+          </button>
         </div>
+        <div class="form">
+          <form id="searchForm" data-search-target="form" data-action="submit->search#submitForm">
+            
+            <div class="form-divs">
+              <%= f.label :titolo_cont, "Nome menu" %>
+              <%= f.search_field :titolo_cont, class: "input" %>
+            </div>
 
-        <div class="field search-field">
-          <%= f.label :numero_persone, "Numero di persone" %>
-          <%= text_field_tag :numero_persone, params[:numero_persone], placeholder: "Es. 5" %>
+            <div class="form-divs">
+              <%= f.label :numero_persone, "Numero di persone" %>
+              <%= text_field_tag :numero_persone, params[:numero_persone], placeholder: "Es. 5", class:"input", id:"numPersone" %>
+            </div>
+
+            <div class="form-divs">
+              <%= f.label :search_date, "Data" %>
+              <%= text_field_tag :search_date, params[:search_date], class: "datepicker input", id: "search-date" %>
+            </div>
+
+
+            <div class="form-divs">
+              <h4 class="text-lg font-semibold">Filtra per allergeni:</h4>
+              <!-- Checkbox Seleziona Tutte -->
+              <div>
+                  <div class="form-checkbox-div mb-2">
+                    <input type="checkbox" data-action="change->search#toggleAll" data-search-target="selectAllAllergeni" class="checkbox">
+                    <label>Seleziona tutti</label>
+                  </div>
+                <div class="grid grid-cols-3 gap-1">
+                  <% ["noci", "soia", "glutine", "arachidi", "lattosio", "crostacei"].each do |allergene| %>
+                    <div class="form-checkbox-div">
+                      <%= check_box_tag 'allergeni[]', allergene, params[:allergeni]&.include?(allergene), class:"checkbox", data: { search_target: "allergeneCheckbox" } %>
+                      <label><%= allergene.capitalize %></label>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-divs">
+              <h4 class="text-lg font-semibold">Filtra per preferenze alimentari:</h4>
+              <div>
+              <!-- Checkbox Seleziona Tutte per preferenze alimentari -->
+                <div class="form-checkbox-div mb-2">
+                  <input type="checkbox" data-action="change->search#toggleAll" data-search-target="selectAllPreferenze" class="checkbox">
+                  <label>Seleziona tutte</label>
+                </div>
+                <div class="grid grid-cols-2 gap-1">
+                  <% ["vegano", "glutine"].each do |preferenza| %>
+                    <div class="form-checkbox-div">
+                      <%= check_box_tag 'preferenze[]', preferenza, params[:preferenze]&.include?(preferenza), class:"checkbox", data: { search_target: "preferenzaCheckbox" } %>
+                      <label><%= preferenza.capitalize %></label>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="actions pt-4">
+              <%= f.button "Cerca", type: "submit", :class=> "btn btn-default" %>
+            </div>
+          </form>
         </div>
-
-        <div class="field search-field">
-          <%= f.label :search_date, "Data" %>
-          <%= text_field_tag :search_date, params[:search_date], class: "form-control datepicker", id: "search-date" %>
-        </div>
-
-
-        <div class="field">
-          <h4>Filtra per allergeni:</h4>
-          <!-- Checkbox Seleziona Tutte -->
-          <label>
-            <input type="checkbox" data-action="change->search#toggleAll" data-search-target="selectAllAllergeni">
-            Seleziona Tutte
-          </label>
-          <br>
-
-          <% ["noci", "soia", "glutine", "arachidi", "lattosio", "crostacei"].each do |allergene| %>
-            <label>
-              <%= check_box_tag 'allergeni[]', allergene, params[:allergeni]&.include?(allergene), data: { search_target: "allergeneCheckbox" } %>
-              <%= allergene.capitalize %>
-            </label>
-            <br>
-          <% end %>
-        </div>
-
-        <div class="field">
-          <h4>Filtra per preferenze alimentari:</h4>
-          <!-- Checkbox Seleziona Tutte per preferenze alimentari -->
-          <label>
-            <input type="checkbox" data-action="change->search#toggleAll" data-search-target="selectAllPreferenze">
-            Seleziona Tutte
-          </label>
-          <br>
-
-          <% ["vegano", "glutine"].each do |preferenza| %>
-            <label>
-              <%= check_box_tag 'preferenze[]', preferenza, params[:preferenze]&.include?(preferenza), data: { search_target: "preferenzaCheckbox" } %>
-              <%= preferenza.capitalize %>
-            </label>
-            <br>
-          <% end %>
-        </div>
-
-
-        <div class="actions">
-          <%= f.submit "Cerca", class: "search-button" %>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 <% end %>
 
 <style>
-  .search-field {
-    margin-bottom: 0.3rem; /* Add space between fields */
-  }
 
-  .search-button {
-   background-color: #007bff; /* Blue background */
-    color: white; /* White text */
-    border: 2px solid #007bff; /* Blue border */
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    cursor: pointer;
-  }
-
-  .search-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    border-color: #0056b3; /* Darker blue border on hover */
-  }
-
-  .search-field label {
-    display: block;
-    margin-bottom: 0.3rem; /* Add space between label and input */
-  }
-
-  .search-field input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-  }
 </style>

@@ -1,9 +1,26 @@
 
-<h2 class="page-title">Menu</h2>
+<% if @user.present? %>
+   <% if user_signed_in? && current_user == @user %>
+      <div class="flex justify-between items-center">
+         <h2 class="page-title">I tuoi menu</h2>
+         <%= button_to new_menu_path, method: :get do %>
+               <div class="btn btn-default flex items-center gap-2">
+                  <%= inline_svg_tag "icons/plus.svg", class: "w-6 h-6 icon-default" %>
+                  <p>Crea un nuovo menu</p>
+               </div>
+         <% end %> 
+      </div>
+   <% else %>
+      <h2 class="page-title">Menu di <%= @user.nome %> <%= @user.cognome %></h2>
+   <% end %>
+<% else %>
+   <h2 class="page-title">Menu</h2>
+<% end %>
+
 
 <div id="menu-list" class="grid grid-cols-4 gap-8 ">
    <% @menus.each do |menu| %>
-      <%= render partial: "menu_card", locals: {menu: menu} %>
+      <%= render partial: "menus/menu_card", locals: {menu: menu} %>
    <% end %>
 </div>
 
