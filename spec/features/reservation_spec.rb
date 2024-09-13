@@ -37,15 +37,17 @@ RSpec.feature "Reservation", type: :feature, js: true do
        check 'miseenplace' # Usa il nome della checkbox o il suo ID per selezionarla
      end
 
+     fill_in 'modifiche_richieste', with: 'Carne ben cotta'
+
     # Clicca sul pulsante per effettuare la prenotazione
     click_button 'Prenota'
     sleep 1
 
     # Verifica che la prenotazione sia stata creata con successo
-    expect(page).to have_content('Reservation Details')     
+    expect(page).to have_content('Prenotazione')     
     expect(page).to have_content('Via Esempio 123')
     expect(page).to have_content(menu.min_persone)
-    expect(page).to have_content('pranzo')
+    expect(page).to have_content('Pranzo')
     expect(page).to have_content('2024-10-01')
    
     sleep 1
