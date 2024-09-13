@@ -1,85 +1,83 @@
-  <%# Avatar %>
-<div class="field">
-  <%= f.label :avatar %><br />
-  <%= f.file_field :avatar, class: "mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" %>
-  <% if @user.avatar.present? %>
-    <%= image_tag(@user.avatar, class: "avatar mt-4") %> <!-- immagine caricata -->
-  <% elsif @user.avatar_url.present? %>
-    <%= image_tag(@user.avatar_url, class: "avatar mt-4") %> <!-- immagine caricata -->
-  <% end %>
-</div><br>
+    <%# Avatar %>
+<div class="form">
+  <div class="form-divs">
+    <%= f.label :avatar, class: "label" %>
+    <%= f.file_field :avatar, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" %>
+    <% if !@user.new_record? && @user.avatar.present? %>
+      <%= image_tag(@user.avatar, class: "avatar mt-4") %> <!-- immagine caricata -->
+    <% elsif !@user.new_record? && @user.avatar_url.present? %>
+      <%= image_tag(@user.avatar_url, class: "avatar mt-4") %> <!-- immagine caricata -->
+    <% end %>
+  </div>
 
-<div class="form-divs">
-  <%= f.label :nome %>
-  <%= f.text_field :nome, class: "input", value: f.object.persisted? ? (f.object.nome.presence || f.object.reload.nome) : f.object.nome %>
-</div>
+  <div class="form-divs">
+    <%= f.label :nome, class: "label" %>
+    <%= f.text_field :nome, class: "input", value: f.object.persisted? ? (f.object.nome.presence || f.object.reload.nome) : f.object.nome %>
+  </div>
 
-<div class="form-divs">
-  <%= f.label :cognome %>
-  <%= f.text_field :cognome, class: "input", value: f.object.persisted? ? (f.object.cognome.presence || f.object.reload.cognome) : f.object.cognome %>
-</div>
+  <div class="form-divs">
+    <%= f.label :cognome, class: "label" %>
+    <%= f.text_field :cognome, class: "input", value: f.object.persisted? ? (f.object.cognome.presence || f.object.reload.cognome) : f.object.cognome %>
+  </div>
 
-
-
-
-<% if @user.ruolo == "chef" %>
-  <%= f.fields_for :chef, @chef || Chef.new do |chef_form| %>
-    <div
-        data-controller="places-autocomplete"
-        data-action="google-maps-callback@window->places-autocomplete#initAutocomplete"
-        data-places-autocomplete-country-value='["it"]'
-      >
-        <%= chef_form.label :indirizzo %>
-        <%= chef_form.text_field :indirizzo, class: "input", value: @chef.persisted? ? (@chef.indirizzo.presence || @chef.reload.indirizzo) : @chef.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
-      </div>  
-
-    <div class="form-divs">
-      <%= chef_form.label :telefono %>
-      <%= chef_form.text_field :telefono, class:"input", value: @chef.persisted? ? (@chef.telefono.presence || @chef.reload.telefono) : @chef.telefono %>
-    </div>
-
-    <div class="hidden">
-      <%= chef_form.label :raggio %>
-      <%= chef_form.hidden_field :raggio, value: @chef.persisted? ? (@chef.raggio.presence || @chef.reload.raggio) : @chef.raggio %>
-    </div>
-
-    <div class="form-divs">
-      <%= chef_form.label :descrizione %>
-      <%= chef_form.rich_text_area :descrizione, class:"input", value: @chef.persisted? ? (@chef.descrizione.presence || @chef.reload.descrizione) : @chef.descrizione %>
-    </div>
-  <% end %>
-  
-<% elsif @user.ruolo == "client" %>
-  <%= f.fields_for :client, @client || Client.new do |client_form| %>
-    <div class="form-divs">
+  <% if @user.ruolo == "chef" %>
+    <%= f.fields_for :chef, @chef || Chef.new do |chef_form| %>
       <div
-        data-controller="places-autocomplete"
-        data-action="google-maps-callback@window->places-autocomplete#initAutocomplete"
-        data-places-autocomplete-country-value='["it"]'
-      >
-        <%= client_form.label :indirizzo %>
-        <%= client_form.text_field :indirizzo, class:"input", value: @client.persisted? ? (@client.indirizzo.presence || @client.reload.indirizzo) : @client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
-      </div>  
-    </div>
+          data-controller="places-autocomplete"
+          data-action="google-maps-callback@window->places-autocomplete#initAutocomplete"
+          data-places-autocomplete-country-value='["it"]'
+        >
+          <%= chef_form.label :indirizzo, class: "label" %>
+          <%= chef_form.text_field :indirizzo, class: "input w-full", value: @chef.persisted? ? (@chef.indirizzo.presence || @chef.reload.indirizzo) : @chef.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
+        </div>  
 
-    <div class="form-divs">
-      <%= client_form.label :telefono %>
-      <%= client_form.text_field :telefono, class:"input", value: @client.persisted? ? (@client.telefono.presence || @client.reload.telefono) : @client.telefono %>
-    </div><br>
-
-    
-    <div class="form-checkbox-div">
-      <%= client_form.label :allergeni, "Seleziona gli allergeni:" %><br>
-        <% Menu::ALLERGENI.each do |allergene| %>
-          <div>
-            <%= hidden_field_tag "user[client_attributes][allergeni][#{allergene}]", "false" %>
-            <%= check_box_tag "user[client_attributes][allergeni][#{allergene}]", "true", @client.allergeni&.dig(allergene) == "true", class: "checkbox" %>
-            <%= label_tag "user_client_attributes_allergeni_#{allergene}", allergene.capitalize %>
-          </div>
-        <% end %>
+      <div class="form-divs">
+        <%= chef_form.label :telefono, class: "label" %>
+        <%= chef_form.text_field :telefono, class:"input", value: @chef.persisted? ? (@chef.telefono.presence || @chef.reload.telefono) : @chef.telefono %>
       </div>
-    </div>
-  
 
+      <div class="hidden">
+        <%= chef_form.hidden_field :raggio, value: "0" %>
+      </div>
+
+      <div class="form-divs">
+        <%= chef_form.label :descrizione, class: "label" %>
+        <%= chef_form.rich_text_area :descrizione, class:"input", value: @chef.persisted? ? (@chef.descrizione.presence || @chef.reload.descrizione) : @chef.descrizione %>
+      </div>
+    <% end %>
+    
+  <% elsif @user.ruolo == "client" %>
+    <%= f.fields_for :client, @client || Client.new do |client_form| %>
+      <div class="form-divs">
+        <div
+          data-controller="places-autocomplete"
+          data-action="google-maps-callback@window->places-autocomplete#initAutocomplete"
+          data-places-autocomplete-country-value='["it"]'
+        >
+          <%= client_form.label :indirizzo %>
+          <%= client_form.text_field :indirizzo, class:"input", value: @client.persisted? ? (@client.indirizzo.presence || @client.reload.indirizzo) : @client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
+        </div>  
+      </div>
+
+      <div class="form-divs">
+        <%= client_form.label :telefono %>
+        <%= client_form.text_field :telefono, class:"input", value: @client.persisted? ? (@client.telefono.presence || @client.reload.telefono) : @client.telefono %>
+      </div><br>
+
+      
+      <div class="form-checkbox-div">
+        <%= client_form.label :allergeni, "Seleziona gli allergeni:" %><br>
+          <% Menu::ALLERGENI.each do |allergene| %>
+            <div>
+              <%= hidden_field_tag "user[client_attributes][allergeni][#{allergene}]", "false" %>
+              <%= check_box_tag "user[client_attributes][allergeni][#{allergene}]", "true", @client.allergeni&.dig(allergene) == "true", class: "checkbox" %>
+              <%= label_tag "user_client_attributes_allergeni_#{allergene}", allergene.capitalize %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    
+
+    <% end %>
   <% end %>
-<% end %>
+</div>
