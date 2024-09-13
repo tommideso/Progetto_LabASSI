@@ -86,6 +86,9 @@ li {
 .btn-outline {
     @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
 }
+.btn-outline-bigger {
+    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground text-lg;
+}
 .btn-secondary {
     @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-input;
 }
