@@ -18,34 +18,35 @@
             data-controller="dropdown"
             data-action="click@window->dropdown#hide touchstart@window->dropdown#hide keydown.up->dropdown#previousItem keydown.down->dropdown#nextItem keydown.esc->dropdown#hide"
             class="inline-block relative">
+            
             <button data-action="dropdown#toggle:stop">
                 <%= render 'profiles/avatar', user: current_user, size_class: "h-14 w-14 rounded-full" %>
             </button>
-            <div data-dropdown-target="menu" class="hidden absolute top-10 right-[-65px] z-10 mt-5 flex w-screen max-w-max">
-                <div class="text-base bg-white shadow-lg rounded border overflow-hidden w-48">
+            <div data-dropdown-target="menu" class="hidden absolute top-10 right-0 z-10 mt-5 flex w-screen max-w-max ">
+                <div class="text-base card overflow-hidden w-48">
                     <% unless current_user.admin? %>
-                        <a data-dropdown-target="menuItem" href="<%= profile_path(current_user) %>" class='no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 whitespace-nowrap'>
+                        <a data-dropdown-target="menuItem" href="<%= profile_path(current_user) %>" class='no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap'>
                         Profilo
                         </a>
-                        <a data-dropdown-target="menuItem" href="<%= user_path(1) %>" class='no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 focus:bg-gray-100'>
+                        <a data-dropdown-target="menuItem" href="<%= user_path(1) %>" class='no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 focus:bg-slate-100'>
                         Chatta con l'assistenza
                         </a>
                     <% end %>
                     <% if current_user.client? %>
-                        <%= link_to "Menu preferiti", favorites_path, class: 'w-full text-left no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 whitespace-nowrap focus:bg-gray-100' %>
-                        <%= link_to "Prenotazioni", reservations_path, class: 'w-full text-left no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 whitespace-nowrap focus:bg-gray-100' %>
+                        <%= link_to "Menu preferiti", favorites_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
+                        <%= link_to "Prenotazioni", reservations_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
                     <% end %>
                     <% if current_user.chef? %>
-                        <%= link_to "I miei menu", menus_path, class: 'w-full text-left no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 whitespace-nowrap focus:bg-gray-100' %>
-                        <%= link_to "Prenotazioni", reservations_path, class: 'w-full text-left no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 whitespace-nowrap focus:bg-gray-100' %>
+                        <%= link_to "I miei menu", menus_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
+                        <%= link_to "Prenotazioni", reservations_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
                     <% end %>
                     <% if current_user.admin? %>
-                        <%= link_to "Utenti", profiles_path, class: 'w-full text-left no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 whitespace-nowrap focus:bg-gray-100' %>   
-                        <%= link_to "Prenotazioni", reservations_path, class: 'w-full text-left no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 whitespace-nowrap focus:bg-gray-100' %>
-                        <%= link_to "Menu", menus_path, class: 'w-full text-left no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 whitespace-nowrap focus:bg-gray-100' %>
+                        <%= link_to "Utenti", profiles_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>   
+                        <%= link_to "Prenotazioni", reservations_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
+                        <%= link_to "Menu", menus_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
                     <% end %>
                     <hr class="border-t" />
-                    <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'w-full text-left no-underline block pl-6 py-3 text-gray-900 bg-white hover:bg-gray-100 whitespace-nowrap focus:bg-gray-100' %> 
+                    <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %> 
                 </div>
             </div>
         </div>
