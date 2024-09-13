@@ -7,9 +7,9 @@
     <% end %>
 
     <!-- Mostriamo i contenuti del modello -->
-    <div>
-        <%= form.label :titolo %>
-        <%= form.text_field :titolo, id:"titolo", value: @menu.persisted? ? (@menu.titolo.presence || @menu.reload.titolo) : @menu.titolo %>
+    <div class="form-divs">
+        <%= form.label :titolo, class: 'label' %>
+        <%= form.text_field :titolo, id:"titolo", value: @menu.persisted? ? (@menu.titolo.presence || @menu.reload.titolo) : @menu.titolo, class: 'input w-1/4' %>
     </div>
 
     <div>
@@ -20,20 +20,23 @@
     <!-- Sezione Piatti -->
     <h3>Piatti</h3>
     
-    <!-- Stimulus Rails Nested Form -->
-    <template data-nested-form-target="template">
-        <%= form.fields_for :dishes, Dish.new, child_index: 'NEW_RECORD' do |dish_fields| %>
+    <div class="flex flex-row w-full flex-wrap">
+        <!-- Stimulus Rails Nested Form -->
+        <template data-nested-form-target="template">
+            <%= form.fields_for :dishes, Dish.new, child_index: 'NEW_RECORD' do |dish_fields| %>
+                <%= render "dish_form", f: dish_fields %>
+            <% end %>
+        </template>
+
+        <%= form.fields_for :dishes do |dish_fields| %>
             <%= render "dish_form", f: dish_fields %>
         <% end %>
-    </template>
 
-    <%= form.fields_for :dishes do |dish_fields| %>
-        <%= render "dish_form", f: dish_fields %>
-    <% end %>
+        <div data-nested-form-target="target"></div>
 
-    <div data-nested-form-target="target"></div>
+        <button type="button" data-action="nested-form#add" class="btn btn-default h-1/4"> Aggiungi piatto</button>
+    </div>
 
-    <button type="button" data-action="nested-form#add">Aggiungi piatto</button>
     
 
     <div>
