@@ -34,7 +34,7 @@
 
         <div data-nested-form-target="target"></div>
 
-        <button type="button" data-action="nested-form#add" class="btn btn-default h-1/4"> Aggiungi piatto</button>
+        <button type="button" data-action="nested-form#add" class="btn btn-default h-1/4 my-3"> Aggiungi piatto</button>
     </div>
 
     <div>
@@ -58,63 +58,63 @@
         <%= form.select :tipo_cucina, options_for_select(Menu::TIPI_CUCINA.map { |tipo| [tipo.capitalize, tipo] }, @menu.tipo_cucina), {}, { class: 'flex h-10 rounded-md border border-input bg-background pl-3 pr-8 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50' } %>    
     </div>
 
-    <div class="form-divs">
-        <%= form.label :allergeni, "Seleziona gli allergeni:" %><br>
+    <div>
+        <%= form.label :allergeni, "Seleziona gli allergeni:", class: 'label' %><br>
         <% Menu::ALLERGENI.each do |allergene| %>
         <div>
             <%= hidden_field_tag "menu[allergeni][#{allergene}]", "false" %>
-            <%= check_box_tag "menu[allergeni][#{allergene}]", "true", @menu.allergeni&.dig(allergene) == "true" %>
+            <%= check_box_tag "menu[allergeni][#{allergene}]", "true", @menu.allergeni&.dig(allergene) == "true", class: 'rounded-lg' %>
             <%= label_tag "menu_allergeni_#{allergene}", allergene.capitalize %>
         </div>
         <% end %>
     </div>
 
-    <div class="form-divs">
-        <%= form.label :preferenze_alimentari, "Seleziona le preferenze alimentari:" %><br>
+    <div>
+        <%= form.label :preferenze_alimentari, "Seleziona le preferenze alimentari:", class: 'label' %><br>
         <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
         <div>
             <%= hidden_field_tag "menu[preferenze_alimentari][#{preferenza}]", "false" %>
-            <%= check_box_tag "menu[preferenze_alimentari][#{preferenza}]", "true", @menu.preferenze_alimentari&.dig(preferenza) == "true" %>
+            <%= check_box_tag "menu[preferenze_alimentari][#{preferenza}]", "true", @menu.preferenze_alimentari&.dig(preferenza) == "true", class: 'rounded-lg' %>
             <%= label_tag "menu_preferenze_alimentari_#{preferenza}", preferenza.capitalize %>
         </div>
         <% end %>
     </div>
 
-    <div class="form-divs">
-        <%= form.label :adattabile, "Seleziona l'adattabilità rispetto agli allergeni e alle preferenze alimentari:" %><br>
-        <div> Adattabile per le preferenze alimentari 
+    <div>
+        <%= form.label :adattabile, "Seleziona l'adattabilità rispetto agli allergeni e alle preferenze alimentari:", class: 'label text-xl' %><br>
+        <div> <strong> Adattabile per le preferenze alimentari </strong>
             <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
             <div>
                 <%= hidden_field_tag "menu[adattabile][preferenze][#{preferenza}]", "false" %>
-                <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", "true", @menu.adattabile&.dig("preferenze", preferenza) == "true" %>
+                <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", "true", @menu.adattabile&.dig("preferenze", preferenza) == "true", class: 'rounded-lg'%>
                 <%= label_tag "menu_adattabile_preferenze_#{preferenza}", "Adattabile per " + preferenza %>
             </div>
             <% end %>
         </div>
-        <div> Adattabile per gli allergeni 
+        <div> <strong> Adattabile per gli allergeni </strong>
             <% Menu::ALLERGENI.each do |allergene| %>
             <div>
                 <%= hidden_field_tag "menu[adattabile][allergeni][#{allergene}]", "false" %>
-                <%= check_box_tag "menu[adattabile][allergeni][#{allergene}]", "true", @menu.adattabile&.dig("allergeni", allergene) == "true" %>
+                <%= check_box_tag "menu[adattabile][allergeni][#{allergene}]", "true", @menu.adattabile&.dig("allergeni", allergene) == "true", class: 'rounded-lg' %>
                 <%= label_tag "menu_adattabile_allergeni_#{allergene}", "Adattabile per " + allergene %>
             </div>
             <% end %>
         </div>
     </div>
 
-    <div class="field form-divs">
-        <%= form.label :misenplace, "Mise en place (prezzo a persona)" %>
-        <%= form.number_field :extra_misenplace, step: '0.01', value: @menu.extra ? @menu.extra['miseenplace'].to_f : 0, min: 0 %>
+    <div class="field">
+        <%= form.label :misenplace, "Mise en place (prezzo a persona)", class: 'label' %>
+        <%= form.number_field :extra_misenplace, step: '0.01', value: @menu.extra ? @menu.extra['miseenplace'].to_f : 0, min: 0, class: 'input w-1/12' %>
     </div>
 
     <div class="field form-divs">
-        <%= form.label :vino, "Vino (prezzo a persona)" %>
-        <%= form.text_field :extra_vino, step: '0.01', value: @menu.extra ? @menu.extra['vino'].to_f : 0, min: 0 %>
+        <%= form.label :vino, "Vino (prezzo a persona)", class: 'label' %>
+        <%= form.text_field :extra_vino, step: '0.01', value: @menu.extra ? @menu.extra['vino'].to_f : 0, min: 0, class: 'input w-1/12' %>
     </div>
 
     <!-- Upload delle immagini -->
     <div>
-        <%= form.label :images, "Seleziona le immagini:" %><br>
+        <%= form.label :images, "Seleziona le immagini:", class: 'label' %> <br>
         <% if @menu.images.attached? %>
             <% @menu.images.each do |image| %>
                 <% unless image.new_record? %>
@@ -130,7 +130,8 @@
     </div>
 
 
-<%= form.submit %>
-
+    <%= button_tag(type: 'submit', class: 'btn btn-default mt-4') do %>
+        Crea il menu
+    <% end %>
 
 <% end %>
