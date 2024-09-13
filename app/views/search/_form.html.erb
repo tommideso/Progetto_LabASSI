@@ -1,7 +1,8 @@
 <%= search_form_for @q, url: search_path, method: :get, data: { controller: 'search' } do |f| %>
   <div class="relative">
-    <input type="text" id="searchInput" class="block w-full px-4 py-2 border rounded-lg" placeholder="Cerca...">
-    <button id="openModalButton" class="absolute inset-y-0 right-0 flex items-center px-4 py-2 text-white bg-blue-500 rounded-r-lg" data-action="search#openModal">🔍</button>
+    <button type="button" id="searchButton" class="block w-full px-6 py-3 border rounded-lg bg-blue-500 text-white text-lg font-bold" data-action="click->search#openModal">
+      Cerca
+    </button>
   </div>
 
   <!-- Modale -->
@@ -10,7 +11,6 @@
       <button id="closeModalButton" class="text-gray-500 hover:text-gray-700" data-action="search#closeModal">&times;</button>
       <h1 class="text-lg font-bold mb-4">Filtra la tua ricerca</h1>
       <form id="searchForm" data-search-target="form" data-action="submit->search#submitForm">
-        <!-- Aggiungi qui i tuoi campi di input -->
         
         <div class="field search-field">
           <%= f.label :titolo_cont, "Nome menu" %>
@@ -66,7 +66,7 @@
 
 
         <div class="actions">
-          <%= f.submit "Search", class: "search-button" %>
+          <%= f.submit "Cerca", class: "search-button" %>
         </div>
       </form>
     </div>

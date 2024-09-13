@@ -205,6 +205,7 @@ class MenusController < ApplicationController
     def check_permission
         @menu = Menu.find(params[:id])
         # Controlla se l'utente ha il permesso di disattivare/riattivare il menu
+        puts "Disattivato da: #{@menu.disattivato_da}"
         if current_user.chef? && @menu.disattivato_da == "admin"
             flash[:error] = "Non puoi disattivare un menu disattivato dall'admin."
             redirect_to menus_path

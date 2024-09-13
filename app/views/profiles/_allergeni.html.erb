@@ -1,0 +1,10 @@
+<% allergeni.each do |nome, presente| %>
+    <div class="flex gap-2 items-center">
+        <% if defined?(type) && type.present? && type == "success" %>
+            <%= inline_svg_tag "icons/check_circle.svg", class: 'w-6 h-6 fill-green-700' %>
+        <% else %>
+            <%= inline_svg_tag "icons/error.svg", class: 'w-6 h-6 fill-orange-700' %>
+        <% end %>
+    <p><%= "#{nome.capitalize}" %></p>
+    </div>
+<% end %>

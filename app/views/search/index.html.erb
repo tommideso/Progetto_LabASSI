@@ -1,27 +1,35 @@
-<h1 class="text-center"><%= pluralize(@menus.count,"Result")%></h1>
+<h1 class="text-center mb-6"><%= pluralize(@menus.count, "Result") %></h1>
 
 <div class="container">
-  <table class="table table-dark table-striped">
-    <thead>
-      <tr>
-        <th><%= sort_link(@q, :titolo, "Titolo", default_order: :asc)%> </th>
-        <th><%= sort_link(@q, :allergeni, "Allergeni")%></th>
-        <th><%= sort_link(@q, :preferenze_alimentari, "Preferenze alimentari")%></th>
-        <th><%= sort_link(@q, :min_persone, "Numero minimo di persone")%></th>
-        <th><%= sort_link(@q, :max_persone, "Numero massimo di persone")%></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @menus.each do |menu| %>
-        <tr>
-          <td><%= link_to menu.titolo, menu %></td>
-          <td><%= menu.allergeni %></td>
-          <td><%= menu.preferenze_alimentari %></td>
-          <td><%= menu.min_persone %></td>
-          <td><%= menu.max_persone %></td>
-        </tr>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <% @menus.each do |menu| %>
+      <% valutazioni = menu.reviews.map(&:valutazione).sum.to_f / menu.reviews.count.to_f if menu.reviews.any? %>
+      <% valutazioni = valutazioni.round(1) if valutazioni %>
+      <%= link_to menu_path(menu) do %>
+        <div class="card" id=<%= menu.id %>>
+          <div class="h-64 relative">
+            <% if menu.images.attached? %>
+              <%= image_tag(menu.images.first, alt: menu.titolo, class:"h-full w-full rounded-t-lg object-cover") %>
+            <% end %>
+            <% if valutazioni %>
+              <div class="absolute right-4 top-4">
+                <div class="flex gap-1.5 items-center justify-between rounded-full py-1 px-3 bg-white border">
+                  <p class="text-sm font-bold"> <%= valutazioni %> </p>
+                  <%= image_tag("star.png", alt: "star", class: "h-4 w-4") %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="break-words card-content space-y-2">
+            <h3 class="line-clamp-1"> <%= menu.titolo %> </h3>
+            <p class="line-clamp-2"> <%= raw menu.descrizione %> </p>
+          </div>
+          <div class="flex justify-between items-center px-6 pb-4">
+            <p class="text-sm"> <%= menu.min_persone %> - <%= menu.max_persone %> persone </p>
+            <p class="font-bold"> <%= menu.prezzo_persona %>€ </p>
+          </div>
+        </div>
       <% end %>
-    </tbody>  
-  </table>    
-
+    <% end %>
+  </div>
 </div>

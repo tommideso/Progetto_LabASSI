@@ -84,8 +84,8 @@ group :development, :test do
 
 end
 
-  
 
+gem "inline_svg"
 
 # Per tradurre devise in italiano
 gem "devise-i18n"

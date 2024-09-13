@@ -1,70 +1,136 @@
 <!-- Solo gli amministratori possono vedere il pulsante Blocca/Sblocca -->
-<% if user_signed_in? %>
-    <% if current_user.admin?%>
-        <%= @user.access_locked? ? 
-            button_to("Sblocca", unblock_profile_path(@user.id), method: :put) : 
-            button_to("Blocca", block_profile_path(@user.id), method: :put) 
-        %>
-    <% elsif (current_user.client? || current_user.chef?) && @user == current_user %>
-        <%= link_to "Modifica il tuo profilo", edit_user_registration_path %>
-    <% end %>
-
-<% end %>
-<div>
-    <%= render partial: "avatar", locals: {user: @user} %>
-    <h2> Profilo di <%= @user.nome %> </h2>
-    <p><strong>Media valutazioni:</strong> <%= @reviews_average ? @reviews_average : "Non ci sono ancora recensioni" %></p>
-
-    <% if @user.client? %>
-        <div>
-            <h2>Informazioni del Cliente</h2>
-            <p><strong>Nome:</strong> <%= @user.nome %></p>
-            <p><strong>Cognome:</strong> <%= @user.cognome %></p>
-            <p><strong>Email:</strong> <%= @user.email %></p>
-            <p><strong>Allergeni:</strong> <%= @user.client.allergeni %></p>
+<div class="space-y-8">
+    <div class="card card-content flex flex-col gap-4">
+        <div class="flex items-start justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <%= render partial: "avatar", locals: {user: @user} %>
+                <div class="flex flex-col items-start gap-1">
+                    <h2 class="text-2xl font-bold"><%= @user.nome %> <%= @user.cognome %></h2>
+                    <% if user_signed_in? && (current_user.admin? || current_user == @user) %> 
+                        <p class="text-lg text-slate-600"><%= @user.email %></p>
+                    <% end %>
+                    <%= @reviews_average ? render(partial: "profiles/stars", locals: {valutation: @reviews_average}) : "Non ci sono valutazioni" %>
+                    
+                </div>
+            </div>
+            <%# Azioni %>
+            <% if user_signed_in? %>
+                <div class="flex items-center justify-end gap-2">
+                    <% if current_user == @user && !current_user.admin? %>
+                        <%= button_to edit_user_registration_path, method: :get, class: "" do %>
+                            <div class="btn btn-outline flex items-center gap-2">
+                                <%= inline_svg_tag "icons/edit.svg", class: "w-6 h-6 icon-outline" %>
+                                <p>Modifica il tuo profilo</p>
+                            </div>
+                        <% end %>
+                    <% else %>
+                        <%# Chat with chef %>
+                        <%= button_to user_path(@user), method: :get do %>
+                            <div class="btn btn-default flex items-center gap-2">
+                                <%= inline_svg_tag "icons/chat.svg", class: "w-6 h-6 icon-default" %>
+                                <p>Chatta con lo chef</p>
+                            </div>
+                        <% end %>
+                    <% end %>
+                    <% if current_user.admin? %>
+                        <% if @user.access_locked? %>
+                            <%= button_to unblock_profile_path(@user.id), method: :put, class: "" do %>
+                                <div class="btn btn-secondary flex items-center gap-2">
+                                    <%= inline_svg_tag "icons/unlock.svg", class: "w-6 h-6 icon-secondary" %>
+                                    <p>Sblocca</p>
+                                </div>
+                            <% end %>
+                        <% else %>
+                            <%= button_to block_profile_path(@user.id), method: :put, class: "" do %>
+                                <div class="btn btn-secondary flex items-center gap-2">
+                                    <%= inline_svg_tag "icons/lock.svg", class: "w-6 h-6 icon-secondary" %>
+                                    <p><%= @user.access_locked? ? "Sblocca" : "Blocca" %></p>
+                                </div>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </div>
+            <% end %>
         </div>
-    <% elsif @user.chef? %>
-        <% if user_signed_in? && current_user != @user %>
-            <%= link_to "Chatta con lo chef", user_path(@user) %>   
-        <% end %>
+        <% if @user.chef? %>
+            <%= raw @user.chef.descrizione %>
+        <% elsif @user.client? %>
 
-        <p><strong>Descrizione:</strong> <%= raw @user.chef.descrizione %></p>
-
-        <% if @menus.any? %>
-            <div id="menu-list">
-                <% @menus.each do |menu| %>
-                    <%= render partial: "menus/menu_card", locals: {menu: menu} %>
-                <% end %>
+            <% allergeni_presenti = @user.client.allergeni.select { |_, presente| presente==true } %>
+            <div class="flex gap-8 items-end">
+                <%= render partial: "profiles/allergeni", locals: {allergeni: allergeni_presenti } %>
             </div>
-        <% else %>
-            <p> <%= @user.nome %> non ha ancora creato nessun menù. </p>
         <% end %>
+    </div>
+
+
+    <%# Menu %>
+    <div class="space-y-4">
+        <% if @user.chef? %>
+            <div class="flex justify-between items-center">
+                <h3 class="text-3xl font-bold">Menu </h3>
+                <div class="flex items-center justify-end gap-4">
+                    <% if user_signed_in? && current_user == @user %>
+                        <%= button_to new_menu_path, method: :get do %>
+                            <div class="btn btn-default flex items-center gap-2">
+                                <%= inline_svg_tag "icons/plus.svg", class: "w-6 h-6 icon-default" %>
+                                <p>Crea un nuovo menu</p>
+                            </div>
+                        <% end %> 
+                    <% end %>
+                    <% if @menus.any? %>
+                        <%# TODO agigungere path menu di uno chef %>
+                        <%= button_to menus_path, method: :get do %>
+                            <div class="btn btn-outline flex items-center gap-2">
+                                <%= inline_svg_tag "icons/right.svg", class: "w-6 h-6 icon-outline" %>
+                                <p>Vedi tutti</p>
+                            </div>
+                        <% end %>
+                    <% end %>
+                </div>
+            </div>
+            <% if @menus.any? %>
+                <div id="menu-list" class="grid grid-cols-4 gap-8">
+                    <% @menus.each do |menu| %>
+                        <%= render partial: "menus/menu_card", locals: {menu: menu} %>
+                    <% end %>
+                </div>
+            <% else %>
+                <p> <%= @user.nome %> non ha ancora creato nessun menù. </p>
+            <% end %>
+        <% end %>
+    </div>
+
+    <%# Prenotazioni %>
+    <% if user_signed_in? %>
+        <div class="space-y-4">
+            <% if current_user.admin? || current_user == @user %>
+                <div class="flex justify-between items-center">
+                    <h3 class="text-3xl font-bold">Prenotazioni </h3>
+                    <% if @reservations.any? %>
+                        <%# TODO link a prenotazioni di utente %>
+                        <%= button_to reservations_path, method: :get do %>
+                            <div class="btn btn-outline flex items-center gap-2">
+                                <%= inline_svg_tag "icons/right.svg", class: "w-6 h-6 icon-outline" %>
+                                <p>Vedi tutte</p>
+                            </div>
+                        <% end %>
+                    <% end %>
+                </div>
+                <% if @reservations.any? %>
+                    <div id="reservation-list" class="grid grid-cols-1 gap-4">
+                        <% @reservations.each do |reservation| %>
+                            <%= render partial: "reservations/reservation_card", locals: {reservation: reservation} %>
+                        <% end %>
+                    </div>
+                <% else %>
+                    <p> Non c'è nessuna prenotazione ancora </p>
+                <% end %>
+            <% end %>
+        </div>
     <% end %>
+
 </div>
-
-
-
-<% if user_signed_in? && current_user.chef? %>
-   <h3> <%= link_to "Crea un nuovo menu", new_menu_path %> </h3>
-<% end %>
-        
-<% if user_signed_in? %>
-    <%# Prenotazioni e Recensioni %>
-    <% if current_user.admin? || current_user == @user %>
-        <h2> Prenotazioni </h2>
-        <% if @reservations.any? %>
-            <div id="reservation-list">
-                <% @reservations.each do |reservation| %>
-                    <%= render partial: "reservations/reservation_card", locals: {reservation: reservation} %>
-                <% end %>
-            </div>
-        <% else %>
-            <p> Non hai ancora ricevuto nessuna prenotazione. </p>
-        <% end %>
-    <% end %>
-<% end %>
-
-
 
 
 
