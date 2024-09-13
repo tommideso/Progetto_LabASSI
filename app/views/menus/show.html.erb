@@ -199,7 +199,7 @@
               <%= f.text_field :indirizzo_consegna, class:"input", id: "indirizzo_consegna", value: current_user.client.indirizzo, data: { action: "keydown->places-autocomplete#preventSubmit", places_autocomplete_target: "address" }, placeholder: "Cerca un indirizzo" %>
             </div>
             <div class="form-divs"> 
-              <%= f.label :num_persone %>
+              <%= f.label :num_persone, "Numero di persone" %>
               <%= f.number_field :num_persone, class: "input", min: @menu.min_persone, max: @menu.max_persone, id: "num_persone" %>
             </div>
             <div class="form-divs">

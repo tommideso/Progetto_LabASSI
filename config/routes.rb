@@ -80,6 +80,8 @@ Rails.application.routes.draw do
     member do
       put "block", to: "profiles#block" # richiamo il metodo block del controller profiles
       put "unblock", to: "profiles#unblock" # richiamo il metodo unblock del controller profiles
+      get "menus"
+      get "reservations"
     end
   end
 

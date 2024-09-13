@@ -79,8 +79,7 @@
                         <% end %> 
                     <% end %>
                     <% if @menus.any? %>
-                        <%# TODO agigungere path menu di uno chef %>
-                        <%= button_to menus_path, method: :get do %>
+                        <%= button_to menus_profile_path(@user), method: :get do %>
                             <div class="btn btn-outline flex items-center gap-2">
                                 <%= inline_svg_tag "icons/right.svg", class: "w-6 h-6 icon-outline" %>
                                 <p>Vedi tutti</p>
@@ -108,12 +107,20 @@
                 <div class="flex justify-between items-center">
                     <h3 class="text-3xl font-bold">Prenotazioni </h3>
                     <% if @reservations.any? %>
-                        <%# TODO link a prenotazioni di utente %>
-                        <%= button_to reservations_path, method: :get do %>
-                            <div class="btn btn-outline flex items-center gap-2">
-                                <%= inline_svg_tag "icons/right.svg", class: "w-6 h-6 icon-outline" %>
-                                <p>Vedi tutte</p>
-                            </div>
+                        <% if current_user == @user %>
+                            <%= button_to reservations_path, method: :get do %>
+                                <div class="btn btn-outline flex items-center gap-2">
+                                    <%= inline_svg_tag "icons/right.svg", class: "w-6 h-6 icon-outline" %>
+                                    <p>Vedi tutte</p>
+                                </div>
+                            <% end %>
+                        <% else %>  
+                            <%= button_to reservations_profile_path(@user), method: :get do %>
+                                <div class="btn btn-outline flex items-center gap-2">
+                                    <%= inline_svg_tag "icons/right.svg", class: "w-6 h-6 icon-outline" %>
+                                    <p>Vedi tutte</p>
+                                </div>
+                            <% end %>
                         <% end %>
                     <% end %>
                 </div>

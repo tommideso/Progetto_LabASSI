@@ -1,20 +1,27 @@
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ["modal", "form", "selectAllAllergeni", "allergeneCheckbox", "selectAllPreferenze", "preferenzaCheckbox"]
+    static targets = [
+        "modal",
+        "form",
+        "selectAllAllergeni",
+        "allergeneCheckbox",
+        "selectAllPreferenze",
+        "preferenzaCheckbox",
+    ];
 
     toggleAll(event) {
-        const target = event.target
+        const target = event.target;
         if (target.dataset.searchTarget === "selectAllAllergeni") {
-          this.allergeneCheckboxTargets.forEach(checkbox => {
-            checkbox.checked = target.checked
-          })
+            this.allergeneCheckboxTargets.forEach((checkbox) => {
+                checkbox.checked = target.checked;
+            });
         } else if (target.dataset.searchTarget === "selectAllPreferenze") {
-          this.preferenzaCheckboxTargets.forEach(checkbox => {
-            checkbox.checked = target.checked
-          })
+            this.preferenzaCheckboxTargets.forEach((checkbox) => {
+                checkbox.checked = target.checked;
+            });
         }
-      }
+    }
 
     connect() {
         this.clearForm();
@@ -24,7 +31,9 @@ export default class extends Controller {
     openModal(event) {
         event.preventDefault();
         if (this.hasModalTarget) {
-            this.modalTarget.style.display = 'flex';
+            this.modalTarget.style.display = "flex";
+            // Deactivate scrolling on the body
+            document.body.style.overflow = "hidden";
         } else {
             console.warn("Modal target is missing");
         }
@@ -35,7 +44,8 @@ export default class extends Controller {
         console.log("Closing modal");
         this.resetModal();
         if (this.hasModalTarget) {
-            this.modalTarget.style.display = 'none';
+            document.body.style.overflow = "auto";
+            this.modalTarget.style.display = "none";
         } else {
             console.warn("Modal target is missing");
         }
@@ -50,7 +60,7 @@ export default class extends Controller {
     resetModal() {
         if (this.hasFormTarget) {
             console.log("Form target found:", this.formTarget);
-            if (typeof this.formTarget.reset === 'function') {
+            if (typeof this.formTarget.reset === "function") {
                 this.formTarget.reset();
                 this.clearDatepickers();
             } else {
@@ -79,7 +89,7 @@ export default class extends Controller {
                     flatpickr(element, {
                         onClose: () => {
                             console.log("Date picker closed");
-                        }
+                        },
                     });
                 }
             });
@@ -107,7 +117,7 @@ export default class extends Controller {
     cleanup() {
         console.log("Cleaning up event listeners and DOM elements");
         if (this.hasModalTarget) {
-            this.modalTarget.style.display = 'none';
+            this.modalTarget.style.display = "none";
         }
         if (this.hasFormTarget) {
             this.formTarget.reset();
