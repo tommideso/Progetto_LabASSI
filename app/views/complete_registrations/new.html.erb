@@ -1,10 +1,14 @@
-<h2>Completa il tuo profilo</h2>
+<div class="lg:w-1/2">
+  <div class="sticky top-6 card">
+    <div class="card-content">
+      <h2 class="text-2xl font-bold">Completa il tuo profilo</h2>
 
-<%= form_for @user, url: complete_registration_path, method: :post, html: { data: { turbo: false } } do |f| %>
-  <%= render partial: "shared_partials/profile_errors" %>
-  <%= render "shared_partials/profile", f: f %>
+      <%= form_for @user, url: complete_registration_path, method: :post, html: { data: { turbo: false } } do |f| %>
+        <%= render partial: "shared_partials/profile_errors" %>
+        <%= render "shared_partials/profile", f: f %>
 
-  <div class="actions">
-    <%= f.submit "Completa il profilo" %>
+        <%= f.button "Completa il tuo profilo", type: "submit", :class=> "btn btn-default mb-4 ml-5 " %><br>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</div>

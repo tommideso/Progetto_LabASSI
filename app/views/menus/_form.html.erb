@@ -7,18 +7,18 @@
     <% end %>
 
     <!-- Mostriamo i contenuti del modello -->
-    <div class="form-divs">
+    <div class="form-divs mt-8">
         <%= form.label :titolo, class: 'label' %>
         <%= form.text_field :titolo, id:"titolo", value: @menu.persisted? ? (@menu.titolo.presence || @menu.reload.titolo) : @menu.titolo, class: 'input w-1/4' %>
     </div>
 
-    <div>
-        <%= form.label :descrizione %>
-        <%= form.rich_text_area :descrizione, id:"descrizione", value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione %>
+    <div class="form-divs">
+        <%= form.label :descrizione, class: 'label' %>
+        <%= form.rich_text_area :descrizione, id:"descrizione", value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione, class: 'input' %>
     </div>
 
     <!-- Sezione Piatti -->
-    <h3>Piatti</h3>
+    <h3 class="mt-5"> Piatti </h3>
     
     <div class="flex flex-row w-full flex-wrap">
         <!-- Stimulus Rails Nested Form -->
@@ -34,70 +34,68 @@
 
         <div data-nested-form-target="target"></div>
 
-        <button type="button" data-action="nested-form#add" class="btn btn-default h-1/4"> Aggiungi piatto</button>
-    </div>
-
-    
-
-    <div>
-        <%= form.label :prezzo_persona %>
-        <%= form.number_field :prezzo_persona, id:"prezzo_persona", step: '0.01', value: @menu.persisted? ? (@menu.prezzo_persona.presence || @menu.reload.prezzo_persona) : @menu.prezzo_persona %>
+        <button type="button" data-action="nested-form#add" class="btn btn-default h-1/4 my-3"> Aggiungi piatto</button>
     </div>
 
     <div>
-        <%= form.label :min_persone %>
-        <%= form.number_field :min_persone, id:"min_persone", step: 1, value: @menu.persisted? ? (@menu.min_persone.presence || @menu.reload.min_persone) : @menu.min_persone %>
+        <%= form.label :prezzo_persona, class: 'label' %>
+        <%= form.number_field :prezzo_persona, id:"prezzo_persona", step: '0.01', value: @menu.persisted? ? (@menu.prezzo_persona.presence || @menu.reload.prezzo_persona) : @menu.prezzo_persona, class: 'input' %>
     </div>
 
     <div>
-        <%= form.label :max_persone %>
-        <%= form.number_field :max_persone,id:"max_persone", step: 1, value: @menu.persisted? ? (@menu.max_persone.presence || @menu.reload.max_persone) : @menu.max_persone %>
+        <%= form.label :min_persone, class: 'label' %>
+        <%= form.number_field :min_persone, id:"min_persone", step: 1, value: @menu.persisted? ? (@menu.min_persone.presence || @menu.reload.min_persone) : @menu.min_persone, class: 'input' %>
     </div>
 
     <div>
-        <%= form.label :tipo_cucina %>
+        <%= form.label :max_persone, class: 'label' %>
+        <%= form.number_field :max_persone,id:"max_persone", step: 1, value: @menu.persisted? ? (@menu.max_persone.presence || @menu.reload.max_persone) : @menu.max_persone, class: 'input' %>
+    </div>
+
+    <div>
+        <%= form.label :tipo_cucina, class: 'label' %>
         <!-- Usiamo map per mostrare la prima lettera maiuscola (pur inviando al server la stringa minuscola) -->
-        <%= form.select :tipo_cucina, options_for_select(Menu::TIPI_CUCINA.map { |tipo| [tipo.capitalize, tipo] }, @menu.tipo_cucina)  %>
+        <%= form.select :tipo_cucina, options_for_select(Menu::TIPI_CUCINA.map { |tipo| [tipo.capitalize, tipo] }, @menu.tipo_cucina), {}, { class: 'flex h-10 rounded-md border border-input bg-background pl-3 pr-8 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50' } %>    
     </div>
 
     <div>
-        <%= form.label :allergeni, "Seleziona gli allergeni:" %><br>
+        <%= form.label :allergeni, "Seleziona gli allergeni:", class: 'label' %><br>
         <% Menu::ALLERGENI.each do |allergene| %>
         <div>
             <%= hidden_field_tag "menu[allergeni][#{allergene}]", "false" %>
-            <%= check_box_tag "menu[allergeni][#{allergene}]", "true", @menu.allergeni&.dig(allergene) == "true" %>
+            <%= check_box_tag "menu[allergeni][#{allergene}]", "true", @menu.allergeni&.dig(allergene) == "true", class: 'rounded-lg' %>
             <%= label_tag "menu_allergeni_#{allergene}", allergene.capitalize %>
         </div>
         <% end %>
     </div>
 
     <div>
-        <%= form.label :preferenze_alimentari, "Seleziona le preferenze alimentari:" %><br>
+        <%= form.label :preferenze_alimentari, "Seleziona le preferenze alimentari:", class: 'label' %><br>
         <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
         <div>
             <%= hidden_field_tag "menu[preferenze_alimentari][#{preferenza}]", "false" %>
-            <%= check_box_tag "menu[preferenze_alimentari][#{preferenza}]", "true", @menu.preferenze_alimentari&.dig(preferenza) == "true" %>
+            <%= check_box_tag "menu[preferenze_alimentari][#{preferenza}]", "true", @menu.preferenze_alimentari&.dig(preferenza) == "true", class: 'rounded-lg' %>
             <%= label_tag "menu_preferenze_alimentari_#{preferenza}", preferenza.capitalize %>
         </div>
         <% end %>
     </div>
 
     <div>
-        <%= form.label :adattabile, "Seleziona l'adattabilità rispetto agli allergeni e alle preferenze alimentari:" %><br>
-        <div> Adattabile per le preferenze alimentari 
+        <%= form.label :adattabile, "Seleziona l'adattabilità rispetto agli allergeni e alle preferenze alimentari:", class: 'label text-xl' %><br>
+        <div> <strong> Adattabile per le preferenze alimentari </strong>
             <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
             <div>
                 <%= hidden_field_tag "menu[adattabile][preferenze][#{preferenza}]", "false" %>
-                <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", "true", @menu.adattabile&.dig("preferenze", preferenza) == "true" %>
+                <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", "true", @menu.adattabile&.dig("preferenze", preferenza) == "true", class: 'rounded-lg'%>
                 <%= label_tag "menu_adattabile_preferenze_#{preferenza}", "Adattabile per " + preferenza %>
             </div>
             <% end %>
         </div>
-        <div> Adattabile per gli allergeni 
+        <div> <strong> Adattabile per gli allergeni </strong>
             <% Menu::ALLERGENI.each do |allergene| %>
             <div>
                 <%= hidden_field_tag "menu[adattabile][allergeni][#{allergene}]", "false" %>
-                <%= check_box_tag "menu[adattabile][allergeni][#{allergene}]", "true", @menu.adattabile&.dig("allergeni", allergene) == "true" %>
+                <%= check_box_tag "menu[adattabile][allergeni][#{allergene}]", "true", @menu.adattabile&.dig("allergeni", allergene) == "true", class: 'rounded-lg' %>
                 <%= label_tag "menu_adattabile_allergeni_#{allergene}", "Adattabile per " + allergene %>
             </div>
             <% end %>
@@ -105,18 +103,18 @@
     </div>
 
     <div class="field">
-        <%= form.label :misenplace, "Mise en place (prezzo a persona)" %>
-        <%= form.number_field :extra_misenplace, step: '0.01', value: @menu.extra ? @menu.extra['miseenplace'].to_f : 0, min: 0 %>
+        <%= form.label :misenplace, "Mise en place (prezzo a persona)", class: 'label' %>
+        <%= form.number_field :extra_misenplace, step: '0.01', value: @menu.extra ? @menu.extra['miseenplace'].to_f : 0, min: 0, class: 'input w-1/12' %>
     </div>
 
-    <div class="field">
-        <%= form.label :vino, "Vino (prezzo a persona)" %>
-        <%= form.text_field :extra_vino, step: '0.01', value: @menu.extra ? @menu.extra['vino'].to_f : 0, min: 0 %>
+    <div class="field form-divs">
+        <%= form.label :vino, "Vino (prezzo a persona)", class: 'label' %>
+        <%= form.text_field :extra_vino, step: '0.01', value: @menu.extra ? @menu.extra['vino'].to_f : 0, min: 0, class: 'input w-1/12' %>
     </div>
 
     <!-- Upload delle immagini -->
     <div>
-        <%= form.label :images, "Seleziona le immagini:" %><br>
+        <%= form.label :images, "Seleziona le immagini:", class: 'label' %> <br>
         <% if @menu.images.attached? %>
             <% @menu.images.each do |image| %>
                 <% unless image.new_record? %>
@@ -132,7 +130,8 @@
     </div>
 
 
-<%= form.submit %>
-
+    <%= button_tag(type: 'submit', class: 'btn btn-default mt-4') do %>
+        Crea il menu
+    <% end %>
 
 <% end %>
