@@ -155,7 +155,7 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:num_persone, :tipo_pasto, :vino, :menu_id, :data_prenotazione, :indirizzo_consegna, :miseenplace)
+    params.require(:reservation).permit(:num_persone, :tipo_pasto, :vino, :menu_id, :data_prenotazione, :indirizzo_consegna, :miseenplace, :modifiche_richieste)
   end
 
   def refund_payment(reservation)

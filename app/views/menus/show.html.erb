@@ -211,6 +211,12 @@
               <%= f.label :data_prenotazione %>
               <%= f.date_field :data_prenotazione, class: "datepicker input", min: Date.today, id: "data_prenotazione" %>
             </div>
+            <div class="form-divs">
+              <%= f.label :modifiche_richieste %>
+              <%= f.text_field :modifiche_richieste, class: "input", id: "modifiche_richieste" %>
+            </div>
+            
+
             <% if @menu.extra["vino"] > 0 %>
             <%= f.hidden_field :vino, value: false %>
             <div class="form-checkbox-div">
