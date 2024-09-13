@@ -16,6 +16,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :client
   # vincoli necessari per la chat
   has_many :messages, dependent: :destroy
+  has_many :participants, dependent: :destroy
 
   # validazione per i campi
   validates :ruolo, inclusion: { in: [ "chef", "client", "admin", nil ] }
@@ -32,7 +33,7 @@ class User < ApplicationRecord
   def admin?
     ruolo == "admin"
   end
-  has_one_attached :avatar
+  has_one_attached :avatar, dependent: :destroy
 
   def completed?
     completed == 2

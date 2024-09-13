@@ -7,7 +7,7 @@ class Reservation < ApplicationRecord
   # usiamo un'associazione "personalizzata" con paper_trail
   belongs_to :menu_version, class_name: "PaperTrail::Version", optional: true
   # ed un'altra associata personalizzata con il solo scope di percorrere l'associazione in maniera più veloce
-  has_one :versioned_menu, through: :menu_version, source: :item, source_type: "Menu"
+  has_one :versioned_menu, through: :menu_version, source: :item, source_type: "Menu", dependent: :destroy
 
   # aggiunta dell'associazione menu_version_id
   belongs_to :menu_version, optional: true
@@ -30,7 +30,7 @@ class Reservation < ApplicationRecord
 
 
   # Recensioni
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
   validate :max_three_reviews # non più di tre recensioni per prenotazione
 
   # Se il pagamento è stato effettuato, allora la prenotazione deve avere un session_id

@@ -13,7 +13,7 @@ class Menu < ApplicationRecord
     # collegamento verso chef
     belongs_to :chef
     # collegamento verso prenotazione
-    has_many :reservations
+    has_many :reservations, dependent: :destroy
 
 
     # definiamo uno scope che restituisce i menu disponibili per una certa data, con stato della prenotazione :attesa_pagamento o :confermata
@@ -31,14 +31,14 @@ class Menu < ApplicationRecord
     EXTRA = [ "vino", "miseenplace" ].freeze
 
     # immagini
-    has_many_attached :images
+    has_many_attached :images, dependent: :destroy
     validate :images_must_be_valid
 
     # versioning tramite gemma paper_trail
     has_paper_trail on: [] # normalmente la gemma è disabilitata! viene attivata dal modello reservation.rb
 
     # Recensioni
-    has_many :reviews, as: :tipo_recensione
+    has_many :reviews, as: :tipo_recensione, dependent: :destroy
 
     # Piatti
     has_many :dishes, dependent: :destroy

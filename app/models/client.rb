@@ -12,7 +12,7 @@ class Client < ApplicationRecord
   has_many :favorites, dependent: :destroy
 
   # Recensioni
-  has_many :reviews, as: :tipo_recensione
+  has_many :reviews, as: :tipo_recensione, dependent: :destroy
 
   delegate :email, to: :user
   pay_customer stripe_attributes: :stripe_attributes
@@ -34,7 +34,7 @@ class Client < ApplicationRecord
   private
 
   def allergeni_presence
-    if allergeni.nil? || allergeni.empty? 
+    if allergeni.nil? || allergeni.empty?
       puts "Allergeni: #{allergeni.inspect}"
       errors.add(:allergeni, "Non può essere vuoto")
     end
