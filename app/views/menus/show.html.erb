@@ -89,13 +89,13 @@
         <!-- Extra -->
         <div class="card card-content  ">
           <h3 class="card-title">Puoi aggiungere:</h3>
-          <% if @menu.extra["vino"] > 0 %>
+          <% if @menu.extra["vino"].to_i > 0 %>
           <div class="flex gap-2 items-center py-2">
             <%= inline_svg_tag "icons/wine.svg", class: 'w-6 h-6 fill-slate-600' %>
             <p>Vino: <%= @menu.extra["vino"].to_f.round(2) %> € a persona</p>
           </div>
           <% end %>
-          <% if @menu.extra["miseenplace"] > 0 %>
+          <% if @menu.extra["miseenplace"].to_i > 0 %>
           <div class="flex gap-2 items-center py-2">
             <%= inline_svg_tag "icons/mise.svg", class: 'w-6 h-6 fill-slate-600' %>
             <p>Mise en place: <%= @menu.extra["miseenplace"].to_f.round(2) %> € a persona</p>

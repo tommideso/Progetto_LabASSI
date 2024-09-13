@@ -135,7 +135,7 @@ class MenusController < ApplicationController
             @menu.errors.add(:base, "Errore durante la creazione del prodotto o del prezzo (Stripe): #{e.message}")
         end
         if @menu.save
-            redirect_to @menu
+            redirect_to menu_path(@menu)
         else
             render :new, status: :unprocessable_entity
         end

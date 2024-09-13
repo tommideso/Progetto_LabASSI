@@ -9,12 +9,12 @@
     <!-- Mostriamo i contenuti del modello -->
     <div>
         <%= form.label :titolo %>
-        <%= form.text_field :titolo, value: @menu.persisted? ? (@menu.titolo.presence || @menu.reload.titolo) : @menu.titolo %>
+        <%= form.text_field :titolo, id:"titolo", value: @menu.persisted? ? (@menu.titolo.presence || @menu.reload.titolo) : @menu.titolo %>
     </div>
 
     <div>
         <%= form.label :descrizione %>
-        <%= form.rich_text_area :descrizione, value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione %>
+        <%= form.rich_text_area :descrizione, id:"descrizione", value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione %>
     </div>
 
     <!-- Sezione Piatti -->
@@ -38,23 +38,23 @@
 
     <div>
         <%= form.label :prezzo_persona %>
-        <%= form.number_field :prezzo_persona, step: '0.01', value: @menu.persisted? ? (@menu.prezzo_persona.presence || @menu.reload.prezzo_persona) : @menu.prezzo_persona %>
+        <%= form.number_field :prezzo_persona, id:"prezzo_persona", step: '0.01', value: @menu.persisted? ? (@menu.prezzo_persona.presence || @menu.reload.prezzo_persona) : @menu.prezzo_persona %>
     </div>
 
     <div>
         <%= form.label :min_persone %>
-        <%= form.number_field :min_persone, step: 1, value: @menu.persisted? ? (@menu.min_persone.presence || @menu.reload.min_persone) : @menu.min_persone %>
+        <%= form.number_field :min_persone, id:"min_persone", step: 1, value: @menu.persisted? ? (@menu.min_persone.presence || @menu.reload.min_persone) : @menu.min_persone %>
     </div>
 
     <div>
         <%= form.label :max_persone %>
-        <%= form.number_field :max_persone, step: 1, value: @menu.persisted? ? (@menu.max_persone.presence || @menu.reload.max_persone) : @menu.max_persone %>
+        <%= form.number_field :max_persone,id:"max_persone", step: 1, value: @menu.persisted? ? (@menu.max_persone.presence || @menu.reload.max_persone) : @menu.max_persone %>
     </div>
 
     <div>
         <%= form.label :tipo_cucina %>
         <!-- Usiamo map per mostrare la prima lettera maiuscola (pur inviando al server la stringa minuscola) -->
-        <%= form.select :tipo_cucina, options_for_select(Menu::TIPI_CUCINA.map { |tipo| [tipo.capitalize, tipo] }, @menu.tipo_cucina) %>
+        <%= form.select :tipo_cucina, options_for_select(Menu::TIPI_CUCINA.map { |tipo| [tipo.capitalize, tipo] }, @menu.tipo_cucina)  %>
     </div>
 
     <div>

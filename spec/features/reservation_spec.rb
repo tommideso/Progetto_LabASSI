@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# TODO intanto lo pusho cosi
 RSpec.feature "Reservation", type: :feature, js: true do
   let(:client) { create(:client) }
   let(:chef) { create(:chef) }
