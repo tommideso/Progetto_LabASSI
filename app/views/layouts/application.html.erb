@@ -49,14 +49,14 @@
     </style>
   </head>
 
-  <body class="w-full px-[5%]">
+  <body class="w-full px-[5%] bg-slate-100/50">
     <%= render partial: "shared_partials/notifications", locals: { message: flash[:notice], type: "success" } %>
     <%= render partial: "shared_partials/notifications", locals: { message: flash[:alert], type: "warning" } %>
     <%= render partial: "shared_partials/notifications", locals: { message: flash[:error], type: "danger" } %>
     <%= render partial: "shared_partials/mini_header" %> 
 
     <%= render partial: "shared_partials/sidebar" %>
-    <div class="">
+    <div class="pb-10">
       <%= yield %>
     </div>
     

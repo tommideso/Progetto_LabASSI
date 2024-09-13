@@ -43,9 +43,9 @@
         </div>
         <div class="flex gap-1 justify-between flex-wrap">
             <% if @menu.images.attached? %>
-            <% @menu.images.first(3).each do |image| %>
-            <%= image_tag(image, class: "h-72") %>
-            <% end %>
+              <% @menu.images.first(3).each do |image| %>
+                <%= image_tag(image, class: "h-72") %>
+              <% end %>
             <% end %>
           </div>
           <div>
@@ -60,22 +60,7 @@
           <div class="space-y-2 w-full">
             <div class="flex justify-between items-center">
               <p class="text-2xl font-bold"><%= @menu.chef.user.nome %> <%= @menu.chef.user.cognome %></p>
-              <div class="flex">
-                <% if @chef_valutation.present? && !@chef_valutation.nan? %>
-                <% full_stars = @chef_valutation.floor %>
-                <% half_star = (@chef_valutation - full_stars) >= 0.5 %>
-                <% empty_stars = 5 - full_stars - (half_star ? 1 : 0) %>
-                <% full_stars.times do %>
-                <%= image_tag "yellow_star_fill.png", alt: "Valutazione Chef", class: "w-6 h-6" %>
-                <% end %>
-                <% if half_star %>
-                <%= image_tag "yellow_star_half.png", alt: "Mezza Valutazione Chef", class: "w-6 h-6" %>
-                <% end %>
-                <% empty_stars.times do %>
-                <%= image_tag "yellow_star_empty.png", alt: "Stella Vuota", class: "w-6 h-6" %>
-                <% end %> 
-                <% end %> 
-              </div>
+                <%= render partial: "profiles/stars", locals: {valutation: @chef_valutation} %>
             </div>
             <div class="">
               <p class="text-lg line-clamp-3 "><%= raw @menu.chef.descrizione %></p>
@@ -144,35 +129,28 @@
         <h3 class="card-title">Allergeni e Preferenze Alimentari</h3>
         <div class="grid grid-cols-2 gap-y-6 gap-x-16">
           <div>
-            <h4 class="card-secondary-title">Presenti:</h4>
+            <h4 class="card-secondary-title mb-2">Presenti:</h4>
             <% allergeni_presenti = @menu.allergeni.select { |allergene, presente| presente == true } if @menu.allergeni.present? %>
             <% preferenze_presenti = @menu.preferenze_alimentari.select { |preferenza, presente| presente == true } if @menu.preferenze_alimentari.present? %>
             <% presenti = (allergeni_presenti || {}).merge(preferenze_presenti || {}) %>
             <% if presenti.any? %>
-            <% presenti.each do |nome, presente| %>
-            <div class="flex gap-2 items-center py-2">
-              <%= inline_svg_tag "icons/error.svg", class: 'w-6 h-6 fill-orange-700' %>
-              <p><%= "#{nome.capitalize}" %></p>
-            </div>
-            <% end %>
+              <div class="flex flex-col gap-2">
+                <%= render partial: "profiles/allergeni", locals: {allergeni: presenti} %>
+              </div>
             <% else %>
             <p>Nessun allergene o preferenza alimentare registrata.</p>
             <% end %>
           </div>
           <div>
-            <h4 class="card-secondary-title">Adattabile per:</h4>
-            <% adattabile_allergeni = @menu.adattabile["allergeni"].select { |adattamento, presente| presente == true } if @menu.adattabile.present? && @menu.adattabile["allergeni"].present? %>
-            <% adattabile_preferenze = @menu.adattabile["preferenze"].select { |adattamento, presente| presente == true } if @menu.adattabile.present? && @menu.adattabile["preferenze"].present? %>
+            <h4 class="card-secondary-title mb-2">Adattabile per:</h4>
+            <%# <% if (@menu.allergeni.present? && @menu.allergeni[nome] == true) || (@menu.preferenze_alimentari.present? && @menu.preferenze_alimentari[nome] == true) %>
+            <% adattabile_allergeni = @menu.adattabile["allergeni"].select { |adattamento, presente| presente == true && allergeni_presenti[adattamento] == true } if @menu.adattabile.present? && @menu.adattabile["allergeni"].present? %>
+            <% adattabile_preferenze = @menu.adattabile["preferenze"].select { |adattamento, presente| presente == true && preferenze_presenti[adattamento] == true } if @menu.adattabile.present? && @menu.adattabile["preferenze"].present? %>
             <% adattabili = (adattabile_allergeni || {}).merge(adattabile_preferenze || {}) %>
             <% if adattabili.any? %>
-            <% adattabili.each do |nome, presente| %>
-            <% if (@menu.allergeni.present? && @menu.allergeni[nome] == true) || (@menu.preferenze_alimentari.present? && @menu.preferenze_alimentari[nome] == true) %>
-            <div class="flex gap-2 items-center py-2">
-              <%= inline_svg_tag "icons/check_circle.svg", class: 'w-6 h-6 fill-green-700' %>
-              <p><%= "#{nome.capitalize}" %></p>
-            </div>
-            <% end %>
-            <% end %>
+              <div class="flex flex-col gap-2">
+                <%= render partial: "profiles/allergeni", locals: {allergeni: adattabili, type: "success"} %>
+              </div>
             <% else %>
             <p>Non è possibile adattare il menu per allergeni o preferenze alimentari.</p>
             <% end %>
@@ -185,21 +163,14 @@
         <% @menu_reviews.each do |review| %>
         <div class="card card-content space-y-2">
           <div class="flex items-center">
-            <div class="flex items-center">
-              <% full_stars = review.valutazione.floor %>
-              <% empty_stars = 5 - full_stars %>
-              <% full_stars.times do %>
-              <%= image_tag "yellow_star_fill.png", alt: "Valutazione Chef", class: "w-6 h-6" %>
-              <% end %>
-              <% empty_stars.times do %>
-              <%= image_tag "yellow_star_empty.png", alt: "Stella Vuota", class: "w-6 h-6" %>
-              <% end %> 
-            </div>
+              <%= render partial: "profiles/stars", locals: {valutation: review.valutazione} %>
           </div>
           <p><%= review.commento %></p>
           <%# Se admin  %>
           <% if user_signed_in? && current_user.admin? %>
-          <p><%= button_to "Vai alla prenotazione", reservation_path(review.reservation), class:"btn-link" %></p>
+            <%= button_to reservation_path(review.reservation), method: :get do %>
+              <div class="btn-link">Vai alla prenotazione</div>
+            <% end %>
           <% end %>
         </div>
         <% end %>

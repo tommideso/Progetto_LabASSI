@@ -92,7 +92,15 @@ li {
 .btn-link {
     @apply text-primary underline-offset-4 hover:underline;
 }
-
+.icon-default {
+    @apply fill-primary-foreground;
+}
+.icon-secondary {
+    @apply fill-secondary-foreground;
+}
+.icon-outline {
+    @apply fill-accent-foreground;
+}
 /* TABS */
 .tabs .tabs-tabs {
     @apply flex gap-1 my-4 items-center;

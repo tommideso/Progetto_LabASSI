@@ -1,0 +1,16 @@
+<% if valutation.present? && (valutation.is_a?(Float) ? !valutation.nan? : true) %>
+    <div class="flex items-center">
+        <% full_stars = valutation.floor %>
+        <% half_star = (valutation - full_stars) >= 0.5 %>
+        <% empty_stars = 5 - full_stars - (half_star ? 1 : 0) %>
+        <% full_stars.times do %>
+            <%= inline_svg_tag "icons/star_fill.svg", class: 'w-6 h-6 fill-yellow-500' %>
+        <% end %>
+        <% if half_star %>
+            <%= inline_svg_tag "icons/star_half.svg", class: 'w-6 h-6 fill-yellow-500' %>
+        <% end %>
+        <% empty_stars.times do %>
+            <%= inline_svg_tag "icons/star_empty.svg", class: 'w-6 h-6 fill-yellow-500' %>
+        <% end %> 
+    </div>
+<% end %> 
