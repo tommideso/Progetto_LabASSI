@@ -46,7 +46,7 @@
                         <%= link_to "Menu", menus_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
                     <% end %>
                     <hr class="border-t" />
-                    <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %> 
+                    <%= button_to "Esci", destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %> 
                 </div>
             </div>
         </div>
@@ -54,15 +54,15 @@
         <% elsif user_signed_in? && !current_user.completed? %>
             <%= button_to destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'btn btn-outline-bigger justify-self-right' do %>
                 <%= inline_svg_tag 'icons/sign-out.svg', class: 'w-6 h-6 mr-3' %>
-                Log out
+                Esci
             <% end %>
         <% elsif !user_signed_in? %>
         <!-- caso di un utente non loggato -->
             <%= link_to new_user_session_path, class: 'btn btn-outline-bigger justify-self-right' do %>
                 <%= inline_svg_tag 'icons/log-in.svg', class: 'w-6 h-6 mr-3' %>
-                Login
+                Accedi
             <% end %>
-            <%#= link_to "Sign up", new_user_registration_path, class: 'btn btn-outline-bigger' %>
+            <%#= link_to "Registrati", new_user_registration_path, class: 'btn btn-outline-bigger' %>
         <% end %>
     </div>
 </div>
