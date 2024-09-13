@@ -141,7 +141,7 @@ li {
     @apply flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50;
 }
 .label {
-    @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+    @apply font-semibold;
 }
 .checkbox {
     @apply w-5 h-5 text-primary bg-slate-100 border-slate-300 rounded-full hover:cursor-pointer;

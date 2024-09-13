@@ -1,10 +1,20 @@
-<h2 class="page-title">Prenotazione #<%= @reservation.id %></h2>
+<div class="flex justify-between items-center">
+  <h2 class="page-title">Prenotazione #<%= @reservation.id %></h2>
+  <%= button_to reservations_path, method: :get do %>
+    <div class="btn btn-outline flex justify-between gap-2">
+      <%= inline_svg_tag "icons/right.svg", class: "w-6 h-6 icon-outline rotate-180" %>
+      <p>Torna alle prenotazioni</p>
+    </div>
+  <% end %>
+</div>
+
 <div class="flex gap-4">
-  <div class="card card-content lg:w-3/4">
-    <h2 class="card-title pb-4">Dettagli prenotazione</h2>
+  <div class="card card-content lg:w-3/4 h-fit">
+      <h2 class="card-title pb-4">Dettagli prenotazione</h2>
+      
     <div class="space-y-4">
       <div class="flex justify-between items-center">
-        <% client_label = current_user.client? ? "Tu:" : "Cliente:" %>
+        <% client_label = current_user.client? ? "Tu" : "Cliente" %>
         <% if current_user.admin? || current_user.client? %>
             <div class="flex gap-2">
               <%= inline_svg_tag "icons/person.svg", class: "w-6 h-6 icon-secondary" %>
@@ -22,13 +32,14 @@
       </div>
             
       <%# Chef %>
-      <div class="">
-        <% chef_label = current_user.chef? ? "Tu:" : "Chef:" %>
-        <%= link_to profile_path(@reservation.chef.user) do %>
-          <div class="flex gap-2">
+      <div class="flex justify-between items-center">
+        <% chef_label = current_user.chef? ? "Tu" : "Chef" %>
+        <div class="flex gap-2">
             <%= inline_svg_tag "icons/chef.svg", class: "w-6 h-6 icon-secondary " %>
-            <p><span class="font-semibold"><%= chef_label %></span> <%= @reservation.chef.user.nome %> <%= @reservation.chef.user.cognome %></p>
+            <p><span class="font-semibold"><%= chef_label %></span></p>
           </div>
+        <%= link_to profile_path(@reservation.chef.user) do %>
+            <p><%= @reservation.chef.user.nome %> <%= @reservation.chef.user.cognome %></p>
         <% end %>
       </div>
 
@@ -37,19 +48,24 @@
       <div class="flex justify-between items-center">
         <div class="flex gap-2">
           <%= inline_svg_tag "icons/calendar.svg", class: "w-6 h-6 icon-secondary" %>
-          <p><span class="font-semibold">Data Prenotazione:</span> <%= @reservation.data_prenotazione %></p>
+          <p><span class="font-semibold">Data Prenotazione:</span></p>
         </div>
+        <p> <%= @reservation.data_prenotazione %> </p>
       </div>
       
       <div class="flex justify-between items-center">
         <div class="flex gap-2">
-          <%= inline_svg_tag "icons/time.svg", class: "w-6 h-6 icon-secondary" %>
-          <p><span class="font-semibold">Tipo pasto:</span> <%= @reservation.tipo_pasto.capitalize %></p>
+          <%= inline_svg_tag "icons/clock.svg", class: "w-6 h-6 icon-secondary" %>
+          <p><span class="font-semibold">Tipo pasto:</span></p>
         </div>
+        <p> <%= @reservation.tipo_pasto.capitalize %> </p>
       </div>
     
       <div class="flex justify-between items-center">
+        <div class="flex gap-2">
+          <%= inline_svg_tag "icons/loader.svg", class: "w-6 h-6 icon-secondary" %>
         <p class="text-xl font-semibold">Stato</p>
+        </div>
         <% colore = case @reservation.stato  
                   when "completata" then "blue"
                   when "cancellata" then "destructive"
@@ -61,26 +77,33 @@
         <%= render partial: "shared_partials/status", locals: {colore: colore, testo: @reservation.stato.humanize } %>
       </div>
       <div class="flex justify-between items-center">
-        <p class="text-xl font-semibold">Numero Persone</p>
+        <div class="flex gap-2">
+          <%= inline_svg_tag "icons/groups.svg", class: "w-6 h-6 icon-secondary" %>
+          <p><span class="font-semibold">Numero Persone</span></p>
+        </div>
         <p><%= @reservation.num_persone %></p>
       </div>
-
       <div class="flex justify-between items-center">
-        <p class="text-xl font-semibold">Tipo pasto</p>
-        <p><%= @reservation.tipo_pasto.capitalize %></p>
-      </div>
-      <div class="flex justify-between items-center">
-        <p class="text-xl font-semibold">Indirizzo Consegna</p>
+        <div class="flex gap-2">
+          <%= inline_svg_tag "icons/pin.svg", class: "w-6 h-6 icon-secondary" %>
+          <p><span class="font-semibold">Indirizzo Consegna</span></p>
+        </div>
         <p><%= @reservation.indirizzo_consegna %></p>
       </div>
       <div class="flex justify-between items-center">
-        <p class="text-xl font-semibold">Modifiche richieste</p>
+        <div class="flex gap-2">
+          <%= inline_svg_tag "icons/text.svg", class: "w-6 h-6 icon-secondary" %>
+          <p><span class="font-semibold">Modifiche richieste</span></p>
+        </div>
         <p><%= @reservation.modifiche_richieste.present? ? @reservation.modifiche_richieste : "Nessuna nota" %></p>
       </div>
       <%# Extra %>
       <% if @reservation.extra.present? %>
         <div class="flex justify-between items-center">
-          <p class="text-xl font-semibold">Extra</p>
+          <div class="flex gap-2">
+            <%= inline_svg_tag "icons/plus.svg", class: "w-6 h-6 icon-secondary" %>
+            <p><span class="font-semibold">Extra</span></p>
+          </div>
           <% extra = @reservation.extra.map { |key, value| value == "true" ? key == "miseenplace" ? "Mise en place" : key.capitalize : nil }.compact %>
           <% if extra.any? %>
             <%= extra.join(", ") %>
@@ -94,12 +117,42 @@
 
 
   <div class="lg:w-1/4 flex flex-col gap-2">
-    <div class="card card-content">
-      <h2 class="card-title">Checkout</h2>
+    <div class="card card-content flex flex-col gap-2">
+      <h2 class="card-title">Gestione</h2>
+      
       <div class="flex justify-between items-center">
         <p class="text-xl font-semibold">Prezzo Totale</p>
         <p><%= @reservation.prezzo %>€</p>
       </div>
+      <div class="flex w-full gap-2">
+        <% if current_user.client? || current_user.chef? %>
+          <% if @reservation.attesa_pagamento? || @reservation.confermata? %>
+            <%= button_to reservation_path(@reservation), method: :delete, data: { turbo: false } do %>
+              <div class="btn btn-destructive">Annulla Prenotazione</div>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% if current_user.client? %>
+          <% if @reservation.attesa_pagamento? && current_user.client? %>
+            <%= render partial: 'pay/stripe/checkout_button', locals: { session: @checkout_session, title: "Paga", class: "btn btn-default" } %>
+          <% end %>
+        <% end %>
+        <% if @current_user.admin? %>
+          <%= link_to menu_version_path(@reservation.menu, @reservation.menu_version_id) do %>
+            <div class="btn-link">Menu al momento della prenotazione</div>
+          <% end %>
+          <% if @reservation.completata? %>
+            <%= button_to reservation_path(@reservation), method: :delete, data: { turbo: false } do %>
+              <div class="btn btn-destructive">Rimborsa</div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+      <% if @reservation.attesa_pagamento? && current_user.chef? %>
+        <p>Il cliente deve ancora pagare</p>
+      <% elsif @reservation.confermata? %>
+        <p>Il pagamento è stato effettuato</p>
+      <% end %>
       
     </div>
     <%= link_to menu_path(@reservation.menu) do %>
@@ -212,22 +265,9 @@
   </div>
 <% end %>
 
-<% if @reservation.attesa_pagamento? && current_user.client? %>
-  <%= render partial: 'pay/stripe/checkout_button', locals: { session: @checkout_session, title: "Checkout" } %>
-<% end %>
 
-<% if @reservation.attesa_pagamento? || @reservation.confermata? %>
-  <%= button_to 'Annulla Prenotazione', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
-<% end %>
 
-<% if @current_user.admin? %>
-  <%= link_to "Menu al momento della prenotazione", menu_version_path(@reservation.menu, @reservation.menu_version_id) %>
-  <% if @reservation.completata? %>
-    <%= button_to 'Rimborso completo', reservation_path(@reservation), method: :delete, data: { turbo: false } %>
-  <% end %>
-<% end %>
 
-<%= link_to 'All Reservations', reservations_path, class: 'btn btn-secondary' %>
 
 <style>
   .hidden_form {
