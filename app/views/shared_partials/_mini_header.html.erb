@@ -1,17 +1,17 @@
 <%# NAVBAR %>
-<div class="flex gap-5 items-center justify-between py-5 h-28">
+<div class="grid grid-cols-3 items-center w-full py-5 h-28">
     <%# Logo %>
-    <div>
+    <div class="justify-self-start">
         <%= link_to root_path do %>
             <%= image_tag "logo.png", alt: "logo", class: "h-20" %>
         <% end %>
     </div>
 
-    <div>
-        <%= render "search/form"%>
+    <div class="justify-self-center">
+        <%= render "search/form" %>
     </div>
 
-    <div>
+    <div class="justify-self-end">
         <!-- caso di un utente loggato e completato (dropdown) -->
         <% if user_signed_in? && current_user.completed? %>
         <div
@@ -46,17 +46,23 @@
                         <%= link_to "Menu", menus_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
                     <% end %>
                     <hr class="border-t" />
-                    <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %> 
+                    <%= button_to "Esci", destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %> 
                 </div>
             </div>
         </div>
         <!-- caso di un utente loggato ma non completato -->
         <% elsif user_signed_in? && !current_user.completed? %>
-            <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %> 
+            <%= button_to destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'btn btn-outline-bigger justify-self-right' do %>
+                <%= inline_svg_tag 'icons/sign-out.svg', class: 'w-6 h-6 mr-3' %>
+                Esci
+            <% end %>
         <% elsif !user_signed_in? %>
         <!-- caso di un utente non loggato -->
-            <%= link_to "Login", new_user_session_path %>
-            <%= link_to "Sign up", new_user_registration_path %>
+            <%= link_to new_user_session_path, class: 'btn btn-outline-bigger justify-self-right' do %>
+                <%= inline_svg_tag 'icons/log-in.svg', class: 'w-6 h-6 mr-3' %>
+                Accedi
+            <% end %>
+            <%#= link_to "Registrati", new_user_registration_path, class: 'btn btn-outline-bigger' %>
         <% end %>
     </div>
 </div>

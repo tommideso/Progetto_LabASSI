@@ -1,25 +1,40 @@
-<%- if controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Dimenticato la password?", new_password_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to "Non hai ricevuto le istruzioni per la conferma dell'account?", new_confirmation_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to "Non hai ricevuto le istruzioni per sbloccare l'account?", new_unlock_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.omniauthable? %>
-  <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
+<div class="space-y-2 mt-2">
+  <%- if devise_mapping.omniauthable? %>
+    <%- resource_class.omniauth_providers.each do |provider| %>
+      <%= button_to omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: "w-full" do %>
+        <div class="btn btn-outline w-full flex justify-center items-center gap-2">
+          <%= image_tag "google.png", alt: "google", class: "h-6 w-6" %>
+          <p>Continua con Google</p>
+        </div>
+      <% end %>
+    <% end %>
   <% end %>
-<% end %>
+
+  <%- if controller_name != 'sessions' %>
+    <%= link_to new_session_path(resource_name) do %>
+      <div class="btn btn-link w-full">Hai già un account? Accedi</div>
+    <% end %>
+      
+  <% end %>
+
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <%= link_to new_registration_path(resource_name) do %>
+      <div class="btn btn-link w-full">Non hai un account? Registrati</div>
+    <% end %>
+  <% end %>
+
+  <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+    <%= link_to new_password_path(resource_name) do %>
+      <div class="btn-link-secondary text-center  ">Hai dimenticato la password?</div>
+    <% end %>
+  <% end %>
+  <!-- 
+  <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+    <%= link_to "Non hai ricevuto le istruzioni per la conferma dell'account?", new_confirmation_path(resource_name) %>
+  <% end %>
+
+  <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+    <%= link_to "Non hai ricevuto le istruzioni per sbloccare l'account?", new_unlock_path(resource_name) %>
+  <% end %> -->
+</div>
+
