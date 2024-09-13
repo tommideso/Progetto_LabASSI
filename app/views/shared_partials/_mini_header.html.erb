@@ -11,8 +11,8 @@
         <%= render "search/form"%>
     </div>
 
-    <%# User da mettere dropdown %>
     <div>
+        <!-- caso di un utente loggato e completato (dropdown) -->
         <% if user_signed_in? && current_user.completed? %>
         <div
             data-controller="dropdown"
@@ -50,9 +50,11 @@
                 </div>
             </div>
         </div>
-
-        <% else %>
-        <!-- nel caso di un utente non loggato -->
+        <!-- caso di un utente loggato ma non completato -->
+        <% elsif user_signed_in? && !current_user.completed? %>
+            <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %> 
+        <% elsif !user_signed_in? %>
+        <!-- caso di un utente non loggato -->
             <%= link_to "Login", new_user_session_path %>
             <%= link_to "Sign up", new_user_registration_path %>
         <% end %>
