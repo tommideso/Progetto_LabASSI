@@ -22,7 +22,7 @@ class User < ApplicationRecord
   validate :ruolo_presente_se_inizializzato
   validate :nome_e_cognome_presenti_se_ruolo_selezionato_o_completato
 
-  # metodi per determinare i ruoli
+  # metodi per determinare i ruoli ed il completamento
   def chef?
     ruolo == "chef"
   end
@@ -34,6 +34,9 @@ class User < ApplicationRecord
   end
   has_one_attached :avatar
 
+  def completed?
+    completed == 2
+  end
 
   # funzione per fare retrieving dei dati sugli utenti loggati tramite oauth
   def self.from_omniauth(auth)

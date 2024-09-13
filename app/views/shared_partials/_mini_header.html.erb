@@ -13,7 +13,7 @@
 
     <%# User da mettere dropdown %>
     <div>
-        <% if user_signed_in? %>
+        <% if user_signed_in? && current_user.completed? %>
         <div
             data-controller="dropdown"
             data-action="click@window->dropdown#hide touchstart@window->dropdown#hide keydown.up->dropdown#previousItem keydown.down->dropdown#nextItem keydown.esc->dropdown#hide"
