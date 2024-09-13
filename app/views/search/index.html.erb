@@ -1,4 +1,10 @@
-<h1 class="text-center mb-6"><%= pluralize(@menus.count, "Result") %></h1>
+<h2 class="text-center page-title">
+  <% if @menus.count == 1 %>
+    1 Menu trovato
+  <% else %>
+    <%= @menus.count %> Menu trovati
+  <% end %>
+</h2>
 
 <div class="">
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
