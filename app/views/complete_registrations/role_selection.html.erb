@@ -1,12 +1,23 @@
-<h1>Seleziona il ruolo</h1>
-
-<%= form_with url: new_complete_registration_path, method: :get, local: true do %>
-  <div>
-    <%= label_tag :role, 'Client' %>
-    <%= radio_button_tag :role, 'client' %>
-    <%= label_tag :role, 'Chef' %>
-    <%= radio_button_tag :role, 'chef' %>
-  </div>
-
-  <button type="submit">Seleziona Ruolo</button>
-<% end %>
+<div class="flex flex-col justify-center items-center gap-10"> 
+  <h1 class="mt-32">Seleziona il ruolo</h1>
+  <%= form_with url: new_complete_registration_path, method: :get, local: true, id: 'role-selection-form' do %>
+    <div class="flex flex-col gap-10 justify-center items-center">
+      <div class="flex gap-6">
+        <div> 
+          <input id="role-client" class="hidden peer" type="radio" value="client" name="role">
+          <label for="role-client" class="p-4 flex flex-col justify-center gap-2 w-full text-gray-500 dark:text-white bg-white dark:bg-gray-700 rounded-lg border border-gray-400 dark:border-gray-800 cursor-pointer peer-checked:ring-2 peer-checked:ring-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-500">
+            <%= inline_svg_tag 'icons/person.svg', class: 'w-32 h-24 stroke-secondary-500' %>
+            <div class="text-center text-lg font-semibold">Cliente</div>
+          </label>
+        </div>
+        <div>
+          <input id="role-chef" class="hidden peer" type="radio" value="chef" name="role">
+          <label for="role-chef" class="p-4 flex flex-col justify-center gap-2 w-full text-gray-500 dark:text-white bg-white dark:bg-gray-700 rounded-lg border border-gray-400 dark:border-gray-800 cursor-pointer peer-checked:ring-2 peer-checked:ring-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-500">
+            <%= inline_svg_tag 'icons/chef.svg', class: 'w-32 h-24 stroke-secondary-500' %>
+            <div class="text-center text-lg font-semibold">Chef</div>
+          </label>
+        </div>
+      </div>
+    <button type="submit" class="btn btn-default-bigger">Seleziona ruolo</button>
+  <% end %>
+</div>

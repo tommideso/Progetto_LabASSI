@@ -10,15 +10,15 @@ class ApplicationController < ActionController::Base
   end
 
   # Metodo per cambiare il testo del bottone in base alla presenza del preferito
+  def favorite_class
+    @favorite_exists ? "fill-red-500" : " "
+  end
   def favorite_text
     @favorite_exists ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"
   end
-  def favorite_image
-    @favorite_exists ? "icons/favorite_fill.svg" : "icons/favorite.svg"
-  end
 
+  helper_method :favorite_class
   helper_method :favorite_text
-  helper_method :favorite_image
 
   # metodo per mostrare la pagina d'errore 404
   def render_404

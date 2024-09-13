@@ -2,7 +2,7 @@
   <div class="relative">
     <button type="button" id="searchButton"  data-action="click->search#openModal" class="btn btn-default flex items-center gap-3">
       <%= inline_svg_tag "icons/search.svg", class: "w-6 h-6 icon-default" %>
-      <p>Cerca</p> 
+      <p>Cerca un menu</p> 
     </button>
   </div>
 
@@ -11,7 +11,7 @@
     <div class="card w-11/12 md:w-2/3 2xl:w-1/3 max-h-[90vh] overflow-y-auto	">
       <div class="card-content">
         <div class="flex justify-between items-start">
-          <h2 class="card-title">Filtra la tua ricerca</h2>
+          <h2 class="card-title pb-2">Filtra la tua ricerca</h2>
           <button id="closeModalButton" class="" data-action="search#closeModal">
             <%= inline_svg_tag "icons/close.svg", class: "w-6 h-6 fill-slate-500 hover:fill-slate-700 " %> 
           </button>
@@ -74,7 +74,7 @@
             </div>
 
 
-            <div class="actions pt-4">
+            <div class="actions pt-2">
               <%= f.button "Cerca", type: "submit", :class=> "btn btn-default" %>
             </div>
           </form>

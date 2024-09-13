@@ -7,6 +7,8 @@ class CompleteRegistrationsController < ApplicationController
       flash[:notice] = "Profilo già completato."
       redirect_to root_path
     elsif @user.completed == 1 # Ruolo selezionato
+      flash[:alert] = nil
+      flash[:notice] = "Ruolo selezionato."
       @chef = @user.chef || @user.build_chef if @user.chef?
       @client = @user.client || @user.build_client if @user.client?
       clean_url_from_role_param_and_redirect
@@ -23,6 +25,13 @@ class CompleteRegistrationsController < ApplicationController
           redirect_to new_complete_registration_path
         end
     else
+      # se non è la prima volta che renderiamo la pagina, mostriamo l'alert
+      if session[:visited_role_selection] 
+        flash[:alert] = "Devi selezionare un ruolo."
+      # se è la prima volta che renderiamo la pagina, non viene mostrato l'alert ma impostiamo la sessione = true
+      else
+        session[:visited_role_selection] = true
+      end
       render :role_selection
     end
   end

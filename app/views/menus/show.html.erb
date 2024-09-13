@@ -9,7 +9,7 @@
               <% if current_user.client? %>
                 <%= button_to favorites_menu_path, method: :put do %>
                   <div id="favorite-button" class="btn btn-outline flex items-center gap-4">
-                    <%= inline_svg_tag favorite_image, class: 'w-6 h-6 fill-red-500' %>
+                    <%= inline_svg_tag "icons/heart.svg", class: "w-6 h-6 stroke-red-500 #{favorite_class}" %>
                     <p><%= favorite_text %></p>
                   </div>
                 <% end %>
@@ -74,15 +74,15 @@
         <div class="card card-content  ">
           <h3 class="card-title">Dettagli</h3>
           <div class="flex gap-2 items-center py-2">
-            <%= inline_svg_tag "icons/euro.svg", class: 'w-6 h-6 fill-slate-600' %>
+            <%= inline_svg_tag "icons/euro.svg", class: 'w-6 h-6 icon-secondary' %>
             <p>Prezzo a persona: <%= number_to_currency(@menu.prezzo_persona, unit: "€")%></p>
           </div>
           <div class="flex gap-2 items-center py-2">
-            <%= inline_svg_tag "icons/groups.svg", class: 'w-6 h-6 fill-slate-600' %>
+            <%= inline_svg_tag "icons/groups.svg", class: 'w-6 h-6 icon-secondary' %>
             <p>Numero persone: <%= @menu.min_persone %> - <%= @menu.max_persone %></p>
           </div>
           <div class="flex gap-2 items-center py-2">
-            <%= inline_svg_tag "icons/restaurant.svg", class: 'w-6 h-6 fill-slate-600' %>
+            <%= inline_svg_tag "icons/restaurant.svg", class: 'w-6 h-6 icon-secondary' %>
             <p><%= @menu.tipo_cucina %></p>
           </div>
         </div>
@@ -91,13 +91,13 @@
           <h3 class="card-title">Puoi aggiungere:</h3>
           <% if @menu.extra["vino"].to_i > 0 %>
           <div class="flex gap-2 items-center py-2">
-            <%= inline_svg_tag "icons/wine.svg", class: 'w-6 h-6 fill-slate-600' %>
+            <%= inline_svg_tag "icons/wine.svg", class: 'w-6 h-6 icon-secondary' %>
             <p>Vino: <%= @menu.extra["vino"].to_f.round(2) %> € a persona</p>
           </div>
           <% end %>
           <% if @menu.extra["miseenplace"].to_i > 0 %>
           <div class="flex gap-2 items-center py-2">
-            <%= inline_svg_tag "icons/mise.svg", class: 'w-6 h-6 fill-slate-600' %>
+            <%= inline_svg_tag "icons/mise.svg", class: 'w-6 h-6 icon-secondary' %>
             <p>Mise en place: <%= @menu.extra["miseenplace"].to_f.round(2) %> € a persona</p>
           </div>
           <% end %>

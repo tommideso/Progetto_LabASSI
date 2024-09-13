@@ -70,16 +70,20 @@ class ReservationsController < ApplicationController
       update_params = reservation_params.dup
       update_params[:client_id] = current_user.client.id
       update_params[:chef_id] = menu.chef.id
+      misenplace = reservation_params[:miseenplace] == "true" ? menu.extra["miseenplace"] : 0
+      vino = reservation_params[:vino] == "true" ? menu.extra["vino"] : 0
+      num_persone = reservation_params[:num_persone].to_f
       update_params[:extra] = {
         "miseenplace" => reservation_params[:miseenplace],
         "vino" => reservation_params[:vino]
       }
+      puts "AAAAAAAAAAAAA miseenplace: #{misenplace} vino: #{vino} num_persone: #{num_persone}"
       # Delete vino and miseenplace from update_params
       update_params.delete(:vino)
       update_params.delete(:miseenplace)
       PaperTrail.request(enabled: true) do
         @reservation = Reservation.new(update_params)
-        @reservation.prezzo = menu.prezzo_persona.to_f * reservation_params[:num_persone].to_i
+        @reservation.prezzo = menu.prezzo_persona.to_f * num_persone + misenplace.to_f * num_persone + vino.to_f * num_persone
         if @reservation.save
           flash[:notice] = "Prenotazione effettuata con successo."
           redirect_to @reservation

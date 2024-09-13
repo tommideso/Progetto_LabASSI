@@ -77,6 +77,9 @@ li {
 .btn-default {
     @apply bg-primary text-primary-foreground hover:bg-primary/90;
 }
+.btn-default-bigger {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 text-lg;
+}
 .btn-destructive {
     @apply bg-destructive text-destructive-foreground hover:bg-destructive/90;
 }
@@ -93,13 +96,13 @@ li {
     @apply text-primary underline-offset-4 hover:underline;
 }
 .icon-default {
-    @apply fill-primary-foreground;
+    @apply stroke-primary-foreground;
 }
 .icon-secondary {
-    @apply fill-secondary-foreground;
+    @apply stroke-secondary-foreground;
 }
 .icon-outline {
-    @apply fill-accent-foreground;
+    @apply stroke-accent-foreground;
 }
 /* TABS */
 .tabs .tabs-tabs {
@@ -152,4 +155,8 @@ li {
 }
 .card-secondary-title {
     @apply text-lg font-semibold;
+}
+
+.separator {
+    @apply shrink-0 bg-border h-[1px] w-full;
 }

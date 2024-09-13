@@ -7,6 +7,8 @@ class PagesController < ApplicationController
       redirect_to profiles_path
     elsif user_signed_in? && current_user.chef?
       redirect_to profile_path(current_user)
+    elsif user_signed_in? && !current_user.completed?
+      redirect_to new_complete_registration_path
     else
       redirect_to menus_path
     end
