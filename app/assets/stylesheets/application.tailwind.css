@@ -98,6 +98,9 @@ li {
 .btn-link {
     @apply text-primary underline-offset-4 hover:underline;
 }
+.btn-link-secondary {
+    @apply text-secondary-foreground underline-offset-4 hover:underline;
+}
 .icon-default {
     @apply stroke-primary-foreground;
 }
