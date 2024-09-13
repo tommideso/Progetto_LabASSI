@@ -16,6 +16,7 @@ class ProfilesController < ApplicationController
             redirect_to root_path
             return
         end
+
         # solo se l'utente è uno chef voglio vedere i suoi menu
         if @user.chef?
             @menus = Menu.where(chef: @user.chef).order(created_at: :desc).limit(4)
