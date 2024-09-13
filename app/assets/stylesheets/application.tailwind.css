@@ -84,7 +84,7 @@ li {
     @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
 }
 .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-input;
 }
 .btn-ghost {
     @apply hover:bg-accent hover:text-accent-foreground;
@@ -138,4 +138,10 @@ li {
 /* Testi */
 .page-title {
     @apply text-4xl font-bold mb-6;
+}
+.card-title {
+    @apply text-2xl font-bold mb-2;
+}
+.card-secondary-title {
+    @apply text-lg font-semibold;
 }

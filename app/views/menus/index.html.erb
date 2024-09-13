@@ -7,10 +7,6 @@
    <% end %>
 </div>
 
-<% if user_signed_in? && current_user.chef? %>
-   <h3> <%= link_to "Crea un nuovo menu", new_menu_path %> </h3>
-<% end %>
-
 
 <script>
    document.addEventListener("DOMContentLoaded", () => {

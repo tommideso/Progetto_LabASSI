@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     @favorite_exists ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"
   end
   def favorite_image
-    @favorite_exists ? "favorite_fill.png" : "favorite.png"
+    @favorite_exists ? "icons/favorite_fill.svg" : "icons/favorite.svg"
   end
 
   helper_method :favorite_text
