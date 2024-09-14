@@ -1,8 +1,7 @@
 <div class="flex justify-center items-center my-[2.5%]">
-  <div class="lg:min-w-1/3">
+  <div class="w-[40vw]">
     <div class="card card-content" >
       <h2 class="card-title">Modifica utente</h2>
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, data: { turbo: false } }) do |f| %>
   <!-- commentato perché utilizziamo il nostro handler per gli errori  -->
   <%#= render "devise/shared/error_messages", resource: resource %>
@@ -35,15 +34,20 @@
       Password attuale (abbiamo bisogno della tua password attuale per confermare i tuoi cambiamenti)
     <% end %>
     <%= f.password_field :current_password, class:"input", autocomplete: "current-password" %>
+    <%- if devise_mapping.recoverable? %>
+    <%= link_to new_password_path(resource_name) do %>
+        <div class="btn-link-secondary text-left  ">Hai dimenticato la password?</div>
+      <% end %>
+    <% end %>
   </div>
 
   <%= render "shared_partials/profile", f: f %>
 
-  <%= f.button type: "submit", :class=> "btn btn-default w-full my-2" do %>
+  <%= f.button type: "submit", :class=> "btn btn-default w-full my-2", data: { turbo: false } do %>
     <p>Modifica utente</p>
   <% end %>
 <% end %>
-<%= button_to registration_path(resource_name), class:"w-full btn btn-destructive my-2", method: :delete do %>
+<%= button_to registration_path(resource_name), class:"w-full btn btn-destructive my-2", method: :delete, data: { turbo: false } do %>
   <p>Elimina account</p>
 <% end %>
 </div>

@@ -15,6 +15,25 @@ class RegistrationsController < Devise::RegistrationsController
                                             client_attributes: [ :indirizzo, :telefono, { allergeni: {} }, :id ] ])
     end
 
+    def update
+      self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+
+      if params[:user][:current_password].blank?
+        resource.errors.add(:current_password, :blank)
+        render :edit and return
+      end
+
+      if resource.update_with_password(account_update_params)
+        set_flash_message(:notice, :updated)
+        bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
+        respond_with resource, location: after_update_path_for(resource)
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
+      end
+    end
+
     # sovrascrivo il metodo create, chiamando comunque super, per impostare inizializzato a true
     # e passare poi al completamento (con il relativo controller)
     # def create
@@ -37,5 +56,9 @@ class RegistrationsController < Devise::RegistrationsController
       elsif current_user.ruolo == "client"
         @client = current_user.client || current_user.build_client
       end
+    end
+
+    def after_update_path_for(resource)
+      edit_user_registration_path
     end
 end

@@ -1,11 +1,11 @@
 <div class="flex justify-center items-center my-[2.5%]">
-  <div class="lg:min-w-1/3">
+  <div class="w-[40vw]">
     <div class="card card-content" >
       <h2 class="card-title">Completa il tuo profilo</h2>
       <%= form_for @user, url: complete_registration_path, method: :post, html: { data: { turbo: false } } do |f| %>
         <%= render partial: "shared_partials/profile_errors" %>
         <%= render "shared_partials/profile", f: f %>
-        <%= f.button "Completa il tuo profilo", type: "submit", :class=> "btn btn-default w-full mt-4 " %><br>
+        <%= f.button "Completa il tuo profilo", type: "submit", :class=> "btn btn-default w-full my-4 ", data: { turbo: false } %>
       <% end %>
     </div>
   </div>

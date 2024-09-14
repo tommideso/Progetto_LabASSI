@@ -24,6 +24,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.find(params[:id])
     @review = Review.new
     @version_menu = @reservation.menu.versions.find(@reservation.menu_version_id).reify
+
     if @reservation.data_prenotazione < Date.today && @reservation.confermata?
       @reservation.stato = :completata
     elsif @reservation.data_prenotazione < Date.today && @reservation.attesa_pagamento?
@@ -134,21 +135,29 @@ class ReservationsController < ApplicationController
       @reservation.stato = :cancellata
     elsif @reservation.confermata?
       @reservation.stato = :cancellata
-      refund_payment(@reservation)
+      unless refund_payment(@reservation)
+        flash[:error] = "Errore durante il rimborso, impossibile cancellare la prenotazione."
+        redirect_to reservation_path(@reservation)
+        return
+      end
     elsif @reservation.completata?
       @reservation.stato = :rimborsata
-      refund_payment(@reservation)
+      unless refund_payment(@reservation)
+        flash[:error] = "Errore durante il rimborso."
+        redirect_to reservation_path(@reservation)
+      end
     else
       # Non si può cancellare una prenotazione rimborsata o cancellata
       flash[:error] = "Impossibile cancellare la prenotazione, controlla lo stato della prenotazione."
-      redirect_to @reservation
+      redirect_to reservation_path(@reservation)
+      return
     end
     if @reservation.save
-      flash[:notice] = "Prenotazione cancellata con successo."
-      redirect_to @reservation
+      flash[:notice] = "Prenotazione rimborsata con successo."
+      redirect_to reservation_path(@reservation)
     else
-      flash[:error] = "Impossibile cancellare la prenotazione."
-      redirect_to @reservation
+      flash[:error] = "Impossibile rimborsare la prenotazione."
+      redirect_to reservation_path(@reservation)
     end
   end
 
@@ -167,8 +176,9 @@ class ReservationsController < ApplicationController
     rescue Stripe::StripeError => e
       logger.error "Errore durante il rimborso: #{e.message}"
       flash[:error] = "Errore durante il rimborso"
-      redirect_to reservation
+      false
     end
+    true
   end
 
   def check_user_permission

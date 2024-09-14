@@ -1,5 +1,11 @@
-<h1> Modifica il menu </h1>
+<div class="flex justify-center items-center my-[2.5%]">
+  <div class="w-[40vw]">
+    <div class="card card-content" >
+      <h2 class="card-title">Modifica Menu</h2>
 
 <%= render partial: "form", locals: {post: @menu}%>
 
 <%= button_to "Cancella il menu", menu_path(@menu), method: :delete, data: {turbo_confirm: "Sei sicuro di eliminare il menu?"}%>
+</div>
+</div>
+</div>

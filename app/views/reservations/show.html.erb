@@ -9,110 +9,266 @@
 </div>
 
 <div class="flex gap-4">
-  <div class="card card-content lg:w-3/4 h-fit">
-      <h2 class="card-title pb-4">Dettagli prenotazione</h2>
-      
-    <div class="space-y-4">
-      <div class="flex justify-between items-center">
-        <% client_label = current_user.client? ? "Tu" : "Cliente" %>
-        <% if current_user.admin? || current_user.client? %>
+  <div class="lg:w-3/4 h-fit flex flex-col gap-4">
+    <div class="card card-content ">
+        <h2 class="card-title pb-4">Dettagli prenotazione</h2>
+        
+      <div class="space-y-4">
+        <div class="flex justify-between items-center">
+          <% client_label = current_user.client? ? "Tu" : "Cliente" %>
+          <% if current_user.admin? || current_user.client? %>
+              <div class="flex gap-2">
+                <%= inline_svg_tag "icons/person.svg", class: "w-6 h-6 icon-secondary" %>
+                <p><span class="font-semibold"><%= client_label %></span></p>
+              </div>
+            <%= link_to profile_path(@reservation.client.user) do %>
+                <p><%= @reservation.client.user.nome %> <%= @reservation.client.user.cognome %></p>
+            <% end %>
+          <% else %>
             <div class="flex gap-2">
               <%= inline_svg_tag "icons/person.svg", class: "w-6 h-6 icon-secondary" %>
-              <p><span class="font-semibold"><%= client_label %></span></p>
+              <p><span class="font-semibold">Cliente:</span></p>
             </div>
-          <%= link_to profile_path(@reservation.client.user) do %>
-              <p><%= @reservation.client.user.nome %> <%= @reservation.client.user.cognome %></p>
-          <% end %>
-        <% else %>
+            <p><%= @reservation.client.user.nome %> <%= @reservation.client.user.cognome %> </p>
+          <% end %> 
+        </div>
+              
+        <%# Chef %>
+        <div class="flex justify-between items-center">
+          <% chef_label = current_user.chef? ? "Tu" : "Chef" %>
           <div class="flex gap-2">
-            <%= inline_svg_tag "icons/person.svg", class: "w-6 h-6 icon-secondary" %>
-            <p><span class="font-semibold">Cliente:</span> <%= @reservation.client.user.nome %> <%= @reservation.client.user.cognome %></p>
-          </div>
-        <% end %> 
-      </div>
-            
-      <%# Chef %>
-      <div class="flex justify-between items-center">
-        <% chef_label = current_user.chef? ? "Tu" : "Chef" %>
-        <div class="flex gap-2">
-            <%= inline_svg_tag "icons/chef.svg", class: "w-6 h-6 icon-secondary " %>
-            <p><span class="font-semibold"><%= chef_label %></span></p>
-          </div>
-        <%= link_to profile_path(@reservation.chef.user) do %>
-            <p><%= @reservation.chef.user.nome %> <%= @reservation.chef.user.cognome %></p>
-        <% end %>
-      </div>
+              <%= inline_svg_tag "icons/chef.svg", class: "w-6 h-6 icon-secondary " %>
+              <p><span class="font-semibold"><%= chef_label %></span></p>
+            </div>
+          <%= link_to profile_path(@reservation.chef.user) do %>
+              <p><%= @reservation.chef.user.nome %> <%= @reservation.chef.user.cognome %></p>
+          <% end %>
+        </div>
 
-      <%# Indirizzo %>
-      
-      <div class="flex justify-between items-center">
-        <div class="flex gap-2">
-          <%= inline_svg_tag "icons/calendar.svg", class: "w-6 h-6 icon-secondary" %>
-          <p><span class="font-semibold">Data Prenotazione:</span></p>
-        </div>
-        <p> <%= @reservation.data_prenotazione %> </p>
-      </div>
-      
-      <div class="flex justify-between items-center">
-        <div class="flex gap-2">
-          <%= inline_svg_tag "icons/clock.svg", class: "w-6 h-6 icon-secondary" %>
-          <p><span class="font-semibold">Tipo pasto:</span></p>
-        </div>
-        <p> <%= @reservation.tipo_pasto.capitalize %> </p>
-      </div>
-    
-      <div class="flex justify-between items-center">
-        <div class="flex gap-2">
-          <%= inline_svg_tag "icons/loader.svg", class: "w-6 h-6 icon-secondary" %>
-        <p class="text-xl font-semibold">Stato</p>
-        </div>
-        <% colore = case @reservation.stato  
-                  when "completata" then "blue"
-                  when "cancellata" then "destructive"
-                  when "attesa_pagamento" then "yellow"
-                  when "confermata" then "success"
-                  when "rimborsata" then "orange"
-                  else "blue"
-              end %>
-        <%= render partial: "shared_partials/status", locals: {colore: colore, testo: @reservation.stato.humanize } %>
-      </div>
-      <div class="flex justify-between items-center">
-        <div class="flex gap-2">
-          <%= inline_svg_tag "icons/groups.svg", class: "w-6 h-6 icon-secondary" %>
-          <p><span class="font-semibold">Numero Persone</span></p>
-        </div>
-        <p><%= @reservation.num_persone %></p>
-      </div>
-      <div class="flex justify-between items-center">
-        <div class="flex gap-2">
-          <%= inline_svg_tag "icons/pin.svg", class: "w-6 h-6 icon-secondary" %>
-          <p><span class="font-semibold">Indirizzo Consegna</span></p>
-        </div>
-        <p><%= @reservation.indirizzo_consegna %></p>
-      </div>
-      <div class="flex justify-between items-center">
-        <div class="flex gap-2">
-          <%= inline_svg_tag "icons/text.svg", class: "w-6 h-6 icon-secondary" %>
-          <p><span class="font-semibold">Modifiche richieste</span></p>
-        </div>
-        <p><%= @reservation.modifiche_richieste.present? ? @reservation.modifiche_richieste : "Nessuna nota" %></p>
-      </div>
-      <%# Extra %>
-      <% if @reservation.extra.present? %>
+        <%# Indirizzo %>
+        
         <div class="flex justify-between items-center">
           <div class="flex gap-2">
-            <%= inline_svg_tag "icons/plus.svg", class: "w-6 h-6 icon-secondary" %>
-            <p><span class="font-semibold">Extra</span></p>
+            <%= inline_svg_tag "icons/calendar.svg", class: "w-6 h-6 icon-secondary" %>
+            <p><span class="font-semibold">Data Prenotazione:</span></p>
           </div>
-          <% extra = @reservation.extra.map { |key, value| value == "true" ? key == "miseenplace" ? "Mise en place" : key.capitalize : nil }.compact %>
-          <% if extra.any? %>
-            <%= extra.join(", ") %>
-          <% else %>
-            <p>Nessun extra selezionato</p>
-          <% end %>
+          <p> <%= @reservation.data_prenotazione %> </p>
         </div>
+        
+        <div class="flex justify-between items-center">
+          <div class="flex gap-2">
+            <%= inline_svg_tag "icons/clock.svg", class: "w-6 h-6 icon-secondary" %>
+            <p><span class="font-semibold">Tipo pasto:</span></p>
+          </div>
+          <p> <%= @reservation.tipo_pasto.capitalize %> </p>
+        </div>
+      
+        <div class="flex justify-between items-center">
+          <div class="flex gap-2">
+            <%= inline_svg_tag "icons/loader.svg", class: "w-6 h-6 icon-secondary" %>
+          <p class="text-xl font-semibold">Stato</p>
+          </div>
+          <% colore = case @reservation.stato  
+                    when "completata" then "blue"
+                    when "cancellata" then "destructive"
+                    when "attesa_pagamento" then "yellow"
+                    when "confermata" then "success"
+                    when "rimborsata" then "orange"
+                    else "blue"
+                end %>
+          <%= render partial: "shared_partials/status", locals: {colore: colore, testo: @reservation.stato.humanize } %>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="flex gap-2">
+            <%= inline_svg_tag "icons/groups.svg", class: "w-6 h-6 icon-secondary" %>
+            <p><span class="font-semibold">Numero Persone</span></p>
+          </div>
+          <p><%= @reservation.num_persone %></p>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="flex gap-2">
+            <%= inline_svg_tag "icons/pin.svg", class: "w-6 h-6 icon-secondary" %>
+            <p><span class="font-semibold">Indirizzo Consegna</span></p>
+          </div>
+          <p><%= @reservation.indirizzo_consegna %></p>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="flex gap-2">
+            <%= inline_svg_tag "icons/text.svg", class: "w-6 h-6 icon-secondary" %>
+            <p><span class="font-semibold">Modifiche richieste</span></p>
+          </div>
+          <p><%= @reservation.modifiche_richieste.present? ? @reservation.modifiche_richieste : "Nessuna nota" %></p>
+        </div>
+        <%# Extra %>
+        <% if @reservation.extra.present? %>
+          <div class="flex justify-between items-center">
+            <div class="flex gap-2">
+              <%= inline_svg_tag "icons/plus.svg", class: "w-6 h-6 icon-secondary" %>
+              <p><span class="font-semibold">Extra</span></p>
+            </div>
+            <% extra = @reservation.extra.map { |key, value| value == "true" ? key == "miseenplace" ? "Mise en place" : key.capitalize : nil }.compact %>
+            <% if extra.any? %>
+              <%= extra.join(", ") %>
+            <% else %>
+              <p>Nessun extra selezionato</p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      </div>
+
+    <!-- Recensioni -->
+    <div class="card card-content">
+      <h2 class="card-title">Recensioni</h2>
+      
+    <% if @reservation.completata? %>
+      <% if current_user.client? %>
+        <% if @reservation.reviews.empty? || @reservation.reviews.length == 1 %>
+          <%= form_with(model: [@reservation, @review], url: create_by_client_reservation_reviews_path(@reservation), local: true) do |form| %>
+            <% if @review.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@review.errors.count, "error") %> errori non hanno permesso di salvare la recensione:</h2>
+                <ul>
+                  <% @review.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
+
+            <!-- Valutazione per Chef -->
+            <div class="form-divs">
+              <%= form.label :valutazione_chef, "Valutazione per Chef", class: "label" %>
+              <div class="star-rating" id="star-rating-chef">
+                <% (1..5).each do |i| %>
+                  <%= form.radio_button :valutazione_chef, i, id: "valutazione_chef_#{i}" %>
+                  <label for="valutazione_chef_#{i}" class="star" data-value="<%= i %>">
+                    &#9733;
+                  </label>
+                <% end %>
+                <%= form.number_field :valutazione_chef, id: 'valutazione_chef_value', style: 'opacity: 0;', class: "hidden_form", required: true %>
+              </div>
+            </div>
+
+            <!-- Valutazione per Menu -->
+            <div class="form-divs">
+              <%= form.label :valutazione_menu, "Valutazione per Menu", class: "label" %>
+              <div class="star-rating" id="star-rating-menu">
+                <% (1..5).each do |i| %>
+                  <%= form.radio_button :valutazione_menu, i, id: "valutazione_menu_#{i}" %>
+                  <label for="valutazione_menu_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
+                <% end %>
+                <%= form.number_field :valutazione_menu, id: 'valutazione_menu_value', style: 'opacity: 0;', class: "hidden_form", required: true %>
+              </div>
+            </div>
+
+            <div class="form-divs mb-4">
+              <%= form.label :commento, "Commento per menu", class: "label" %>
+              <%= form.text_area :commento, required: true, class: "input" %>
+            </div>
+            
+            <%= form.button :submit, data: { turbo: false } do %>
+                <p class="btn btn-default">Invia Recensione</p>
+              <% end %>
+          <% end %>
+          
+        <% end %>
+
+      <% elsif current_user.chef? %>
+        <% if @reservation.reviews.empty? || @reservation.reviews.length == 2 %>
+          <%= form_with(model: [@reservation, @review], url: create_by_chef_reservation_reviews_path(@reservation), local: true) do |form| %>
+            <% if @review.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@review.errors.count, "error") %> errori non hanno permesso di salvare la recensione:</h2>
+                <ul>
+                  <% @review.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
+          
+            <!-- Valutazione per Cliente -->
+            <div class="form-divs">
+              <%= form.label :valutazione_cliente, "Valutazione Cliente", class: "label" %>
+              <div class="star-rating" id="star-rating-client">
+                <% (1..5).each do |i| %>
+                  <%= form.radio_button :valutazione_cliente, i, id: "valutazione_cliente_#{i}" %>
+                  <label for="valutazione_cliente_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
+                <% end %>
+                <%= form.number_field :valutazione_cliente, id: 'valutazione_cliente_value', style: 'opacity: 0;', class: "hidden_form", required: true %>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <%= form.button :submit, data: { turbo: false } do %>
+                <p class="btn btn-default">Invia Recensione</p>
+              <% end %>
+            </div>
+
+          <% end %>
+        <% end %>
       <% end %>
+      <div class="grid grid-cols-1 gap-2 mt-2">
+        <% if current_user.client? || @reservation.reviews.count == 3 %>
+          <div class="flex items-center gap-2">
+            <p>Cliente</p>
+            <% if @reservation.reviews.where(tipo_recensione_type: "Client").empty? %>
+              <p>Non è stata ancora lasciata una recensione</p>
+            <% else %>
+              <%= render partial: "profiles/stars", locals: {valutation: @reservation.reviews.where(tipo_recensione_type: "Client").first.valutazione} %>
+            <% end %>
+          </div>
+        <% end %>
+        <% if current_user.chef? || @reservation.reviews.count == 3 %> 
+          <div class="flex items-center gap-2">
+            <p>Chef</p>
+            <% if @reservation.reviews.where(tipo_recensione_type: "Chef").empty? %>
+              <p>Non è stata ancora lasciata una recensione</p>
+            <% else %>
+              <%= render partial: "profiles/stars", locals: {valutation: @reservation.reviews.where(tipo_recensione_type: "Chef").first.valutazione} %>
+            <% end %> 
+          </div>
+          <div class="flex gap-2">
+            <p>Menu</p>
+            <div>
+              <% if @reservation.reviews.where(tipo_recensione_type: "Menu").empty? %>
+                <p>Non è stata ancora lasciata una recensione</p>
+              <% else %>
+                <%= render partial: "profiles/stars", locals: {valutation: @reservation.reviews.where(tipo_recensione_type: "Menu").first.valutazione} %>
+                <p> <%= @reservation.reviews.where(tipo_recensione_type: "Menu").first.commento %> </p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        
+      </div>
+
+
+    <% end %>
+
     </div>
+
+    <%= link_to profile_path(@reservation.chef.user) do %>
+      <div class="card card-content">
+        <div class="flex items-center gap-4">
+          <%= render partial: "profiles/avatar", locals: {user: @reservation.chef.user, size_class:"h-20 w-20"} %>
+          <div class="space-y-2 w-full">
+            <div class="flex justify-between items-center">
+              <p class="text-2xl font-bold"><%= @reservation.chef.user.nome %> <%= @reservation.chef.user.cognome %></p>
+            </div>
+            <div class="">
+              <p class="text-lg line-clamp-3 "><%= raw @reservation.chef.descrizione %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
   </div>
 
 
@@ -164,106 +320,9 @@
 </div>
 
 
-<!-- Recensioni -->
-<% if @reservation.completata? %>
-  <% if current_user.client? %>
-    <% if @reservation.reviews.empty? || @reservation.reviews.length == 1 %>
-      <%= form_with(model: [@reservation, @review], url: create_by_client_reservation_reviews_path(@reservation), local: true) do |form| %>
-        <% if @review.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@review.errors.count, "error") %> errori non hanno permesso di salvare la recensione:</h2>
-            <ul>
-              <% @review.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
 
-        <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
 
-        <!-- Valutazione per Chef -->
-        <div class="field">
-          <%= form.label :valutazione_chef, "Valutazione per Chef" %>
-          <div class="star-rating" id="star-rating-chef">
-            <% (1..5).each do |i| %>
-              <%= form.radio_button :valutazione_chef, i, id: "valutazione_chef_#{i}" %>
-              <label for="valutazione_chef_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
-            <% end %>
-            <%= form.number_field :valutazione_chef, id: 'valutazione_chef_value', style: 'opacity: 0;', class: "hidden_form", required: true %>
-          </div>
-        </div>
 
-        <!-- Valutazione per Menu -->
-        <div class="field">
-          <%= form.label :valutazione_menu, "Valutazione per Menu" %>
-          <div class="star-rating" id="star-rating-menu">
-            <% (1..5).each do |i| %>
-              <%= form.radio_button :valutazione_menu, i, id: "valutazione_menu_#{i}" %>
-              <label for="valutazione_menu_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
-            <% end %>
-            <%= form.number_field :valutazione_menu, id: 'valutazione_menu_value', style: 'opacity: 0;', class: "hidden_form", required: true %>
-          </div>
-        </div>
-
-        <div class="field">
-          <%= form.label :commento, "Commento per menu" %>
-          <%= form.text_area :commento, required: true %>
-        </div>
-        
-        <div class="actions">
-          <%= form.submit %>
-        </div>
-      <% end %>
-    <% end %>
-
-  <% elsif current_user.chef? %>
-    <% if @reservation.reviews.empty? || @reservation.reviews.length == 2 %>
-      <%= form_with(model: [@reservation, @review], url: create_by_chef_reservation_reviews_path(@reservation), local: true) do |form| %>
-        <% if @review.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@review.errors.count, "error") %> errori non hanno permesso di salvare la recensione:</h2>
-            <ul>
-              <% @review.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <%= form.hidden_field :prenotazione_id, value: @reservation.id %>
-      
-        <!-- Valutazione per Cliente -->
-        <div class="field">
-          <%= form.label :valutazione_cliente, "Valutazione Cliente" %>
-          <div class="star-rating" id="star-rating-client">
-            <% (1..5).each do |i| %>
-              <%= form.radio_button :valutazione_cliente, i, id: "valutazione_cliente_#{i}" %>
-              <label for="valutazione_cliente_#{i}" class="star" data-value="<%= i %>"> &#9733;</label>
-            <% end %>
-            <%= form.number_field :valutazione_cliente, id: 'valutazione_cliente_value', style: 'opacity: 0;', class: "hidden_form", required: true %>
-          </div>
-        </div>
-        
-        <div class="actions">
-          <%= form.submit %>
-        </div>
-
-      <% end %>
-    <% end %>
-  <% end %>
-<% end %>
-
-<!-- Recensioni esistenti -->
-<% @reservation.reviews.each do |review| %>
-  <div class="review">
-    <p><strong>Recensione a:</strong> <%= review.tipo_recensione_type %></p>
-    <p><strong>Valutazione:</strong> <%= review.valutazione %></p>
-    <% if review.commento.present? %>
-      <p><strong>Commento:</strong> <%= review.commento %></p>
-    <% end %>
-  </div>
-<% end %>
 
 
 
@@ -282,6 +341,7 @@
 
   .star-rating {
     display: inline-flex;
+    
   }
 
   .star-rating input[type="radio"] {
@@ -292,6 +352,7 @@
     font-size: 2rem;
     color: #ddd; /* Colore grigio iniziale */
     cursor: pointer;
+    
   }
 
   .star-rating .selected {

@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   def index
     @q = Menu.ransack(params[:q])
-    @menus = @q.result(distinct: true)
+    @menus = @q.result(distinct: true).where(disattivato: false)
 
     puts "PARAMS: #{params}"
     # filtri personalizzati

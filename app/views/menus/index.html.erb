@@ -14,7 +14,18 @@
       <h2 class="page-title">Menu di <%= @user.nome %> <%= @user.cognome %></h2>
    <% end %>
 <% else %>
-   <h2 class="page-title">Menu</h2>
+   <div class="flex justify-between items-center">
+      <h2 class="page-title">Menu</h2>
+      <% if user_signed_in? && current_user.chef? %>
+         <%= button_to new_menu_path, method: :get do %>
+               <div class="btn btn-default flex items-center gap-2">
+                  <%= inline_svg_tag "icons/plus.svg", class: "w-6 h-6 icon-default" %>
+                  <p>Crea un nuovo menu</p>
+               </div>
+         <% end %>
+      <% end %>
+   </div>
+
 <% end %>
 
 

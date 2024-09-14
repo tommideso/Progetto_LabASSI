@@ -1,20 +1,22 @@
-<div class="nested-form-wrapper card card-content mr-5 mb-5" data-new-record="<%= f.object.new_record? %>">
-    <div class="field">
+<div class="nested-form-wrapper card card-content" data-new-record="<%= f.object.new_record? %>">
+    <div class="form">
+    <div class="form-divs">
         <%= f.label :nome, "Nome del piatto", class: 'label' %>
         <%= f.text_field :nome, id:"nome", class: 'input' %>
     </div>
 
-    <div class="field">
+    <div class="form-divs">
         <%= f.label :tipo_portata, "Tipo di portata", class: 'label' %>
         <%= f.select :tipo_portata, ['Antipasto', 'Primo', 'Secondo', 'Dolce'], {id:"tipo_portata"}, class: 'flex h-10 rounded-md border border-input bg-background pl-3 pr-10 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50' %>
     </div>
 
-    <div class="field">
+    <div class="form-divs">
         <%= f.label :ingredienti, "Ingredienti", class: 'label' %>
         <%= f.text_area :ingredienti, id:"ingredienti", class: 'input' %>
     </div>
 
-    <button type="button" data-action="nested-form#remove" class="btn btn-destructive mt-2">Rimuovi piatto</button>
+    <button type="button" data-action="nested-form#remove" class="btn btn-destructive">Rimuovi piatto</button>
 
     <%= f.hidden_field :_destroy %>
+    </div>
 </div>
