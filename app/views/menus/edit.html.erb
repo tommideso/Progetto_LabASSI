@@ -3,9 +3,11 @@
     <div class="card card-content" >
       <h2 class="card-title">Modifica Menu</h2>
 
-<%= render partial: "form", locals: {post: @menu}%>
+<%= render partial: "form", locals: { menu: @menu, button_name: "Modifica menu"} %>
 
-<%= button_to "Cancella il menu", menu_path(@menu), method: :delete, data: {turbo_confirm: "Sei sicuro di eliminare il menu?"}%>
+<%= button_to menu_path(@menu), method: :delete, class: "btn btn-destructive w-full mt-4" do %>
+  <p>Cancella il menu</p>
+<% end %>
 </div>
 </div>
 </div>

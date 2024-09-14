@@ -2,7 +2,7 @@
 <div class="form">
   <div class="form-divs">
     <%= f.label :avatar, class: "label" %>
-    <%= f.file_field :avatar, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" %>
+    <%= f.file_field :avatar, class: "file-input" %>
     <% if !@user.new_record? && @user.avatar.present? %>
       <%= image_tag(@user.avatar, class: "avatar") %> <!-- immagine caricata -->
     <% elsif !@user.new_record? && @user.avatar_url.present? %>
@@ -43,7 +43,7 @@
 
       <div class="form-divs">
         <%= chef_form.label :descrizione, class: "label" %>
-        <%= chef_form.rich_text_area :descrizione, class:"input", value: @chef.persisted? ? (@chef.descrizione.presence || @chef.reload.descrizione) : @chef.descrizione %>
+        <%= chef_form.rich_text_area :descrizione, class:"input", value: @chef.persisted? ? (@chef.descrizione.presence || @chef.reload.descrizione) : @chef.descrizione, id: "descrizione" %>
       </div>
     <% end %>
     
@@ -82,3 +82,20 @@
     <% end %>
   <% end %>
 </div>
+
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    const chatText = document.getElementById("descrizione");
+    if(!chatText) return;
+    chatText.style.height = "auto";
+
+
+    chatText.addEventListener("input", function() {
+      chatText.style.height = "auto";
+      chatText.style.height = (chatText.scrollHeight) + "px";
+    });
+
+    
+  });
+</script>

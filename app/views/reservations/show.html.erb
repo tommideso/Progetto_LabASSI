@@ -214,7 +214,7 @@
         <% end %>
       <% end %>
       <div class="grid grid-cols-1 gap-2 mt-2">
-        <% if current_user.client? || @reservation.reviews.count == 3 %>
+        <% if current_user.client? || @reservation.reviews.count > 0 %>
           <div class="flex items-center gap-2">
             <p>Cliente</p>
             <% if @reservation.reviews.where(tipo_recensione_type: "Client").empty? %>
@@ -224,7 +224,7 @@
             <% end %>
           </div>
         <% end %>
-        <% if current_user.chef? || @reservation.reviews.count == 3 %> 
+        <% if current_user.chef? || @reservation.reviews.count > 1 %> 
           <div class="flex items-center gap-2">
             <p>Chef</p>
             <% if @reservation.reviews.where(tipo_recensione_type: "Chef").empty? %>
