@@ -40,7 +40,7 @@ FactoryBot.define do
       }
       extra {
         {
-          "miseenplace" => Faker::Boolean.boolean ? Faker::Number.decimal(l_digits: 2, r_digits: 2) : 0,
+          "miseenplace" => 1.50,
           "vino" => Faker::Boolean.boolean ? Faker::Number.decimal(l_digits: 2, r_digits: 2) : 0
         }
       }
@@ -51,8 +51,8 @@ FactoryBot.define do
       after(:build) do |menu|
         menu.dishes << FactoryBot.build(:dish, menu: menu)
       end
-  
-        # Usa after(:build) per fare le chiamate API a Stripe
+
+      # Usa after(:build) per fare le chiamate API a Stripe
       after(:build) do |menu|
         product = Stripe::Product.create({
           name: menu.titolo,
@@ -92,6 +92,3 @@ FactoryBot.define do
       end
     end
   end
-  
-  
-   

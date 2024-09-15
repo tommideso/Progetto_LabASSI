@@ -1,5 +1,5 @@
-<div class="flex flex-start mb-4 cont-<%=message.user.id%> message-container">
-  <div class="bg-white border max-w-80 px-5 rounded-xl break-words msg-<%= message.user.id %>">
-    <p class="text-gray-800"><%= simple_format(message.body) %></p>
+<div class="flex mb-4 cont-<%=message.user.id%> message-container">
+  <div class="border max-w-70 px-3 py-2 rounded-lg break-words bg-muted text-base msg-<%=message.user.id%>">
+    <%= simple_format(message.body, class: "text-base") %>
   </div>
 </div>

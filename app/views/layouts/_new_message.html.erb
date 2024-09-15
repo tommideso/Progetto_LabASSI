@@ -1,8 +1,12 @@
 <div class="form-group msg-form w-full">
   <%= form_with(model: [@single_room, @message], remote: true, class: 'flex flex-col w-full',
   data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset"}) do |f| %>
-    <%= f.text_area :body, id: 'chat-text', class: 'form-control msg-content flex-grow p-2 border rounded mr-2 text-black text-lg resize-none w-full', rows: 1, autocomplete: 'off' %>
-    <%= f.submit "Invia messaggio", data: {disable_with: false}, class: 'btn btn-primary bg-blue-500 text-white text-xl px-5 py-2 rounded mt-2 mx-auto mt-4' %>
+    <div class="flex gap-2 items-start justify-between">
+    <%= f.text_area :body, id: 'chat-text', class: 'input max-h-24', rows: 1, autocomplete: 'off' %>
+    <%= f.button type: "submit", class: 'btn btn-default h-full', data: {disable_with: false} do %>
+      <%= inline_svg_tag "icons/send.svg", class: "w-6 h-6 icon-default" %>
+    <% end %>
+    </div>
   <% end %>
 </div>
 

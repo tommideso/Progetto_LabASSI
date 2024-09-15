@@ -33,19 +33,16 @@
         window.dispatchEvent(event)
       }
     </script>
-
     <style>
       <%= ".msg-#{current_user&.id}" %> {
-        background-color: #90d5ff !important;
-        border-color: #90d5ff !important;
+        background-color: hsl(var(--primary)) !important;
+        color: hsl(var(--primary-foreground)) !important;
       }
       <%= ".cont-#{current_user&.id}" %> {
         display: flex !important;
         justify-content: flex-end !important;
       }
-      .message-container p {
-        color: black;
-      }
+      
     </style>
 
     <%= favicon_link_tag 'favicon.ico' %>

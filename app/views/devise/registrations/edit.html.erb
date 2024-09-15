@@ -34,11 +34,6 @@
       Password attuale (abbiamo bisogno della tua password attuale per confermare i tuoi cambiamenti)
     <% end %>
     <%= f.password_field :current_password, class:"input", autocomplete: "current-password" %>
-    <%- if devise_mapping.recoverable? %>
-    <%= link_to new_password_path(resource_name) do %>
-        <div class="btn-link-secondary text-left  ">Hai dimenticato la password?</div>
-      <% end %>
-    <% end %>
   </div>
 
   <%= render "shared_partials/profile", f: f %>

@@ -1,7 +1,12 @@
 class SearchController < ApplicationController
   def index
     @q = Menu.ransack(params[:q])
-    @menus = @q.result(distinct: true).where(disattivato: false)
+
+    if user_signed_in? && current_user.admin?
+      @menus = @q.result(distinct: true)
+    else
+      @menus = @q.result(distinct: true).where(disattivato: false)
+    end
 
     puts "PARAMS: #{params}"
     # filtri personalizzati

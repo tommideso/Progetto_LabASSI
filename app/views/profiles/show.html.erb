@@ -28,7 +28,7 @@
                         <%= button_to user_path(@user), method: :get do %>
                             <div class="btn btn-default flex items-center gap-2">
                                 <%= inline_svg_tag "icons/chat.svg", class: "w-6 h-6 icon-default" %>
-                                <p>Chatta con lo chef</p>
+                                <p>Chatta con <%= @user.chef? ? "lo chef" : "il cliente" %></p>
                             </div>
                         <% end %>
                     <% end %>

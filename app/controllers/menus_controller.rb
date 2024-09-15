@@ -12,7 +12,11 @@ class MenusController < ApplicationController
         page = 1 if page <= 0
 
         # Filtra solo i menu attivi
-        total_items = Menu.where(disattivato: false).count
+        if user_signed_in? && current_user.admin?
+           total_items = Menu.count
+        else
+            total_items = Menu.where(disattivato: false).count
+        end
         num_items = 10
         @total_pages = (total_items.to_f / num_items).ceil
 
@@ -23,7 +27,11 @@ class MenusController < ApplicationController
         end
 
         # Fa vedere solo menu attivi (da far vedere a admin)
-        @pagy, @menus = pagy(Menu.where(disattivato: false), page: page, items: num_items)
+        if user_signed_in? && current_user.admin?
+            @pagy, @menus = pagy(Menu.all, page: page, items: num_items)
+        else
+            @pagy, @menus = pagy(Menu.where(disattivato: false), page: page, items: num_items)
+        end
         respond_to do |format|
             format.html
             format.turbo_stream

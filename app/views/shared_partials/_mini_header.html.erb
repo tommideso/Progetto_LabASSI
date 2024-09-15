@@ -39,6 +39,7 @@
                     <% if current_user.chef? %>
                         <%= link_to "I miei menu", menus_profile_path(current_user), class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
                         <%= link_to "Prenotazioni", reservations_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
+                        <%= link_to "Menu", menus_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>
                     <% end %>
                     <% if current_user.admin? %>
                         <%= link_to "Utenti", profiles_path, class: 'w-full text-left no-underline block pl-6 py-3 text-slate-900 bg-white hover:bg-slate-100 whitespace-nowrap focus:bg-slate-100' %>   
