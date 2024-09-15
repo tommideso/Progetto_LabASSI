@@ -43,12 +43,9 @@ RSpec.describe ReservationsController, type: :controller do
   it "creates a new Reservation with valid attributes" do
     expect {
       post :create, params: { reservation: valid_attributes }
-      puts "Response body: #{response.body}"
-      puts "Response status: #{response.status}"
     }.to change(Reservation, :count).by(1)
 
     reservation = Reservation.last
-    puts "Created reservationM: #{reservation.inspect}"
     expect(reservation.client).to eq(client)
     expect(reservation.menu).to eq(menu)
     expect(reservation.chef).to eq(menu.chef)

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Menu", type: :feature, js: true do
   let(:chef) { create(:chef) }
-  
+
   scenario "Chef crea un menu con successo" do
     # Ridimensiona la finestra del browser
     page.driver.browser.manage.window.resize_to(1920, 1080)
@@ -15,13 +15,13 @@ RSpec.feature "Menu", type: :feature, js: true do
 
     sleep 3
 
-    #Preme su Crea un nuovo menu
+    # Preme su Crea un nuovo menu
     click_button 'Crea un nuovo menu'
 
     expect(page).to have_current_path(new_menu_path)
     sleep 1
 
-    #Per il campo rich_text_area
+    # Per il campo rich_text_area
     fill_in 'titolo', with: 'Menu di esempio'
     sleep 1
     # Trova il campo Trix Editor
@@ -31,8 +31,8 @@ RSpec.feature "Menu", type: :feature, js: true do
     page.execute_script("document.querySelector('#descrizione').editor.insertString('Descrizione del menu')")
     sleep 1
 
-    #Inserimento piatti (form _dish_form)
-    click_button 'Aggiungi piatto'
+    # Inserimento piatti (form _dish_form)
+    click_button 'Aggiungi un piatto'
     # Seleziona il primo campo di input per il nome del piatto
     all_nome_fields = all(:field, 'nome', visible: true, disabled: false)
     all_nome_fields[0].set('Nome Antipasto')
@@ -48,7 +48,7 @@ RSpec.feature "Menu", type: :feature, js: true do
     sleep 1
 
     # Aggiungi il secondo piatto
-    click_button 'Aggiungi piatto'
+    click_button 'Aggiungi un piatto'
     # Seleziona il secondo campo di input per il nome del piatto
     all_nome_fields = all(:field, 'nome', visible: true, disabled: false)
     all_nome_fields[1].set('Nome Primo')
@@ -75,7 +75,7 @@ RSpec.feature "Menu", type: :feature, js: true do
     check 'soia'
     check 'noci'
     sleep 1
- 
+
     # Compila i campi delle preferenze alimentari
     check 'vegano'
     sleep 1
@@ -105,9 +105,8 @@ RSpec.feature "Menu", type: :feature, js: true do
     click_button 'Modifica'
     fill_in 'titolo', with: 'Menu di pesce'
     sleep 3
-    click_button 'Aggiorna Menu'
+    click_button 'Modifica menu'
     sleep 4
-    
   end
 
   scenario "Creazione menu fallisce perchè non tutti i campi sono stati compilati" do
@@ -122,7 +121,7 @@ RSpec.feature "Menu", type: :feature, js: true do
 
     sleep 3
 
-    #Preme su Crea un nuovo menu
+    # Preme su Crea un nuovo menu
     click_button 'Crea un nuovo menu'
 
     expect(page).to have_current_path(new_menu_path)
@@ -134,9 +133,7 @@ RSpec.feature "Menu", type: :feature, js: true do
 
     # Verifica che il menu non sia stato creato
     expect(page).to have_current_path(new_menu_path)
-    expect(page).to have_content("Titolo non può essere")
+    expect(page).to have_content("Titolo non può essere lasciato in bianco")
     sleep 1
-
   end
-
 end

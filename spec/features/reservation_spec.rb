@@ -16,14 +16,14 @@ RSpec.feature "Reservation", type: :feature, js: true do
     visit menu_path(menu)
     sleep 1
 
-    # Compila i campi di prenotazione utilizzando gli attributi `id`
+     # Compila i campi di prenotazione utilizzando gli attributi `id`
      fill_in 'indirizzo_consegna', with: 'Via Esempio 123'
      sleep 1
      fill_in 'num_persone', with: menu.min_persone
      sleep 1
      select 'Pranzo', from: 'reservation_tipo_pasto'
-    
-    # Uso jQuery per selezionare una data
+
+     # Uso jQuery per selezionare una data
      page.execute_script("document.querySelector('#data_prenotazione').value = '2024-10-01'")
 
      # Seleziona la checkbox per il vino se è presente nel menu
@@ -37,22 +37,21 @@ RSpec.feature "Reservation", type: :feature, js: true do
        check 'miseenplace' # Usa il nome della checkbox o il suo ID per selezionarla
      end
 
-     fill_in 'modifiche_richieste', with: 'Carne ben cotta'
+     fill_in 'modifiche_richieste', with: '1 senza glutine, 1 senza lattosio'
 
     # Clicca sul pulsante per effettuare la prenotazione
     click_button 'Prenota'
     sleep 1
 
     # Verifica che la prenotazione sia stata creata con successo
-    expect(page).to have_content('Prenotazione')     
+    expect(page).to have_content('Prenotazione')
     expect(page).to have_content('Via Esempio 123')
     expect(page).to have_content(menu.min_persone)
     expect(page).to have_content('Pranzo')
     expect(page).to have_content('2024-10-01')
-   
+
     sleep 1
     expect(page).to have_current_path(reservation_path(Reservation.last))
-
   end
 
   scenario "Prenotazione fallisce perche non tutti i campi sono stati compilati" do
@@ -87,13 +86,5 @@ RSpec.feature "Reservation", type: :feature, js: true do
     sleep 3
     # Non deve esserci il bottone prenota
     expect(page).not_to have_button('Prenota')
-
   end
-
 end
-
-
-
-
-
-    

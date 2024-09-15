@@ -23,14 +23,14 @@
               <% end %>
               <% if current_user.admin? || (current_user.chef? && @menu.chef == current_user.chef) %>
                 <% if @menu.disattivato %>
-                  <%= button_to riattiva_menu_path(@menu), method: :post do %>
+                  <%= button_to riattiva_menu_path(@menu), method: :post, data: { turbo: false } do %>
                     <div class="btn btn-secondary flex items-center gap-4">
                       <%= inline_svg_tag "icons/show.svg", class: 'w-6 h-6 icon-secondary' %>
                       <p>Attiva</p>
                     </div>
                   <% end %>
                 <% else %>
-                  <%= button_to disattiva_menu_path(@menu), method: :post do %>
+                  <%= button_to disattiva_menu_path(@menu), method: :post, data: { turbo: false } do %>
                     <div class="btn btn-secondary flex items-center gap-4">
                       <%= inline_svg_tag "icons/no-show.svg", class: 'w-6 h-6 icon-secondary' %>
                       <p>Disattiva</p>

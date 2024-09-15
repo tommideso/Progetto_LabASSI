@@ -207,11 +207,11 @@ class MenusController < ApplicationController
         # Controlla se l'utente ha il permesso di disattivare/riattivare il menu
         puts "Disattivato da: #{@menu.disattivato_da}"
         if current_user.chef? && @menu.disattivato_da == "admin"
-            flash[:error] = "Non puoi disattivare un menu disattivato dall'admin."
-            redirect_to menus_path
+            flash[:error] = "Non puoi attivare un menu disattivato dall'admin."
+            redirect_to menu_path(@menu)
         elsif current_user.admin? && @menu.disattivato_da == "chef"
-            flash[:error] = "Non puoi disattivare un menu disattivato dallo chef."
-            redirect_to menus_path
+            flash[:error] = "Non puoi attivare un menu disattivato dallo chef."
+            redirect_to menu_path(@menu)
         end
     end
 end

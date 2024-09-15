@@ -130,7 +130,7 @@
 
         <div class="form-divs">
             <%= form.label :vino, "Vino (prezzo a persona)", class: 'label' %>
-            <%= form.text_field :extra_vino, step: '0.01', value: @menu.extra ? @menu.extra['vino'].to_f : 0, min: 0, class: 'input' %>
+            <%= form.number_field :extra_vino, step: '0.01', value: @menu.extra ? @menu.extra['vino'].to_f : 0, min: 0, class: 'input' %>
         </div>
     </div>
 
