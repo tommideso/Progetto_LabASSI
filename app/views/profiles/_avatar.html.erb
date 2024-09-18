@@ -1,9 +1,9 @@
 <% size_class ||= "h-24 w-24" %>
 
 <% if user.avatar.attached? %>
-  <%= image_tag user.avatar, class: "#{size_class} rounded-full" %>
+  <%= image_tag user.avatar, class: "#{size_class} rounded-full object-cover" %>
 <% elsif user.avatar_url.present? %>
-  <%= image_tag user.avatar_url, class: "#{size_class} rounded-full" %>
+  <%= image_tag user.avatar_url, class: "#{size_class} rounded-full object-cover" %>
 <% else %>
-  <%= image_tag "https://ui-avatars.com/api/?name=#{user.nome}+#{user.cognome}", class: "#{size_class} rounded-full" %>
+  <%= image_tag "https://ui-avatars.com/api/?name=#{user.nome}+#{user.cognome}", class: "#{size_class} rounded-full object-cover" %>
 <% end %>

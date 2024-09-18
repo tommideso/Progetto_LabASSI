@@ -8,33 +8,33 @@ FactoryBot.define do
       tipo_cucina { Faker::Food.dish }
       allergeni {
         {
-          "glutine" => Faker::Boolean.boolean,
-          "soia" => Faker::Boolean.boolean,
-          "noci" => Faker::Boolean.boolean,
-          "lattosio" => Faker::Boolean.boolean,
-          "crostacei" => Faker::Boolean.boolean,
-          "arachidi" => Faker::Boolean.boolean
+          "glutine" => Faker::Boolean.boolean.to_s,
+          "soia" => Faker::Boolean.boolean.to_s,
+          "noci" => Faker::Boolean.boolean.to_s,
+          "lattosio" => Faker::Boolean.boolean.to_s,
+          "crostacei" => Faker::Boolean.boolean.to_s,
+          "arachidi" => Faker::Boolean.boolean.to_s
         }
       }
       preferenze_alimentari {
         {
-          "vegano" => Faker::Boolean.boolean,
-          "glutine" => Faker::Boolean.boolean
+          "vegano" => Faker::Boolean.boolean.to_s,
+          "glutine" => Faker::Boolean.boolean.to_s
         }
       }
       adattabile {
         {
           "preferenze" => {
-            "vegano" => Faker::Boolean.boolean,
-            "glutine" => Faker::Boolean.boolean
+            "vegano" => Faker::Boolean.boolean.to_s,
+            "glutine" => Faker::Boolean.boolean.to_s
           },
           "allergeni" => {
-            "glutine" => Faker::Boolean.boolean,
-            "soia" => Faker::Boolean.boolean,
-            "noci" => Faker::Boolean.boolean,
-            "lattosio" => Faker::Boolean.boolean,
-            "crostacei" => Faker::Boolean.boolean,
-            "arachidi" => Faker::Boolean.boolean
+            "glutine" => Faker::Boolean.boolean.to_s,
+            "soia" => Faker::Boolean.boolean.to_s,
+            "noci" => Faker::Boolean.boolean.to_s,
+            "lattosio" => Faker::Boolean.boolean.to_s,
+            "crostacei" => Faker::Boolean.boolean.to_s,
+            "arachidi" => Faker::Boolean.boolean.to_s
           }
         }
       }

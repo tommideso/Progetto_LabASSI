@@ -56,7 +56,7 @@
             <%= raw @user.chef.descrizione %>
         <% elsif @user.client? %>
 
-            <% allergeni_presenti = @user.client.allergeni.select { |_, presente| presente==true } %>
+            <% allergeni_presenti = @user.client.allergeni.select { |_, presente| presente=="true" || presente==true } %>
             <div class="flex gap-8 items-end">
                 <%= render partial: "profiles/allergeni", locals: {allergeni: allergeni_presenti } %>
             </div>

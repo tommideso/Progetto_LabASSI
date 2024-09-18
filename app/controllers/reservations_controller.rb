@@ -78,7 +78,6 @@ class ReservationsController < ApplicationController
         "miseenplace" => reservation_params[:miseenplace],
         "vino" => reservation_params[:vino]
       }
-      puts "AAAAAAAAAAAAA miseenplace: #{misenplace} vino: #{vino} num_persone: #{num_persone}"
       # Delete vino and miseenplace from update_params
       update_params.delete(:vino)
       update_params.delete(:miseenplace)
@@ -89,7 +88,6 @@ class ReservationsController < ApplicationController
           flash[:notice] = "Prenotazione effettuata con successo."
           redirect_to @reservation
         else
-          puts "ERRORE PRENOTAZIONE"
           logger.error @reservation.errors.full_messages.join(", ")
           flash[:error] = "Impossibile creare la prenotazione."
           redirect_to menu_path(reservation_params[:menu_id])

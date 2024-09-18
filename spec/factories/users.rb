@@ -1,14 +1,14 @@
 FactoryBot.define do
     factory :user do
-      email { Faker::Internet.email }          
-      nome { Faker::Name.first_name }           
-      cognome { Faker::Name.last_name }         
-      ruolo { ['chef', 'client'].sample }      
-      password { "password" }                   
-      confirmed_at { Time.now }                 
-      completed { 1 }
-      
-        # Factory per l'admin
+      email { Faker::Internet.email }
+      nome { Faker::Name.first_name }
+      cognome { Faker::Name.last_name }
+      ruolo { [ 'chef', 'client' ].sample }
+      password { "password" }
+      confirmed_at { Time.now }
+      completed { 2 }
+
+      # Factory per l'admin
       factory :admin do
         email { "admin@admin.it" }  # Specifica l'email dell'admin
         nome { "Admin" }
@@ -19,4 +19,3 @@ FactoryBot.define do
       end
     end
   end
-  

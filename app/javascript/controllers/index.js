@@ -11,11 +11,12 @@ import { application } from "controllers/application";
 import Notification from "@stimulus-components/notification";
 import PlacesAutocomplete from "stimulus-places-autocomplete";
 import { Tabs, Dropdown } from "tailwindcss-stimulus-components";
-import RailsNestedFormController from 'controllers/rails-nested_form_controller'
-
+import RailsNestedFormController from "controllers/rails-nested_form_controller";
+import Flatpicker from "./flatpickr_controller";
 
 application.register("notification", Notification);
 application.register("places-autocomplete", PlacesAutocomplete);
 application.register("tabs", Tabs);
-application.register('nested-form', RailsNestedFormController)
-application.register('dropdown', Dropdown)
+application.register("nested-form", RailsNestedFormController);
+application.register("dropdown", Dropdown);
+application.register("flatpickr", Flatpicker);

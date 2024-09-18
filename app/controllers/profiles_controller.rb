@@ -4,7 +4,7 @@ class ProfilesController < ApplicationController
 
     # Ho già controllo se l'utente è admin
     def index
-        @users = User.all
+        @users = User.where(completed: 2)
         @chefs = @users.where(ruolo: "chef")
         @clients = @users.where(ruolo: "client")
     end
@@ -33,7 +33,6 @@ class ProfilesController < ApplicationController
         puts reviews.map { |r| r.valutazione.to_f }
         # Voglio controllare il tipo delle recensioni e metterlo in un array
         @reviews_average = reviews.map { |r| r.valutazione.to_f }
-        puts "AAAAAAAAAAAAAAA #{@reviews_average}"
         @reviews_average = @reviews_average.size > 0 ? (@reviews_average.sum / @reviews_average.size).round(2) : nil
     end
 

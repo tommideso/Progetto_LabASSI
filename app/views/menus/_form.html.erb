@@ -9,14 +9,14 @@
     <% end %>
 
     <!-- Mostriamo i contenuti del modello -->
-    <div class="form-divs">
+    <div class="form-divs ">
         <%= form.label :titolo, class: 'label' %>
         <%= form.text_field :titolo, id:"titolo", value: @menu.persisted? ? (@menu.titolo.presence || @menu.reload.titolo) : @menu.titolo, class: 'input' %>
     </div>
 
-    <div class="form-divs">
+    <div class="form-divs ">
         <%= form.label :descrizione, class: 'label' %>
-        <%= form.rich_text_area :descrizione, id:"descrizione", value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione, class: 'input' %>
+        <%= form.rich_text_area :descrizione, id:"descrizione", value: @menu.persisted? ? (@menu.descrizione.presence || @menu.reload.descrizione) : @menu.descrizione, class: 'input break-words max-w-full' %>
     </div>
 
     <!-- Sezione Piatti -->
@@ -104,7 +104,7 @@
             <% Menu::PREFERENZE_ALIMENTARI.each do |preferenza| %>
             <div class="checkbox-and-label">
                 <%= hidden_field_tag "menu[adattabile][preferenze][#{preferenza}]", "false" %>
-                <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", "true", @menu.adattabile&.dig("preferenze", preferenza) == "true", class: 'checkbox'%>
+                <%= check_box_tag "menu[adattabile][preferenze][#{preferenza}]", "true", @menu.adattabile&.dig("preferenze", preferenza) == "true", class: 'checkbox' %>
                 <%= label_tag "menu_adattabile_preferenze_#{preferenza}", "Adattabile per " + preferenza %>
             </div>
             <% end %>
@@ -164,13 +164,21 @@
 <script>
   document.addEventListener("turbo:load", function() {
     const chatText = document.getElementById("descrizione");
+    const card = document.querySelector(".card-content");
     if(!chatText) return;
-    chatText.style.height = "auto";
+    
+    function resize() {
+      chatText.style.height = "auto";
+      chatText.style.height = (chatText.scrollHeight) + "px";
+      chatText.style.width = "100%";
+      chatText.style.maxWidth = card.width + "px";
+
+    }
+    resize();
 
 
     chatText.addEventListener("input", function() {
-      chatText.style.height = "auto";
-      chatText.style.height = (chatText.scrollHeight) + "px";
+        resize();
     });
 
     

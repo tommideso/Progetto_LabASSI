@@ -72,12 +72,12 @@ RSpec.feature "Menu", type: :feature, js: true do
     sleep 1
 
     # Compila i campi degli allergeni
-    check 'soia'
-    check 'noci'
+    check 'menu_allergeni_glutine'
+    check 'menu_allergeni_soia'
     sleep 1
 
     # Compila i campi delle preferenze alimentari
-    check 'vegano'
+    check 'menu_preferenze_alimentari_vegano'
     sleep 1
 
     # Compila i campi di adattabilit

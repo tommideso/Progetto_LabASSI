@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   # Metodo per cambiare il testo del bottone in base alla presenza del preferito
   def favorite_class
-    @favorite_exists ? "fill-red-500" : " "
+    @favorite_exists ? "fill-red-500 stroke-red-500" : " stroke-red-500"
   end
   def favorite_text
     @favorite_exists ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"

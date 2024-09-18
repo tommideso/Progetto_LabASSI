@@ -92,3 +92,5 @@ gem "devise-i18n"
 
 
 gem "rails-i18n"
+
+gem "pexels", "~> 0.5.0"

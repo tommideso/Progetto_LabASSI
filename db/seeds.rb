@@ -1,5 +1,10 @@
 ## Seeds
 require 'open-uri'
+require "pexels"
+# PEXELS wH429QtV1Mna9VN8LOjVIf9fXQIUId17wcwrhC8uad70n7agDHcFWIGr
+client = Pexels::Client.new(ENV['PEXELS_API_KEY'])
+# response = client.collections.find("abimmfd", per_page: 3)
+response = client.photos.search("food", per_page: 3)
 
 # Create a user for the admin
 admin_email = "admin@admin.it"
@@ -56,14 +61,15 @@ Client.create!(
 password = "password"
 
 15.times do |i|
+    email = Faker::Internet.email
     # Create a user
     u = User.create!(
-        email: Faker::Internet.email,
+        email: email,
         nome: Faker::Name.first_name,
         cognome: Faker::Name.last_name,
         ruolo: i < 11 ? 'chef' : 'client', # Alterna tra chef e client,
-        password: password,
-        encrypted_password: User.new(password: password).encrypted_password,
+        password: email,
+        encrypted_password: User.new(password: email).encrypted_password,
         confirmed_at: Time.now,
         completed: 2,
     )
@@ -102,29 +108,29 @@ end
         max_persone: Faker::Number.between(from: 11, to: 20),
         tipo_cucina: Faker::Food.dish,
         allergeni: {
-          "glutine" => Faker::Boolean.boolean,
-          "soia" => Faker::Boolean.boolean,
-          "noci" => Faker::Boolean.boolean,
-          "lattosio" => Faker::Boolean.boolean,
-          "crostacei" => Faker::Boolean.boolean,
-          "arachidi" => Faker::Boolean.boolean
+          "glutine" => Faker::Boolean.boolean.to_s,
+          "soia" => Faker::Boolean.boolean.to_s,
+          "noci" => Faker::Boolean.boolean.to_s,
+          "lattosio" => Faker::Boolean.boolean.to_s,
+          "crostacei" => Faker::Boolean.boolean.to_s,
+          "arachidi" => Faker::Boolean.boolean.to_s
         },
         preferenze_alimentari: {
-          "vegano" => Faker::Boolean.boolean,
-          "glutine" => Faker::Boolean.boolean
+          "vegano" => Faker::Boolean.boolean.to_s,
+          "glutine" => Faker::Boolean.boolean.to_s
         },
         adattabile: {
           "preferenze" => {
-            "vegano" => Faker::Boolean.boolean,
-            "glutine" => Faker::Boolean.boolean
+            "vegano" => Faker::Boolean.boolean.to_s,
+            "glutine" => Faker::Boolean.boolean.to_s
           },
           "allergeni" => {
-            "glutine" => Faker::Boolean.boolean,
-            "soia" => Faker::Boolean.boolean,
-            "noci" => Faker::Boolean.boolean,
-            "lattosio" => Faker::Boolean.boolean,
-            "crostacei" => Faker::Boolean.boolean,
-            "arachidi" => Faker::Boolean.boolean
+            "glutine" => Faker::Boolean.boolean.to_s,
+            "soia" => Faker::Boolean.boolean.to_s,
+            "noci" => Faker::Boolean.boolean.to_s,
+            "lattosio" => Faker::Boolean.boolean.to_s,
+            "crostacei" => Faker::Boolean.boolean.to_s,
+            "arachidi" => Faker::Boolean.boolean.to_s
           }
         },
         extra: {
@@ -133,10 +139,17 @@ end
         },
         chef: Chef.all.sample,
       )
+      while response.photos.length != 3
+        response = response.next_page
+      end
+      response.photos.each do |image|
+        menu.images.attach(io: URI.open(image.src["medium"]), filename: "menu_#{i + 1}.jpg")
+      end
+      response = response.next_page
 
       # Download and attach the image
-      Faker::Number.between(from: 1, to: 5).times do |j|
-        image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'food', 'menu' ])
+      3.times do |j|
+        image_url = Faker::LoremFlickr.image(size: "500x500", search_terms: [ 'food' ])
         downloaded_image = URI.open(image_url)
         menu.images.attach(io: downloaded_image, filename: "menu_#{j + 1}.jpg")
       end
@@ -265,29 +278,29 @@ end
       max_persone: Faker::Number.between(from: 11, to: 20),
       tipo_cucina: Faker::Food.dish,
       allergeni: {
-        "glutine" => Faker::Boolean.boolean,
-        "soia" => Faker::Boolean.boolean,
-        "noci" => Faker::Boolean.boolean,
-        "lattosio" => Faker::Boolean.boolean,
-        "crostacei" => Faker::Boolean.boolean,
-        "arachidi" => Faker::Boolean.boolean
+        "glutine" => Faker::Boolean.boolean.to_s,
+        "soia" => Faker::Boolean.boolean.to_s,
+        "noci" => Faker::Boolean.boolean.to_s,
+        "lattosio" => Faker::Boolean.boolean.to_s,
+        "crostacei" => Faker::Boolean.boolean.to_s,
+        "arachidi" => Faker::Boolean.boolean.to_s
       },
       preferenze_alimentari: {
-        "vegano" => Faker::Boolean.boolean,
-        "glutine" => Faker::Boolean.boolean
+        "vegano" => Faker::Boolean.boolean.to_s,
+        "glutine" => Faker::Boolean.boolean.to_s
       },
       adattabile: {
         "preferenze" => {
-          "vegano" => Faker::Boolean.boolean,
-          "glutine" => Faker::Boolean.boolean
+          "vegano" => Faker::Boolean.boolean.to_s,
+          "glutine" => Faker::Boolean.boolean.to_s
         },
         "allergeni" => {
-          "glutine" => Faker::Boolean.boolean,
-          "soia" => Faker::Boolean.boolean,
-          "noci" => Faker::Boolean.boolean,
-          "lattosio" => Faker::Boolean.boolean,
-          "crostacei" => Faker::Boolean.boolean,
-          "arachidi" => Faker::Boolean.boolean
+          "glutine" => Faker::Boolean.boolean.to_s,
+          "soia" => Faker::Boolean.boolean.to_s,
+          "noci" => Faker::Boolean.boolean.to_s,
+          "lattosio" => Faker::Boolean.boolean.to_s,
+          "crostacei" => Faker::Boolean.boolean.to_s,
+          "arachidi" => Faker::Boolean.boolean.to_s
         }
       },
       extra: {
@@ -297,12 +310,19 @@ end
       chef: User.find_by(email: 'chef@chef.it').chef,
     )
 
-    # Download and attach the image
-    Faker::Number.between(from: 1, to: 5).times do |j|
-      image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'food', 'menu' ])
-      downloaded_image = URI.open(image_url)
-      menu.images.attach(io: downloaded_image, filename: "menu_#{j + 1}.jpg")
+    while response.photos.length != 3
+      response = response.next_page
     end
+    response.photos.each do |image|
+      menu.images.attach(io: URI.open(image.src["medium"]), filename: "menu_#{i + 1}.jpg")
+    end
+
+    # Download and attach the image
+    # 3.times do |j|
+    #   image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'food' ])
+    #   downloaded_image = URI.open(image_url)
+    #   menu.images.attach(io: downloaded_image, filename: "menu_#{j + 1}.jpg")
+    # end
 
     product = Stripe::Product.create({
       name: menu.titolo,
