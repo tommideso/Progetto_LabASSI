@@ -465,6 +465,7 @@ DEPENDENCIES
   inline_svg
   jbuilder
   letter_opener_web (~> 3.0)
+  net-protocol
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection (~> 1.0)
