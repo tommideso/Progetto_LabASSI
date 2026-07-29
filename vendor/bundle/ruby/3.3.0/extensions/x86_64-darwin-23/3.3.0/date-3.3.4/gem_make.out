@@ -1,0 +1,24 @@
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/date-3.3.4/ext/date
+/Users/andrealanzarone/.asdf/installs/ruby/3.3.3/bin/ruby extconf.rb
+checking for rb_category_warn()... yes
+checking for timezone in time.h with  -Werror... yes
+checking for altzone in time.h with  -Werror... no
+creating Makefile
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/date-3.3.4/ext/date
+make DESTDIR\= sitearchdir\=./.gem.20260729-14980-ghu90p sitelibdir\=./.gem.20260729-14980-ghu90p clean
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/date-3.3.4/ext/date
+make DESTDIR\= sitearchdir\=./.gem.20260729-14980-ghu90p sitelibdir\=./.gem.20260729-14980-ghu90p
+compiling date_core.c
+compiling date_parse.c
+compiling date_strftime.c
+compiling date_strptime.c
+linking shared-object date_core.bundle
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/date-3.3.4/ext/date
+make DESTDIR\= sitearchdir\=./.gem.20260729-14980-ghu90p sitelibdir\=./.gem.20260729-14980-ghu90p install
+/usr/bin/install -c -m 0755 date_core.bundle ./.gem.20260729-14980-ghu90p
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/date-3.3.4/ext/date
+make DESTDIR\= sitearchdir\=./.gem.20260729-14980-ghu90p sitelibdir\=./.gem.20260729-14980-ghu90p clean

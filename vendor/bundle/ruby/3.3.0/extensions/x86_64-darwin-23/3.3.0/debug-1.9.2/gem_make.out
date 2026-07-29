@@ -1,0 +1,19 @@
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+/Users/andrealanzarone/.asdf/installs/ruby/3.3.3/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20260729-18420-erser0 sitelibdir\=./.gem.20260729-18420-erser0 clean
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20260729-18420-erser0 sitelibdir\=./.gem.20260729-18420-erser0
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.bundle
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20260729-18420-erser0 sitelibdir\=./.gem.20260729-18420-erser0 install
+/usr/bin/install -c -m 0755 debug.bundle ./.gem.20260729-18420-erser0/debug
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20260729-18420-erser0 sitelibdir\=./.gem.20260729-18420-erser0 clean

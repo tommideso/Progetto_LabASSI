@@ -1,0 +1,18 @@
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/stringio-3.1.1/ext/stringio
+/Users/andrealanzarone/.asdf/installs/ruby/3.3.3/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/stringio-3.1.1/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20260729-14980-volhpn sitelibdir\=./.gem.20260729-14980-volhpn clean
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/stringio-3.1.1/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20260729-14980-volhpn sitelibdir\=./.gem.20260729-14980-volhpn
+compiling stringio.c
+linking shared-object stringio.bundle
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/stringio-3.1.1/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20260729-14980-volhpn sitelibdir\=./.gem.20260729-14980-volhpn install
+/usr/bin/install -c -m 0755 stringio.bundle ./.gem.20260729-14980-volhpn
+
+current directory: /Users/andrealanzarone/Desktop/html/Progetto_LabASSI/vendor/bundle/ruby/3.3.0/gems/stringio-3.1.1/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20260729-14980-volhpn sitelibdir\=./.gem.20260729-14980-volhpn clean
